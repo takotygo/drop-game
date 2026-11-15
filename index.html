@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>غدر الكرات: أوفردرايف | CYBER REFLEX ARCADE v3.3</title>
+    <title>TAKO DROP | غدر الكرات v3.4</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -426,6 +426,22 @@
             color: #fda4af;
         }
 
+        /* Login Error Box */
+        #login-msg {
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 10px;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+        #login-msg.error {
+            display: block;
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid var(--pink);
+            color: #fda4af;
+        }
+
         /* ================= IN-GAME HUD & CANVAS ================= */
         #hud {
             display: flex;
@@ -620,23 +636,24 @@
         <button class="lane-btn" id="btn-3" data-lane="3">4 <small>[K]</small></button>
     </div>
 
-    <!-- ================= LOGIN OVERLAY ================= -->
+    <!-- ================= SECURE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge">SECURITY ACCESS // LOGIN</div>
-        <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول</div>
-        <div class="menu-subtitle" style="margin-bottom:18px;">سجّل اسمك وكلمة السر مرة واحدة فقط لحفظ تقدمك وتصدر القائمة!</div>
+        <div class="cyber-badge">SECURITY ACCESS // TAKO DROP</div>
+        <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول الآمن</div>
+        <div class="menu-subtitle" style="margin-bottom:18px;">كل حساب محمي بكلمة السر الخاصة به، ولا يمكن لأحد فتح حسابك بكلمة سر عشوائية!</div>
 
         <div class="editor-box" style="width:100%; max-width:360px; padding:18px;">
+            <div id="login-msg"></div>
             <div class="field-group">
                 <label>👤 اسم اللاعب (Username)</label>
-                <input type="text" id="login-user" class="cyber-input" placeholder="مثال: Tako_King" maxlength="18">
+                <input type="text" id="login-user" class="cyber-input" placeholder="مثال: tako" maxlength="18">
             </div>
             <div class="field-group">
                 <label>🔒 كلمة السر (Password)</label>
-                <input type="password" id="login-pass" class="cyber-input" placeholder="اكتب أي كلمة سر لحفظ حسابك">
+                <input type="password" id="login-pass" class="cyber-input" placeholder="أدخل كلمة السر الخاصة بحسابك">
             </div>
             <button class="play-chip" style="width:100%; padding:12px; font-size:15px; margin-top:6px;" onclick="handleLogin()">
-                <span>دخول وحفظ الحساب ⚡</span>
+                <span>دخول / إنشاء حساب محمي 🔒</span>
             </button>
         </div>
     </div>
@@ -650,11 +667,11 @@
                 <span id="display-username">لاعب</span>
             </div>
             <button class="top-btn-Rank" onclick="openLeaderboardTab()">🏆 المتصدرين</button>
-            <button class="logout-btn" onclick="logoutUser()">تبديل الحساب</button>
+            <button class="logout-btn" onclick="logoutUser()">تبديل الحساب 🔒</button>
         </div>
 
-        <div class="cyber-badge">CYBER REFLEX ARCADE // v3.3</div>
-        <div class="glitch-title">غدر الكرات: أوفردرايف</div>
+        <div class="cyber-badge">TAKO ARCADE // v3.4</div>
+        <div class="glitch-title">TAKO DROP | غدر الكرات</div>
         <div class="menu-subtitle">جميع الكرات تنزل بلون موحد ولا تكشف خدعتها إلا بآخر لحظة!</div>
 
         <!-- 3 Stat Cards -->
@@ -691,8 +708,6 @@
         <!-- TAB 1: 10 TUTORIAL STAGES + PLAYER STAGES -->
         <div id="tab-stages" class="tab-panel active">
             <div id="tutorial-list-container" style="display:flex; flex-direction:column; gap:8px;"></div>
-
-            <!-- Saved Custom Stages List -->
             <div id="my-custom-stages" style="display:flex; flex-direction:column; gap:8px; margin-top:6px;"></div>
         </div>
 
@@ -1014,37 +1029,35 @@
         }
     };
 
-    function renderTutorialCards() {
-        const container = document.getElementById('tutorial-list-container');
-        container.innerHTML = Object.keys(STAGES).map(k => {
-            const st = STAGES[k];
-            const isCleared = saveData.cleared.includes(parseInt(k));
-            return `
-            <div class="stage-card ${st.colorClass}">
-                <div class="stage-info">
-                    <div class="stage-title">${st.title} ${isCleared ? '✅' : ''}</div>
-                    <div class="stage-desc">${st.desc}</div>
-                </div>
-                <button class="play-chip ${st.colorClass}" onclick="startStage(${k})"><span>ابدأ ◀</span></button>
-            </div>`;
-        }).join('');
+    // ================= SECURE MULTI-ACCOUNT DATABASE =================
+    let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v34') || '{}');
+    let activeUserKey = localStorage.getItem('takoDropActiveUser_v34') || "";
+
+    // Migrate previous single-account data if present so user doesn't lose progress
+    const legacySave = JSON.parse(localStorage.getItem('cyberDropSave_v33') || localStorage.getItem('cyberDropSave_v32') || 'null');
+    if (legacySave && legacySave.username) {
+        const uKey = legacySave.username.trim().toLowerCase();
+        if (!accountsDB[uKey]) {
+            accountsDB[uKey] = {
+                username: legacySave.username.trim(),
+                password: legacySave.password || "1234",
+                high: legacySave.high || 0,
+                xp: legacySave.xp || 0,
+                cleared: legacySave.cleared || [],
+                skin: legacySave.skin || "#00f0ff"
+            };
+            localStorage.setItem('takoDropAccounts_v34', JSON.stringify(accountsDB));
+        }
     }
 
-    // ================= USER & SAVE DATA (REAL PLAYERS ONLY) =================
-    let saveData = JSON.parse(localStorage.getItem('cyberDropSave_v33') || 'null');
-    if (!saveData) {
-        const old = JSON.parse(localStorage.getItem('cyberDropSave_v32') || localStorage.getItem('cyberDropSave_v31') || 'null');
-        saveData = old ? { ...old, cleared: old.cleared || [] } : {
-            username: "",
-            password: "",
-            high: 0,
-            xp: 0,
-            cleared: [],
-            skin: "#00f0ff"
-        };
-    }
-
-    let realPlayersDB = JSON.parse(localStorage.getItem('cyberDropRealPlayers_v31') || '{}');
+    let saveData = {
+        username: "",
+        password: "",
+        high: 0,
+        xp: 0,
+        cleared: [],
+        skin: "#00f0ff"
+    };
 
     // Built-in Custom Stage ID for instant testing (TAKO-99)
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v3') || '{}');
@@ -1068,86 +1081,136 @@
         ]
     };
 
-    function syncRealPlayerScore() {
-        if (!saveData.username) return;
-        const key = saveData.username.trim();
-        const prev = realPlayersDB[key] || { name: key, pts: 0, xp: 0 };
-        realPlayersDB[key] = {
-            name: key,
-            pts: Math.max(prev.pts || 0, saveData.high || 0),
-            xp: Math.max(prev.xp || 0, saveData.xp || 0)
-        };
-        localStorage.setItem('cyberDropRealPlayers_v31', JSON.stringify(realPlayersDB));
+    function renderTutorialCards() {
+        const container = document.getElementById('tutorial-list-container');
+        container.innerHTML = Object.keys(STAGES).map(k => {
+            const st = STAGES[k];
+            const isCleared = saveData.cleared.includes(parseInt(k));
+            return `
+            <div class="stage-card ${st.colorClass}">
+                <div class="stage-info">
+                    <div class="stage-title">${st.title} ${isCleared ? '✅' : ''}</div>
+                    <div class="stage-desc">${st.desc}</div>
+                </div>
+                <button class="play-chip ${st.colorClass}" onclick="startStage(${k})"><span>ابدأ ◀</span></button>
+            </div>`;
+        }).join('');
     }
 
     function saveProgress() {
-        localStorage.setItem('cyberDropSave_v33', JSON.stringify(saveData));
-        syncRealPlayerScore();
+        if (saveData.username) {
+            const uKey = saveData.username.trim().toLowerCase();
+            accountsDB[uKey] = {
+                username: saveData.username.trim(),
+                password: saveData.password,
+                high: saveData.high,
+                xp: saveData.xp,
+                cleared: saveData.cleared,
+                skin: saveData.skin
+            };
+            localStorage.setItem('takoDropAccounts_v34', JSON.stringify(accountsDB));
+            localStorage.setItem('takoDropActiveUser_v34', uKey);
+            document.getElementById('display-username').textContent = saveData.username;
+        }
         document.getElementById('stat-high').textContent = saveData.high;
         document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 10`;
         document.getElementById('stat-xp').textContent = `${saveData.xp} XP`;
-        if (saveData.username) {
-            document.getElementById('display-username').textContent = saveData.username;
-        }
         renderTutorialCards();
         renderCustomStagesList();
     }
 
+    function showLoginError(msg) {
+        const box = document.getElementById('login-msg');
+        if (!msg) {
+            box.className = '';
+            box.style.display = 'none';
+            return;
+        }
+        box.textContent = msg;
+        box.className = 'error';
+    }
+
     function checkAutoLogin() {
-        if (!saveData.username) {
-            document.getElementById('login-overlay').classList.remove('hidden');
-            document.getElementById('menu-overlay').classList.add('hidden');
-        } else {
+        if (activeUserKey && accountsDB[activeUserKey]) {
+            saveData = { ...accountsDB[activeUserKey] };
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('menu-overlay').classList.remove('hidden');
             saveProgress();
+        } else {
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.getElementById('menu-overlay').classList.add('hidden');
         }
     }
 
     function handleLogin() {
-        const u = document.getElementById('login-user').value.trim();
-        const p = document.getElementById('login-pass').value.trim();
-        if (!u) {
-            showToast("الرجاء كتابة اسم اللاعب أولاً! 👤", false);
+        const rawUser = document.getElementById('login-user').value.trim();
+        const rawPass = document.getElementById('login-pass').value.trim();
+
+        if (!rawUser) {
+            showLoginError("⚠️ الرجاء كتابة اسم اللاعب أولاً!");
             return;
         }
-        saveData.username = u;
-        saveData.password = p || "1234";
-        if (realPlayersDB[u]) {
-            saveData.high = Math.max(saveData.high, realPlayersDB[u].pts || 0);
-            saveData.xp = Math.max(saveData.xp, realPlayersDB[u].xp || 0);
+        if (!rawPass) {
+            showLoginError("🔒 الرجاء كتابة كلمة السر لحماية حسابك!");
+            return;
         }
+
+        const uKey = rawUser.toLowerCase();
+
+        // Check if account already exists
+        if (accountsDB[uKey]) {
+            if (accountsDB[uKey].password !== rawPass) {
+                showLoginError("❌ كلمة السر غير صحيحة لهذا الحساب! لا يمكنك الدخول لحساب شخص آخر.");
+                tone(130, 'sawtooth', 0.25, 0.25);
+                return;
+            }
+            // Password matches! Load this specific user's progress
+            saveData = { ...accountsDB[uKey] };
+            showLoginError("");
+            showToast(`أهلاً بعودتك يا ${saveData.username}! 🔓`, true);
+        } else {
+            // New account registration
+            saveData = {
+                username: rawUser,
+                password: rawPass,
+                high: 0,
+                xp: 0,
+                cleared: [],
+                skin: "#00f0ff"
+            };
+            accountsDB[uKey] = { ...saveData };
+            showLoginError("");
+            showToast(`تم إنشاء حسابك المحمي يا ${rawUser}! 🔒⚡`, true);
+        }
+
+        activeUserKey = uKey;
         saveProgress();
         document.getElementById('login-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
         renderLeaderboard();
-        showToast(`أهلاً بك يا ${u}! تم حفظ دخولك ⚡`, true);
     }
 
     function logoutUser() {
-        saveData.username = "";
-        saveData.high = 0;
-        saveData.xp = 0;
-        saveData.cleared = [];
-        localStorage.setItem('cyberDropSave_v33', JSON.stringify(saveData));
+        activeUserKey = "";
+        localStorage.removeItem('takoDropActiveUser_v34');
         document.getElementById('login-user').value = "";
         document.getElementById('login-pass').value = "";
+        showLoginError("");
         checkAutoLogin();
     }
 
     // ================= REAL PLAYERS LEADERBOARD =================
     function renderLeaderboard() {
-        syncRealPlayerScore();
         const container = document.getElementById('leaderboard-container');
-        const playersList = Object.values(realPlayersDB);
-        playersList.sort((a, b) => (b.pts - a.pts) || (b.xp - a.xp));
+        const playersList = Object.values(accountsDB);
+        playersList.sort((a, b) => (b.high - a.high) || (b.xp - a.xp));
         const top100 = playersList.slice(0, 100);
 
         const myName = saveData.username || "أنت";
-        const myRankIndex = top100.findIndex(p => p.name === myName);
+        const myRankIndex = top100.findIndex(p => p.username.toLowerCase() === myName.toLowerCase());
         const myRank = myRankIndex !== -1 ? myRankIndex + 1 : 1;
 
-        document.getElementById('my-rank-summary').textContent = `ترتيبك الحالي: المركز #${myRank} من أصل ${top100.length} لاعب حقيقي 🔥`;
+        document.getElementById('my-rank-summary').textContent = `ترتيبك الحالي: المركز #${myRank} من أصل ${top100.length} حساب مسجل 🔥`;
         document.getElementById('my-rank-pts').textContent = `${saveData.high} PTS`;
 
         if (top100.length === 0) {
@@ -1163,18 +1226,18 @@
             else if (r === 2) { badgeClass = 'rank-2'; medal = '🥈 2'; }
             else if (r === 3) { badgeClass = 'rank-3'; medal = '🥉 3'; }
 
-            const isMe = item.name === myName;
+            const isMe = item.username.toLowerCase() === myName.toLowerCase();
             const rowStyle = isMe ? 'border: 1px solid var(--cyan); background: rgba(0, 240, 255, 0.14);' : '';
 
             return `
                 <div class="rank-row" style="${rowStyle}">
                     <div style="display:flex; align-items:center; gap:10px;">
                         <div class="rank-badge ${badgeClass}">${medal}</div>
-                        <span style="color:${isMe ? 'var(--cyan)' : '#fff'};">${item.name} ${isMe ? '(أنت)' : ''}</span>
+                        <span style="color:${isMe ? 'var(--cyan)' : '#fff'};">${item.username} ${isMe ? '(أنت)' : ''}</span>
                     </div>
                     <div style="display:flex; gap:10px; align-items:center;">
                         <span style="font-size:11px; color:var(--yellow);">${item.xp || 0} XP</span>
-                        <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px;">${item.pts} PTS</span>
+                        <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px;">${item.high || 0} PTS</span>
                     </div>
                 </div>
             `;
@@ -1504,7 +1567,6 @@
         const b = createBallObject(lane, type, st.speed);
         balls.push(b);
 
-        // If a bouncer ball spawns, 55% chance to spawn a trailing ball behind it!
         if (type === 'bounce' && Math.random() < 0.55) {
             setTimeout(() => {
                 if (active && !customMode) {
@@ -1569,7 +1631,6 @@
         }
     }
 
-    // STRICT BOTTOM-MOST BALL ISOLATION + BOUNCER BALL MECHANIC
     function pressLane(lane) {
         if (!active) return;
         const btn = document.getElementById('btn-' + lane);
@@ -1587,7 +1648,6 @@
 
         const bottomBall = laneBalls[0];
 
-        // 1. If the lowest ball is a Faked ball
         if (bottomBall.state === 'faked') {
             if (Math.abs(bottomBall.y - hitY) < 140) {
                 bottomBall.state = 'dead';
@@ -1597,9 +1657,7 @@
             }
         }
 
-        // 2. If the lowest ball is within the Hit Line catch zone
         if (Math.abs(bottomBall.y - hitY) <= 65 && bottomBall.state !== 'faked') {
-            // Check if it still has armor
             if (bottomBall.armor > 1) {
                 bottomBall.armor--;
                 tone(480, 'square', 0.09, 0.2);
@@ -1613,12 +1671,10 @@
                 return;
             }
 
-            // Check if it is a BOUNCER BALL ("طابة النط") on its first hit!
             if (bottomBall.type === 'bounce' && !bottomBall.bounced) {
                 bottomBall.bounced = true;
                 bottomBall.state = 'bouncing_up';
                 bottomBall.vy = -10.5;
-                // 50% chance to jump to adjacent lane or stay in same lane!
                 if (Math.random() < 0.5) {
                     bottomBall.lane = bottomBall.targetLane;
                     addFloat(bottomBall.x, hitY - 28, "نطت وغيرت مسارها! 🏀↪️", "#38bdf8");
@@ -1630,7 +1686,6 @@
                 return;
             }
 
-            // Otherwise, catch the ball!
             bottomBall.state = 'dead';
             tone(650, 'triangle', 0.09, 0.2);
             setTimeout(() => tone(920, 'sine', 0.1, 0.18), 35);
@@ -1638,7 +1693,6 @@
             return;
         }
 
-        // 3. If the lowest ball is still in the air AND has armor > 1
         if (bottomBall.armor > 1 && bottomBall.y > 20 && bottomBall.y < hitY - 65) {
             bottomBall.armor--;
             tone(520, 'square', 0.08, 0.2);
@@ -1652,7 +1706,6 @@
             return;
         }
 
-        // 4. Otherwise, player pressed too early on the lowest ball
         if (bottomBall.y > hitY - 210 && bottomBall.y < hitY - 65) {
             bottomBall.state = 'dead';
             hurt(bottomBall.type === 'fake' ? "مستعجل عالـ FAKE! 🤡" : "ضغطت بكير كتير! ⏳");
@@ -1706,10 +1759,9 @@
                 b.rot += 0.06;
                 if (b.state === 'dead') { balls.splice(i, 1); continue; }
 
-                // Handle Bouncer Ball upward & gravity physics
                 if (b.state === 'bouncing_up') {
                     b.y += b.vy;
-                    b.vy += 0.44; // Gravity brings it back down
+                    b.vy += 0.44;
                     if (b.vy >= 0) {
                         b.state = 'after_bounce';
                         b.speed = b.baseSpeed * 1.12;
@@ -1718,7 +1770,6 @@
                     continue;
                 }
 
-                // Trigger special behaviors ONLY at trigger line (stays disguised before that!)
                 if (b.state === 'fall' && b.y >= b.trigY) {
                     if (b.type === 'fake') {
                         b.state = 'faked';
@@ -1792,7 +1843,6 @@
             }
         }
 
-        // Draw Cyber Scene
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         gridOffset = (gridOffset + 1.5) % 40;
         ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
@@ -1828,7 +1878,6 @@
             ctx.restore();
         });
 
-        // DRAW BALLS (DISGUISED WHEN FALLING SO IT DOES NOT SPOIL THE SURPRISE!)
         balls.forEach(b => {
             ctx.save();
             if (b.state === 'faked' || b.state === 'dbl_fake') {
@@ -1844,7 +1893,6 @@
                     ctx.globalAlpha = 0.08;
                 }
 
-                // UNIFORM COLOR UNTIL TRIGGERED!
                 let col = saveData.skin || '#00f0ff';
                 if (b.state === 'switched') col = '#b829ff';
                 else if (b.state === 'braking' || b.state === 'after_brk') col = '#ffb800';
@@ -1858,7 +1906,6 @@
                 ctx.fillStyle = col;
                 ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
 
-                // Only Armored balls show their shield count so player knows to pre-break armor
                 if (b.armor > 1) {
                     ctx.strokeStyle = b.type === 'boss' ? '#ffd700' : '#ffb800';
                     ctx.lineWidth = 3.5;
