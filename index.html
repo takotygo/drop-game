@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>غدر الكرات: أوفردرايف | CYBER REFLEX ARCADE v2.5</title>
+    <title>غدر الكرات: أوفردرايف | CYBER REFLEX ARCADE v3.3</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -15,6 +15,7 @@
             --purple: #b829ff;
             --yellow: #ffb800;
             --green: #00ff66;
+            --orange: #ff6b00;
         }
 
         * {
@@ -50,7 +51,7 @@
             border-right: 1px solid rgba(0, 240, 255, 0.15);
         }
 
-        /* ================= MENU OVERLAY (CYBER REFLEX v2.5) ================= */
+        /* ================= OVERLAYS ================= */
         .overlay {
             position: absolute;
             inset: 0;
@@ -58,12 +59,65 @@
             z-index: 50;
             display: flex;
             flex-direction: column;
-            padding: 18px 16px 24px 16px;
+            padding: 14px 14px 20px 14px;
             overflow-y: auto;
         }
 
         .overlay.hidden {
             display: none !important;
+        }
+
+        /* Top User & Leaderboard Bar */
+        .top-user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 10px;
+            background: rgba(17, 14, 32, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 6px 10px;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+        }
+
+        .top-btn-Rank {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: #05050a;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .logout-btn {
+            background: rgba(255, 0, 85, 0.15);
+            border: 1px solid rgba(255, 0, 85, 0.4);
+            color: #fda4af;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
         .cyber-badge {
@@ -72,105 +126,134 @@
             border: 1px solid rgba(255, 0, 85, 0.45);
             color: #ff4d88;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 900;
             letter-spacing: 1.5px;
-            padding: 4px 16px;
+            padding: 3px 14px;
             border-radius: 4px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
         }
 
         .glitch-title {
             text-align: center;
-            font-size: 33px;
+            font-size: 30px;
             font-weight: 900;
             color: #fff;
-            text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink), 0 0 20px rgba(0, 240, 255, 0.5);
-            margin-bottom: 4px;
-            line-height: 1.2;
+            text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink), 0 0 18px rgba(0, 240, 255, 0.5);
+            margin-bottom: 2px;
+            line-height: 1.15;
         }
 
         .menu-subtitle {
             text-align: center;
             color: #94a3b8;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         /* Stats Row (3 Boxes) */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .stat-card {
             background: rgba(17, 14, 32, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 10px 6px;
+            padding: 8px 4px;
             text-align: center;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
         }
 
         .stat-label {
-            font-size: 11px;
+            font-size: 10.5px;
             color: #94a3b8;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .stat-val {
             font-family: 'Orbitron', 'Cairo', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 900;
         }
 
         .val-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
         .val-yellow { color: var(--yellow); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
 
-        /* Tabs Row */
+        /* Play by Stage ID Box */
+        .id-search-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            background: rgba(17, 14, 32, 0.95);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        .cyber-input {
+            width: 100%;
+            background: rgba(7, 5, 16, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Tabs Row (5 Tabs) */
         .tabs-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
         }
 
         .tab-btn {
             background: rgba(23, 19, 43, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #cbd5e1;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 800;
-            padding: 9px 6px;
+            padding: 8px 2px;
             border-radius: 6px;
             cursor: pointer;
-            transform: skewX(-8deg);
+            transform: skewX(-6deg);
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .tab-btn span {
             display: inline-block;
-            transform: skewX(8deg);
+            transform: skewX(6deg);
         }
 
         .tab-btn.active {
             background: var(--cyan);
             color: #05050a;
             border-color: var(--cyan);
-            box-shadow: 0 0 18px rgba(0, 240, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
         }
 
         /* Tab Panels */
         .tab-panel {
             display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
             overflow-y: auto;
             padding-left: 2px;
@@ -186,18 +269,19 @@
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-right: 4px solid var(--cyan);
             border-radius: 10px;
-            padding: 12px 14px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
         }
 
         .stage-card.purple { border-right-color: var(--purple); }
         .stage-card.yellow { border-right-color: var(--yellow); }
         .stage-card.green { border-right-color: var(--green); }
         .stage-card.pink { border-right-color: var(--pink); }
+        .stage-card.orange { border-right-color: var(--orange); }
 
         .stage-info {
             text-align: right;
@@ -205,67 +289,131 @@
         }
 
         .stage-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 900;
             color: #fff;
             margin-bottom: 2px;
         }
 
         .stage-desc {
-            font-size: 11.5px;
+            font-size: 11px;
             color: #94a3b8;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .play-chip {
             border: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
-            padding: 8px 16px;
+            padding: 7px 13px;
             border-radius: 6px;
             cursor: pointer;
             color: #05050a;
             background: var(--cyan);
             transform: skewX(-8deg);
             flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
-            transition: transform 0.15s;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
         }
 
-        .play-chip:active {
-            transform: skewX(-8deg) scale(0.94);
+        .play-chip span {
+            display: inline-block;
+            transform: skewX(8deg);
         }
 
-        .play-chip.purple { background: var(--purple); color: #fff; box-shadow: 0 0 12px rgba(184, 41, 255, 0.4); }
-        .play-chip.yellow { background: var(--yellow); color: #05050a; box-shadow: 0 0 12px rgba(255, 184, 0, 0.4); }
-        .play-chip.green { background: var(--green); color: #05050a; box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }
-        .play-chip.pink { background: var(--pink); color: #fff; box-shadow: 0 0 12px rgba(255, 0, 85, 0.4); }
+        .play-chip.purple { background: var(--purple); color: #fff; }
+        .play-chip.yellow { background: var(--yellow); color: #05050a; }
+        .play-chip.green { background: var(--green); color: #05050a; }
+        .play-chip.pink { background: var(--pink); color: #fff; }
+        .play-chip.orange { background: var(--orange); color: #fff; }
 
-        /* Skins Grid */
-        .skin-card {
-            background: rgba(18, 15, 34, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Level Editor Styles */
+        .editor-box {
+            background: rgba(18, 15, 34, 0.95);
+            border: 1px solid rgba(0, 240, 255, 0.25);
             border-radius: 10px;
-            padding: 12px 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .field-group label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+
+        .spawn-list {
+            max-height: 120px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(7, 5, 16, 0.8);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .spawn-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        /* Leaderboard Rows */
+        .rank-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: rgba(18, 15, 34, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
         }
 
-        .skin-preview {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            flex-shrink: 0;
+        .rank-badge {
+            min-width: 32px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
         }
 
-        /* Hardcore Toggle Bar */
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #000; box-shadow: 0 0 10px #ffd700; }
+        .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #d97706, #92400e); color: #fff; }
+
+        /* Hardcore Bar */
         .hardcore-bar {
-            margin-top: 12px;
+            margin-top: 8px;
             background: rgba(45, 10, 25, 0.75);
             border: 1px solid rgba(255, 0, 85, 0.45);
-            border-radius: 10px;
-            padding: 10px 14px;
+            border-radius: 8px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -273,15 +421,9 @@
         }
 
         .hardcore-bar span {
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 800;
             color: #fda4af;
-        }
-
-        .hardcore-bar input {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--pink);
         }
 
         /* ================= IN-GAME HUD & CANVAS ================= */
@@ -308,7 +450,7 @@
         }
 
         .hud-val {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 900;
             color: var(--cyan);
             text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
@@ -362,12 +504,12 @@
             padding: 6px 18px;
             border-radius: 99px;
             font-weight: 900;
-            font-size: 15px;
+            font-size: 14px;
             opacity: 0;
             pointer-events: none;
             transition: all 0.15s;
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.8);
-            z-index: 20;
+            z-index: 60;
             white-space: nowrap;
         }
 
@@ -377,7 +519,7 @@
         }
 
         #toast.good {
-            background: rgba(0, 255, 102, 0.92);
+            background: rgba(0, 255, 102, 0.95);
             color: #040308;
             box-shadow: 0 0 20px rgba(0, 255, 102, 0.8);
         }
@@ -395,7 +537,7 @@
         }
 
         .lane-btn {
-            height: 62px;
+            height: 60px;
             border-radius: 12px;
             border: 2px solid rgba(0, 240, 255, 0.35);
             background: linear-gradient(180deg, #161229 0%, #090714 100%);
@@ -454,8 +596,8 @@
             <span class="hud-val" id="hud-stage">1</span>
         </div>
         <div class="hud-box">
-            <span class="hud-lbl">السكور / الكومبو</span>
-            <span class="hud-val" id="hud-score">0 / 15</span>
+            <span class="hud-lbl">السكور / الهدف</span>
+            <span class="hud-val" id="hud-score">0 / 10</span>
         </div>
         <div class="hud-box">
             <span class="hud-lbl">الطاقة</span>
@@ -470,7 +612,7 @@
         <div id="toast">أكلت المقلب! 😂</div>
     </div>
 
-    <!-- Bottom Buttons -->
+    <!-- Bottom Controls -->
     <div id="controls">
         <button class="lane-btn" id="btn-0" data-lane="0">1 <small>[D]</small></button>
         <button class="lane-btn" id="btn-1" data-lane="1">2 <small>[F]</small></button>
@@ -478,11 +620,42 @@
         <button class="lane-btn" id="btn-3" data-lane="3">4 <small>[K]</small></button>
     </div>
 
-    <!-- MAIN MENU OVERLAY (EXACT CYBER REFLEX ARCADE v2.5) -->
+    <!-- ================= LOGIN OVERLAY ================= -->
+    <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
+        <div class="cyber-badge">SECURITY ACCESS // LOGIN</div>
+        <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول</div>
+        <div class="menu-subtitle" style="margin-bottom:18px;">سجّل اسمك وكلمة السر مرة واحدة فقط لحفظ تقدمك وتصدر القائمة!</div>
+
+        <div class="editor-box" style="width:100%; max-width:360px; padding:18px;">
+            <div class="field-group">
+                <label>👤 اسم اللاعب (Username)</label>
+                <input type="text" id="login-user" class="cyber-input" placeholder="مثال: Tako_King" maxlength="18">
+            </div>
+            <div class="field-group">
+                <label>🔒 كلمة السر (Password)</label>
+                <input type="password" id="login-pass" class="cyber-input" placeholder="اكتب أي كلمة سر لحفظ حسابك">
+            </div>
+            <button class="play-chip" style="width:100%; padding:12px; font-size:15px; margin-top:6px;" onclick="handleLogin()">
+                <span>دخول وحفظ الحساب ⚡</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= MAIN MENU OVERLAY ================= -->
     <div id="menu-overlay" class="overlay">
-        <div class="cyber-badge">CYBER REFLEX ARCADE // v2.5</div>
+        <!-- Top User & Leaderboard Bar -->
+        <div class="top-user-bar">
+            <div class="user-pill">
+                <span class="online-dot"></span>
+                <span id="display-username">لاعب</span>
+            </div>
+            <button class="top-btn-Rank" onclick="openLeaderboardTab()">🏆 المتصدرين</button>
+            <button class="logout-btn" onclick="logoutUser()">تبديل الحساب</button>
+        </div>
+
+        <div class="cyber-badge">CYBER REFLEX ARCADE // v3.3</div>
         <div class="glitch-title">غدر الكرات: أوفردرايف</div>
-        <div class="menu-subtitle">اضغط على الدائرة أو الزر باللحظة الصح.. واكبح إصبعك عن فخاخ الـ FAKE!</div>
+        <div class="menu-subtitle">جميع الكرات تنزل بلون موحد ولا تكشف خدعتها إلا بآخر لحظة!</div>
 
         <!-- 3 Stat Cards -->
         <div class="stats-grid">
@@ -491,8 +664,8 @@
                 <div class="stat-val val-cyan" id="stat-high">0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">مراحل مختومة</div>
-                <div class="stat-val val-cyan" id="stat-cleared">0 / 5</div>
+                <div class="stat-label">التتوريل المختوم</div>
+                <div class="stat-val val-cyan" id="stat-cleared">0 / 10</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">نقاط الطاقة XP</div>
@@ -500,69 +673,121 @@
             </div>
         </div>
 
-        <!-- 3 Navigation Tabs -->
+        <!-- Play by Stage ID Box -->
+        <div class="id-search-bar">
+            <input type="text" id="stage-id-input" class="cyber-input" placeholder="🔍 العب مرحلة لاعب عبر الـ ID (مثال: TAKO-99)">
+            <button class="play-chip green" onclick="playStageById()"><span>تشغيل ◀</span></button>
+        </div>
+
+        <!-- 5 Navigation Tabs -->
         <div class="tabs-row">
-            <button class="tab-btn active" onclick="switchTab('stages', this)"><span>🎮 المراحل</span></button>
-            <button class="tab-btn" onclick="switchTab('skins', this)"><span>⚡ شكل الكرة</span></button>
-            <button class="tab-btn" onclick="switchTab('guide', this)"><span>📖 دليل الخدع</span></button>
+            <button class="tab-btn active" id="tabbtn-stages" onclick="switchTab('stages', this)"><span>🎓 التتوريل</span></button>
+            <button class="tab-btn" id="tabbtn-editor" onclick="switchTab('editor', this)"><span>🛠️ اصنع مرحلة</span></button>
+            <button class="tab-btn" id="tabbtn-ranks" onclick="switchTab('ranks', this)"><span>🏆 المتصدرين</span></button>
+            <button class="tab-btn" id="tabbtn-skins" onclick="switchTab('skins', this)"><span>⚡ الكرات</span></button>
+            <button class="tab-btn" id="tabbtn-guide" onclick="switchTab('guide', this)"><span>📖 الـ 11 خدعة</span></button>
         </div>
 
-        <!-- TAB 1: STAGES -->
+        <!-- TAB 1: 10 TUTORIAL STAGES + PLAYER STAGES -->
         <div id="tab-stages" class="tab-panel active">
-            <div class="stage-card">
-                <div class="stage-info">
-                    <div class="stage-title">المرحلة 1: اختراق النظام</div>
-                    <div class="stage-desc">كرات طاقة مع فخاخ (FAKE) أساسية.. اكبح إصبعك!</div>
-                </div>
-                <button class="play-chip" onclick="startStage(1)"><span>ابدأ ◀</span></button>
-            </div>
+            <div id="tutorial-list-container" style="display:flex; flex-direction:column; gap:8px;"></div>
 
-            <div class="stage-card purple">
-                <div class="stage-info">
-                    <div class="stage-title">المرحلة 2: المراوغة البرقية</div>
-                    <div class="stage-desc">انتبه! الكرات تقفز بين المسارات بآخر لحظة ↪️</div>
-                </div>
-                <button class="play-chip purple" onclick="startStage(2)"><span>ابدأ ◀</span></button>
-            </div>
+            <!-- Saved Custom Stages List -->
+            <div id="my-custom-stages" style="display:flex; flex-direction:column; gap:8px; margin-top:6px;"></div>
+        </div>
 
-            <div class="stage-card yellow">
-                <div class="stage-info">
-                    <div class="stage-title">المرحلة 3: تجميد الزمن</div>
-                    <div class="stage-desc">كرات تضرب فرامل بالهواء لتخدعك، وكرات مدرعة (x2) 🛡️</div>
-                </div>
-                <button class="play-chip yellow" onclick="startStage(3)"><span>ابدأ ◀</span></button>
-            </div>
+        <!-- TAB 2: LEVEL EDITOR ("اصنع مرحلة") -->
+        <div id="tab-editor" class="tab-panel">
+            <div class="editor-box">
+                <div class="stage-title" style="color:var(--cyan);">🛠️ استوديو تصميم المراحل (11 كرة)</div>
+                <div class="stage-desc">اختر المسار، نوع الكرة، متى تنزل، وسرعتها بالضبط (تقبل الفواصل مثل 0.1) ثم احفظها بـ ID خاص!</div>
 
-            <div class="stage-card green">
-                <div class="stage-info">
-                    <div class="stage-title">المرحلة 4: الخدعة المزدوجة</div>
-                    <div class="stage-desc">كرات تتظاهر أنها FAKE ثم تتحول لحقيقية بآخر ثانية 🧠</div>
+                <div class="field-group">
+                    <label>اسم مرحلتك الخاصة:</label>
+                    <input type="text" id="ed-title" class="cyber-input" placeholder="مثال: مرحلة الغدر المستحيلة">
                 </div>
-                <button class="play-chip green" onclick="startStage(4)"><span>ابدأ ◀</span></button>
-            </div>
 
-            <div class="stage-card pink">
-                <div class="stage-info">
-                    <div class="stage-title">المرحلة 5: امتحان الأوفردرايف</div>
-                    <div class="stage-desc">أقصى سرعة مع كل أنواع الفخاخ والمراوغات بنفس الوقت 🔥</div>
+                <div class="editor-grid">
+                    <div class="field-group">
+                        <label>المسار (من وين تنزل؟)</label>
+                        <select id="ed-lane" class="cyber-input">
+                            <option value="0">المسار 1 (يسار)</option>
+                            <option value="1">المسار 2 (وسط يسار)</option>
+                            <option value="2">المسار 3 (وسط يمين)</option>
+                            <option value="3">المسار 4 (يمين)</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label>نوع الكرة / الخدعة (11 نوع)</label>
+                        <select id="ed-type" class="cyber-input">
+                            <option value="normal">🔵 عادية (+5 XP)</option>
+                            <option value="fake">🔴 فيك FAKE (+15 XP)</option>
+                            <option value="sw">🟣 غدارة تقفز (+20 XP)</option>
+                            <option value="brk">🛑 فرامل (+25 XP)</option>
+                            <option value="arm">🛡️ مدرعة x2 (+30 XP)</option>
+                            <option value="ghost">👻 شبحية تختفي (+35 XP)</option>
+                            <option value="nitro">🚀 نيترو صاروخية (+40 XP)</option>
+                            <option value="dbl">🧠 خدعة مزدوجة (+45 XP)</option>
+                            <option value="zig">🐍 زلزال متعرجة (+50 XP)</option>
+                            <option value="bounce">🏀 طابة النط المرتدة (+60 XP)</option>
+                            <option value="boss">👑 زعيم مدرعة x3 (+70 XP)</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label>إيمت تنزل؟ (بالثواني، مثل 0.2)</label>
+                        <input type="number" id="ed-time" class="cyber-input" value="1.0" step="any" min="0">
+                    </div>
+                    <div class="field-group">
+                        <label>سرعة النزول (كما تكتبها بالضبط، مثل 0.1)</label>
+                        <input type="number" id="ed-speed" class="cyber-input" value="4.5" step="any" min="0.01">
+                    </div>
                 </div>
-                <button class="play-chip pink" onclick="startStage(5)"><span>ابدأ ◀</span></button>
-            </div>
 
-            <div class="stage-card" style="border-right-color:#fff; background:linear-gradient(90deg, rgba(184,41,255,0.25), rgba(0,240,255,0.2));">
-                <div class="stage-info">
-                    <div class="stage-title">♾️ الطور اللانهائي (تحدي السكور)</div>
-                    <div class="stage-desc">سرعة تتصاعد بلا حدود.. كم كرة تقدر تصمد؟</div>
+                <button class="play-chip" style="width:100%; padding:9px;" onclick="addBallToEditor()">
+                    <span>➕ أضف الكرة إلى المرحلة</span>
+                </button>
+
+                <div class="spawn-list" id="ed-balls-list">
+                    <div style="color:#64748b; text-align:center; font-size:11px;">لم تضف أي كرة بعد.. اختر الخصائص واضغط "أضف الكرة"!</div>
                 </div>
-                <button class="play-chip" onclick="startStage(6)"><span>انطلق ◀</span></button>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <button class="play-chip green" style="padding:10px;" onclick="saveCustomStage()">
+                        <span>💾 حفظ وتوليد ID</span>
+                    </button>
+                    <button class="play-chip yellow" style="padding:10px;" onclick="testEditorStage()">
+                        <span>▶️ تجربة المرحلة</span>
+                    </button>
+                </div>
+
+                <div id="generated-id-box" class="hidden" style="background:rgba(0,255,102,0.12); border:1px solid var(--green); padding:10px; border-radius:8px; text-align:center;">
+                    <div style="font-size:11.5px; color:#cbd5e1;">تم حفظ مرحلتك! شارك هذا الـ ID مع أصدقائك:</div>
+                    <div id="generated-id-text" style="font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:var(--green); margin:4px 0;">TK-0000</div>
+                    <div style="display:flex; gap:6px; justify-content:center; margin-top:4px;">
+                        <button class="menu-mini-btn" onclick="copyStageId(false)">📋 نسخ الـ ID</button>
+                        <button class="menu-mini-btn" onclick="copyStageId(true)">🌐 نسخ كود المشاركة لأي جهاز</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- TAB 2: SKINS -->
+        <!-- TAB 3: LEADERBOARD (REAL PLAYERS ONLY) -->
+        <div id="tab-ranks" class="tab-panel">
+            <div class="stage-card yellow" style="margin-bottom:4px;">
+                <div class="stage-info">
+                    <div class="stage-title">🏆 لائحة المتصدرين الحقيقيين</div>
+                    <div class="stage-desc" id="my-rank-summary">تضم فقط اللاعبين الحقيقيين الذين سجلوا دخولهم!</div>
+                </div>
+                <div class="stat-val val-cyan" id="my-rank-pts">0 PTS</div>
+            </div>
+            <div id="leaderboard-container" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+
+        <!-- TAB 4: SKINS -->
         <div id="tab-skins" class="tab-panel">
-            <div class="skin-card">
+            <div class="stage-card">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="skin-preview" style="background:#00f0ff; box-shadow:0 0 12px #00f0ff;"></div>
+                    <div style="width:30px; height:30px; border-radius:50%; background:#00f0ff; box-shadow:0 0 12px #00f0ff;"></div>
                     <div>
                         <div class="stage-title">نواة السايبر (الافتراضي)</div>
                         <div class="stage-desc">مفتوح دائماً</div>
@@ -571,77 +796,124 @@
                 <button class="play-chip" onclick="selectSkin('#00f0ff')"><span>تفعيل</span></button>
             </div>
 
-            <div class="skin-card">
+            <div class="stage-card pink">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="skin-preview" style="background:#ff0055; box-shadow:0 0 12px #ff0055;"></div>
+                    <div style="width:30px; height:30px; border-radius:50%; background:#ff0055; box-shadow:0 0 12px #ff0055;"></div>
                     <div>
                         <div class="stage-title">لهب البلازما القرمزي</div>
-                        <div class="stage-desc">يتطلب 50 XP</div>
+                        <div class="stage-desc">يتطلب 100 XP</div>
                     </div>
                 </div>
-                <button class="play-chip pink" onclick="unlockSkin('#ff0055', 50)"><span>اختيار</span></button>
+                <button class="play-chip pink" onclick="unlockSkin('#ff0055', 100)"><span>اختيار</span></button>
             </div>
 
-            <div class="skin-card">
+            <div class="stage-card green">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="skin-preview" style="background:#00ff66; box-shadow:0 0 12px #00ff66;"></div>
+                    <div style="width:30px; height:30px; border-radius:50%; background:#00ff66; box-shadow:0 0 12px #00ff66;"></div>
                     <div>
                         <div class="stage-title">شيفرة الماتريكس</div>
-                        <div class="stage-desc">يتطلب 120 XP</div>
-                    </div>
-                </div>
-                <button class="play-chip green" onclick="unlockSkin('#00ff66', 120)"><span>اختيار</span></button>
-            </div>
-
-            <div class="skin-card">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="skin-preview" style="background:#ffb800; box-shadow:0 0 12px #ffb800;"></div>
-                    <div>
-                        <div class="stage-title">البرق الذهبي الخارق</div>
                         <div class="stage-desc">يتطلب 250 XP</div>
                     </div>
                 </div>
-                <button class="play-chip yellow" onclick="unlockSkin('#ffb800', 250)"><span>اختيار</span></button>
+                <button class="play-chip green" onclick="unlockSkin('#00ff66', 250)"><span>اختيار</span></button>
+            </div>
+
+            <div class="stage-card yellow">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:30px; height:30px; border-radius:50%; background:#ffb800; box-shadow:0 0 12px #ffb800;"></div>
+                    <div>
+                        <div class="stage-title">البرق الذهبي الخارق</div>
+                        <div class="stage-desc">يتطلب 500 XP</div>
+                    </div>
+                </div>
+                <button class="play-chip yellow" onclick="unlockSkin('#ffb800', 500)"><span>اختيار</span></button>
             </div>
         </div>
 
-        <!-- TAB 3: GUIDE -->
+        <!-- TAB 5: GUIDE (11 BALLS & XP REWARDS) -->
         <div id="tab-guide" class="tab-panel">
             <div class="stage-card">
                 <div class="stage-info">
-                    <div class="stage-title" style="color:var(--cyan);">🔵 كرة الطاقة العادية</div>
-                    <div class="stage-desc">اضغط على الدائرة أو الزر لحظة وصولها للخط تماماً.</div>
+                    <div class="stage-title" style="color:var(--cyan);">1. 🔵 كرة البلازما العادية (+5 XP)</div>
+                    <div class="stage-desc">تنزل بسرعة ثابتة، اضغط لحظة وصولها للخط تماماً.</div>
                 </div>
+                <button class="play-chip" onclick="startSingleBallDemo('normal')"><span>جربها ◀</span></button>
             </div>
             <div class="stage-card pink">
                 <div class="stage-info">
-                    <div class="stage-title" style="color:var(--pink);">🔴 كرة الـ FAKE الخادعة</div>
-                    <div class="stage-desc">تتحول للون الأحمر وتختفي قبل الخط.. إياك أن تضغط الزر وإلا تخسر طاقة!</div>
+                    <div class="stage-title" style="color:var(--pink);">2. 🔴 كرة الـ FAKE الخادعة (+15 XP)</div>
+                    <div class="stage-desc">تنزل كأنها عادية ثم تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!</div>
                 </div>
+                <button class="play-chip pink" onclick="startSingleBallDemo('fake')"><span>جربها ◀</span></button>
             </div>
             <div class="stage-card purple">
                 <div class="stage-info">
-                    <div class="stage-title" style="color:var(--purple);">🟣 الكرة الغدارة (المراوغة)</div>
+                    <div class="stage-title" style="color:var(--purple);">3. 🟣 الكرة الغدارة المراوغة (+20 XP)</div>
                     <div class="stage-desc">تقفز بآخر لحظة إلى المسار المجاور! الحقها بالزر الجديد.</div>
                 </div>
+                <button class="play-chip purple" onclick="startSingleBallDemo('sw')"><span>جربها ◀</span></button>
             </div>
             <div class="stage-card yellow">
                 <div class="stage-info">
-                    <div class="stage-title" style="color:var(--yellow);">🛡️ الكرة المدرعة (x2) والفرامل</div>
-                    <div class="stage-desc">المدرعة تحتاج ضغطة بالهواء لكسر الدرع وضغطة عند الخط. والفرامل تتوقف بالهواء لتخدع توقيتك!</div>
+                    <div class="stage-title" style="color:var(--yellow);">4. 🛑 كرة الفرامل (+25 XP)</div>
+                    <div class="stage-desc">تتوقف بالهواء فجأة لتخدع توقيتك ثم تتابع نزولها للخط!</div>
                 </div>
+                <button class="play-chip yellow" onclick="startSingleBallDemo('brk')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card yellow">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--yellow);">5. 🛡️ الكرة المدرعة x2 (+30 XP)</div>
+                    <div class="stage-desc">تحتاج ضغطة أولى لكسر الدرع وضغطة ثانية لالتقاطها عند الخط.</div>
+                </div>
+                <button class="play-chip yellow" onclick="startSingleBallDemo('arm')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:#cbd5e1;">6. 👻 الكرة الشبحية (+35 XP)</div>
+                    <div class="stage-desc">تختفي بمنتصف الطريق وتكمل نزولها متخفية! احسب وقت وصولها للخط.</div>
+                </div>
+                <button class="play-chip" onclick="startSingleBallDemo('ghost')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card orange">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--orange);">7. 🚀 كرة النيترو الصاروخية (+40 XP)</div>
+                    <div class="stage-desc">تنزل ببطء شديد ثم تشعل النيترو وتنطلق كالصاروخ نحو الخط!</div>
+                </div>
+                <button class="play-chip orange" onclick="startSingleBallDemo('nitro')"><span>جربها ◀</span></button>
             </div>
             <div class="stage-card green">
                 <div class="stage-info">
-                    <div class="stage-title" style="color:var(--green);">🧠 الخدعة المزدوجة (Double Fake)</div>
+                    <div class="stage-title" style="color:var(--green);">8. 🧠 الخدعة المزدوجة (+45 XP)</div>
                     <div class="stage-desc">تتظاهر أنها FAKE بالبداية ثم ترجع حقيقية باللون الأخضر قبل الخط!</div>
                 </div>
+                <button class="play-chip green" onclick="startSingleBallDemo('dbl')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card purple">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:#f472b6;">9. 🐍 كرة الزلزال المتعرجة (+50 XP)</div>
+                    <div class="stage-desc">تراوغ مرتين متتاليتين بين المسارات بسرعة خاطفة!</div>
+                </div>
+                <button class="play-chip purple" onclick="startSingleBallDemo('zig')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card orange">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:#38bdf8;">10. 🏀 طابة النط المرتدة (+60 XP)</div>
+                    <div class="stage-desc">لما تضغطها عند الخط بترجع تنط لورا بالهواء (ممكن تغير مسارها أو تضل بنفس المسار ويكون وراها طابة ثانية!) ثم تنزل لتلتقطها!</div>
+                </div>
+                <button class="play-chip" onclick="startSingleBallDemo('bounce')"><span>جربها ◀</span></button>
+            </div>
+            <div class="stage-card pink">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:#ffd700;">11. 👑 كرة الزعيم المدرعة x3 (+70 XP)</div>
+                    <div class="stage-desc">درع ثلاثي (x3) وتقفز لمسار مجاور عند كسر درعها الأول!</div>
+                </div>
+                <button class="play-chip pink" onclick="startSingleBallDemo('boss')"><span>جربها ◀</span></button>
             </div>
         </div>
 
         <!-- Hardcore Mode Bar -->
         <label class="hardcore-bar">
-            <span>🔥 طور الجلطة (قلب واحد + نقاط مضاعفة)</span>
+            <span>🔥 طور الجلطة (قلب واحد + نقاط وXP مضاعف)</span>
             <input type="checkbox" id="hardcore-toggle">
         </label>
     </div>
@@ -649,11 +921,11 @@
     <!-- RESULT OVERLAY -->
     <div id="result-overlay" class="overlay hidden" style="justify-content:center; align-items:center; text-align:center;">
         <div class="cyber-badge">SYSTEM REPORT</div>
-        <div class="glitch-title" id="res-title" style="margin-bottom:10px;">تم اختراق المرحلة!</div>
-        <div class="menu-subtitle" id="res-desc" style="font-size:15px; margin-bottom:24px;">أداء أسطوري وردة فعل خارقة!</div>
-        <button class="play-chip" id="next-btn" style="width:100%; padding:14px; font-size:16px; margin-bottom:10px;" onclick="nextStage()"><span>المرحلة التالية ◀</span></button>
-        <button class="play-chip purple" style="width:100%; padding:12px; font-size:15px; margin-bottom:10px;" onclick="retryStage()"><span>إعادة التحدي 🔄</span></button>
-        <button class="menu-mini-btn" style="width:100%; padding:12px; font-size:14px;" onclick="openMenu()">العودة للقائمة الرئيسية 🏠</button>
+        <div class="glitch-title" id="res-title" style="margin-bottom:10px;">تم اجتياز التتوريل!</div>
+        <div class="menu-subtitle" id="res-desc" style="font-size:14px; margin-bottom:20px;">أداء أسطوري وردة فعل خارقة!</div>
+        <button class="play-chip" id="next-btn" style="width:100%; padding:13px; font-size:15px; margin-bottom:8px;" onclick="nextStage()"><span>التتوريل التالي ◀</span></button>
+        <button class="play-chip purple" style="width:100%; padding:11px; font-size:14px; margin-bottom:8px;" onclick="retryStage()"><span>إعادة التحدي 🔄</span></button>
+        <button class="menu-mini-btn" style="width:100%; padding:11px; font-size:13.5px;" onclick="openMenu()">العودة للقائمة الرئيسية 🏠</button>
     </div>
 </div>
 
@@ -663,22 +935,427 @@
     const app = document.getElementById('app');
     const toast = document.getElementById('toast');
 
-    // Saved Progress
-    let saveData = JSON.parse(localStorage.getItem('cyberDropSave_v25') || '{"high":0,"xp":0,"cleared":[],"skin":"#00f0ff"}');
+    // ================= XP & BALL META (11 BALL TYPES) =================
+    const BALL_META = {
+        normal: { name: '🔵 عادية', xp: 5, pts: 1, color: '#00f0ff' },
+        fake:   { name: '🔴 فيك FAKE', xp: 15, pts: 2, color: '#ff0055' },
+        sw:     { name: '🟣 غدارة', xp: 20, pts: 2, color: '#b829ff' },
+        brk:    { name: '🛑 فرامل', xp: 25, pts: 2, color: '#ffb800' },
+        arm:    { name: '🛡️ مدرعة x2', xp: 30, pts: 3, color: '#ffb800' },
+        ghost:  { name: '👻 شبحية', xp: 35, pts: 3, color: '#94a3b8' },
+        nitro:  { name: '🚀 نيترو', xp: 40, pts: 4, color: '#ff6b00' },
+        dbl:    { name: '🧠 خدعة مزدوجة', xp: 45, pts: 4, color: '#00ff66' },
+        zig:    { name: '🐍 زلزال متعرجة', xp: 50, pts: 5, color: '#f472b6' },
+        bounce: { name: '🏀 طابة النط', xp: 60, pts: 6, color: '#38bdf8' },
+        boss:   { name: '👑 زعيم x3', xp: 70, pts: 7, color: '#ffd700' }
+    };
+
+    // ================= 10 TUTORIAL STAGES =================
+    const STAGES = {
+        1: {
+            name: "تتوريل 1", title: "التتوريل 1: أساسيات الالتقاط والفخاخ",
+            desc: "تعلم متى تضغط على الكرة العادية ومتى تكبح إصبعك عن الـ FAKE (+15 XP)",
+            colorClass: "", target: 6, speed: 3.8, spawn: 1050,
+            p: { normal: 0.60, fake: 0.40 }
+        },
+        2: {
+            name: "تتوريل 2", title: "التتوريل 2: الكرة الغدارة المراوغة",
+            desc: "الكرات تنزل بلون موحد وفجأة تقفز لمسار مجاور بآخر لحظة! (+20 XP)",
+            colorClass: "purple", target: 7, speed: 4.0, spawn: 1000,
+            p: { normal: 0.35, fake: 0.20, sw: 0.45 }
+        },
+        3: {
+            name: "تتوريل 3", title: "التتوريل 3: تجميد الزمن (الفرامل)",
+            desc: "كرات تضرب فرامل بالهواء لتخدع توقيتك ثم تكمل نزولها! (+25 XP)",
+            colorClass: "yellow", target: 7, speed: 4.2, spawn: 980,
+            p: { normal: 0.30, fake: 0.20, brk: 0.50 }
+        },
+        4: {
+            name: "تتوريل 4", title: "التتوريل 4: الكرة المدرعة (x2)",
+            desc: "اضغط عليها بالهواء لكسر الدرع الأول ثم التقطها عند الخط! (+30 XP)",
+            colorClass: "yellow", target: 8, speed: 4.2, spawn: 960,
+            p: { normal: 0.30, fake: 0.20, arm: 0.50 }
+        },
+        5: {
+            name: "تتوريل 5", title: "التتوريل 5: الكرة الشبحية الخفية",
+            desc: "تختفي الكرة بمنتصف الطريق وعليك تقدير لحظة وصولها للدائرة! (+35 XP)",
+            colorClass: "", target: 8, speed: 4.3, spawn: 950,
+            p: { normal: 0.30, fake: 0.20, ghost: 0.50 }
+        },
+        6: {
+            name: "تتوريل 6", title: "التتوريل 6: صواريخ النيترو",
+            desc: "تنزل ببطء ثم تشتعل وتنطلق بسرعة البرق نحو الهدف! (+40 XP)",
+            colorClass: "orange", target: 8, speed: 4.4, spawn: 920,
+            p: { normal: 0.30, fake: 0.20, nitro: 0.50 }
+        },
+        7: {
+            name: "تتوريل 7", title: "التتوريل 7: الخدعة المزدوجة (Double Fake)",
+            desc: "تتظاهر أنها FAKE لتتركها ثم تتحول لحقيقية خضراء قبل الخط! (+45 XP)",
+            colorClass: "green", target: 8, speed: 4.4, spawn: 920,
+            p: { normal: 0.25, fake: 0.25, dbl: 0.50 }
+        },
+        8: {
+            name: "تتوريل 8", title: "التتوريل 8: كرة الزلزال المتعرجة",
+            desc: "تقفز مرتين متتاليتين بين المسارات قبل الوصول للهدف! (+50 XP)",
+            colorClass: "purple", target: 9, speed: 4.5, spawn: 900,
+            p: { normal: 0.25, sw: 0.25, zig: 0.50 }
+        },
+        9: {
+            name: "تتوريل 9", title: "التتوريل 9: طابة النط المرتدة 🏀",
+            desc: "لما تضغطها عند الخط بترجع تنط لورا بالهواء (ممكن تغير مسارها ويكون وراها طابة!) (+60 XP)",
+            colorClass: "", target: 10, speed: 4.5, spawn: 820,
+            p: { normal: 0.35, fake: 0.15, bounce: 0.50 }
+        },
+        10: {
+            name: "تتوريل 10", title: "التتوريل 10: امتحان الزعيم الشامل 👑",
+            desc: "الاختبار النهائي لكل الخدع مع كرة الزعيم المدرعة (x3) قبل تصميم مراحلك! (+70 XP)",
+            colorClass: "pink", target: 12, speed: 4.7, spawn: 850,
+            p: { normal: 0.10, fake: 0.10, sw: 0.10, brk: 0.08, arm: 0.08, ghost: 0.08, nitro: 0.08, dbl: 0.08, zig: 0.08, bounce: 0.12, boss: 0.10 }
+        }
+    };
+
+    function renderTutorialCards() {
+        const container = document.getElementById('tutorial-list-container');
+        container.innerHTML = Object.keys(STAGES).map(k => {
+            const st = STAGES[k];
+            const isCleared = saveData.cleared.includes(parseInt(k));
+            return `
+            <div class="stage-card ${st.colorClass}">
+                <div class="stage-info">
+                    <div class="stage-title">${st.title} ${isCleared ? '✅' : ''}</div>
+                    <div class="stage-desc">${st.desc}</div>
+                </div>
+                <button class="play-chip ${st.colorClass}" onclick="startStage(${k})"><span>ابدأ ◀</span></button>
+            </div>`;
+        }).join('');
+    }
+
+    // ================= USER & SAVE DATA (REAL PLAYERS ONLY) =================
+    let saveData = JSON.parse(localStorage.getItem('cyberDropSave_v33') || 'null');
+    if (!saveData) {
+        const old = JSON.parse(localStorage.getItem('cyberDropSave_v32') || localStorage.getItem('cyberDropSave_v31') || 'null');
+        saveData = old ? { ...old, cleared: old.cleared || [] } : {
+            username: "",
+            password: "",
+            high: 0,
+            xp: 0,
+            cleared: [],
+            skin: "#00f0ff"
+        };
+    }
+
+    let realPlayersDB = JSON.parse(localStorage.getItem('cyberDropRealPlayers_v31') || '{}');
+
+    // Built-in Custom Stage ID for instant testing (TAKO-99)
+    let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v3') || '{}');
+    customStagesDB['TAKO-99'] = {
+        id: 'TAKO-99',
+        title: 'تحدي الـ 11 خدعة وطابة النط',
+        creator: 'Tako_King',
+        spawns: [
+            { lane: 0, type: 'normal', time: 0.5, speed: 4.2 },
+            { lane: 1, type: 'bounce', time: 1.4, speed: 4.5 },
+            { lane: 1, type: 'normal', time: 2.1, speed: 4.5 },
+            { lane: 2, type: 'fake',   time: 3.2, speed: 4.5 },
+            { lane: 3, type: 'sw',     time: 4.2, speed: 4.5 },
+            { lane: 0, type: 'brk',    time: 5.3, speed: 4.5 },
+            { lane: 2, type: 'arm',    time: 6.4, speed: 4.2 },
+            { lane: 1, type: 'ghost',  time: 7.6, speed: 4.2 },
+            { lane: 3, type: 'nitro',  time: 8.8, speed: 3.6 },
+            { lane: 0, type: 'dbl',    time: 10.0, speed: 4.5 },
+            { lane: 2, type: 'zig',    time: 11.3, speed: 4.5 },
+            { lane: 1, type: 'boss',   time: 12.6, speed: 4.0 }
+        ]
+    };
+
+    function syncRealPlayerScore() {
+        if (!saveData.username) return;
+        const key = saveData.username.trim();
+        const prev = realPlayersDB[key] || { name: key, pts: 0, xp: 0 };
+        realPlayersDB[key] = {
+            name: key,
+            pts: Math.max(prev.pts || 0, saveData.high || 0),
+            xp: Math.max(prev.xp || 0, saveData.xp || 0)
+        };
+        localStorage.setItem('cyberDropRealPlayers_v31', JSON.stringify(realPlayersDB));
+    }
 
     function saveProgress() {
-        localStorage.setItem('cyberDropSave_v25', JSON.stringify(saveData));
+        localStorage.setItem('cyberDropSave_v33', JSON.stringify(saveData));
+        syncRealPlayerScore();
         document.getElementById('stat-high').textContent = saveData.high;
-        document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 5`;
+        document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 10`;
         document.getElementById('stat-xp').textContent = `${saveData.xp} XP`;
+        if (saveData.username) {
+            document.getElementById('display-username').textContent = saveData.username;
+        }
+        renderTutorialCards();
+        renderCustomStagesList();
     }
-    saveProgress();
 
+    function checkAutoLogin() {
+        if (!saveData.username) {
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.getElementById('menu-overlay').classList.add('hidden');
+        } else {
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('menu-overlay').classList.remove('hidden');
+            saveProgress();
+        }
+    }
+
+    function handleLogin() {
+        const u = document.getElementById('login-user').value.trim();
+        const p = document.getElementById('login-pass').value.trim();
+        if (!u) {
+            showToast("الرجاء كتابة اسم اللاعب أولاً! 👤", false);
+            return;
+        }
+        saveData.username = u;
+        saveData.password = p || "1234";
+        if (realPlayersDB[u]) {
+            saveData.high = Math.max(saveData.high, realPlayersDB[u].pts || 0);
+            saveData.xp = Math.max(saveData.xp, realPlayersDB[u].xp || 0);
+        }
+        saveProgress();
+        document.getElementById('login-overlay').classList.add('hidden');
+        document.getElementById('menu-overlay').classList.remove('hidden');
+        renderLeaderboard();
+        showToast(`أهلاً بك يا ${u}! تم حفظ دخولك ⚡`, true);
+    }
+
+    function logoutUser() {
+        saveData.username = "";
+        saveData.high = 0;
+        saveData.xp = 0;
+        saveData.cleared = [];
+        localStorage.setItem('cyberDropSave_v33', JSON.stringify(saveData));
+        document.getElementById('login-user').value = "";
+        document.getElementById('login-pass').value = "";
+        checkAutoLogin();
+    }
+
+    // ================= REAL PLAYERS LEADERBOARD =================
+    function renderLeaderboard() {
+        syncRealPlayerScore();
+        const container = document.getElementById('leaderboard-container');
+        const playersList = Object.values(realPlayersDB);
+        playersList.sort((a, b) => (b.pts - a.pts) || (b.xp - a.xp));
+        const top100 = playersList.slice(0, 100);
+
+        const myName = saveData.username || "أنت";
+        const myRankIndex = top100.findIndex(p => p.name === myName);
+        const myRank = myRankIndex !== -1 ? myRankIndex + 1 : 1;
+
+        document.getElementById('my-rank-summary').textContent = `ترتيبك الحالي: المركز #${myRank} من أصل ${top100.length} لاعب حقيقي 🔥`;
+        document.getElementById('my-rank-pts').textContent = `${saveData.high} PTS`;
+
+        if (top100.length === 0) {
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">لا يوجد لاعبون مسجلون بعد.</div>`;
+            return;
+        }
+
+        container.innerHTML = top100.map((item, idx) => {
+            const r = idx + 1;
+            let badgeClass = '';
+            let medal = `#${r}`;
+            if (r === 1) { badgeClass = 'rank-1'; medal = '🥇 1'; }
+            else if (r === 2) { badgeClass = 'rank-2'; medal = '🥈 2'; }
+            else if (r === 3) { badgeClass = 'rank-3'; medal = '🥉 3'; }
+
+            const isMe = item.name === myName;
+            const rowStyle = isMe ? 'border: 1px solid var(--cyan); background: rgba(0, 240, 255, 0.14);' : '';
+
+            return `
+                <div class="rank-row" style="${rowStyle}">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="rank-badge ${badgeClass}">${medal}</div>
+                        <span style="color:${isMe ? 'var(--cyan)' : '#fff'};">${item.name} ${isMe ? '(أنت)' : ''}</span>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <span style="font-size:11px; color:var(--yellow);">${item.xp || 0} XP</span>
+                        <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px;">${item.pts} PTS</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openLeaderboardTab() {
+        renderLeaderboard();
+        switchTab('ranks', document.getElementById('tabbtn-ranks'));
+    }
+
+    // ================= LEVEL EDITOR ("اصنع مرحلة" + ID) =================
+    let editorSpawns = [];
+    let lastGeneratedCode = "";
+    let lastShortId = "";
+
+    function addBallToEditor() {
+        const lane = parseInt(document.getElementById('ed-lane').value);
+        const type = document.getElementById('ed-type').value;
+        const timeInput = parseFloat(document.getElementById('ed-time').value);
+        const speedInput = parseFloat(document.getElementById('ed-speed').value);
+
+        const time = isNaN(timeInput) || timeInput < 0 ? 0 : timeInput;
+        const speed = isNaN(speedInput) || speedInput <= 0 ? 0.1 : speedInput;
+
+        editorSpawns.push({ lane, type, time, speed });
+        editorSpawns.sort((a, b) => a.time - b.time);
+
+        document.getElementById('ed-time').value = +(time + 0.8).toFixed(2);
+        renderEditorBalls();
+    }
+
+    function removeEditorBall(idx) {
+        editorSpawns.splice(idx, 1);
+        renderEditorBalls();
+    }
+
+    function renderEditorBalls() {
+        const list = document.getElementById('ed-balls-list');
+        if (editorSpawns.length === 0) {
+            list.innerHTML = `<div style="color:#64748b; text-align:center; font-size:11px;">لم تضف أي كرة بعد.. اختر الخصائص واضغط "أضف الكرة"!</div>`;
+            return;
+        }
+        list.innerHTML = editorSpawns.map((b, i) => `
+            <div class="spawn-item">
+                <span>#${i + 1} | مسار ${b.lane + 1} | ${BALL_META[b.type].name} | ⏱️ ${b.time}ث | ⚡ سرعة ${b.speed}</span>
+                <button class="logout-btn" onclick="removeEditorBall(${i})">حذف ✖</button>
+            </div>
+        `).join('');
+    }
+
+    function saveCustomStage() {
+        if (editorSpawns.length === 0) {
+            showToast("أضف كرة واحدة على الأقل لحفظ المرحلة! 🛠️", false);
+            return;
+        }
+        const title = document.getElementById('ed-title').value.trim() || `مرحلة ${saveData.username || 'خاصة'}`;
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        const shortId = `TK-${randomNum}`;
+
+        const stageObj = {
+            id: shortId,
+            title: title,
+            creator: saveData.username || 'لاعب',
+            spawns: [...editorSpawns]
+        };
+
+        customStagesDB[shortId] = stageObj;
+        localStorage.setItem('cyberDropCustomStages_v3', JSON.stringify(customStagesDB));
+
+        const compactPayload = {
+            t: title,
+            c: stageObj.creator,
+            s: editorSpawns.map(x => [x.lane, x.type, x.time, x.speed])
+        };
+        const portableCode = "TK#" + btoa(encodeURIComponent(JSON.stringify(compactPayload)));
+
+        lastShortId = shortId;
+        lastGeneratedCode = portableCode;
+
+        document.getElementById('generated-id-text').textContent = shortId;
+        document.getElementById('generated-id-box').classList.remove('hidden');
+        renderCustomStagesList();
+        showToast(`تم حفظ المرحلة! الـ ID هو: ${shortId} 🎉`, true);
+    }
+
+    function copyStageId(portable) {
+        const textToCopy = portable ? lastGeneratedCode : lastShortId;
+        navigator.clipboard?.writeText(textToCopy);
+        document.getElementById('stage-id-input').value = textToCopy;
+        showToast(portable ? "تم نسخ كود المشاركة العالمي! 🌐" : `تم نسخ الـ ID (${lastShortId})! 📋`, true);
+    }
+
+    function testEditorStage() {
+        if (editorSpawns.length === 0) {
+            showToast("أضف كرات أولاً لتجربة المرحلة! ⚡", false);
+            return;
+        }
+        startCustomStage({
+            id: 'TEST',
+            title: document.getElementById('ed-title').value.trim() || 'تجربة مرحلتك',
+            creator: saveData.username,
+            spawns: [...editorSpawns]
+        });
+    }
+
+    function renderCustomStagesList() {
+        const wrap = document.getElementById('my-custom-stages');
+        const keys = Object.keys(customStagesDB);
+        if (keys.length === 0) {
+            wrap.innerHTML = '';
+            return;
+        }
+        wrap.innerHTML = `<div style="font-size:12px; font-weight:900; color:var(--green); margin-top:4px;">🌐 مراحل اللاعبين المحفوظة (تعمل بالـ ID):</div>` +
+            keys.map(k => {
+                const st = customStagesDB[k];
+                return `
+                <div class="stage-card green">
+                    <div class="stage-info">
+                        <div class="stage-title">${st.title} <span style="color:var(--yellow); font-family:'Orbitron',sans-serif; font-size:12px;">[${st.id}]</span></div>
+                        <div class="stage-desc">صممها: ${st.creator} • عدد الكرات: ${st.spawns.length}</div>
+                    </div>
+                    <button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button>
+                </div>`;
+            }).join('');
+    }
+
+    function playStageById(forcedId) {
+        const raw = (forcedId || document.getElementById('stage-id-input').value).trim();
+        if (!raw) {
+            showToast("اكتب الـ ID أولاً في الصندوق! 🔍", false);
+            return;
+        }
+
+        const upper = raw.toUpperCase();
+        if (customStagesDB[upper]) {
+            startCustomStage(customStagesDB[upper]);
+            return;
+        }
+
+        if (raw.startsWith("TK#")) {
+            try {
+                const decoded = JSON.parse(decodeURIComponent(atob(raw.slice(3))));
+                const stageObj = {
+                    id: "CUSTOM",
+                    title: decoded.t || "مرحلة مشاركة",
+                    creator: decoded.c || "لاعب",
+                    spawns: decoded.s.map(arr => ({ lane: arr[0], type: arr[1], time: arr[2], speed: arr[3] }))
+                };
+                startCustomStage(stageObj);
+                return;
+            } catch (err) {
+                showToast("كود المرحلة غير صالح! تأكد من نسخه كاملاً ❌", false);
+                return;
+            }
+        }
+
+        showToast(`لم يتم العثور على مرحلة بالـ ID (${raw})! جرب TAKO-99`, false);
+    }
+
+    function startSingleBallDemo(ballType) {
+        const demoSpawns = [
+            { lane: 1, type: ballType, time: 0.5, speed: 4.0 },
+            { lane: 2, type: ballType, time: 2.3, speed: 4.2 },
+            { lane: 0, type: ballType, time: 4.1, speed: 4.4 }
+        ];
+        startCustomStage({
+            id: 'DEMO',
+            title: `تجربة: ${BALL_META[ballType].name}`,
+            creator: 'النظام',
+            spawns: demoSpawns
+        });
+    }
+
+    // ================= TABS & SKINS =================
     function switchTab(tabName, btnEl) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
         btnEl.classList.add('active');
         document.getElementById('tab-' + tabName).classList.add('active');
+        if (tabName === 'ranks') renderLeaderboard();
     }
 
     function selectSkin(color) {
@@ -697,7 +1374,7 @@
         }
     }
 
-    // Web Audio Synthesizer
+    // ================= AUDIO SYNTHESIZER =================
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
     function tone(freq, type = 'sine', dur = 0.1, vol = 0.15) {
@@ -716,17 +1393,15 @@
         } catch(e) {}
     }
 
-    const STAGES = {
-        1: { name: "1", target: 14, speed: 4.3, spawn: 980,  p: { normal: 0.58, fake: 0.42, sw: 0, brk: 0, arm: 0, dbl: 0 } },
-        2: { name: "2", target: 18, speed: 4.8, spawn: 860,  p: { normal: 0.42, fake: 0.28, sw: 0.30, brk: 0, arm: 0, dbl: 0 } },
-        3: { name: "3", target: 22, speed: 5.2, spawn: 790,  p: { normal: 0.34, fake: 0.24, sw: 0.14, brk: 0.15, arm: 0.13, dbl: 0 } },
-        4: { name: "4", target: 26, speed: 5.7, spawn: 720,  p: { normal: 0.30, fake: 0.22, sw: 0.14, brk: 0.12, arm: 0.10, dbl: 0.12 } },
-        5: { name: "5", target: 32, speed: 6.4, spawn: 640,  p: { normal: 0.25, fake: 0.23, sw: 0.16, brk: 0.12, arm: 0.12, dbl: 0.12 } },
-        6: { name: "♾️", target: 9999, speed: 5.2, spawn: 740, p: { normal: 0.28, fake: 0.22, sw: 0.15, brk: 0.12, arm: 0.11, dbl: 0.12 }, endless: true }
-    };
-
+    // ================= GAMEPLAY ENGINE =================
     let curStage = 1;
+    let customMode = false;
+    let activeCustomStage = null;
+    let customQueue = [];
+    let stageStartTime = 0;
+
     let score = 0;
+    let clearedBallsCount = 0;
     let combo = 0;
     let hearts = 3;
     let active = false;
@@ -752,53 +1427,91 @@
         toast.textContent = msg;
         toast.className = good ? 'show good' : 'show';
         clearTimeout(toast.t);
-        toast.t = setTimeout(() => toast.className = '', 900);
+        toast.t = setTimeout(() => toast.className = '', 1100);
     }
 
     function updateHUD() {
-        const st = STAGES[curStage];
-        document.getElementById('hud-stage').textContent = st.name;
-        const cTxt = combo >= 5 ? ` 🔥x${combo}` : (combo > 1 ? ` x${combo}` : '');
-        document.getElementById('hud-score').textContent = st.endless ? `${score}${cTxt}` : `${score} / ${st.target}${cTxt}`;
+        if (customMode) {
+            document.getElementById('hud-stage').textContent = activeCustomStage.id;
+            const total = activeCustomStage.spawns.length;
+            document.getElementById('hud-score').textContent = `${clearedBallsCount} / ${total}`;
+            document.getElementById('progress-fill').style.width = Math.min(100, (clearedBallsCount / total) * 100) + '%';
+        } else {
+            const st = STAGES[curStage];
+            document.getElementById('hud-stage').textContent = st.name;
+            const cTxt = combo >= 5 ? ` 🔥x${combo}` : (combo > 1 ? ` x${combo}` : '');
+            document.getElementById('hud-score').textContent = `${clearedBallsCount} / ${st.target}${cTxt}`;
+            const pct = Math.min(100, (clearedBallsCount / st.target) * 100);
+            document.getElementById('progress-fill').style.width = pct + '%';
+        }
         document.getElementById('hud-hearts').textContent = '⚡'.repeat(Math.max(0, hearts)) + '🖤'.repeat(Math.max(0, 3 - hearts));
-        const pct = st.endless ? 100 : Math.min(100, (score / st.target) * 100);
-        document.getElementById('progress-fill').style.width = pct + '%';
     }
 
     function pickType(p) {
         const r = Math.random();
-        let sum = p.normal;
-        if (r < sum) return 'normal';
-        sum += p.fake; if (r < sum) return 'fake';
-        sum += p.sw;   if (r < sum) return 'sw';
-        sum += p.brk;  if (r < sum) return 'brk';
-        sum += p.arm;  if (r < sum) return 'arm';
-        return 'dbl';
+        let sum = 0;
+        const keys = Object.keys(p);
+        for (let k of keys) {
+            sum += (p[k] || 0);
+            if (r <= sum) return k;
+        }
+        return 'normal';
     }
 
-    function spawnBall() {
-        const st = STAGES[curStage];
-        const lane = Math.floor(Math.random() * 4);
-        const type = pickType(st.p);
+    function createBallObject(lane, type, speed) {
         let targetLane = lane;
-        if (type === 'sw') {
-            targetLane = lane === 0 ? 1 : (lane === 3 ? 2 : (Math.random() < 0.5 ? lane - 1 : lane + 1));
-        }
-        const boost = st.endless ? Math.min(3.2, Math.floor(score / 12) * 0.25) : 0;
+        let secondLane = lane;
 
-        balls.push({
-            lane, targetLane,
+        if (type === 'sw' || type === 'boss' || type === 'bounce') {
+            targetLane = lane === 0 ? 1 : (lane === 3 ? 2 : (Math.random() < 0.5 ? lane - 1 : lane + 1));
+        } else if (type === 'zig') {
+            targetLane = lane === 0 ? 1 : (lane === 3 ? 2 : lane + 1);
+            secondLane = lane;
+        }
+
+        let armor = 1;
+        if (type === 'arm') armor = 2;
+        if (type === 'boss') armor = 3;
+
+        let initSpeed = speed;
+        if (type === 'nitro') initSpeed = speed * 0.45;
+
+        return {
+            lane,
+            targetLane,
+            secondLane,
             x: lanes[lane],
             y: -25,
             r: 20,
             type,
-            armor: type === 'arm' ? 2 : 1,
-            speed: st.speed + boost,
+            armor: armor,
+            maxArmor: armor,
+            baseSpeed: speed,
+            speed: initSpeed,
+            vy: 0,
+            bounced: false,
             state: 'fall',
-            trigY: hitY - (125 + Math.random() * 35),
+            trigY: hitY - (140 + Math.random() * 35),
             brakeUntil: 0,
             rot: 0
-        });
+        };
+    }
+
+    function spawnRandomBall() {
+        const st = STAGES[curStage];
+        const lane = Math.floor(Math.random() * 4);
+        const type = pickType(st.p);
+        const b = createBallObject(lane, type, st.speed);
+        balls.push(b);
+
+        // If a bouncer ball spawns, 55% chance to spawn a trailing ball behind it!
+        if (type === 'bounce' && Math.random() < 0.55) {
+            setTimeout(() => {
+                if (active && !customMode) {
+                    balls.push(createBallObject(lane, 'normal', st.speed));
+                }
+            }, 340);
+        }
     }
 
     function burst(x, y, color) {
@@ -825,70 +1538,126 @@
         if (hearts <= 0) finishGame(false);
     }
 
-    function gainPoint(pts, x, y, txt) {
+    function rewardBallSuccess(ballType, x, y, customLabel) {
         combo++;
-        const mult = (document.getElementById('hardcore-toggle').checked ? 2 : 1) * (combo >= 10 ? 2 : 1);
-        const total = pts * mult;
-        score += total;
-        saveData.xp += total;
+        const meta = BALL_META[ballType] || BALL_META.normal;
+        const hcMult = document.getElementById('hardcore-toggle').checked ? 2 : 1;
+        const feverMult = combo >= 10 ? 2 : 1;
+
+        const ptsEarned = meta.pts * hcMult * feverMult;
+        const xpEarned = meta.xp * hcMult;
+
+        score += ptsEarned;
+        saveData.xp += xpEarned;
+        clearedBallsCount++;
+
         if (score > saveData.high) saveData.high = score;
         saveProgress();
         updateHUD();
-        addFloat(x, y, txt, '#00f0ff');
-        burst(x, y, saveData.skin);
 
-        const st = STAGES[curStage];
-        if (!st.endless && score >= st.target) finishGame(true);
+        const label = customLabel || `${meta.name} +${xpEarned} XP`;
+        addFloat(x, y, label, meta.color);
+        burst(x, y, meta.color);
+
+        if (customMode) {
+            if (clearedBallsCount >= activeCustomStage.spawns.length && balls.length <= 1 && customQueue.length === 0) {
+                setTimeout(() => { if (active) finishGame(true); }, 250);
+            }
+        } else {
+            const st = STAGES[curStage];
+            if (clearedBallsCount >= st.target) finishGame(true);
+        }
     }
 
+    // STRICT BOTTOM-MOST BALL ISOLATION + BOUNCER BALL MECHANIC
     function pressLane(lane) {
         if (!active) return;
         const btn = document.getElementById('btn-' + lane);
         btn.classList.add('active');
         setTimeout(() => btn.classList.remove('active'), 100);
 
-        // 1. Check Armored ball in air first
-        const armoredInAir = balls.find(b => b.lane === lane && b.armor > 1 && b.y > 40 && b.y < hitY - 40);
-        if (armoredInAir) {
-            armoredInAir.armor = 1;
-            tone(520, 'square', 0.08, 0.2);
-            burst(armoredInAir.x, armoredInAir.y, '#ffb800');
-            addFloat(armoredInAir.x, armoredInAir.y, "كسر الدرع! 🛡️", "#ffb800");
+        const laneBalls = balls
+            .filter(b => b.lane === lane && b.state !== 'dead' && b.state !== 'bouncing_up' && b.y > -10)
+            .sort((a, b) => b.y - a.y);
+
+        if (laneBalls.length === 0) {
+            hurt("ما في كرة بالمسار! تسرعت 💨");
             return;
         }
 
-        // 2. Check Faked ball trap
-        const faked = balls.find(b => b.lane === lane && b.state === 'faked' && Math.abs(b.y - hitY) < 130);
-        if (faked) {
-            faked.state = 'dead';
-            burst(lanes[lane], hitY, '#ff0055');
-            hurt("بلعت مقلب الـ FAKE! 😂");
-            return;
-        }
+        const bottomBall = laneBalls[0];
 
-        // 3. Check Valid Catch near Hit Line
-        const targetBall = balls.find(b => b.lane === lane && b.state !== 'faked' && b.state !== 'dead' && Math.abs(b.y - hitY) <= 64);
-        if (targetBall) {
-            if (targetBall.armor > 1) {
-                targetBall.armor = 1;
-                tone(400, 'square', 0.1, 0.2);
-                addFloat(targetBall.x, hitY - 25, "اضغط مرة ثانية! 🛡️", "#ffb800");
+        // 1. If the lowest ball is a Faked ball
+        if (bottomBall.state === 'faked') {
+            if (Math.abs(bottomBall.y - hitY) < 140) {
+                bottomBall.state = 'dead';
+                burst(lanes[lane], hitY, '#ff0055');
+                hurt("بلعت مقلب الـ FAKE! 😂");
                 return;
             }
-            targetBall.state = 'dead';
+        }
+
+        // 2. If the lowest ball is within the Hit Line catch zone
+        if (Math.abs(bottomBall.y - hitY) <= 65 && bottomBall.state !== 'faked') {
+            // Check if it still has armor
+            if (bottomBall.armor > 1) {
+                bottomBall.armor--;
+                tone(480, 'square', 0.09, 0.2);
+                burst(bottomBall.x, bottomBall.y, '#ffb800');
+                if (bottomBall.type === 'boss' && bottomBall.armor === 2) {
+                    bottomBall.lane = bottomBall.targetLane;
+                    addFloat(bottomBall.x, bottomBall.y - 20, "الزعيم قفز! 👑↪️", "#ffd700");
+                } else {
+                    addFloat(bottomBall.x, hitY - 25, `اضغط كمان (${bottomBall.armor})! 🛡️`, "#ffb800");
+                }
+                return;
+            }
+
+            // Check if it is a BOUNCER BALL ("طابة النط") on its first hit!
+            if (bottomBall.type === 'bounce' && !bottomBall.bounced) {
+                bottomBall.bounced = true;
+                bottomBall.state = 'bouncing_up';
+                bottomBall.vy = -10.5;
+                // 50% chance to jump to adjacent lane or stay in same lane!
+                if (Math.random() < 0.5) {
+                    bottomBall.lane = bottomBall.targetLane;
+                    addFloat(bottomBall.x, hitY - 28, "نطت وغيرت مسارها! 🏀↪️", "#38bdf8");
+                } else {
+                    addFloat(bottomBall.x, hitY - 28, "نطت لورا! انتبه للي وراها 🏀⬆️", "#38bdf8");
+                }
+                tone(540, 'triangle', 0.12, 0.22);
+                burst(bottomBall.x, hitY, '#38bdf8');
+                return;
+            }
+
+            // Otherwise, catch the ball!
+            bottomBall.state = 'dead';
             tone(650, 'triangle', 0.09, 0.2);
             setTimeout(() => tone(920, 'sine', 0.1, 0.18), 35);
-            gainPoint(1, targetBall.x, hitY - 20, combo >= 10 ? "FEVER x2! 🔥" : "PERFECT! +1");
+            rewardBallSuccess(bottomBall.type, bottomBall.x, hitY - 20);
             return;
         }
 
-        // 4. Pressed too early
-        const early = balls.find(b => b.lane === lane && b.y > hitY - 200 && b.y < hitY - 64);
-        if (early) {
-            early.state = 'dead';
-            hurt(early.type === 'fake' ? "مستعجل عالـ FAKE! 🤡" : "ضغطت بكير كتير! ⏳");
+        // 3. If the lowest ball is still in the air AND has armor > 1
+        if (bottomBall.armor > 1 && bottomBall.y > 20 && bottomBall.y < hitY - 65) {
+            bottomBall.armor--;
+            tone(520, 'square', 0.08, 0.2);
+            burst(bottomBall.x, bottomBall.y, '#ffb800');
+            if (bottomBall.type === 'boss' && bottomBall.armor === 2) {
+                bottomBall.lane = bottomBall.targetLane;
+                addFloat(bottomBall.x, bottomBall.y, "الزعيم راوغ! 👑↪️", "#ffd700");
+            } else {
+                addFloat(bottomBall.x, bottomBall.y, "كسر الدرع! 🛡️", "#ffb800");
+            }
+            return;
+        }
+
+        // 4. Otherwise, player pressed too early on the lowest ball
+        if (bottomBall.y > hitY - 210 && bottomBall.y < hitY - 65) {
+            bottomBall.state = 'dead';
+            hurt(bottomBall.type === 'fake' ? "مستعجل عالـ FAKE! 🤡" : "ضغطت بكير كتير! ⏳");
         } else {
-            hurt("ما في كرة بالمسار! تسرعت 💨");
+            hurt("ما في كرة عالخط! تسرعت 💨");
         }
     }
 
@@ -916,20 +1685,40 @@
 
     function loop(ts) {
         if (active) {
-            const st = STAGES[curStage];
-            const sp = st.endless ? Math.max(410, st.spawn - score * 3) : st.spawn;
-            if (ts - lastSpawn > sp) {
-                spawnBall();
-                lastSpawn = ts;
+            if (customMode) {
+                const elapsedSec = (ts - stageStartTime) / 1000;
+                while (customQueue.length > 0 && elapsedSec >= customQueue[0].time) {
+                    const item = customQueue.shift();
+                    balls.push(createBallObject(item.lane, item.type, item.speed));
+                }
+            } else {
+                const st = STAGES[curStage];
+                if (ts - lastSpawn > st.spawn) {
+                    spawnRandomBall();
+                    lastSpawn = ts;
+                }
             }
 
             for (let i = 0; i < 4; i++) document.getElementById('btn-' + i).classList.remove('warn');
 
             for (let i = balls.length - 1; i >= 0; i--) {
                 const b = balls[i];
-                b.rot += 0.05;
+                b.rot += 0.06;
                 if (b.state === 'dead') { balls.splice(i, 1); continue; }
 
+                // Handle Bouncer Ball upward & gravity physics
+                if (b.state === 'bouncing_up') {
+                    b.y += b.vy;
+                    b.vy += 0.44; // Gravity brings it back down
+                    if (b.vy >= 0) {
+                        b.state = 'after_bounce';
+                        b.speed = b.baseSpeed * 1.12;
+                    }
+                    b.x += (lanes[b.lane] - b.x) * 0.25;
+                    continue;
+                }
+
+                // Trigger special behaviors ONLY at trigger line (stays disguised before that!)
                 if (b.state === 'fall' && b.y >= b.trigY) {
                     if (b.type === 'fake') {
                         b.state = 'faked';
@@ -945,8 +1734,23 @@
                         addFloat(b.x, b.y - 18, "فرامل! 🛑", "#ffb800");
                     } else if (b.type === 'dbl') {
                         b.state = 'dbl_fake';
-                        b.brakeUntil = ts + 260;
+                        b.brakeUntil = ts + 250;
                         addFloat(b.x, b.y - 18, "FAKE؟..", "#ff0055");
+                    } else if (b.type === 'ghost') {
+                        b.state = 'ghosted';
+                        tone(320, 'sine', 0.1, 0.12);
+                        addFloat(b.x, b.y - 15, "اختفت! 👻", "#94a3b8");
+                    } else if (b.type === 'nitro') {
+                        b.state = 'nitro_boost';
+                        b.speed = b.baseSpeed * 2.35;
+                        tone(800, 'sawtooth', 0.12, 0.18);
+                        addFloat(b.x, b.y - 15, "نيترو! 🚀", "#ff6b00");
+                    } else if (b.type === 'zig') {
+                        b.state = 'zig_1';
+                        b.lane = b.targetLane;
+                        b.brakeUntil = ts + 170;
+                        tone(600, 'sine', 0.07, 0.15);
+                        addFloat(b.x, b.y - 15, "زلزال! 🐍", "#f472b6");
                     }
                 }
 
@@ -959,6 +1763,13 @@
                         tone(780, 'sine', 0.09, 0.18);
                         addFloat(b.x, b.y, "حقيقية! امسكها 🧠", "#00ff66");
                     }
+                } else if (b.state === 'zig_1') {
+                    b.y += b.speed * 0.75;
+                    if (ts >= b.brakeUntil) {
+                        b.state = 'zig_2';
+                        b.lane = b.secondLane;
+                        tone(750, 'sine', 0.07, 0.15);
+                    }
                 } else {
                     b.y += b.speed;
                 }
@@ -968,12 +1779,15 @@
                 if (b.state === 'faked') {
                     document.getElementById('btn-' + b.lane).classList.add('warn');
                     if (b.y > hitY + 55) {
-                        gainPoint(2, lanes[b.lane], hitY - 28, "كشفت الفيك! +2 🧠");
+                        rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! +15 XP 🧠");
                         balls.splice(i, 1);
                     }
                 } else if (b.y > hitY + 62) {
                     hurt("فاتتك الكرة! ❌");
                     balls.splice(i, 1);
+                    if (customMode && balls.length === 0 && customQueue.length === 0 && hearts > 0) {
+                        finishGame(true);
+                    }
                 }
             }
         }
@@ -987,7 +1801,6 @@
             ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
         }
 
-        const lw = canvas.width / 4;
         for (let i = 0; i < 4; i++) {
             const x = lanes[i];
             ctx.strokeStyle = 'rgba(0, 240, 255, 0.16)';
@@ -1015,6 +1828,7 @@
             ctx.restore();
         });
 
+        // DRAW BALLS (DISGUISED WHEN FALLING SO IT DOES NOT SPOIL THE SURPRISE!)
         balls.forEach(b => {
             ctx.save();
             if (b.state === 'faked' || b.state === 'dbl_fake') {
@@ -1026,24 +1840,37 @@
                 ctx.setLineDash([4, 4]);
                 ctx.beginPath(); ctx.arc(b.x, b.y - 5, b.r, 0, Math.PI * 2); ctx.stroke();
             } else {
+                if (b.state === 'ghosted') {
+                    ctx.globalAlpha = 0.08;
+                }
+
+                // UNIFORM COLOR UNTIL TRIGGERED!
                 let col = saveData.skin || '#00f0ff';
                 if (b.state === 'switched') col = '#b829ff';
-                if (b.state === 'braking' || b.state === 'after_brk') col = '#ffb800';
-                if (b.state === 'real_again') col = '#00ff66';
+                else if (b.state === 'braking' || b.state === 'after_brk') col = '#ffb800';
+                else if (b.state === 'real_again') col = '#00ff66';
+                else if (b.state === 'nitro_boost') col = '#ff6b00';
+                else if (b.state === 'zig_1' || b.state === 'zig_2') col = '#f472b6';
+                else if (b.state === 'bouncing_up' || b.state === 'after_bounce') col = '#38bdf8';
 
                 ctx.shadowColor = col;
-                ctx.shadowBlur = 18;
+                ctx.shadowBlur = 16;
                 ctx.fillStyle = col;
                 ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
 
+                // Only Armored balls show their shield count so player knows to pre-break armor
                 if (b.armor > 1) {
-                    ctx.strokeStyle = '#ffb800';
+                    ctx.strokeStyle = b.type === 'boss' ? '#ffd700' : '#ffb800';
                     ctx.lineWidth = 3.5;
                     ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
                     ctx.fillStyle = '#05050a';
                     ctx.font = '900 12px Orbitron';
                     ctx.textAlign = 'center';
-                    ctx.fillText('x2', b.x, b.y + 4);
+                    ctx.fillText('x' + b.armor, b.x, b.y + 4);
+                } else if (b.bounced) {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 4, 0, Math.PI * 2); ctx.stroke();
                 } else {
                     ctx.strokeStyle = '#fff';
                     ctx.lineWidth = 2;
@@ -1059,7 +1886,7 @@
             ctx.save();
             ctx.globalAlpha = f.alpha;
             ctx.fillStyle = f.color;
-            ctx.font = '900 15px Cairo';
+            ctx.font = '900 14px Cairo';
             ctx.textAlign = 'center';
             ctx.fillText(f.txt, f.x, f.y);
             ctx.restore();
@@ -1071,8 +1898,10 @@
 
     function startStage(num) {
         resize();
+        customMode = false;
         curStage = num;
         score = 0;
+        clearedBallsCount = 0;
         combo = 0;
         hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
         balls = [];
@@ -1085,6 +1914,26 @@
         updateHUD();
     }
 
+    function startCustomStage(stageObj) {
+        resize();
+        customMode = true;
+        activeCustomStage = stageObj;
+        customQueue = stageObj.spawns.map(s => ({ ...s })).sort((a, b) => a.time - b.time);
+        score = 0;
+        clearedBallsCount = 0;
+        combo = 0;
+        hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
+        balls = [];
+        particles = [];
+        floatTexts = [];
+        stageStartTime = performance.now();
+        active = true;
+        document.getElementById('menu-overlay').classList.add('hidden');
+        document.getElementById('result-overlay').classList.add('hidden');
+        updateHUD();
+        showToast(`بدأت مرحلة: ${stageObj.title} 🔥`, true);
+    }
+
     function finishGame(won) {
         active = false;
         const ov = document.getElementById('result-overlay');
@@ -1094,30 +1943,38 @@
         ov.classList.remove('hidden');
 
         if (won) {
-            if (!saveData.cleared.includes(curStage) && curStage <= 5) saveData.cleared.push(curStage);
+            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= 10) {
+                saveData.cleared.push(curStage);
+            }
             saveProgress();
-            t.textContent = `تم اختراق المرحلة ${curStage}! 🔥`;
-            d.textContent = `كسبت نقاط طاقة XP إضافية! ردة فعلك أسطورية.`;
-            nb.style.display = 'block';
+            t.textContent = customMode ? `ختمت مرحلة ${activeCustomStage.title}! 🏆` : `اجتزت التتوريل ${curStage}! 🔥`;
+            d.textContent = `رصيدك الآن ${saveData.xp} XP | أعلى سكور: ${saveData.high}`;
+            nb.style.display = (customMode || curStage >= 10) ? 'none' : 'block';
         } else {
-            t.textContent = STAGES[curStage].endless ? `انتهى التحدي! سكورك: ${score}` : `فشل الاختراق! 💔`;
+            t.textContent = `فشل الاختراق! 💔`;
             d.textContent = `خدعتك الكرات.. ركز بالمسارات وجرب مرة ثانية!`;
             nb.style.display = 'none';
         }
     }
 
     function nextStage() {
-        startStage(curStage < 5 ? curStage + 1 : 6);
+        if (curStage < 10) startStage(curStage + 1);
     }
+
     function retryStage() {
-        startStage(curStage);
+        if (customMode) startCustomStage(activeCustomStage);
+        else startStage(curStage);
     }
+
     function openMenu() {
         active = false;
         saveProgress();
         document.getElementById('result-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
     }
+
+    // Initialize App
+    checkAutoLogin();
 </script>
 </body>
 </html>
