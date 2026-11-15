@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TAKO DROP | غدر الكرات v3.4</title>
+    <title>TAKO DROP | غدر الكرات v4.0 ONLINE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -95,6 +95,11 @@
             border-radius: 50%;
             background: var(--green);
             box-shadow: 0 0 8px var(--green);
+        }
+
+        . online-dot.offline {
+            background: var(--yellow);
+            box-shadow: 0 0 8px var(--yellow);
         }
 
         .top-btn-Rank {
@@ -441,6 +446,12 @@
             border: 1px solid var(--pink);
             color: #fda4af;
         }
+        #login-msg.info {
+            display: block;
+            background: rgba(0, 240, 255, 0.15);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+        }
 
         /* ================= IN-GAME HUD & CANVAS ================= */
         #hud {
@@ -636,11 +647,11 @@
         <button class="lane-btn" id="btn-3" data-lane="3">4 <small>[K]</small></button>
     </div>
 
-    <!-- ================= SECURE LOGIN OVERLAY ================= -->
+    <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge">SECURITY ACCESS // TAKO DROP</div>
-        <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول الآمن</div>
-        <div class="menu-subtitle" style="margin-bottom:18px;">كل حساب محمي بكلمة السر الخاصة به، ولا يمكن لأحد فتح حسابك بكلمة سر عشوائية!</div>
+        <div class="cyber-badge">ONLINE SERVER // TAKO DROP</div>
+        <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
+        <div class="menu-subtitle" style="margin-bottom:18px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك من أي جهاز إلا بكلمة سرك!</div>
 
         <div class="editor-box" style="width:100%; max-width:360px; padding:18px;">
             <div id="login-msg"></div>
@@ -652,8 +663,8 @@
                 <label>🔒 كلمة السر (Password)</label>
                 <input type="password" id="login-pass" class="cyber-input" placeholder="أدخل كلمة السر الخاصة بحسابك">
             </div>
-            <button class="play-chip" style="width:100%; padding:12px; font-size:15px; margin-top:6px;" onclick="handleLogin()">
-                <span>دخول / إنشاء حساب محمي 🔒</span>
+            <button class="play-chip" id="login-submit-btn" style="width:100%; padding:12px; font-size:15px; margin-top:6px;" onclick="handleLogin()">
+                <span>دخول / إنشاء حساب أونلاين 🌐🔒</span>
             </button>
         </div>
     </div>
@@ -663,16 +674,16 @@
         <!-- Top User & Leaderboard Bar -->
         <div class="top-user-bar">
             <div class="user-pill">
-                <span class="online-dot"></span>
+                <span class="online-dot" id="server-status-dot"></span>
                 <span id="display-username">لاعب</span>
             </div>
-            <button class="top-btn-Rank" onclick="openLeaderboardTab()">🏆 المتصدرين</button>
+            <button class="top-btn-Rank" onclick="openLeaderboardTab()">🏆 المتصدرين (أونلاين)</button>
             <button class="logout-btn" onclick="logoutUser()">تبديل الحساب 🔒</button>
         </div>
 
-        <div class="cyber-badge">TAKO ARCADE // v3.4</div>
+        <div class="cyber-badge">TAKO ARCADE // v4.0 ONLINE</div>
         <div class="glitch-title">TAKO DROP | غدر الكرات</div>
-        <div class="menu-subtitle">جميع الكرات تنزل بلون موحد ولا تكشف خدعتها إلا بآخر لحظة!</div>
+        <div class="menu-subtitle">سيرفر عالمي مباشر للمتصدرين ومشاركة مراحل الـ ID!</div>
 
         <!-- 3 Stat Cards -->
         <div class="stats-grid">
@@ -692,7 +703,7 @@
 
         <!-- Play by Stage ID Box -->
         <div class="id-search-bar">
-            <input type="text" id="stage-id-input" class="cyber-input" placeholder="🔍 العب مرحلة لاعب عبر الـ ID (مثال: TAKO-99)">
+            <input type="text" id="stage-id-input" class="cyber-input" placeholder="🔍 العب مرحلة أونلاين عبر الـ ID (مثال: TAKO-99)">
             <button class="play-chip green" onclick="playStageById()"><span>تشغيل ◀</span></button>
         </div>
 
@@ -714,8 +725,8 @@
         <!-- TAB 2: LEVEL EDITOR ("اصنع مرحلة") -->
         <div id="tab-editor" class="tab-panel">
             <div class="editor-box">
-                <div class="stage-title" style="color:var(--cyan);">🛠️ استوديو تصميم المراحل (11 كرة)</div>
-                <div class="stage-desc">اختر المسار، نوع الكرة، متى تنزل، وسرعتها بالضبط (تقبل الفواصل مثل 0.1) ثم احفظها بـ ID خاص!</div>
+                <div class="stage-title" style="color:var(--cyan);">🛠️ استوديو تصميم المراحل الأونلاين</div>
+                <div class="stage-desc">صمم مرحلتك واحفظها لترتفع فوراً على السيرفر بـ ID قصير يفتحه أي صديق من جهازه!</div>
 
                 <div class="field-group">
                     <label>اسم مرحلتك الخاصة:</label>
@@ -768,7 +779,7 @@
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                     <button class="play-chip green" style="padding:10px;" onclick="saveCustomStage()">
-                        <span>💾 حفظ وتوليد ID</span>
+                        <span>💾 حفظ ورفع أونلاين (ID)</span>
                     </button>
                     <button class="play-chip yellow" style="padding:10px;" onclick="testEditorStage()">
                         <span>▶️ تجربة المرحلة</span>
@@ -776,24 +787,24 @@
                 </div>
 
                 <div id="generated-id-box" class="hidden" style="background:rgba(0,255,102,0.12); border:1px solid var(--green); padding:10px; border-radius:8px; text-align:center;">
-                    <div style="font-size:11.5px; color:#cbd5e1;">تم حفظ مرحلتك! شارك هذا الـ ID مع أصدقائك:</div>
+                    <div style="font-size:11.5px; color:#cbd5e1;">تم رفع مرحلتك على السيرفر! أعطِ هذا الـ ID لأصدقائك:</div>
                     <div id="generated-id-text" style="font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:var(--green); margin:4px 0;">TK-0000</div>
                     <div style="display:flex; gap:6px; justify-content:center; margin-top:4px;">
-                        <button class="menu-mini-btn" onclick="copyStageId(false)">📋 نسخ الـ ID</button>
-                        <button class="menu-mini-btn" onclick="copyStageId(true)">🌐 نسخ كود المشاركة لأي جهاز</button>
+                        <button class="menu-mini-btn" onclick="copyStageId(false)">📋 نسخ الـ ID القصير</button>
+                        <button class="menu-mini-btn" onclick="copyStageId(true)">🌐 نسخ الكود الاحتياطي</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: LEADERBOARD (REAL PLAYERS ONLY) -->
+        <!-- TAB 3: LEADERBOARD (ONLINE REAL PLAYERS) -->
         <div id="tab-ranks" class="tab-panel">
             <div class="stage-card yellow" style="margin-bottom:4px;">
                 <div class="stage-info">
-                    <div class="stage-title">🏆 لائحة المتصدرين الحقيقيين</div>
-                    <div class="stage-desc" id="my-rank-summary">تضم فقط اللاعبين الحقيقيين الذين سجلوا دخولهم!</div>
+                    <div class="stage-title">🏆 لائحة المتصدرين العالمية (Online Top 100)</div>
+                    <div class="stage-desc" id="my-rank-summary">جاري جلب بيانات المتصدرين من السيرفر...</div>
                 </div>
-                <div class="stat-val val-cyan" id="my-rank-pts">0 PTS</div>
+                <button class="menu-mini-btn" onclick="syncFromCloud(true)">🔄 تحديث</button>
             </div>
             <div id="leaderboard-container" style="display:flex; flex-direction:column; gap:6px;"></div>
         </div>
@@ -945,6 +956,10 @@
 </div>
 
 <script>
+    // ================= FIREBASE CLOUD CONFIGURATION =================
+    // مرتبط مباشرة بمشروعك takotygo-74 على فيربيس
+    const FIREBASE_DB_URL = "https://takotygo-74-default-rtdb.firebaseio.com";
+
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const app = document.getElementById('app');
@@ -1029,26 +1044,9 @@
         }
     };
 
-    // ================= SECURE MULTI-ACCOUNT DATABASE =================
-    let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v34') || '{}');
-    let activeUserKey = localStorage.getItem('takoDropActiveUser_v34') || "";
-
-    // Migrate previous single-account data if present so user doesn't lose progress
-    const legacySave = JSON.parse(localStorage.getItem('cyberDropSave_v33') || localStorage.getItem('cyberDropSave_v32') || 'null');
-    if (legacySave && legacySave.username) {
-        const uKey = legacySave.username.trim().toLowerCase();
-        if (!accountsDB[uKey]) {
-            accountsDB[uKey] = {
-                username: legacySave.username.trim(),
-                password: legacySave.password || "1234",
-                high: legacySave.high || 0,
-                xp: legacySave.xp || 0,
-                cleared: legacySave.cleared || [],
-                skin: legacySave.skin || "#00f0ff"
-            };
-            localStorage.setItem('takoDropAccounts_v34', JSON.stringify(accountsDB));
-        }
-    }
+    // ================= CLOUD + LOCAL DATABASE SYNC =================
+    let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v40') || '{}');
+    let activeUserKey = localStorage.getItem('takoDropActiveUser_v40') || "";
 
     let saveData = {
         username: "",
@@ -1059,8 +1057,7 @@
         skin: "#00f0ff"
     };
 
-    // Built-in Custom Stage ID for instant testing (TAKO-99)
-    let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v3') || '{}');
+    let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v40') || '{}');
     customStagesDB['TAKO-99'] = {
         id: 'TAKO-99',
         title: 'تحدي الـ 11 خدعة وطابة النط',
@@ -1081,11 +1078,68 @@
         ]
     };
 
+    function sanitizeFirebaseKey(key) {
+        return key.trim().toLowerCase().replace(/[.#$\[\]\/]/g, '_');
+    }
+
+    async function syncFromCloud(showNotification = false) {
+        try {
+            const [accRes, stgRes] = await Promise.all([
+                fetch(`${FIREBASE_DB_URL}/accounts.json`),
+                fetch(`${FIREBASE_DB_URL}/stages.json`)
+            ]);
+
+            if (accRes.ok) {
+                const cloudAccounts = await accRes.json();
+                if (cloudAccounts && typeof cloudAccounts === 'object') {
+                    accountsDB = { ...accountsDB, ...cloudAccounts };
+                    localStorage.setItem('takoDropAccounts_v40', JSON.stringify(accountsDB));
+                }
+                document.getElementById('server-status-dot').classList.remove('offline');
+            }
+
+            if (stgRes.ok) {
+                const cloudStages = await stgRes.json();
+                if (cloudStages && typeof cloudStages === 'object') {
+                    customStagesDB = { ...customStagesDB, ...cloudStages };
+                    localStorage.setItem('cyberDropCustomStages_v40', JSON.stringify(customStagesDB));
+                }
+            }
+
+            renderLeaderboard();
+            renderCustomStagesList();
+            if (showNotification) showToast("تم تحديث المتصدرين والمراحل من السيرفر! 🌐⚡", true);
+        } catch (err) {
+            document.getElementById('server-status-dot').classList.add('offline');
+        }
+    }
+
+    async function pushAccountToCloud(uKey, accountObj) {
+        try {
+            await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(accountObj)
+            });
+        } catch (e) {}
+    }
+
+    async function pushStageToCloud(stageId, stageObj) {
+        try {
+            await fetch(`${FIREBASE_DB_URL}/stages/${encodeURIComponent(stageId)}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(stageObj)
+            });
+        } catch (e) {}
+    }
+
     function renderTutorialCards() {
         const container = document.getElementById('tutorial-list-container');
+        const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
         container.innerHTML = Object.keys(STAGES).map(k => {
             const st = STAGES[k];
-            const isCleared = saveData.cleared.includes(parseInt(k));
+            const isCleared = clearedArr.includes(parseInt(k));
             return `
             <div class="stage-card ${st.colorClass}">
                 <div class="stage-info">
@@ -1098,28 +1152,31 @@
     }
 
     function saveProgress() {
+        if (!Array.isArray(saveData.cleared)) saveData.cleared = [];
         if (saveData.username) {
-            const uKey = saveData.username.trim().toLowerCase();
-            accountsDB[uKey] = {
+            const uKey = sanitizeFirebaseKey(saveData.username);
+            const accountObj = {
                 username: saveData.username.trim(),
                 password: saveData.password,
-                high: saveData.high,
-                xp: saveData.xp,
+                high: saveData.high || 0,
+                xp: saveData.xp || 0,
                 cleared: saveData.cleared,
-                skin: saveData.skin
+                skin: saveData.skin || "#00f0ff"
             };
-            localStorage.setItem('takoDropAccounts_v34', JSON.stringify(accountsDB));
-            localStorage.setItem('takoDropActiveUser_v34', uKey);
+            accountsDB[uKey] = accountObj;
+            localStorage.setItem('takoDropAccounts_v40', JSON.stringify(accountsDB));
+            localStorage.setItem('takoDropActiveUser_v40', uKey);
             document.getElementById('display-username').textContent = saveData.username;
+            pushAccountToCloud(uKey, accountObj);
         }
-        document.getElementById('stat-high').textContent = saveData.high;
+        document.getElementById('stat-high').textContent = saveData.high || 0;
         document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 10`;
-        document.getElementById('stat-xp').textContent = `${saveData.xp} XP`;
+        document.getElementById('stat-xp').textContent = `${saveData.xp || 0} XP`;
         renderTutorialCards();
         renderCustomStagesList();
     }
 
-    function showLoginError(msg) {
+    function showLoginMessage(msg, type = 'error') {
         const box = document.getElementById('login-msg');
         if (!msg) {
             box.className = '';
@@ -1127,12 +1184,16 @@
             return;
         }
         box.textContent = msg;
-        box.className = 'error';
+        box.className = type;
     }
 
-    function checkAutoLogin() {
+    async function checkAutoLogin() {
+        await syncFromCloud(false);
         if (activeUserKey && accountsDB[activeUserKey]) {
-            saveData = { ...accountsDB[activeUserKey] };
+            saveData = {
+                ...accountsDB[activeUserKey],
+                cleared: Array.isArray(accountsDB[activeUserKey].cleared) ? accountsDB[activeUserKey].cleared : []
+            };
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('menu-overlay').classList.remove('hidden');
             saveProgress();
@@ -1142,34 +1203,52 @@
         }
     }
 
-    function handleLogin() {
+    async function handleLogin() {
         const rawUser = document.getElementById('login-user').value.trim();
         const rawPass = document.getElementById('login-pass').value.trim();
 
         if (!rawUser) {
-            showLoginError("⚠️ الرجاء كتابة اسم اللاعب أولاً!");
+            showLoginMessage("⚠️ الرجاء كتابة اسم اللاعب أولاً!", "error");
             return;
         }
         if (!rawPass) {
-            showLoginError("🔒 الرجاء كتابة كلمة السر لحماية حسابك!");
+            showLoginMessage("🔒 الرجاء كتابة كلمة السر لحماية حسابك!", "error");
             return;
         }
 
-        const uKey = rawUser.toLowerCase();
+        const uKey = sanitizeFirebaseKey(rawUser);
+        const btn = document.getElementById('login-submit-btn');
+        btn.disabled = true;
+        showLoginMessage("🌐 جاري التحقق من السيرفر العالمي...", "info");
 
-        // Check if account already exists
+        // Fetch latest account state directly from Firebase Cloud
+        try {
+            const res = await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`);
+            if (res.ok) {
+                const cloudAcc = await res.json();
+                if (cloudAcc) {
+                    accountsDB[uKey] = cloudAcc;
+                }
+            }
+        } catch (e) {}
+
+        btn.disabled = false;
+
+        // Check if account exists in Cloud or Local DB
         if (accountsDB[uKey]) {
-            if (accountsDB[uKey].password !== rawPass) {
-                showLoginError("❌ كلمة السر غير صحيحة لهذا الحساب! لا يمكنك الدخول لحساب شخص آخر.");
+            if (String(accountsDB[uKey].password) !== String(rawPass)) {
+                showLoginMessage("❌ كلمة السر غير صحيحة لهذا الحساب! هذا الاسم محجوز للاعب آخر.", "error");
                 tone(130, 'sawtooth', 0.25, 0.25);
                 return;
             }
-            // Password matches! Load this specific user's progress
-            saveData = { ...accountsDB[uKey] };
-            showLoginError("");
-            showToast(`أهلاً بعودتك يا ${saveData.username}! 🔓`, true);
+            saveData = {
+                ...accountsDB[uKey],
+                cleared: Array.isArray(accountsDB[uKey].cleared) ? accountsDB[uKey].cleared : []
+            };
+            showLoginMessage("");
+            showToast(`أهلاً بعودتك يا ${saveData.username}! 🔓🌐`, true);
         } else {
-            // New account registration
+            // Register brand new protected account on Cloud
             saveData = {
                 username: rawUser,
                 password: rawPass,
@@ -1179,39 +1258,38 @@
                 skin: "#00f0ff"
             };
             accountsDB[uKey] = { ...saveData };
-            showLoginError("");
-            showToast(`تم إنشاء حسابك المحمي يا ${rawUser}! 🔒⚡`, true);
+            showLoginMessage("");
+            showToast(`تم تسجيل حسابك على السيرفر العالمي يا ${rawUser}! 🔒🌐`, true);
         }
 
         activeUserKey = uKey;
         saveProgress();
         document.getElementById('login-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
-        renderLeaderboard();
+        syncFromCloud(false);
     }
 
     function logoutUser() {
         activeUserKey = "";
-        localStorage.removeItem('takoDropActiveUser_v34');
+        localStorage.removeItem('takoDropActiveUser_v40');
         document.getElementById('login-user').value = "";
         document.getElementById('login-pass').value = "";
-        showLoginError("");
+        showLoginMessage("");
         checkAutoLogin();
     }
 
-    // ================= REAL PLAYERS LEADERBOARD =================
+    // ================= ONLINE LEADERBOARD =================
     function renderLeaderboard() {
         const container = document.getElementById('leaderboard-container');
-        const playersList = Object.values(accountsDB);
-        playersList.sort((a, b) => (b.high - a.high) || (b.xp - a.xp));
+        const playersList = Object.values(accountsDB).filter(p => p && p.username);
+        playersList.sort((a, b) => ((b.high || 0) - (a.high || 0)) || ((b.xp || 0) - (a.xp || 0)));
         const top100 = playersList.slice(0, 100);
 
         const myName = saveData.username || "أنت";
         const myRankIndex = top100.findIndex(p => p.username.toLowerCase() === myName.toLowerCase());
         const myRank = myRankIndex !== -1 ? myRankIndex + 1 : 1;
 
-        document.getElementById('my-rank-summary').textContent = `ترتيبك الحالي: المركز #${myRank} من أصل ${top100.length} حساب مسجل 🔥`;
-        document.getElementById('my-rank-pts').textContent = `${saveData.high} PTS`;
+        document.getElementById('my-rank-summary').textContent = `ترتيبك العالمي: المركز #${myRank} من أصل ${top100.length} لاعب أونلاين 🔥`;
 
         if (top100.length === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">لا يوجد لاعبون مسجلون بعد.</div>`;
@@ -1245,11 +1323,11 @@
     }
 
     function openLeaderboardTab() {
-        renderLeaderboard();
+        syncFromCloud(false);
         switchTab('ranks', document.getElementById('tabbtn-ranks'));
     }
 
-    // ================= LEVEL EDITOR ("اصنع مرحلة" + ID) =================
+    // ================= LEVEL EDITOR ("اصنع مرحلة" + ONLINE ID) =================
     let editorSpawns = [];
     let lastGeneratedCode = "";
     let lastShortId = "";
@@ -1289,7 +1367,7 @@
         `).join('');
     }
 
-    function saveCustomStage() {
+    async function saveCustomStage() {
         if (editorSpawns.length === 0) {
             showToast("أضف كرة واحدة على الأقل لحفظ المرحلة! 🛠️", false);
             return;
@@ -1306,7 +1384,8 @@
         };
 
         customStagesDB[shortId] = stageObj;
-        localStorage.setItem('cyberDropCustomStages_v3', JSON.stringify(customStagesDB));
+        localStorage.setItem('cyberDropCustomStages_v40', JSON.stringify(customStagesDB));
+        await pushStageToCloud(shortId, stageObj);
 
         const compactPayload = {
             t: title,
@@ -1321,14 +1400,14 @@
         document.getElementById('generated-id-text').textContent = shortId;
         document.getElementById('generated-id-box').classList.remove('hidden');
         renderCustomStagesList();
-        showToast(`تم حفظ المرحلة! الـ ID هو: ${shortId} 🎉`, true);
+        showToast(`تم رفع المرحلة أونلاين! الـ ID هو: ${shortId} 🌐🎉`, true);
     }
 
     function copyStageId(portable) {
         const textToCopy = portable ? lastGeneratedCode : lastShortId;
         navigator.clipboard?.writeText(textToCopy);
         document.getElementById('stage-id-input').value = textToCopy;
-        showToast(portable ? "تم نسخ كود المشاركة العالمي! 🌐" : `تم نسخ الـ ID (${lastShortId})! 📋`, true);
+        showToast(portable ? "تم نسخ الكود الاحتياطي! 🌐" : `تم نسخ الـ ID (${lastShortId})! 📋`, true);
     }
 
     function testEditorStage() {
@@ -1351,9 +1430,10 @@
             wrap.innerHTML = '';
             return;
         }
-        wrap.innerHTML = `<div style="font-size:12px; font-weight:900; color:var(--green); margin-top:4px;">🌐 مراحل اللاعبين المحفوظة (تعمل بالـ ID):</div>` +
+        wrap.innerHTML = `<div style="font-size:12px; font-weight:900; color:var(--green); margin-top:4px;">🌐 مراحل اللاعبين الأونلاين (تعمل بالـ ID):</div>` +
             keys.map(k => {
                 const st = customStagesDB[k];
+                if (!st || !st.spawns) return '';
                 return `
                 <div class="stage-card green">
                     <div class="stage-info">
@@ -1365,7 +1445,7 @@
             }).join('');
     }
 
-    function playStageById(forcedId) {
+    async function playStageById(forcedId) {
         const raw = (forcedId || document.getElementById('stage-id-input').value).trim();
         if (!raw) {
             showToast("اكتب الـ ID أولاً في الصندوق! 🔍", false);
@@ -1377,6 +1457,21 @@
             startCustomStage(customStagesDB[upper]);
             return;
         }
+
+        // Check Firebase Cloud if stage ID is on server
+        try {
+            const res = await fetch(`${FIREBASE_DB_URL}/stages/${encodeURIComponent(upper)}.json`);
+            if (res.ok) {
+                const cloudStage = await res.json();
+                if (cloudStage && cloudStage.spawns) {
+                    customStagesDB[upper] = cloudStage;
+                    localStorage.setItem('cyberDropCustomStages_v40', JSON.stringify(customStagesDB));
+                    renderCustomStagesList();
+                    startCustomStage(cloudStage);
+                    return;
+                }
+            }
+        } catch (e) {}
 
         if (raw.startsWith("TK#")) {
             try {
@@ -1418,7 +1513,7 @@
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
         btnEl.classList.add('active');
         document.getElementById('tab-' + tabName).classList.add('active');
-        if (tabName === 'ranks') renderLeaderboard();
+        if (tabName === 'ranks') syncFromCloud(false);
     }
 
     function selectSkin(color) {
@@ -1610,10 +1705,10 @@
         const xpEarned = meta.xp * hcMult;
 
         score += ptsEarned;
-        saveData.xp += xpEarned;
+        saveData.xp = (saveData.xp || 0) + xpEarned;
         clearedBallsCount++;
 
-        if (score > saveData.high) saveData.high = score;
+        if (score > (saveData.high || 0)) saveData.high = score;
         saveProgress();
         updateHUD();
 
@@ -2016,9 +2111,15 @@
     function openMenu() {
         active = false;
         saveProgress();
+        syncFromCloud(false);
         document.getElementById('result-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
     }
+
+    // Auto-refresh online leaderboard every 20 seconds
+    setInterval(() => {
+        if (!active) syncFromCloud(false);
+    }, 20000);
 
     // Initialize App
     checkAutoLogin();
