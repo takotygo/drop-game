@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>غدر الكرات: أوفردرايف | FAKE DROP: OVERDRIVE</title>
+    <title>غدر الكرات: أوفردرايف | CYBER REFLEX ARCADE v2.5</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
+
+        :root {
+            --bg-dark: #070510;
+            --panel-bg: #110e20;
+            --cyan: #00f0ff;
+            --pink: #ff0055;
+            --purple: #b829ff;
+            --yellow: #ffb800;
+            --green: #00ff66;
+        }
 
         * {
             box-sizing: border-box;
@@ -18,81 +28,318 @@
         }
 
         body {
-            background: #030712;
+            background: #040308;
             color: #fff;
             overflow: hidden;
             height: 100dvh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        #game-wrapper {
+        #app {
             position: relative;
             width: 100%;
             max-width: 480px;
             height: 100dvh;
-            background: linear-gradient(180deg, #090d16 0%, #030712 100%);
-            border-left: 2px solid rgba(56, 189, 248, 0.15);
-            border-right: 2px solid rgba(56, 189, 248, 0.15);
+            background: radial-gradient(circle at 50% 0%, #1a103c 0%, #070510 70%);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(56, 189, 248, 0.1);
+            border-left: 1px solid rgba(0, 240, 255, 0.15);
+            border-right: 1px solid rgba(0, 240, 255, 0.15);
         }
 
-        /* Top HUD */
+        /* ================= MENU OVERLAY (CYBER REFLEX v2.5) ================= */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 10%, #190e36 0%, #070510 65%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            padding: 18px 16px 24px 16px;
+            overflow-y: auto;
+        }
+
+        .overlay.hidden {
+            display: none !important;
+        }
+
+        .cyber-badge {
+            align-self: center;
+            background: rgba(255, 0, 85, 0.15);
+            border: 1px solid rgba(255, 0, 85, 0.45);
+            color: #ff4d88;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            padding: 4px 16px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
+        }
+
+        .glitch-title {
+            text-align: center;
+            font-size: 33px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink), 0 0 20px rgba(0, 240, 255, 0.5);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .menu-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        /* Stats Row (3 Boxes) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card {
+            background: rgba(17, 14, 32, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-val {
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .val-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        .val-yellow { color: var(--yellow); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
+
+        /* Tabs Row */
+        .tabs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .tab-btn {
+            background: rgba(23, 19, 43, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 9px 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            transform: skewX(-8deg);
+            transition: all 0.2s;
+        }
+
+        .tab-btn span {
+            display: inline-block;
+            transform: skewX(8deg);
+        }
+
+        .tab-btn.active {
+            background: var(--cyan);
+            color: #05050a;
+            border-color: var(--cyan);
+            box-shadow: 0 0 18px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Tab Panels */
+        .tab-panel {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            overflow-y: auto;
+            padding-left: 2px;
+        }
+
+        .tab-panel.active {
+            display: flex;
+        }
+
+        /* Stage Cards */
+        .stage-card {
+            background: rgba(18, 15, 34, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 4px solid var(--cyan);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+        }
+
+        .stage-card.purple { border-right-color: var(--purple); }
+        .stage-card.yellow { border-right-color: var(--yellow); }
+        .stage-card.green { border-right-color: var(--green); }
+        .stage-card.pink { border-right-color: var(--pink); }
+
+        .stage-info {
+            text-align: right;
+            flex: 1;
+        }
+
+        .stage-title {
+            font-size: 15px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .stage-desc {
+            font-size: 11.5px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .play-chip {
+            border: none;
+            font-size: 13px;
+            font-weight: 900;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #05050a;
+            background: var(--cyan);
+            transform: skewX(-8deg);
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+            transition: transform 0.15s;
+        }
+
+        .play-chip:active {
+            transform: skewX(-8deg) scale(0.94);
+        }
+
+        .play-chip.purple { background: var(--purple); color: #fff; box-shadow: 0 0 12px rgba(184, 41, 255, 0.4); }
+        .play-chip.yellow { background: var(--yellow); color: #05050a; box-shadow: 0 0 12px rgba(255, 184, 0, 0.4); }
+        .play-chip.green { background: var(--green); color: #05050a; box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }
+        .play-chip.pink { background: var(--pink); color: #fff; box-shadow: 0 0 12px rgba(255, 0, 85, 0.4); }
+
+        /* Skins Grid */
+        .skin-card {
+            background: rgba(18, 15, 34, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .skin-preview {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Hardcore Toggle Bar */
+        .hardcore-bar {
+            margin-top: 12px;
+            background: rgba(45, 10, 25, 0.75);
+            border: 1px solid rgba(255, 0, 85, 0.45);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .hardcore-bar span {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #fda4af;
+        }
+
+        .hardcore-bar input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--pink);
+        }
+
+        /* ================= IN-GAME HUD & CANVAS ================= */
         #hud {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 16px;
-            background: rgba(3, 7, 18, 0.95);
-            border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+            padding: 10px 14px;
+            background: rgba(7, 5, 16, 0.95);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.25);
             z-index: 10;
         }
 
-        .hud-item {
+        .hud-box {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .hud-label {
+        .hud-lbl {
             font-size: 10px;
             color: #64748b;
             font-weight: 800;
         }
 
-        .hud-value {
+        .hud-val {
             font-size: 16px;
             font-weight: 900;
-            color: #38bdf8;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            color: var(--cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
         }
 
-        #hearts-container {
-            font-size: 15px;
-            letter-spacing: 1px;
+        .menu-mini-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
-        #progress-bar-bg {
+        #progress-bg {
             width: 100%;
-            height: 5px;
-            background: #0f172a;
+            height: 4px;
+            background: #110e20;
         }
 
-        #progress-bar-fill {
+        #progress-fill {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #38bdf8, #a855f7, #f43f5e);
-            box-shadow: 0 0 10px #38bdf8;
-            transition: width 0.2s ease;
+            background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+            box-shadow: 0 0 10px var(--cyan);
+            transition: width 0.2s;
         }
 
-        /* Canvas Area */
-        #canvas-container {
+        #canvas-wrap {
             position: relative;
             flex: 1;
             width: 100%;
@@ -105,57 +352,55 @@
             height: 100%;
         }
 
-        /* Taunt / Toast Message */
-        #taunt-box {
+        #toast {
             position: absolute;
-            top: 22%;
+            top: 20%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: rgba(239, 68, 68, 0.95);
+            transform: translate(-50%, -50%) scale(0.85);
+            background: rgba(255, 0, 85, 0.95);
             color: #fff;
             padding: 6px 18px;
-            border-radius: 999px;
+            border-radius: 99px;
             font-weight: 900;
-            font-size: 16px;
-            pointer-events: none;
+            font-size: 15px;
             opacity: 0;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+            pointer-events: none;
+            transition: all 0.15s;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.8);
             z-index: 20;
             white-space: nowrap;
-            border: 1px solid #fca5a5;
         }
 
-        #taunt-box.show {
+        #toast.show {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1.08);
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
-        #taunt-box.good {
-            background: rgba(16, 185, 129, 0.95);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
-            border-color: #6ee7b7;
+        #toast.good {
+            background: rgba(0, 255, 102, 0.92);
+            color: #040308;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.8);
         }
 
-        /* Bottom Buttons */
+        /* Bottom Arcade Controls */
         #controls {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            padding: 10px 10px 16px 10px;
-            background: rgba(3, 7, 18, 0.98);
-            border-top: 2px solid rgba(56, 189, 248, 0.25);
-            z-index: 10;
+            padding: 8px 10px 14px 10px;
+            background: #070510;
+            border-top: 1px solid rgba(0, 240, 255, 0.25);
             direction: ltr;
+            z-index: 10;
         }
 
-        .catch-btn {
-            position: relative;
-            height: 68px;
-            border-radius: 14px;
-            border: 2px solid rgba(56, 189, 248, 0.4);
-            background: linear-gradient(180deg, #1e293b 0%, #090d16 100%);
-            color: #e2e8f0;
+        .lane-btn {
+            height: 62px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 240, 255, 0.35);
+            background: linear-gradient(180deg, #161229 0%, #090714 100%);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
             font-size: 18px;
             font-weight: 900;
             cursor: pointer;
@@ -163,785 +408,716 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 0 #020617, 0 8px 15px rgba(0,0,0,0.5);
-            transition: transform 0.05s, border-color 0.15s, background 0.15s;
+            box-shadow: 0 4px 0 #020105;
         }
 
-        .catch-btn span.key-hint {
-            font-size: 10px;
+        .lane-btn small {
+            font-size: 9px;
             color: #64748b;
-            margin-top: 1px;
+            font-family: 'Cairo', sans-serif;
         }
 
-        .catch-btn:active, .catch-btn.active {
+        .lane-btn.active, .lane-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #020617;
-            background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
-            border-color: #7dd3fc;
-            color: #fff;
-            box-shadow: 0 0 15px #38bdf8;
+            background: var(--cyan);
+            color: #05050a;
+            border-color: #fff;
+            box-shadow: 0 0 18px var(--cyan);
         }
 
-        .catch-btn.fake-warn {
-            border-color: #ef4444 !important;
-            background: rgba(127, 29, 29, 0.5) !important;
-            box-shadow: 0 0 15px #ef4444 !important;
-        }
-
-        /* Overlays */
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(3, 7, 18, 0.94);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 50;
-            text-align: center;
-            overflow-y: auto;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .game-title {
-            font-size: 34px;
-            font-weight: 900;
-            background: linear-gradient(90deg, #38bdf8, #a855f7, #f43f5e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 4px;
-            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4));
-        }
-
-        .game-subtitle {
-            color: #94a3b8;
-            font-size: 13px;
-            margin-bottom: 14px;
-            line-height: 1.4;
-        }
-
-        .legend-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 14px;
-            padding: 10px 14px;
-            width: 100%;
-            margin-bottom: 14px;
-            text-align: right;
-            font-size: 12px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-            color: #cbd5e1;
-        }
-        .legend-item:last-child { margin-bottom: 0; }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .stage-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-
-        .stage-btn {
-            padding: 10px 8px;
-            border-radius: 10px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            background: rgba(15, 23, 42, 0.9);
-            color: #fff;
-            font-weight: 800;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .stage-btn:hover {
-            background: rgba(56, 189, 248, 0.2);
-            border-color: #38bdf8;
-            transform: translateY(-2px);
-        }
-
-        .stage-btn.endless {
-            grid-column: span 2;
-            background: linear-gradient(90deg, #7c3aed, #db2777);
-            border-color: #f472b6;
-            box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
-        }
-
-        .primary-btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(90deg, #0284c7, #7c3aed);
-            color: #fff;
-            font-size: 16px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
-            margin-top: 6px;
-        }
-
-        .secondary-btn {
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: transparent;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 6px;
+        .lane-btn.warn {
+            border-color: var(--pink) !important;
+            background: rgba(255, 0, 85, 0.28) !important;
+            box-shadow: 0 0 15px var(--pink) !important;
         }
 
         .shake {
-            animation: shakeAnim 0.25s ease-in-out;
+            animation: shake 0.25s ease-in-out;
         }
 
-        @keyframes shakeAnim {
+        @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(8px); }
-            60% { transform: translateX(-6px); }
-            80% { transform: translateX(6px); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-5px); }
         }
     </style>
 </head>
 <body>
 
-<div id="game-wrapper">
+<div id="app">
     <!-- Top HUD -->
     <div id="hud">
-        <div class="hud-item">
-            <span class="hud-label">المرحلة</span>
-            <span class="hud-value" id="hud-stage">1</span>
+        <button class="menu-mini-btn" onclick="openMenu()">🏠 القائمة</button>
+        <div class="hud-box">
+            <span class="hud-lbl">المرحلة</span>
+            <span class="hud-val" id="hud-stage">1</span>
         </div>
-        <div class="hud-item">
-            <span class="hud-label">السكور / الكومبو</span>
-            <span class="hud-value" id="hud-score">0 / 15</span>
+        <div class="hud-box">
+            <span class="hud-lbl">السكور / الكومبو</span>
+            <span class="hud-val" id="hud-score">0 / 15</span>
         </div>
-        <div class="hud-item">
-            <span class="hud-label">الطاقة</span>
-            <div id="hearts-container">❤️❤️❤️</div>
+        <div class="hud-box">
+            <span class="hud-lbl">الطاقة</span>
+            <span class="hud-val" id="hud-hearts">⚡⚡⚡</span>
         </div>
     </div>
-    <div id="progress-bar-bg">
-        <div id="progress-bar-fill"></div>
-    </div>
+    <div id="progress-bg"><div id="progress-fill"></div></div>
 
-    <!-- Main Canvas -->
-    <div id="canvas-container">
+    <!-- Canvas -->
+    <div id="canvas-wrap">
         <canvas id="gameCanvas"></canvas>
-        <div id="taunt-box">أكلت المقلب! 😂</div>
+        <div id="toast">أكلت المقلب! 😂</div>
     </div>
 
-    <!-- 4 Catch Buttons -->
+    <!-- Bottom Buttons -->
     <div id="controls">
-        <button class="catch-btn" data-lane="0" id="btn-0">
-            1
-            <span class="key-hint">[D / 1]</span>
-        </button>
-        <button class="catch-btn" data-lane="1" id="btn-1">
-            2
-            <span class="key-hint">[F / 2]</span>
-        </button>
-        <button class="catch-btn" data-lane="2" id="btn-2">
-            3
-            <span class="key-hint">[J / 3]</span>
-        </button>
-        <button class="catch-btn" data-lane="3" id="btn-3">
-            4
-            <span class="key-hint">[K / 4]</span>
-        </button>
+        <button class="lane-btn" id="btn-0" data-lane="0">1 <small>[D]</small></button>
+        <button class="lane-btn" id="btn-1" data-lane="1">2 <small>[F]</small></button>
+        <button class="lane-btn" id="btn-2" data-lane="2">3 <small>[J]</small></button>
+        <button class="lane-btn" id="btn-3" data-lane="3">4 <small>[K]</small></button>
     </div>
 
-    <!-- Start Menu Overlay -->
+    <!-- MAIN MENU OVERLAY (EXACT CYBER REFLEX ARCADE v2.5) -->
     <div id="menu-overlay" class="overlay">
-        <div class="game-title">غدر الكرات : أوفردرايف</div>
-        <div class="game-subtitle">تحدي الخدع البصرية وردة الفعل بنظام آركيد سايبربانك خارق!</div>
+        <div class="cyber-badge">CYBER REFLEX ARCADE // v2.5</div>
+        <div class="glitch-title">غدر الكرات: أوفردرايف</div>
+        <div class="menu-subtitle">اضغط على الدائرة أو الزر باللحظة الصح.. واكبح إصبعك عن فخاخ الـ FAKE!</div>
 
-        <div class="legend-box">
-            <div class="legend-item">
-                <span class="dot" style="background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span>
-                <span><b>كرة بلازما:</b> التقطها عند دائرة الهدف بدقة.</span>
+        <!-- 3 Stat Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">أعلى سكور</div>
+                <div class="stat-val val-cyan" id="stat-high">0</div>
             </div>
-            <div class="legend-item">
-                <span class="dot" style="background:#ef4444; box-shadow:0 0 8px #ef4444;"></span>
-                <span><b>كرة FAKE:</b> تختفي قبل الخط! <b>إياك أن تضغط!</b></span>
+            <div class="stat-card">
+                <div class="stat-label">مراحل مختومة</div>
+                <div class="stat-val val-cyan" id="stat-cleared">0 / 5</div>
             </div>
-            <div class="legend-item">
-                <span class="dot" style="background:#a855f7; box-shadow:0 0 8px #a855f7;"></span>
-                <span><b>كرة غدارة (↪️):</b> تقفز لمسار مجاور آخر لحظة.</span>
-            </div>
-            <div class="legend-item">
-                <span class="dot" style="background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span>
-                <span><b>كرة فرامل (🛑):</b> تتوقف لتردع توقيتك ثم تتابع.</span>
+            <div class="stat-card">
+                <div class="stat-label">نقاط الطاقة XP</div>
+                <div class="stat-val val-yellow" id="stat-xp">0 XP</div>
             </div>
         </div>
 
-        <div class="stage-grid">
-            <button class="stage-btn" onclick="startStage(1)">المرحلة 1: إحماء وفخاخ</button>
-            <button class="stage-btn" onclick="startStage(2)">المرحلة 2: تغيير المسار</button>
-            <button class="stage-btn" onclick="startStage(3)">المرحلة 3: فرامل وغدر</button>
-            <button class="stage-btn" onclick="startStage(4)">المرحلة 4: فوضى الأعصاب</button>
-            <button class="stage-btn" onclick="startStage(5)">المرحلة 5: امتحان التركيز</button>
-            <button class="stage-btn endless" onclick="startStage(6)">♾️ الطور اللانهائي (تحدي الأسطورة)</button>
+        <!-- 3 Navigation Tabs -->
+        <div class="tabs-row">
+            <button class="tab-btn active" onclick="switchTab('stages', this)"><span>🎮 المراحل</span></button>
+            <button class="tab-btn" onclick="switchTab('skins', this)"><span>⚡ شكل الكرة</span></button>
+            <button class="tab-btn" onclick="switchTab('guide', this)"><span>📖 دليل الخدع</span></button>
         </div>
+
+        <!-- TAB 1: STAGES -->
+        <div id="tab-stages" class="tab-panel active">
+            <div class="stage-card">
+                <div class="stage-info">
+                    <div class="stage-title">المرحلة 1: اختراق النظام</div>
+                    <div class="stage-desc">كرات طاقة مع فخاخ (FAKE) أساسية.. اكبح إصبعك!</div>
+                </div>
+                <button class="play-chip" onclick="startStage(1)"><span>ابدأ ◀</span></button>
+            </div>
+
+            <div class="stage-card purple">
+                <div class="stage-info">
+                    <div class="stage-title">المرحلة 2: المراوغة البرقية</div>
+                    <div class="stage-desc">انتبه! الكرات تقفز بين المسارات بآخر لحظة ↪️</div>
+                </div>
+                <button class="play-chip purple" onclick="startStage(2)"><span>ابدأ ◀</span></button>
+            </div>
+
+            <div class="stage-card yellow">
+                <div class="stage-info">
+                    <div class="stage-title">المرحلة 3: تجميد الزمن</div>
+                    <div class="stage-desc">كرات تضرب فرامل بالهواء لتخدعك، وكرات مدرعة (x2) 🛡️</div>
+                </div>
+                <button class="play-chip yellow" onclick="startStage(3)"><span>ابدأ ◀</span></button>
+            </div>
+
+            <div class="stage-card green">
+                <div class="stage-info">
+                    <div class="stage-title">المرحلة 4: الخدعة المزدوجة</div>
+                    <div class="stage-desc">كرات تتظاهر أنها FAKE ثم تتحول لحقيقية بآخر ثانية 🧠</div>
+                </div>
+                <button class="play-chip green" onclick="startStage(4)"><span>ابدأ ◀</span></button>
+            </div>
+
+            <div class="stage-card pink">
+                <div class="stage-info">
+                    <div class="stage-title">المرحلة 5: امتحان الأوفردرايف</div>
+                    <div class="stage-desc">أقصى سرعة مع كل أنواع الفخاخ والمراوغات بنفس الوقت 🔥</div>
+                </div>
+                <button class="play-chip pink" onclick="startStage(5)"><span>ابدأ ◀</span></button>
+            </div>
+
+            <div class="stage-card" style="border-right-color:#fff; background:linear-gradient(90deg, rgba(184,41,255,0.25), rgba(0,240,255,0.2));">
+                <div class="stage-info">
+                    <div class="stage-title">♾️ الطور اللانهائي (تحدي السكور)</div>
+                    <div class="stage-desc">سرعة تتصاعد بلا حدود.. كم كرة تقدر تصمد؟</div>
+                </div>
+                <button class="play-chip" onclick="startStage(6)"><span>انطلق ◀</span></button>
+            </div>
+        </div>
+
+        <!-- TAB 2: SKINS -->
+        <div id="tab-skins" class="tab-panel">
+            <div class="skin-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="skin-preview" style="background:#00f0ff; box-shadow:0 0 12px #00f0ff;"></div>
+                    <div>
+                        <div class="stage-title">نواة السايبر (الافتراضي)</div>
+                        <div class="stage-desc">مفتوح دائماً</div>
+                    </div>
+                </div>
+                <button class="play-chip" onclick="selectSkin('#00f0ff')"><span>تفعيل</span></button>
+            </div>
+
+            <div class="skin-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="skin-preview" style="background:#ff0055; box-shadow:0 0 12px #ff0055;"></div>
+                    <div>
+                        <div class="stage-title">لهب البلازما القرمزي</div>
+                        <div class="stage-desc">يتطلب 50 XP</div>
+                    </div>
+                </div>
+                <button class="play-chip pink" onclick="unlockSkin('#ff0055', 50)"><span>اختيار</span></button>
+            </div>
+
+            <div class="skin-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="skin-preview" style="background:#00ff66; box-shadow:0 0 12px #00ff66;"></div>
+                    <div>
+                        <div class="stage-title">شيفرة الماتريكس</div>
+                        <div class="stage-desc">يتطلب 120 XP</div>
+                    </div>
+                </div>
+                <button class="play-chip green" onclick="unlockSkin('#00ff66', 120)"><span>اختيار</span></button>
+            </div>
+
+            <div class="skin-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="skin-preview" style="background:#ffb800; box-shadow:0 0 12px #ffb800;"></div>
+                    <div>
+                        <div class="stage-title">البرق الذهبي الخارق</div>
+                        <div class="stage-desc">يتطلب 250 XP</div>
+                    </div>
+                </div>
+                <button class="play-chip yellow" onclick="unlockSkin('#ffb800', 250)"><span>اختيار</span></button>
+            </div>
+        </div>
+
+        <!-- TAB 3: GUIDE -->
+        <div id="tab-guide" class="tab-panel">
+            <div class="stage-card">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--cyan);">🔵 كرة الطاقة العادية</div>
+                    <div class="stage-desc">اضغط على الدائرة أو الزر لحظة وصولها للخط تماماً.</div>
+                </div>
+            </div>
+            <div class="stage-card pink">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--pink);">🔴 كرة الـ FAKE الخادعة</div>
+                    <div class="stage-desc">تتحول للون الأحمر وتختفي قبل الخط.. إياك أن تضغط الزر وإلا تخسر طاقة!</div>
+                </div>
+            </div>
+            <div class="stage-card purple">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--purple);">🟣 الكرة الغدارة (المراوغة)</div>
+                    <div class="stage-desc">تقفز بآخر لحظة إلى المسار المجاور! الحقها بالزر الجديد.</div>
+                </div>
+            </div>
+            <div class="stage-card yellow">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--yellow);">🛡️ الكرة المدرعة (x2) والفرامل</div>
+                    <div class="stage-desc">المدرعة تحتاج ضغطة بالهواء لكسر الدرع وضغطة عند الخط. والفرامل تتوقف بالهواء لتخدع توقيتك!</div>
+                </div>
+            </div>
+            <div class="stage-card green">
+                <div class="stage-info">
+                    <div class="stage-title" style="color:var(--green);">🧠 الخدعة المزدوجة (Double Fake)</div>
+                    <div class="stage-desc">تتظاهر أنها FAKE بالبداية ثم ترجع حقيقية باللون الأخضر قبل الخط!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hardcore Mode Bar -->
+        <label class="hardcore-bar">
+            <span>🔥 طور الجلطة (قلب واحد + نقاط مضاعفة)</span>
+            <input type="checkbox" id="hardcore-toggle">
+        </label>
     </div>
 
-    <!-- Result Overlay -->
-    <div id="result-overlay" class="overlay hidden">
-        <div class="game-title" id="result-title">كفو! عديت المرحلة</div>
-        <div class="game-subtitle" id="result-desc">ردة فعلك أسطورية!</div>
-        <button class="primary-btn" id="next-stage-btn" onclick="nextStageAction()">المرحلة التالية ⬅️</button>
-        <button class="secondary-btn" onclick="retryStage()">إعادة المحاولة 🔄</button>
-        <button class="secondary-btn" onclick="showMainMenu()">القائمة الرئيسية 🏠</button>
+    <!-- RESULT OVERLAY -->
+    <div id="result-overlay" class="overlay hidden" style="justify-content:center; align-items:center; text-align:center;">
+        <div class="cyber-badge">SYSTEM REPORT</div>
+        <div class="glitch-title" id="res-title" style="margin-bottom:10px;">تم اختراق المرحلة!</div>
+        <div class="menu-subtitle" id="res-desc" style="font-size:15px; margin-bottom:24px;">أداء أسطوري وردة فعل خارقة!</div>
+        <button class="play-chip" id="next-btn" style="width:100%; padding:14px; font-size:16px; margin-bottom:10px;" onclick="nextStage()"><span>المرحلة التالية ◀</span></button>
+        <button class="play-chip purple" style="width:100%; padding:12px; font-size:15px; margin-bottom:10px;" onclick="retryStage()"><span>إعادة التحدي 🔄</span></button>
+        <button class="menu-mini-btn" style="width:100%; padding:12px; font-size:14px;" onclick="openMenu()">العودة للقائمة الرئيسية 🏠</button>
     </div>
 </div>
 
 <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const wrapper = document.getElementById('game-wrapper');
-    const tauntBox = document.getElementById('taunt-box');
+    const app = document.getElementById('app');
+    const toast = document.getElementById('toast');
 
-    // Audio Synthesizer
+    // Saved Progress
+    let saveData = JSON.parse(localStorage.getItem('cyberDropSave_v25') || '{"high":0,"xp":0,"cleared":[],"skin":"#00f0ff"}');
+
+    function saveProgress() {
+        localStorage.setItem('cyberDropSave_v25', JSON.stringify(saveData));
+        document.getElementById('stat-high').textContent = saveData.high;
+        document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 5`;
+        document.getElementById('stat-xp').textContent = `${saveData.xp} XP`;
+    }
+    saveProgress();
+
+    function switchTab(tabName, btnEl) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btnEl.classList.add('active');
+        document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    function selectSkin(color) {
+        saveData.skin = color;
+        saveProgress();
+        showToast("تم تفعيل لون الكرة بنجاح! ⚡", true);
+    }
+
+    function unlockSkin(color, cost) {
+        if (saveData.xp >= cost) {
+            saveData.skin = color;
+            saveProgress();
+            showToast("تم اختيار شكل الكرة بنجاح! 🔥", true);
+        } else {
+            showToast(`تحتاج ${cost} XP لفتح هذا الشكل! (لديك ${saveData.xp} XP)`, false);
+        }
+    }
+
+    // Web Audio Synthesizer
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
-
-    function playTone(freq, type = 'sine', duration = 0.12, vol = 0.15) {
+    function tone(freq, type = 'sine', dur = 0.1, vol = 0.15) {
         try {
             if (!audioCtx) audioCtx = new AudioCtx();
             const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+            const g = audioCtx.createGain();
             osc.type = type;
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+            g.gain.setValueAtTime(vol, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+            osc.connect(g);
+            g.connect(audioCtx.destination);
             osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        } catch (e) {}
-    }
-
-    function sfxHit() {
-        playTone(600, 'triangle', 0.08, 0.2);
-        setTimeout(() => playTone(900, 'sine', 0.1, 0.15), 35);
-    }
-    function sfxFakePop() {
-        playTone(250, 'sawtooth', 0.1, 0.15);
-    }
-    function sfxSwitch() {
-        playTone(500, 'sine', 0.07, 0.15);
-        setTimeout(() => playTone(750, 'sine', 0.08, 0.15), 40);
-    }
-    function sfxFail() {
-        playTone(150, 'sawtooth', 0.22, 0.25);
-        setTimeout(() => playTone(100, 'sawtooth', 0.25, 0.25), 90);
+            osc.stop(audioCtx.currentTime + dur);
+        } catch(e) {}
     }
 
     const STAGES = {
-        1: { name: "1", target: 12, speed: 4.2, spawnMs: 1000, probs: { normal: 0.60, fake: 0.40, switch: 0.0, brake: 0.0 } },
-        2: { name: "2", target: 16, speed: 4.7, spawnMs: 880,  probs: { normal: 0.45, fake: 0.25, switch: 0.30, brake: 0.0 } },
-        3: { name: "3", target: 20, speed: 5.2, spawnMs: 800,  probs: { normal: 0.38, fake: 0.25, switch: 0.22, brake: 0.15 } },
-        4: { name: "4", target: 25, speed: 5.9, spawnMs: 700,  probs: { normal: 0.33, fake: 0.30, switch: 0.22, brake: 0.15 } },
-        5: { name: "5", target: 30, speed: 6.6, spawnMs: 620,  probs: { normal: 0.28, fake: 0.32, switch: 0.25, brake: 0.15 } },
-        6: { name: "♾️", target: 9999, speed: 5.3, spawnMs: 750, probs: { normal: 0.35, fake: 0.28, switch: 0.23, brake: 0.14 }, endless: true }
+        1: { name: "1", target: 14, speed: 4.3, spawn: 980,  p: { normal: 0.58, fake: 0.42, sw: 0, brk: 0, arm: 0, dbl: 0 } },
+        2: { name: "2", target: 18, speed: 4.8, spawn: 860,  p: { normal: 0.42, fake: 0.28, sw: 0.30, brk: 0, arm: 0, dbl: 0 } },
+        3: { name: "3", target: 22, speed: 5.2, spawn: 790,  p: { normal: 0.34, fake: 0.24, sw: 0.14, brk: 0.15, arm: 0.13, dbl: 0 } },
+        4: { name: "4", target: 26, speed: 5.7, spawn: 720,  p: { normal: 0.30, fake: 0.22, sw: 0.14, brk: 0.12, arm: 0.10, dbl: 0.12 } },
+        5: { name: "5", target: 32, speed: 6.4, spawn: 640,  p: { normal: 0.25, fake: 0.23, sw: 0.16, brk: 0.12, arm: 0.12, dbl: 0.12 } },
+        6: { name: "♾️", target: 9999, speed: 5.2, spawn: 740, p: { normal: 0.28, fake: 0.22, sw: 0.15, brk: 0.12, arm: 0.11, dbl: 0.12 }, endless: true }
     };
 
-    const TAUNTS_FAKE = [
-        "أكلت المقلب! 😂",
-        "مكتوب FAKE ليش ضغطت؟ 😭",
-        "إصبعك أسرع من عقلك! ⚡",
-        "هدي أعصابك لا تستعجل! 🤡",
-        "بلعت الفخ بنجاح! 🪤"
-    ];
-
-    const TAUNTS_MISS = [
-        "راحت عليك الكرة! 💨",
-        "وين صافن؟ ركز! 👀",
-        "الزر التاني يا بطل! ↪️"
-    ];
-
-    let currentStageNum = 1;
+    let curStage = 1;
     let score = 0;
     let combo = 0;
     let hearts = 3;
-    let gameActive = false;
+    let active = false;
     let balls = [];
-    let effects = [];
     let particles = [];
-    let lastSpawnTime = 0;
-    let hitLineY = 0;
-    let laneCenters = [0, 0, 0, 0];
+    let floatTexts = [];
+    let lastSpawn = 0;
+    let hitY = 0;
+    let lanes = [0, 0, 0, 0];
+    let gridOffset = 0;
 
-    function resizeCanvas() {
+    function resize() {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
-        hitLineY = canvas.height - 56;
-        const laneW = canvas.width / 4;
-        for (let i = 0; i < 4; i++) {
-            laneCenters[i] = laneW * i + laneW / 2;
-        }
+        hitY = canvas.height - 54;
+        const w = canvas.width / 4;
+        for (let i = 0; i < 4; i++) lanes[i] = w * i + w / 2;
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    window.addEventListener('resize', resize);
+    resize();
 
-    function showTaunt(text, isGood = false) {
-        tauntBox.textContent = text;
-        tauntBox.className = isGood ? 'show good' : 'show';
-        clearTimeout(tauntBox.timer);
-        tauntBox.timer = setTimeout(() => {
-            tauntBox.className = '';
-        }, 850);
+    function showToast(msg, good = false) {
+        toast.textContent = msg;
+        toast.className = good ? 'show good' : 'show';
+        clearTimeout(toast.t);
+        toast.t = setTimeout(() => toast.className = '', 900);
     }
 
     function updateHUD() {
-        const st = STAGES[currentStageNum];
+        const st = STAGES[curStage];
         document.getElementById('hud-stage').textContent = st.name;
-        const comboTxt = combo > 1 ? ` (x${combo})` : '';
-        document.getElementById('hud-score').textContent = st.endless ? `${score}${comboTxt}` : `${score} / ${st.target}${comboTxt}`;
-        document.getElementById('hearts-container').textContent = '❤️'.repeat(Math.max(0, hearts)) + '🖤'.repeat(Math.max(0, 3 - hearts));
+        const cTxt = combo >= 5 ? ` 🔥x${combo}` : (combo > 1 ? ` x${combo}` : '');
+        document.getElementById('hud-score').textContent = st.endless ? `${score}${cTxt}` : `${score} / ${st.target}${cTxt}`;
+        document.getElementById('hud-hearts').textContent = '⚡'.repeat(Math.max(0, hearts)) + '🖤'.repeat(Math.max(0, 3 - hearts));
         const pct = st.endless ? 100 : Math.min(100, (score / st.target) * 100);
-        document.getElementById('progress-bar-fill').style.width = pct + '%';
+        document.getElementById('progress-fill').style.width = pct + '%';
     }
 
-    function createParticles(x, y, color) {
-        for (let i = 0; i < 14; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 5 + 2;
-            particles.push({
-                x, y,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                alpha: 1,
-                color,
-                size: Math.random() * 4 + 2
-            });
-        }
-    }
-
-    function pickBallType(probs) {
+    function pickType(p) {
         const r = Math.random();
-        if (r < probs.normal) return 'normal';
-        if (r < probs.normal + probs.fake) return 'fake';
-        if (r < probs.normal + probs.fake + probs.switch) return 'switch';
-        return 'brake';
+        let sum = p.normal;
+        if (r < sum) return 'normal';
+        sum += p.fake; if (r < sum) return 'fake';
+        sum += p.sw;   if (r < sum) return 'sw';
+        sum += p.brk;  if (r < sum) return 'brk';
+        sum += p.arm;  if (r < sum) return 'arm';
+        return 'dbl';
     }
 
     function spawnBall() {
-        const st = STAGES[currentStageNum];
+        const st = STAGES[curStage];
         const lane = Math.floor(Math.random() * 4);
-        const type = pickBallType(st.probs);
-
+        const type = pickType(st.p);
         let targetLane = lane;
-        if (type === 'switch') {
-            if (lane === 0) targetLane = 1;
-            else if (lane === 3) targetLane = 2;
-            else targetLane = Math.random() < 0.5 ? lane - 1 : lane + 1;
+        if (type === 'sw') {
+            targetLane = lane === 0 ? 1 : (lane === 3 ? 2 : (Math.random() < 0.5 ? lane - 1 : lane + 1));
         }
-
-        const speedBoost = st.endless ? Math.min(3.5, Math.floor(score / 10) * 0.25) : 0;
+        const boost = st.endless ? Math.min(3.2, Math.floor(score / 12) * 0.25) : 0;
 
         balls.push({
-            lane: lane,
-            targetLane: targetLane,
-            x: laneCenters[lane],
+            lane, targetLane,
+            x: lanes[lane],
             y: -25,
-            radius: 20,
-            type: type,
-            speed: st.speed + speedBoost,
-            state: 'falling',
-            triggerY: hitLineY - (110 + Math.random() * 40),
+            r: 20,
+            type,
+            armor: type === 'arm' ? 2 : 1,
+            speed: st.speed + boost,
+            state: 'fall',
+            trigY: hitY - (125 + Math.random() * 35),
             brakeUntil: 0,
-            alpha: 1,
-            rotation: Math.random() * Math.PI
+            rot: 0
         });
     }
 
-    function addEffect(x, y, text, color) {
-        effects.push({ x, y, text, color, alpha: 1, dy: -2.0 });
+    function burst(x, y, color) {
+        for (let i = 0; i < 15; i++) {
+            const a = Math.random() * Math.PI * 2;
+            const s = Math.random() * 5 + 2;
+            particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, color, sz: Math.random() * 4 + 2 });
+        }
     }
 
-    function damagePlayer(reasonText) {
-        sfxFail();
+    function addFloat(x, y, txt, color) {
+        floatTexts.push({ x, y, txt, color, alpha: 1 });
+    }
+
+    function hurt(reason) {
+        tone(140, 'sawtooth', 0.25, 0.25);
         hearts--;
         combo = 0;
         updateHUD();
-        showTaunt(reasonText, false);
-        wrapper.classList.remove('shake');
-        void wrapper.offsetWidth;
-        wrapper.classList.add('shake');
-
-        if (hearts <= 0) {
-            endGame(false);
-        }
+        showToast(reason, false);
+        app.classList.remove('shake');
+        void app.offsetWidth;
+        app.classList.add('shake');
+        if (hearts <= 0) finishGame(false);
     }
 
-    function addScore(pts, x, y, label = "+1") {
+    function gainPoint(pts, x, y, txt) {
         combo++;
-        score += pts * Math.min(3, Math.floor(combo / 5) + 1);
+        const mult = (document.getElementById('hardcore-toggle').checked ? 2 : 1) * (combo >= 10 ? 2 : 1);
+        const total = pts * mult;
+        score += total;
+        saveData.xp += total;
+        if (score > saveData.high) saveData.high = score;
+        saveProgress();
         updateHUD();
-        addEffect(x, y, label, '#38bdf8');
-        createParticles(x, y, '#38bdf8');
+        addFloat(x, y, txt, '#00f0ff');
+        burst(x, y, saveData.skin);
 
-        const st = STAGES[currentStageNum];
-        if (!st.endless && score >= st.target) {
-            endGame(true);
-        }
+        const st = STAGES[curStage];
+        if (!st.endless && score >= st.target) finishGame(true);
     }
 
-    function handleLanePress(laneIdx) {
-        if (!gameActive) return;
-
-        const btn = document.getElementById(`btn-${laneIdx}`);
+    function pressLane(lane) {
+        if (!active) return;
+        const btn = document.getElementById('btn-' + lane);
         btn.classList.add('active');
         setTimeout(() => btn.classList.remove('active'), 100);
 
-        const fakeBall = balls.find(b => b.lane === laneIdx && b.state === 'faked' && Math.abs(b.y - hitLineY) < 130);
-        if (fakeBall) {
-            fakeBall.state = 'done';
-            const msg = TAUNTS_FAKE[Math.floor(Math.random() * TAUNTS_FAKE.length)];
-            createParticles(laneCenters[laneIdx], hitLineY, '#ef4444');
-            damagePlayer(msg);
+        // 1. Check Armored ball in air first
+        const armoredInAir = balls.find(b => b.lane === lane && b.armor > 1 && b.y > 40 && b.y < hitY - 40);
+        if (armoredInAir) {
+            armoredInAir.armor = 1;
+            tone(520, 'square', 0.08, 0.2);
+            burst(armoredInAir.x, armoredInAir.y, '#ffb800');
+            addFloat(armoredInAir.x, armoredInAir.y, "كسر الدرع! 🛡️", "#ffb800");
             return;
         }
 
-        const catchable = balls.find(b =>
-            b.lane === laneIdx &&
-            b.type !== 'fake' &&
-            b.state !== 'caught' &&
-            Math.abs(b.y - hitLineY) <= 62
-        );
-
-        if (catchable) {
-            catchable.state = 'caught';
-            sfxHit();
-            addScore(1, catchable.x, hitLineY - 20, "PERFECT! +1");
+        // 2. Check Faked ball trap
+        const faked = balls.find(b => b.lane === lane && b.state === 'faked' && Math.abs(b.y - hitY) < 130);
+        if (faked) {
+            faked.state = 'dead';
+            burst(lanes[lane], hitY, '#ff0055');
+            hurt("بلعت مقلب الـ FAKE! 😂");
             return;
         }
 
-        const earlyBall = balls.find(b => b.lane === laneIdx && b.y > hitLineY - 200 && b.y < hitLineY - 62);
-        if (earlyBall) {
-            if (earlyBall.type === 'fake') {
-                earlyBall.state = 'done';
-                damagePlayer("مستعجل عالـ FAKE! 😂");
-            } else if (earlyBall.type === 'brake') {
-                earlyBall.state = 'caught';
-                damagePlayer("انخدعت بالفرامل وضغطت بكير! 🛑");
-            } else {
-                earlyBall.state = 'caught';
-                damagePlayer("ضغطت بكير كتير! ⏳");
+        // 3. Check Valid Catch near Hit Line
+        const targetBall = balls.find(b => b.lane === lane && b.state !== 'faked' && b.state !== 'dead' && Math.abs(b.y - hitY) <= 64);
+        if (targetBall) {
+            if (targetBall.armor > 1) {
+                targetBall.armor = 1;
+                tone(400, 'square', 0.1, 0.2);
+                addFloat(targetBall.x, hitY - 25, "اضغط مرة ثانية! 🛡️", "#ffb800");
+                return;
             }
+            targetBall.state = 'dead';
+            tone(650, 'triangle', 0.09, 0.2);
+            setTimeout(() => tone(920, 'sine', 0.1, 0.18), 35);
+            gainPoint(1, targetBall.x, hitY - 20, combo >= 10 ? "FEVER x2! 🔥" : "PERFECT! +1");
+            return;
+        }
+
+        // 4. Pressed too early
+        const early = balls.find(b => b.lane === lane && b.y > hitY - 200 && b.y < hitY - 64);
+        if (early) {
+            early.state = 'dead';
+            hurt(early.type === 'fake' ? "مستعجل عالـ FAKE! 🤡" : "ضغطت بكير كتير! ⏳");
         } else {
-            damagePlayer("ما في كرة هون! تسرعت 💨");
+            hurt("ما في كرة بالمسار! تسرعت 💨");
         }
     }
 
-    // Controls & Touch on Canvas
-    document.querySelectorAll('.catch-btn').forEach(btn => {
-        const lane = parseInt(btn.getAttribute('data-lane'));
-        btn.addEventListener('pointerdown', (e) => {
+    document.querySelectorAll('.lane-btn').forEach(b => {
+        b.addEventListener('pointerdown', e => {
             e.preventDefault();
-            handleLanePress(lane);
+            pressLane(parseInt(b.getAttribute('data-lane')));
         });
     });
 
-    canvas.addEventListener('pointerdown', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const laneW = canvas.width / 4;
-        const clickedLane = Math.floor(x / laneW);
-        if (clickedLane >= 0 && clickedLane < 4) {
-            handleLanePress(clickedLane);
-        }
+    canvas.addEventListener('pointerdown', e => {
+        const r = canvas.getBoundingClientRect();
+        const lane = Math.floor((e.clientX - r.left) / (canvas.width / 4));
+        if (lane >= 0 && lane < 4) pressLane(lane);
     });
 
-    window.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', e => {
         if (e.repeat) return;
-        const key = e.key.toLowerCase();
-        if (key === 'd' || key === '1') handleLanePress(0);
-        if (key === 'f' || key === '2') handleLanePress(1);
-        if (key === 'j' || key === '3') handleLanePress(2);
-        if (key === 'k' || key === '4') handleLanePress(3);
+        const k = e.key.toLowerCase();
+        if (k === 'd' || k === '1') pressLane(0);
+        if (k === 'f' || k === '2') pressLane(1);
+        if (k === 'j' || k === '3') pressLane(2);
+        if (k === 'k' || k === '4') pressLane(3);
     });
 
-    function updateGame(timestamp) {
-        if (!gameActive) return;
-
-        const st = STAGES[currentStageNum];
-        const dynamicSpawn = st.endless ? Math.max(420, st.spawnMs - score * 3) : st.spawnMs;
-
-        if (timestamp - lastSpawnTime > dynamicSpawn) {
-            spawnBall();
-            lastSpawnTime = timestamp;
-        }
-
-        for (let i = 0; i < 4; i++) {
-            document.getElementById(`btn-${i}`).classList.remove('fake-warn');
-        }
-
-        for (let i = balls.length - 1; i >= 0; i--) {
-            const b = balls[i];
-            b.rotation += 0.04;
-
-            if (b.state === 'caught' || b.state === 'done') {
-                balls.splice(i, 1);
-                continue;
+    function loop(ts) {
+        if (active) {
+            const st = STAGES[curStage];
+            const sp = st.endless ? Math.max(410, st.spawn - score * 3) : st.spawn;
+            if (ts - lastSpawn > sp) {
+                spawnBall();
+                lastSpawn = ts;
             }
 
-            if (b.state === 'falling' && b.y >= b.triggerY) {
-                if (b.type === 'fake') {
-                    b.state = 'faked';
-                    sfxFakePop();
-                } else if (b.type === 'switch') {
-                    b.state = 'switched';
-                    b.lane = b.targetLane;
-                    sfxSwitch();
-                    addEffect(b.x, b.y, b.targetLane > b.lane ? "⬅️ غدر!" : "غدر! ➡️", "#c084fc");
-                } else if (b.type === 'brake') {
-                    b.state = 'braking';
-                    b.brakeUntil = timestamp + 400;
-                    addEffect(b.x, b.y - 20, "فرامل! 🛑", "#f59e0b");
+            for (let i = 0; i < 4; i++) document.getElementById('btn-' + i).classList.remove('warn');
+
+            for (let i = balls.length - 1; i >= 0; i--) {
+                const b = balls[i];
+                b.rot += 0.05;
+                if (b.state === 'dead') { balls.splice(i, 1); continue; }
+
+                if (b.state === 'fall' && b.y >= b.trigY) {
+                    if (b.type === 'fake') {
+                        b.state = 'faked';
+                        tone(240, 'sawtooth', 0.09, 0.14);
+                    } else if (b.type === 'sw') {
+                        b.state = 'switched';
+                        b.lane = b.targetLane;
+                        tone(520, 'sine', 0.08, 0.15);
+                        addFloat(b.x, b.y, "مراوغة! ↪️", "#b829ff");
+                    } else if (b.type === 'brk') {
+                        b.state = 'braking';
+                        b.brakeUntil = ts + 420;
+                        addFloat(b.x, b.y - 18, "فرامل! 🛑", "#ffb800");
+                    } else if (b.type === 'dbl') {
+                        b.state = 'dbl_fake';
+                        b.brakeUntil = ts + 260;
+                        addFloat(b.x, b.y - 18, "FAKE؟..", "#ff0055");
+                    }
                 }
-            }
 
-            if (b.state === 'braking') {
-                if (timestamp >= b.brakeUntil) {
-                    b.state = 'after_brake';
+                if (b.state === 'braking') {
+                    if (ts >= b.brakeUntil) b.state = 'after_brk';
+                } else if (b.state === 'dbl_fake') {
+                    b.y += b.speed * 0.45;
+                    if (ts >= b.brakeUntil) {
+                        b.state = 'real_again';
+                        tone(780, 'sine', 0.09, 0.18);
+                        addFloat(b.x, b.y, "حقيقية! امسكها 🧠", "#00ff66");
+                    }
+                } else {
+                    b.y += b.speed;
                 }
-            } else {
-                b.y += b.speed;
-            }
 
-            const targetX = laneCenters[b.lane];
-            b.x += (targetX - b.x) * 0.3;
+                b.x += (lanes[b.lane] - b.x) * 0.28;
 
-            if (b.state === 'faked') {
-                document.getElementById(`btn-${b.lane}`).classList.add('fake-warn');
-                b.alpha -= 0.032;
-                if (b.y > hitLineY + 60) {
-                    addScore(2, laneCenters[b.lane], hitLineY - 30, "🧠 SMART! +2");
-                    showTaunt("أسطورة! كشفت الفيك 🧠", true);
+                if (b.state === 'faked') {
+                    document.getElementById('btn-' + b.lane).classList.add('warn');
+                    if (b.y > hitY + 55) {
+                        gainPoint(2, lanes[b.lane], hitY - 28, "كشفت الفيك! +2 🧠");
+                        balls.splice(i, 1);
+                    }
+                } else if (b.y > hitY + 62) {
+                    hurt("فاتتك الكرة! ❌");
                     balls.splice(i, 1);
-                    continue;
-                }
-            } else {
-                if (b.y > hitLineY + 62) {
-                    const msg = TAUNTS_MISS[Math.floor(Math.random() * TAUNTS_MISS.length)];
-                    addEffect(b.x, hitLineY - 15, "فاتتك! ❌", "#ef4444");
-                    damagePlayer(msg);
-                    balls.splice(i, 1);
-                    continue;
                 }
             }
         }
 
-        for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.alpha -= 0.03;
-            if (p.alpha <= 0) particles.splice(i, 1);
-        }
-
-        for (let i = effects.length - 1; i >= 0; i--) {
-            effects[i].y += effects[i].dy;
-            effects[i].alpha -= 0.025;
-            if (effects[i].alpha <= 0) effects.splice(i, 1);
-        }
-    }
-
-    function drawGame() {
+        // Draw Cyber Scene
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        gridOffset = (gridOffset + 1.5) % 40;
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+        ctx.lineWidth = 1;
+        for (let y = gridOffset; y < canvas.height; y += 40) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
 
-        const laneW = canvas.width / 4;
+        const lw = canvas.width / 4;
         for (let i = 0; i < 4; i++) {
-            const x = laneCenters[i];
+            const x = lanes[i];
+            ctx.strokeStyle = 'rgba(0, 240, 255, 0.16)';
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, hitY); ctx.stroke();
 
-            // Neon Lane Line
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.06)';
-            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(laneW * i, 0);
-            ctx.lineTo(laneW * i, canvas.height);
-            ctx.stroke();
-
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.18)';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, hitLineY);
-            ctx.stroke();
-
-            // Cyber Target Ring
-            ctx.beginPath();
-            ctx.arc(x, hitLineY, 26, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+            ctx.arc(x, hitY, 26, 0, Math.PI * 2);
+            ctx.strokeStyle = combo >= 10 ? '#ff0055' : 'rgba(0, 240, 255, 0.65)';
             ctx.lineWidth = 3;
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(x, hitLineY, 6, 0, Math.PI * 2);
-            ctx.fillStyle = '#38bdf8';
+            ctx.arc(x, hitY, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#00f0ff';
             ctx.fill();
         }
 
-        // Draw Particles
-        particles.forEach(p => {
+        particles.forEach((p, idx) => {
+            p.x += p.vx; p.y += p.vy; p.alpha -= 0.035;
+            if (p.alpha <= 0) { particles.splice(idx, 1); return; }
             ctx.save();
-            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.globalAlpha = p.alpha;
             ctx.fillStyle = p.color;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); ctx.fill();
             ctx.restore();
         });
 
-        // Draw Balls
         balls.forEach(b => {
             ctx.save();
-            if (b.state === 'faked') {
-                ctx.fillStyle = '#ef4444';
-                ctx.font = '900 20px Cairo';
+            if (b.state === 'faked' || b.state === 'dbl_fake') {
+                ctx.fillStyle = '#ff0055';
+                ctx.font = '900 18px Cairo';
                 ctx.textAlign = 'center';
                 ctx.fillText('⚡ FAKE!', b.x, b.y);
-
-                ctx.strokeStyle = 'rgba(239, 68, 68, 0.8)';
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ff0055';
                 ctx.setLineDash([4, 4]);
-                ctx.beginPath();
-                ctx.arc(b.x, b.y - 6, b.radius, 0, Math.PI * 2);
-                ctx.stroke();
-
-                ctx.fillStyle = '#ef4444';
-                ctx.font = '900 16px Cairo';
-                ctx.fillText('لا تضغط!', laneCenters[b.lane], hitLineY + 6);
+                ctx.beginPath(); ctx.arc(b.x, b.y - 5, b.r, 0, Math.PI * 2); ctx.stroke();
             } else {
-                const nearTrigger = (b.type === 'fake' && b.triggerY - b.y < 35 && b.triggerY - b.y > 0);
-                const jitterX = nearTrigger ? (Math.random() - 0.5) * 4 : 0;
+                let col = saveData.skin || '#00f0ff';
+                if (b.state === 'switched') col = '#b829ff';
+                if (b.state === 'braking' || b.state === 'after_brk') col = '#ffb800';
+                if (b.state === 'real_again') col = '#00ff66';
 
-                let color = '#38bdf8';
-                let glowColor = '#38bdf8';
-                if (b.state === 'switched') { color = '#a855f7'; glowColor = '#c084fc'; }
-                if (b.state === 'braking' || b.state === 'after_brake') { color = '#f59e0b'; glowColor = '#fbbf24'; }
-
-                ctx.shadowColor = glowColor;
+                ctx.shadowColor = col;
                 ctx.shadowBlur = 18;
-                ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.arc(b.x + jitterX, b.y, b.radius, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = col;
+                ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
 
-                // Core rotation ring
-                ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.arc(b.x + jitterX, b.y, b.radius - 5, b.rotation, b.rotation + Math.PI);
-                ctx.stroke();
+                if (b.armor > 1) {
+                    ctx.strokeStyle = '#ffb800';
+                    ctx.lineWidth = 3.5;
+                    ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
+                    ctx.fillStyle = '#05050a';
+                    ctx.font = '900 12px Orbitron';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('x2', b.x, b.y + 4);
+                } else {
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(b.x, b.y, b.r - 6, b.rot, b.rot + Math.PI); ctx.stroke();
+                }
             }
             ctx.restore();
         });
 
-        // Draw Floating Effects
-        effects.forEach(ef => {
+        floatTexts.forEach((f, idx) => {
+            f.y -= 1.8; f.alpha -= 0.025;
+            if (f.alpha <= 0) { floatTexts.splice(idx, 1); return; }
             ctx.save();
-            ctx.globalAlpha = Math.max(0, ef.alpha);
-            ctx.fillStyle = ef.color;
-            ctx.font = '900 16px Cairo';
+            ctx.globalAlpha = f.alpha;
+            ctx.fillStyle = f.color;
+            ctx.font = '900 15px Cairo';
             ctx.textAlign = 'center';
-            ctx.fillText(ef.text, ef.x, ef.y);
+            ctx.fillText(f.txt, f.x, f.y);
             ctx.restore();
         });
-    }
 
-    function gameLoop(timestamp) {
-        updateGame(timestamp);
-        drawGame();
-        requestAnimationFrame(gameLoop);
+        requestAnimationFrame(loop);
     }
-    requestAnimationFrame(gameLoop);
+    requestAnimationFrame(loop);
 
-    function startStage(stageNum) {
-        resizeCanvas();
-        currentStageNum = stageNum;
+    function startStage(num) {
+        resize();
+        curStage = num;
         score = 0;
         combo = 0;
-        hearts = 3;
+        hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
         balls = [];
-        effects = [];
         particles = [];
-        lastSpawnTime = performance.now();
-        gameActive = true;
-
+        floatTexts = [];
+        lastSpawn = performance.now();
+        active = true;
         document.getElementById('menu-overlay').classList.add('hidden');
         document.getElementById('result-overlay').classList.add('hidden');
         updateHUD();
     }
 
-    function endGame(won) {
-        gameActive = false;
-        const resOverlay = document.getElementById('result-overlay');
-        const title = document.getElementById('result-title');
-        const desc = document.getElementById('result-desc');
-        const nextBtn = document.getElementById('next-stage-btn');
-
-        resOverlay.classList.remove('hidden');
+    function finishGame(won) {
+        active = false;
+        const ov = document.getElementById('result-overlay');
+        const t = document.getElementById('res-title');
+        const d = document.getElementById('res-desc');
+        const nb = document.getElementById('next-btn');
+        ov.classList.remove('hidden');
 
         if (won) {
-            title.textContent = `كفو! ختمت المرحلة ${currentStageNum} 🔥`;
-            desc.textContent = "ردة فعلك أسطورية وما انخدعت بالفخاخ!";
-            if (currentStageNum < 5) {
-                nextBtn.classList.remove('hidden');
-                nextBtn.textContent = `المرحلة ${currentStageNum + 1} ⬅️`;
-            } else {
-                nextBtn.classList.remove('hidden');
-                nextBtn.textContent = `جرب الطور اللانهائي ♾️`;
-            }
+            if (!saveData.cleared.includes(curStage) && curStage <= 5) saveData.cleared.push(curStage);
+            saveProgress();
+            t.textContent = `تم اختراق المرحلة ${curStage}! 🔥`;
+            d.textContent = `كسبت نقاط طاقة XP إضافية! ردة فعلك أسطورية.`;
+            nb.style.display = 'block';
         } else {
-            title.textContent = STAGES[currentStageNum].endless ? `انتهت الجولة! سكورك: ${score}` : "خسرت! غدروك الكرات 💔";
-            desc.textContent = "ركز عالكرات ولا تستعجل بالضغط!";
-            nextBtn.classList.add('hidden');
+            t.textContent = STAGES[curStage].endless ? `انتهى التحدي! سكورك: ${score}` : `فشل الاختراق! 💔`;
+            d.textContent = `خدعتك الكرات.. ركز بالمسارات وجرب مرة ثانية!`;
+            nb.style.display = 'none';
         }
     }
 
-    function nextStageAction() {
-        if (currentStageNum < 5) {
-            startStage(currentStageNum + 1);
-        } else {
-            startStage(6);
-        }
+    function nextStage() {
+        startStage(curStage < 5 ? curStage + 1 : 6);
     }
-
     function retryStage() {
-        startStage(currentStageNum);
+        startStage(curStage);
     }
-
-    function showMainMenu() {
-        gameActive = false;
+    function openMenu() {
+        active = false;
+        saveProgress();
         document.getElementById('result-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
     }
 </script>
-
 </body>
 </html>
