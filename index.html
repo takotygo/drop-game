@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v6.0</title>
+    <title>TAKO DROP | غدر الكرات v6.1</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -157,7 +157,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 0 4px 0;
+            padding: 12px 0 6px 0;
             position: relative;
         }
 
@@ -180,16 +180,19 @@
             border-radius: 99px;
             margin-bottom: 5px;
             box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
+            direction: ltr;
+            unicode-bidi: isolate;
         }
 
         .glitch-title {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 900;
             color: #fff;
             font-family: 'Orbitron', 'Cairo', sans-serif;
             text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink), 0 0 22px rgba(0, 240, 255, 0.55);
             line-height: 1.1;
             letter-spacing: 1px;
+            direction: ltr;
         }
 
         .menu-subtitle {
@@ -211,12 +214,19 @@
             background: rgba(17, 14, 32, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            padding: 7px 4px;
+            padding: 8px 4px;
             text-align: center;
         }
 
-        .stat-label { font-size: 10px; color: #94a3b8; font-weight: 700; }
-        .stat-val { font-family: 'Orbitron', 'Cairo', sans-serif; font-size: 15px; font-weight: 900; }
+        .stat-label { font-size: 10px; color: #94a3b8; font-weight: 700; margin-bottom: 2px; }
+        .stat-val {
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+        }
         .val-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
         .val-yellow { color: var(--yellow); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
 
@@ -224,18 +234,17 @@
         .orbs-stage {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 260px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
         }
 
-        /* Ambient Rotating Ring Behind Start */
         .ambient-ring {
             position: absolute;
-            width: 210px;
-            height: 210px;
+            width: 215px;
+            height: 215px;
             border-radius: 50%;
             border: 2px dashed rgba(0, 240, 255, 0.22);
             animation: spinSlow 14s linear infinite;
@@ -244,8 +253,8 @@
 
         .ambient-ring-2 {
             position: absolute;
-            width: 242px;
-            height: 242px;
+            width: 248px;
+            height: 248px;
             border-radius: 50%;
             border: 1px solid rgba(255, 0, 85, 0.15);
             animation: spinSlow 22s linear infinite reverse;
@@ -281,8 +290,8 @@
         }
 
         .orb-start {
-            width: 158px;
-            height: 158px;
+            width: 162px;
+            height: 162px;
             background: radial-gradient(circle at 35% 30%, #19355c 0%, #091326 65%, #050811 100%);
             border: 4px solid var(--cyan);
             animation: pulseMainOrb 2.2s infinite ease-in-out;
@@ -290,11 +299,13 @@
 
         .orb-start .orb-eng {
             font-family: 'Orbitron', sans-serif;
-            font-size: 25px;
+            font-size: 26px;
             font-weight: 900;
             letter-spacing: 2px;
             color: #fff;
             text-shadow: 0 0 14px var(--cyan);
+            direction: ltr;
+            unicode-bidi: isolate;
         }
 
         .orb-start .orb-ar {
@@ -305,8 +316,8 @@
         }
 
         .orb-side {
-            width: 96px;
-            height: 96px;
+            width: 98px;
+            height: 98px;
             background: radial-gradient(circle at 35% 30%, #2b1442 0%, #11091c 75%);
             border: 3px solid var(--purple);
             box-shadow: 0 0 22px rgba(184, 41, 255, 0.45), inset 0 0 15px rgba(184, 41, 255, 0.3);
@@ -332,9 +343,11 @@
 
         .orb-side .orb-eng {
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 900;
             letter-spacing: 0.5px;
+            direction: ltr;
+            unicode-bidi: isolate;
         }
 
         .orb-side .orb-ar {
@@ -348,15 +361,15 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 8px;
         }
 
         .id-search-bar {
             display: flex;
             gap: 6px;
             background: rgba(17, 14, 32, 0.95);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            padding: 5px;
+            border: 1px solid rgba(0, 255, 102, 0.35);
+            padding: 6px;
             border-radius: 10px;
         }
 
@@ -381,7 +394,7 @@
             background: rgba(45, 10, 25, 0.78);
             border: 1px solid rgba(255, 0, 85, 0.45);
             border-radius: 10px;
-            padding: 7px 12px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -426,7 +439,7 @@
         }
 
         .portal-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 900;
             color: #fff;
             display: flex;
@@ -458,7 +471,6 @@
             scroll-behavior: smooth;
         }
 
-        /* STAGGERED CASCADE ANIMATION FROM TOP TO BOTTOM */
         @keyframes cascadeDown {
             0% {
                 opacity: 0;
@@ -490,10 +502,7 @@
             transition: transform 0.2s, border-color 0.2s;
         }
 
-        .stage-card:hover {
-            transform: translateX(-3px);
-        }
-
+        .stage-card:hover { transform: translateX(-3px); }
         .stage-card.purple { border-right-color: var(--purple); }
         .stage-card.yellow { border-right-color: var(--yellow); }
         .stage-card.green { border-right-color: var(--green); }
@@ -546,7 +555,7 @@
         .field-group label { font-size: 11px; color: #94a3b8; font-weight: 800; }
 
         .spawn-list {
-            max-height: 140px;
+            max-height: 130px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -591,6 +600,7 @@
             justify-content: center;
             font-family: 'Orbitron', sans-serif;
             font-size: 11px;
+            direction: ltr;
         }
 
         .rank-1 { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #000; box-shadow: 0 0 10px #ffd700; }
@@ -621,7 +631,14 @@
 
         .hud-box { display: flex; flex-direction: column; align-items: center; }
         .hud-lbl { font-size: 9.5px; color: #64748b; font-weight: 800; }
-        .hud-val { font-size: 14px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 8px rgba(0, 240, 255, 0.5); }
+        .hud-val {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
 
         .menu-mini-btn {
             background: rgba(255, 255, 255, 0.08);
@@ -763,7 +780,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge">TAKO DROP // v6.0</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.1</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -801,24 +818,24 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge">TAKO DROP // v6.0</div>
-                <div class="glitch-title">TAKO DROP</div>
-                <div class="menu-subtitle">اضغط دائرة START لاختيار المراحل أو CREATE لتصنيع مابك!</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.1</div>
+                <div class="glitch-title" dir="ltr">TAKO DROP</div>
+                <div class="menu-subtitle">اضغط دائرة START لاختيار المراحل الـ 40 أو CREATE لتصنيع مابك!</div>
             </div>
 
             <!-- 3 Stats Boxes -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">أعلى سكور</div>
-                    <div class="stat-val val-cyan" id="stat-high">0</div>
+                    <div class="stat-val val-cyan" id="stat-high" dir="ltr">0</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">المراحل المختومة</div>
-                    <div class="stat-val val-cyan" id="stat-cleared">0 / 10</div>
+                    <div class="stat-val val-cyan" id="stat-cleared" dir="ltr">0 / 40</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">نقاط الطاقة XP</div>
-                    <div class="stat-val val-yellow" id="stat-xp">0 XP</div>
+                    <div class="stat-val val-yellow" id="stat-xp" dir="ltr">0 XP</div>
                 </div>
             </div>
 
@@ -830,36 +847,29 @@
                 <!-- Right Side Circle: Create Map -->
                 <button class="orb-btn orb-side create-orb" onclick="openPortal('editor', event)">
                     <span class="orb-icon">🛠️</span>
-                    <span class="orb-eng" style="color:var(--green);">CREATE</span>
+                    <span class="orb-eng" dir="ltr" style="color:var(--green);">CREATE</span>
                     <span class="orb-ar">تصنيع ماب</span>
                 </button>
 
                 <!-- Center Giant Circle: START -->
                 <button class="orb-btn orb-start" onclick="openPortal('stages', event)">
-                    <span class="orb-eng">START</span>
+                    <span class="orb-eng" dir="ltr">START</span>
                     <span class="orb-ar">ابدأ اللعب ◀</span>
                 </button>
 
-                <!-- Left Side Circle: 1vs1 Room -->
+                <!-- Left Side Circle: 1vs1 Room (Fixed LTR Direction!) -->
                 <button class="orb-btn orb-side pvp-orb" onclick="openPortal('pvp', event)">
                     <span class="orb-icon">⚔️</span>
-                    <span class="orb-eng" style="color:var(--pink);">1 VS 1</span>
+                    <span class="orb-eng" dir="ltr" style="color:var(--pink);">1 VS 1</span>
                     <span class="orb-ar">روم التحدي</span>
                 </button>
             </div>
 
-            <!-- Bottom Quick Actions: Guide + Search by ID + Hardcore -->
+            <!-- Bottom Quick Actions: Guide + Hardcore -->
             <div class="hub-bottom">
-                <div style="display:flex; gap:6px;">
-                    <button class="menu-mini-btn" style="flex:1; padding:8px; border-color:rgba(0,240,255,0.35); color:var(--cyan);" onclick="openPortal('guide', event)">
-                        📖 دليل الـ 41 كرة وتجربتها الفورية
-                    </button>
-                </div>
-
-                <div class="id-search-bar">
-                    <input type="text" id="stage-id-input" class="cyber-input" placeholder="🔍 العب ماب لاعب عبر الـ ID (مثال: TAKO-41)">
-                    <button class="play-chip green" onclick="playStageById()"><span>تشغيل ◀</span></button>
-                </div>
+                <button class="menu-mini-btn" style="width:100%; padding:9px; border-color:rgba(0,240,255,0.35); color:var(--cyan);" onclick="openPortal('guide', event)">
+                    📖 دليل الـ 40 كرة وتجربتها الفورية
+                </button>
 
                 <label class="hardcore-bar">
                     <span>🔥 طور الجلطة (قلب واحد + نقاط وXP مضاعف)</span>
@@ -868,27 +878,37 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 1: STAGES (FROM TOP TO BOTTOM) ================= -->
+        <!-- ================= EXPANDING PORTAL 1: 40 STAGES (FROM TOP TO BOTTOM) ================= -->
         <div id="portal-stages" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title">🎓 قائمة المراحل والمابات</div>
+                <div class="portal-title">🎓 المراحل التدريجية (40 مرحلة)</div>
                 <button class="close-portal-btn" onclick="closePortal('stages')">✖ إغلاق</button>
             </div>
             <div class="portal-body" id="stages-scroll-body">
                 <div id="tutorial-list-container" style="display:flex; flex-direction:column; gap:9px;"></div>
-                <div id="my-custom-stages" style="display:flex; flex-direction:column; gap:9px; margin-top:8px;"></div>
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 2: CREATE MAP (LEVEL EDITOR) ================= -->
+        <!-- ================= EXPANDING PORTAL 2: CREATE MAP + SEARCH BY ID ================= -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--green);">🛠️ استوديو تصنيع الماب (41 كرة)</div>
+                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب والبحث بالـ ID</div>
                 <button class="close-portal-btn" onclick="closePortal('editor')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
+                <!-- Search & Play Map by ID (Moved Inside Create Portal!) -->
+                <div class="editor-box cascade-item" style="border-color:var(--green); padding:10px;">
+                    <div class="stage-title" style="color:var(--green); font-size:13px;">🔍 العب ماب لاعب عبر الـ ID</div>
+                    <div class="id-search-bar" style="margin-top:2px;">
+                        <input type="text" id="stage-id-input" class="cyber-input" placeholder="اكتب الـ ID هنا (مثال: TAKO-40)">
+                        <button class="play-chip green" onclick="playStageById()"><span>تشغيل ◀</span></button>
+                    </div>
+                </div>
+
+                <!-- Map Creator Studio -->
                 <div class="editor-box cascade-item">
-                    <div class="stage-desc">اختر المسار، ونوع الكرة من الـ 41 خدعة، وتوقيت النزول، والسرعة ثم احفظ الماب بـ ID أونلاين!</div>
+                    <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم ماب جديد (40 كرة)</div>
+                    <div class="stage-desc">اختر المسار، ونوع الكرة، وتوقيت النزول، والسرعة ثم احفظ الماب بـ ID أونلاين!</div>
 
                     <div class="field-group">
                         <label>اسم الماب الخاص بك:</label>
@@ -906,7 +926,7 @@
                             </select>
                         </div>
                         <div class="field-group">
-                            <label>نوع الكرة (41 نوع)</label>
+                            <label>نوع الكرة (40 نوع)</label>
                             <select id="ed-type" class="cyber-input"></select>
                         </div>
                         <div class="field-group">
@@ -938,36 +958,39 @@
 
                     <div id="generated-id-box" class="hidden" style="background:rgba(0,255,102,0.12); border:1px solid var(--green); padding:10px; border-radius:8px; text-align:center;">
                         <div style="font-size:11.5px; color:#cbd5e1;">تم رفع الماب على السيرفر! شارك هذا الـ ID مع أصدقائك:</div>
-                        <div id="generated-id-text" style="font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:var(--green); margin:4px 0;">TK-0000</div>
+                        <div id="generated-id-text" dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:var(--green); margin:4px 0;">TK-0000</div>
                         <div style="display:flex; gap:6px; justify-content:center; margin-top:4px;">
                             <button class="menu-mini-btn" onclick="copyStageId(false)">📋 نسخ الـ ID القصير</button>
                             <button class="menu-mini-btn" onclick="copyStageId(true)">🌐 نسخ الكود الاحتياطي</button>
                         </div>
                     </div>
                 </div>
+
+                <!-- Saved Online Custom Maps List -->
+                <div id="my-custom-stages" style="display:flex; flex-direction:column; gap:9px; margin-top:4px;"></div>
             </div>
         </div>
 
         <!-- ================= EXPANDING PORTAL 3: 1VS1 ROOM ================= -->
         <div id="portal-pvp" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي الثنائي (1vs1)</div>
+                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي الثنائي (<span dir="ltr">1 VS 1</span>)</div>
                 <button class="close-portal-btn" onclick="closePortal('pvp')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="editor-box cascade-item" style="border-color:var(--pink);">
-                    <div class="stage-desc">اكتب كود الروم مع رفيقك واضغط "دخول روم التحدي". السيرفر سيولد مرحلة عشوائية موحدة من الـ 41 كرة بنفس التوقيت والمسارات والسرعة لكما معاً!</div>
+                    <div class="stage-desc">اكتب كود الروم مع رفيقك واضغط "دخول روم التحدي". السيرفر سيولد مرحلة عشوائية موحدة من الـ 40 كرة بنفس التوقيت والمسارات والسرعة لكما معاً!</div>
 
                     <div class="field-group" style="margin-top:4px;">
                         <label>🔑 كود الروم المشترك (Room ID):</label>
-                        <input type="text" id="pvp-room-input" class="cyber-input" placeholder="مثال: TAKO77" value="TAKO-1V1">
+                        <input type="text" id="pvp-room-input" class="cyber-input" dir="ltr" placeholder="مثال: TAKO77" value="TAKO-1V1">
                     </div>
 
                     <div class="field-group">
                         <label>🔥 عدد كرات التحدي في الروم:</label>
                         <select id="pvp-ball-count" class="cyber-input">
                             <option value="15">تحدي سريع (15 كرة عشوائية)</option>
-                            <option value="25" selected>تحدي متوسط (25 كرة من الـ 41 نوع)</option>
+                            <option value="25" selected>تحدي متوسط (25 كرة من الـ 40 نوع)</option>
                             <option value="40">تحدي الماستر (40 كرة مجنونة)</option>
                         </select>
                     </div>
@@ -988,7 +1011,7 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 4: LEADERBOARD (TOP BAR) ================= -->
+        <!-- ================= EXPANDING PORTAL 4: LEADERBOARD ================= -->
         <div id="portal-ranks" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--yellow);">🏆 المتصدرين (Online Top 100)</div>
@@ -1056,10 +1079,10 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 6: 41 BALLS GUIDE ================= -->
+        <!-- ================= EXPANDING PORTAL 6: 40 BALLS GUIDE ================= -->
         <div id="portal-guide" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--cyan);">📖 موسوعة الـ 41 كرة وتجربتها</div>
+                <div class="portal-title" style="color:var(--cyan);">📖 موسوعة الـ 40 كرة وتجربتها</div>
                 <button class="close-portal-btn" onclick="closePortal('guide')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
@@ -1070,7 +1093,7 @@
 
     <!-- RESULT OVERLAY -->
     <div id="result-overlay" class="overlay hidden" style="justify-content:center; align-items:center; text-align:center;">
-        <div class="cyber-badge">SYSTEM REPORT</div>
+        <div class="cyber-badge" dir="ltr">SYSTEM REPORT</div>
         <div class="glitch-title" id="res-title" style="margin-bottom:10px;">تم اجتياز المرحلة!</div>
         <div class="menu-subtitle" id="res-desc" style="font-size:14px; margin-bottom:20px;">أداء أسطوري وردة فعل خارقة!</div>
         <button class="play-chip" id="next-btn" style="width:100%; padding:13px; font-size:15px; margin-bottom:8px;" onclick="nextStage()"><span>المرحلة التالية ◀</span></button>
@@ -1093,7 +1116,6 @@
         const modal = document.getElementById('portal-' + name);
         if (!modal) return;
 
-        // Calculate click origin so portal expands directly from the button clicked!
         let originX = 50, originY = 54;
         if (ev && ev.currentTarget) {
             const rect = ev.currentTarget.getBoundingClientRect();
@@ -1103,23 +1125,23 @@
         }
 
         modal.style.clipPath = `circle(0% at ${originX}% ${originY}%)`;
-        void modal.offsetWidth; // Force reflow
+        void modal.offsetWidth;
 
         if (name === 'stages') {
             renderTutorialCards();
-            renderCustomStagesList();
             const body = document.getElementById('stages-scroll-body');
             if (body) body.scrollTop = 0;
+        } else if (name === 'editor') {
+            renderCustomStagesList();
         } else if (name === 'ranks') {
             syncFromCloud(false);
         }
 
-        // Re-trigger staggered top-to-bottom cascade animation on child cards
         const items = modal.querySelectorAll('.stage-card, .rank-row, .editor-box');
         items.forEach((el, idx) => {
             el.classList.remove('cascade-item');
             void el.offsetWidth;
-            el.style.animationDelay = `${Math.min(idx * 0.045, 0.6)}s`;
+            el.style.animationDelay = `${Math.min(idx * 0.035, 0.65)}s`;
             el.classList.add('cascade-item');
         });
 
@@ -1143,7 +1165,7 @@
         });
     }
 
-    // ================= ALL 41 BALL TYPES =================
+    // ================= ALL 40 BALL TYPES (UPWARD BALL REMOVED AS REQUESTED) =================
     const BALL_META = {
         normal:     { name: '🔵 1. البلازما العادية', xp: 5, pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
         fake:       { name: '🔴 2. الفخ القاتل FAKE', xp: 15, pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
@@ -1160,56 +1182,78 @@
         pendulum:   { name: '⏳ 13. كرة البندول المتأرجحة', xp: 55, pts: 5, color: '#38bdf8', desc: 'تتأرجح يميناً ويساراً بين المسارات أثناء نزولها!' },
         magnet:     { name: '🧲 14. كرة المغناطيس', xp: 60, pts: 5, color: '#ef4444', desc: 'تسحب الكرات الأخرى المجاورة لتجبرها على الدخول بمسارها!' },
         boomerang:  { name: '🪃 15. الارتداد العكسي (بوميرانج)', xp: 65, pts: 6, color: '#fbbf24', desc: 'تلمس الخط وتصعد للأعلى لوحدها ثم تعود، امسكها بالمرة الثانية!' },
-        upward:     { name: '⬆️ 16. الجاذبية المعكوسة', xp: 60, pts: 6, color: '#10b981', desc: 'تخرج من أسفل الشاشة صعوداً نحو دائرة الهدف!' },
-        swapper:    { name: '🔄 17. كرة التبديل (Swapper)', xp: 65, pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى بمسار مجاور قبل الخط!' },
-        splitter:   { name: '➗ 18. الكرة المنقسمة (Splitter)', xp: 65, pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين بمسارين متجاورين!' },
-        matryoshka: { name: '🪆 19. كرة الماتريوشكا الروسية', xp: 75, pts: 7, color: '#f97316', desc: 'كرة كبيرة تصغر وتنط للأعلى 3 مرات عند الخط قبل اختفائها!' },
-        spawner:    { name: '🤰 20. الكرة الأم (Spawner)', xp: 65, pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها أثناء نزولها!' },
-        twin:       { name: '🔗 21. التوأم المربوط', xp: 70, pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها بمسار آخر بنفس اللحظة مربوطتين بليزر!' },
-        mirage:     { name: '🏜️ 22. كرة السراب (Mirage)', xp: 65, pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين تختفيان قبل الخط وتبقى الحقيقية!' },
-        chameleon:  { name: '🦎 23. كرة الحرباء', xp: 55, pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار وتكشف حقيقتها بآخر لحظة!' },
-        smoke:      { name: '💨 24. قنبلة الدخان (Smoke)', xp: 70, pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات لثانية كاملة!' },
-        flash:      { name: '📸 25. كرة الفلاش الضوئي', xp: 70, pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور أثناء الوميض!' },
-        micro:      { name: '🔬 26. الكرة المتقلصة (Micro)', xp: 55, pts: 5, color: '#38bdf8', desc: 'تبدأ كبيرة وتصغر تدريجياً حتى تصبح نقطة صغيرة عند الخط!' },
-        mirror:     { name: '🪞 27. الشاشة المقلوبة (Mirror)', xp: 80, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً (1 يصير 4، و2 يصير 3) أثناء وجودها!' },
-        heartbeat:  { name: '💓 28. كرة النبض (Heartbeat)', xp: 55, pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات متقطعة حتى تصل للخط!' },
-        slowmo:     { name: '🐢 29. كرة تبطيء الزمن (Slow-Mo)', xp: 50, pts: 5, color: '#2dd4bf', desc: 'عند كسر درعها تبطئ كل الكرات بالشاشة لمدة ثانيتين!' },
-        glitchspd:  { name: '⚡ 30. التسارع العشوائي (Glitch)', xp: 65, pts: 6, color: '#facc15', desc: 'تتغير سرعتها كل ربع ثانية بشكل جنوني غير متوقع!' },
-        timebomb:   { name: '💣 31. القنبلة الموقوتة (Timer)', xp: 75, pts: 7, color: '#ef4444', desc: 'عليها عداد ثواني؛ اضغط زر مسارها فور وصول العداد لـ 0.0 بالهواء!' },
-        laserhold:  { name: '🔋 32. شعاع الليزر الطويل', xp: 65, pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر، اضغط على رأسها وذيلها المتصل عند الخط!' },
-        swipe:      { name: '➡️ 33. كرة السهم الموجه (Swipe)', xp: 65, pts: 6, color: '#fb923c', desc: 'عليها سهم؛ تندفع بآخر لحظة باتجاه السهم للمسار المجاور!' },
-        overcharge: { name: '⚡ 34. الكرة المشحونة (Double Tap)', xp: 70, pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط لتفريغ شحنتها!' },
-        shieldgrd:  { name: '🛡️ 35. كرة الأمان العابرة', xp: 45, pts: 4, color: '#4ade80', desc: 'كرة خضراء مسالمة تمر من الخط بسلام وتمنحك XP مجاني إذا تركتها!' },
-        mine:       { name: '☠️ 36. كرة اللغم الأرضي (Mine)', xp: 50, pts: 5, color: '#dc2626', desc: 'لا تختفي مثل الـ FAKE بل تمر فوق الدائرة! إذا ضغطتها تنقص قلبين!' },
-        vampire:    { name: '🧛 37. كرة مصاص الدماء', xp: 65, pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 40 XP من رصيدك وتطير للأعلى!' },
-        virus:      { name: '🦠 38. كرة الفيروس المعدي', xp: 70, pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة بها إلى كرات شبحية عند اقترابها!' },
-        freeze:     { name: '❄️ 39. كرة الجليد (Freeze)', xp: 65, pts: 6, color: '#7dd3fc', desc: 'إذا ضغطت مسارها بكير بالغلط تجمد الزر لمدة 1.5 ثانية!' },
-        sniper:     { name: '🎯 40. كرة القناص (Sniper)', xp: 75, pts: 7, color: '#f87171', desc: 'تصوب بعلامة 🎯 على مسار آخر وتنطلق إليه بزاوية مائلة كالرصاصة!' },
-        blackhole:  { name: '🌌 41. زعيم الثقب الأسود (x4)', xp: 100, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4)! كل ضغطة عليها تبعثر أماكن الكرات الأخرى بالشاشة!' }
+        swapper:    { name: '🔄 16. كرة التبديل (Swapper)', xp: 65, pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى بمسار مجاور قبل الخط!' },
+        splitter:   { name: '➗ 17. الكرة المنقسمة (Splitter)', xp: 65, pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين بمسارين متجاورين!' },
+        matryoshka: { name: '🪆 18. كرة الماتريوشكا الروسية', xp: 75, pts: 7, color: '#f97316', desc: 'كرة كبيرة تصغر وتنط للأعلى 3 مرات عند الخط قبل اختفائها!' },
+        spawner:    { name: '🤰 19. الكرة الأم (Spawner)', xp: 65, pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها أثناء نزولها!' },
+        twin:       { name: '🔗 20. التوأم المربوط', xp: 70, pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها بمسار آخر بنفس اللحظة مربوطتين بليزر!' },
+        mirage:     { name: '🏜️ 21. كرة السراب (Mirage)', xp: 65, pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين تختفيان قبل الخط وتبقى الحقيقية!' },
+        chameleon:  { name: '🦎 22. كرة الحرباء', xp: 55, pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار وتكشف حقيقتها بآخر لحظة!' },
+        smoke:      { name: '💨 23. قنبلة الدخان (Smoke)', xp: 70, pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات لثانية كاملة!' },
+        flash:      { name: '📸 24. كرة الفلاش الضوئي', xp: 70, pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور أثناء الوميض!' },
+        micro:      { name: '🔬 25. الكرة المتقلصة (Micro)', xp: 55, pts: 5, color: '#38bdf8', desc: 'تبدأ كبيرة وتصغر تدريجياً حتى تصبح نقطة صغيرة عند الخط!' },
+        mirror:     { name: '🪞 26. الشاشة المقلوبة (Mirror)', xp: 80, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً (1 يصير 4، و2 يصير 3) أثناء وجودها!' },
+        heartbeat:  { name: '💓 27. كرة النبض (Heartbeat)', xp: 55, pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات متقطعة حتى تصل للخط!' },
+        slowmo:     { name: '🐢 28. كرة تبطيء الزمن (Slow-Mo)', xp: 50, pts: 5, color: '#2dd4bf', desc: 'عند كسر درعها تبطئ كل الكرات بالشاشة لمدة ثانيتين!' },
+        glitchspd:  { name: '⚡ 29. التسارع العشوائي (Glitch)', xp: 65, pts: 6, color: '#facc15', desc: 'تتغير سرعتها كل ربع ثانية بشكل جنوني غير متوقع!' },
+        timebomb:   { name: '💣 30. القنبلة الموقوتة (Timer)', xp: 75, pts: 7, color: '#ef4444', desc: 'عليها عداد ثواني؛ اضغط زر مسارها فور وصول العداد لـ 0.0 بالهواء!' },
+        laserhold:  { name: '🔋 31. شعاع الليزر الطويل', xp: 65, pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر، اضغط على رأسها وذيلها المتصل عند الخط!' },
+        swipe:      { name: '➡️ 32. كرة السهم الموجه (Swipe)', xp: 65, pts: 6, color: '#fb923c', desc: 'عليها سهم؛ تندفع بآخر لحظة باتجاه السهم للمسار المجاور!' },
+        overcharge: { name: '⚡ 33. الكرة المشحونة (Double Tap)', xp: 70, pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط لتفريغ شحنتها!' },
+        shieldgrd:  { name: '🛡️ 34. كرة الأمان العابرة', xp: 45, pts: 4, color: '#4ade80', desc: 'كرة خضراء مسالمة تمر من الخط بسلام وتمنحك XP مجاني إذا تركتها!' },
+        mine:       { name: '☠️ 35. كرة اللغم الأرضي (Mine)', xp: 50, pts: 5, color: '#dc2626', desc: 'لا تختفي مثل الـ FAKE بل تمر فوق الدائرة! إذا ضغطتها تنقص قلبين!' },
+        vampire:    { name: '🧛 36. كرة مصاص الدماء', xp: 65, pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 40 XP من رصيدك وتطير للأعلى!' },
+        virus:      { name: '🦠 37. كرة الفيروس المعدي', xp: 70, pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة بها إلى كرات شبحية عند اقترابها!' },
+        freeze:     { name: '❄️ 38. كرة الجليد (Freeze)', xp: 65, pts: 6, color: '#7dd3fc', desc: 'إذا ضغطت مسارها بكير بالغلط تجمد الزر لمدة 1.5 ثانية!' },
+        sniper:     { name: '🎯 39. كرة القناص (Sniper)', xp: 75, pts: 7, color: '#f87171', desc: 'تصوب بعلامة 🎯 على مسار آخر وتنطلق إليه بزاوية مائلة كالرصاصة!' },
+        blackhole:  { name: '🌌 40. زعيم الثقب الأسود (x4)', xp: 100, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4)! كل ضغطة عليها تبعثر أماكن الكرات الأخرى بالشاشة!' }
     };
 
-    // ================= 10 STAGES COVERING ALL 41 BALLS =================
-    const STAGES = {
-        1: { name: "مرحلة 1", title: "المرحلة 1: الأساسيات والفخاخ (1 - 5)", desc: "العادية، الـ FAKE، الغدارة، الفرامل، والمدرعة x2", colorClass: "", target: 8, speed: 3.8, spawn: 1000, p: { normal: 0.30, fake: 0.20, sw: 0.20, brk: 0.15, arm: 0.15 } },
-        2: { name: "مرحلة 2", title: "المرحلة 2: الخدع المتقدمة (6 - 11)", desc: "الشبحية، النيترو، الخدعة المزدوجة، الزلزال، طابة النط، والزعيم x3", colorClass: "purple", target: 10, speed: 4.0, spawn: 950, p: { ghost: 0.18, nitro: 0.18, dbl: 0.18, zig: 0.16, bounce: 0.18, boss: 0.12 } },
-        3: { name: "مرحلة 3", title: "المرحلة 3: بوابات الحركة والجاذبية (12 - 17)", desc: "كرة البوابة، البندول، المغناطيس، البوميرانج، الجاذبية المعكوسة، والتبديل!", colorClass: "yellow", target: 10, speed: 4.1, spawn: 950, p: { portal: 0.18, pendulum: 0.18, magnet: 0.16, boomerang: 0.16, upward: 0.16, swapper: 0.16 } },
-        4: { name: "مرحلة 4", title: "المرحلة 4: الانقسام والتكاثر (18 - 21)", desc: "الكرة المنقسمة، الماتريوشكا الروسية، الكرة الأم، والتوأم المربوط!", colorClass: "orange", target: 12, speed: 4.1, spawn: 960, p: { splitter: 0.25, matryoshka: 0.25, spawner: 0.25, twin: 0.25 } },
-        5: { name: "مرحلة 5", title: "المرحلة 5: السراب والخدع البصرية (22 - 27)", desc: "السراب، الحرباء، قنبلة الدخان، الفلاش، المتقلصة، والشاشة المقلوبة!", colorClass: "pink", target: 11, speed: 4.2, spawn: 940, p: { mirage: 0.18, chameleon: 0.18, smoke: 0.16, flash: 0.16, micro: 0.16, mirror: 0.16 } },
-        6: { name: "مرحلة 6", title: "المرحلة 6: التلاعب بالزمن والنبض (28 - 31)", desc: "كرة النبض، تبطيء الزمن، التسارع العشوائي، والقنبلة الموقوتة!", colorClass: "green", target: 11, speed: 4.2, spawn: 920, p: { heartbeat: 0.25, slowmo: 0.25, glitchspd: 0.25, timebomb: 0.25 } },
-        7: { name: "مرحلة 7", title: "المرحلة 7: أوامر التحكم الخاصة (32 - 35)", desc: "شعاع الليزر، كرة السهم الموجه، الكرة المشحونة، وكرة الأمان العابرة!", colorClass: "", target: 12, speed: 4.3, spawn: 900, p: { laserhold: 0.25, swipe: 0.25, overcharge: 0.25, shieldgrd: 0.25 } },
-        8: { name: "مرحلة 8", title: "المرحلة 8: الألغام والفيروسات (36 - 40)", desc: "اللغم الأرضي، مصاص الدماء، الفيروس، كرة الجليد، وكرة القناص 🎯!", colorClass: "purple", target: 12, speed: 4.3, spawn: 890, p: { mine: 0.20, vampire: 0.20, virus: 0.20, freeze: 0.20, sniper: 0.20 } },
-        9: { name: "مرحلة 9", title: "المرحلة 9: معركة الثقب الأسود 🌌 (41)", desc: "مواجهة زعيم الثقب الأسود (x4) الذي يبعثر الكرات مع نخبة الكرات السريعة!", colorClass: "yellow", target: 14, speed: 4.4, spawn: 860, p: { blackhole: 0.25, sniper: 0.15, portal: 0.15, bounce: 0.15, mirror: 0.15, boss: 0.15 } },
-        10: { name: "مرحلة 10", title: "المرحلة 10: مهرجان الـ 41 كرة الشامل 👑", desc: "الامتحان النهائي المجنون! جميع الـ 41 كرة تنزل بشكل عشوائي!", colorClass: "pink", target: 20, speed: 4.5, spawn: 820, p: "ALL_41" }
-    };
+    const BALL_KEYS = Object.keys(BALL_META); // 40 Balls total
+    const TOTAL_STAGES = BALL_KEYS.length;    // 40 Cumulative Stages
+
+    // ================= GENERATE 40 CUMULATIVE STAGES (EACH STAGE = NEW BALL + PREVIOUS BALLS) =================
+    const STAGES = {};
+    const STAGE_COLORS = ["", "pink", "purple", "yellow", "green", "orange"];
+
+    BALL_KEYS.forEach((key, idx) => {
+        const stageNum = idx + 1;
+        const meta = BALL_META[key];
+        const cleanName = meta.name.replace(/^\S+\s+\d+\.\s*/, '');
+
+        // Cumulative probability: 45% for the newly unlocked ball, 55% distributed across all previous balls!
+        let probMap = {};
+        if (idx === 0) {
+            probMap[key] = 1.0;
+        } else {
+            probMap[key] = 0.45;
+            const prevShare = 0.55 / idx;
+            for (let p = 0; p < idx; p++) {
+                probMap[BALL_KEYS[p]] = prevShare;
+            }
+        }
+
+        STAGES[stageNum] = {
+            name: `مرحلة ${stageNum}`,
+            title: `المرحلة ${stageNum}: ${cleanName}`,
+            desc: idx === 0
+                ? `${meta.desc}`
+                : `تُدخل [${cleanName}] + مزيج من الـ ${idx} كرات السابقة! — ${meta.desc}`,
+            colorClass: STAGE_COLORS[idx % STAGE_COLORS.length],
+            target: Math.min(20, 6 + Math.floor(idx / 3)),
+            speed: +(3.8 + Math.min(0.9, idx * 0.02)).toFixed(2),
+            spawn: Math.max(800, 1020 - idx * 5),
+            p: probMap
+        };
+    });
 
     function initBallsUI() {
         const selectEl = document.getElementById('ed-type');
         const guideEl = document.getElementById('guide-list-container');
-        const keys = Object.keys(BALL_META);
 
-        selectEl.innerHTML = keys.map(k => `<option value="${k}">${BALL_META[k].name} (+${BALL_META[k].xp} XP)</option>`).join('');
+        selectEl.innerHTML = BALL_KEYS.map(k => `<option value="${k}">${BALL_META[k].name} (+${BALL_META[k].xp} XP)</option>`).join('');
 
-        guideEl.innerHTML = keys.map((k, idx) => {
+        guideEl.innerHTML = BALL_KEYS.map((k, idx) => {
             const m = BALL_META[k];
             return `
             <div class="stage-card cascade-item" style="border-right-color:${m.color}; animation-delay:${Math.min(idx * 0.03, 0.5)}s">
@@ -1229,9 +1273,10 @@
     let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "#00f0ff" };
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v50') || '{}');
 
-    customStagesDB['TAKO-41'] = {
-        id: 'TAKO-41', title: 'استعراض الـ 41 كرة الخارقة', creator: 'Tako_King',
-        spawns: Object.keys(BALL_META).map((k, idx) => ({
+    // Showcase stage with all 40 balls
+    customStagesDB['TAKO-40'] = {
+        id: 'TAKO-40', title: 'استعراض الـ 40 كرة الخارقة', creator: 'Tako_King',
+        spawns: BALL_KEYS.map((k, idx) => ({
             lane: idx % 4,
             type: k,
             time: +(0.6 + idx * 0.95).toFixed(2),
@@ -1298,7 +1343,7 @@
             const st = STAGES[k];
             const isCleared = clearedArr.includes(parseInt(k));
             return `
-            <div class="stage-card ${st.colorClass} cascade-item" style="animation-delay:${idx * 0.045}s">
+            <div class="stage-card ${st.colorClass} cascade-item" style="animation-delay:${Math.min(idx * 0.03, 0.6)}s">
                 <div class="stage-info">
                     <div class="stage-title">${st.title} ${isCleared ? '✅' : ''}</div>
                     <div class="stage-desc">${st.desc}</div>
@@ -1323,7 +1368,7 @@
             pushAccountToCloud(uKey, accountObj);
         }
         document.getElementById('stat-high').textContent = saveData.high || 0;
-        document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / 10`;
+        document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / ${TOTAL_STAGES}`;
         document.getElementById('stat-xp').textContent = `${saveData.xp || 0} XP`;
         renderTutorialCards();
         renderCustomStagesList();
@@ -1420,11 +1465,10 @@
             if (res.ok) roomData = await res.json();
 
             if (!roomData || !roomData.spawns || forceRegenerate) {
-                const allTypes = Object.keys(BALL_META);
                 let generatedSpawns = [];
                 let tAcc = 0.6;
                 for (let i = 0; i < ballCount; i++) {
-                    const rndType = allTypes[Math.floor(Math.random() * allTypes.length)];
+                    const rndType = BALL_KEYS[Math.floor(Math.random() * BALL_KEYS.length)];
                     const rndLane = Math.floor(Math.random() * 4);
                     const rndSpeed = +(3.9 + Math.random() * 0.9).toFixed(2);
                     generatedSpawns.push({ lane: rndLane, type: rndType, time: +tAcc.toFixed(2), speed: rndSpeed });
@@ -1515,7 +1559,7 @@
                         <div class="rank-badge ${badgeClass}">${medal}</div>
                         <span style="color:${isMe ? 'var(--cyan)' : '#fff'};">${item.username} ${isMe ? '(أنت)' : ''}</span>
                     </div>
-                    <div style="display:flex; gap:10px; align-items:center;">
+                    <div style="display:flex; gap:10px; align-items:center;" dir="ltr">
                         <span style="font-size:11px; color:var(--yellow);">${item.xp || 0} XP</span>
                         <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px;">${item.high || 0} PTS</span>
                     </div>
@@ -1605,14 +1649,14 @@
         const wrap = document.getElementById('my-custom-stages');
         const keys = Object.keys(customStagesDB);
         if (keys.length === 0) { wrap.innerHTML = ''; return; }
-        wrap.innerHTML = `<div style="font-size:12px; font-weight:900; color:var(--green); margin-top:6px;">🌐 مابات اللاعبين الأونلاين (تعمل بالـ ID):</div>` +
+        wrap.innerHTML = `<div style="font-size:12px; font-weight:900; color:var(--green); margin-top:6px;">🌐 مابات اللاعبين الأونلاين المحفوظة:</div>` +
             keys.map((k, idx) => {
                 const st = customStagesDB[k];
-                if (!st || !st.spawns) return '';
+                if (!st || !st.spawns || st.type === 'upward') return '';
                 return `
-                <div class="stage-card green cascade-item" style="animation-delay:${0.45 + idx * 0.04}s">
+                <div class="stage-card green cascade-item" style="animation-delay:${0.15 + idx * 0.04}s">
                     <div class="stage-info">
-                        <div class="stage-title">${st.title} <span style="color:var(--yellow); font-family:'Orbitron',sans-serif; font-size:12px;">[${st.id}]</span></div>
+                        <div class="stage-title">${st.title} <span dir="ltr" style="color:var(--yellow); font-family:'Orbitron',sans-serif; font-size:12px;">[${st.id}]</span></div>
                         <div class="stage-desc">صممها: ${st.creator} • عدد الكرات: ${st.spawns.length}</div>
                     </div>
                     <button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button>
@@ -1659,7 +1703,7 @@
             }
         }
 
-        showToast(`لم يتم العثور على ماب بالـ ID (${raw})! جرب TAKO-41`, false);
+        showToast(`لم يتم العثور على ماب بالـ ID (${raw})! جرب TAKO-40`, false);
     }
 
     function startSingleBallDemo(ballType) {
@@ -1695,7 +1739,7 @@
         } catch(e) {}
     }
 
-    // ================= 41-BALL GAMEPLAY ENGINE =================
+    // ================= 40-BALL GAMEPLAY ENGINE =================
     let curStage = 1;
     let customMode = false;
     let activeCustomStage = null;
@@ -1754,10 +1798,6 @@
     }
 
     function pickType(p) {
-        if (p === "ALL_41") {
-            const allKeys = Object.keys(BALL_META);
-            return allKeys[Math.floor(Math.random() * allKeys.length)];
-        }
         const r = Math.random();
         let sum = 0;
         const keys = Object.keys(p);
@@ -1766,6 +1806,7 @@
     }
 
     function createBallObject(lane, type, speed) {
+        if (!BALL_META[type]) type = 'normal';
         let targetLane = lane;
         let secondLane = lane;
         const adjLane = lane === 0 ? 1 : (lane === 3 ? 2 : (Math.random() < 0.5 ? lane - 1 : lane + 1));
@@ -1791,13 +1832,13 @@
         return {
             lane, origLane: lane, targetLane, secondLane,
             x: lanes[lane],
-            y: type === 'upward' ? canvas.height + 20 : -25,
+            y: -25,
             r: type === 'matryoshka' ? 26 : 20,
             type, armor, maxArmor: armor,
             baseSpeed: speed, speed: initSpeed,
             vy: 0, bounced: false,
             matryoshkaCount: type === 'matryoshka' ? 2 : 0,
-            state: type === 'upward' ? 'upward_move' : 'fall',
+            state: 'fall',
             trigY: hitY - (145 + Math.random() * 35),
             brakeUntil: 0,
             bombDeadline: type === 'timebomb' ? now + 1350 : 0,
@@ -1807,6 +1848,7 @@
     }
 
     function spawnBallWithExtras(lane, type, speed) {
+        if (!BALL_META[type]) type = 'normal';
         const mainBall = createBallObject(lane, type, speed);
         balls.push(mainBall);
 
@@ -2053,16 +2095,6 @@
                     continue;
                 }
 
-                if (b.state === 'upward_move') {
-                    b.y -= b.speed * 0.85 * speedFactor;
-                    b.x += (lanes[b.lane] - b.x) * 0.25;
-                    if (b.y < hitY - 65) {
-                        hurt("فاتتك الكرة الصاعدة! ⬆️❌");
-                        balls.splice(i, 1);
-                    }
-                    continue;
-                }
-
                 if (b.state === 'bouncing_up') {
                     b.y += b.vy * speedFactor;
                     b.vy += 0.44 * speedFactor;
@@ -2240,7 +2272,7 @@
                 if (b.state === 'ghosted') ctx.globalAlpha = 0.09;
 
                 let col = saveData.skin || '#00f0ff';
-                if (b.state !== 'fall' || ['mine', 'shieldgrd', 'timebomb', 'upward', 'chameleon'].includes(b.type)) {
+                if (b.state !== 'fall' || ['mine', 'shieldgrd', 'timebomb', 'chameleon'].includes(b.type)) {
                     col = BALL_META[b.type]?.color || col;
                 }
                 if (b.type === 'chameleon') {
@@ -2348,11 +2380,11 @@
         ov.classList.remove('hidden');
 
         if (won) {
-            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= 10) saveData.cleared.push(curStage);
+            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) saveData.cleared.push(curStage);
             saveProgress();
             t.textContent = customMode ? `أنهيت التحدي بنجاح! 🏆` : `اجتزت المرحلة ${curStage}! 🔥`;
             d.textContent = `السكور النهائي: ${score} PTS${opponentText} | رصيدك: ${saveData.xp} XP`;
-            nb.style.display = (customMode || curStage >= 10) ? 'none' : 'block';
+            nb.style.display = (customMode || curStage >= TOTAL_STAGES) ? 'none' : 'block';
         } else {
             t.textContent = `فشل التحدي! 💔`;
             d.textContent = `سكورك: ${score} PTS${opponentText}.. ركز بالمسارات وجرب مرة ثانية!`;
@@ -2360,7 +2392,7 @@
         }
     }
 
-    function nextStage() { if (curStage < 10) startStage(curStage + 1); }
+    function nextStage() { if (curStage < TOTAL_STAGES) startStage(curStage + 1); }
     function retryStage() { if (customMode) startCustomStage(activeCustomStage, !!activePvpRoomCode); else startStage(curStage); }
 
     function openMenu() {
