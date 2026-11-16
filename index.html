@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v6.1</title>
+    <title>TAKO DROP | غدر الكرات v6.2</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -71,7 +71,446 @@
             display: none !important;
         }
 
-        /* ================= TOP BAR (LEADERBOARD & USER) ================= */
+        /* ================= TOP BAR (LEADERBOARD & USER & ADMIN) ================= */
+        .top-user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5px;
+            background: rgba(17, 14, 32, 0.92);
+            border: 1px solid rgba(0, 240, 255, 0.18);
+            border-radius: 12px;
+            padding: 7px 9px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            flex-wrap: wrap;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+        }
+
+        .online-dot.offline {
+            background: var(--yellow);
+            box-shadow: 0 0 8px var(--yellow);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-btn-admin {
+            background: linear-gradient(135deg, #ff0055, #b829ff);
+            color: #fff;
+            border: 1px solid #ff99bb;
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(255, 0, 85, 0.65);
+            animation: pulseAdmin 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pulseAdmin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .top-btn-rank {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #05050a;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
+            transition: transform 0.15s;
+        }
+
+        .top-btn-rank:active { transform: scale(0.93); }
+
+        .top-btn-mini {
+            background: rgba(0, 240, 255, 0.12);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            color: var(--cyan);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background: rgba(255, 0, 85, 0.15);
+            border: 1px solid rgba(255, 0, 85, 0.4);
+            color: #fda4af;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* ================= CENTER HUB (CIRCLES MENU) ================= */
+        .hub-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0 6px 0;
+            position: relative;
+        }
+
+        .hub-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cyber-badge {
+            background: rgba(255, 0, 85, 0.15);
+            border: 1px solid rgba(255, 0, 85, 0.45);
+            color: #ff4d88;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            padding: 3px 14px;
+            border-radius: 99px;
+            margin-bottom: 5px;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+
+        .glitch-title {
+            font-size: 34px;
+            font-weight: 900;
+            color: #fff;
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink), 0 0 22px rgba(0, 240, 255, 0.55);
+            line-height: 1.1;
+            letter-spacing: 1px;
+            direction: ltr;
+        }
+
+        .menu-subtitle {
+            color: #94a3b8;
+            font-size: 11.5px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* Stats Strip */
+        .stats-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .stat-card {
+            background: rgba(17, 14, 32, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        .stat-label { font-size: 10px; color: #94a3b8; font-weight: 700; margin-bottom: 2px; }
+        .stat-val {
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+        }
+        .val-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        .val-yellow { color: var(--yellow); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
+
+        /* MAIN PULSING ORBS STAGE */
+        .orbs-stage {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .ambient-ring {
+            position: absolute;
+            width: 215px;
+            height: 215px;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 240, 255, 0.22);
+            animation: spinSlow 14s linear infinite;
+            pointer-events: none;
+        }
+
+        .ambient-ring-2 {
+            position: absolute;
+            width: 248px;
+            height: 248px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 0, 85, 0.15);
+            animation: spinSlow 22s linear infinite reverse;
+            pointer-events: none;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseMainOrb {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 240, 255, 0.55), inset 0 0 25px rgba(0, 240, 255, 0.4); }
+            50% { transform: scale(1.06); box-shadow: 0 0 50px rgba(0, 240, 255, 0.85), 0 0 80px rgba(255, 0, 85, 0.35), inset 0 0 35px rgba(0, 240, 255, 0.65); }
+        }
+
+        .orb-btn {
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s;
+            border: none;
+            color: #fff;
+        }
+
+        .orb-btn:active {
+            transform: scale(0.9) !important;
+        }
+
+        .orb-start {
+            width: 162px;
+            height: 162px;
+            background: radial-gradient(circle at 35% 30%, #19355c 0%, #091326 65%, #050811 100%);
+            border: 4px solid var(--cyan);
+            animation: pulseMainOrb 2.2s infinite ease-in-out;
+        }
+
+        .orb-start .orb-eng {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 14px var(--cyan);
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+
+        .orb-start .orb-ar {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-top: 2px;
+        }
+
+        .orb-side {
+            width: 98px;
+            height: 98px;
+            background: radial-gradient(circle at 35% 30%, #2b1442 0%, #11091c 75%);
+            border: 3px solid var(--purple);
+            box-shadow: 0 0 22px rgba(184, 41, 255, 0.45), inset 0 0 15px rgba(184, 41, 255, 0.3);
+        }
+
+        .orb-side.create-orb {
+            border-color: var(--green);
+            background: radial-gradient(circle at 35% 30%, #0d3828 0%, #071912 75%);
+            box-shadow: 0 0 22px rgba(0, 255, 102, 0.4), inset 0 0 15px rgba(0, 255, 102, 0.25);
+        }
+
+        .orb-side.pvp-orb {
+            border-color: var(--pink);
+            background: radial-gradient(circle at 35% 30%, #421028 0%, #1c0711 75%);
+            box-shadow: 0 0 22px rgba(255, 0, 85, 0.45), inset 0 0 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .orb-side .orb-icon {
+            font-size: 22px;
+            line-height: 1;
+            margin-bottom: 3px;
+        }
+
+        .orb-side .orb-eng {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+
+        .orb-side .orb-ar {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #cbd5e1;
+        }
+
+        /* Quick Bottom Bar in Hub */
+        .hub-bottom {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .id-search-bar {
+            display: flex;
+            gap: 6px;
+            background: rgba(17, 14, 32, 0.95);
+            border: 1px solid rgba(0, 255, 102, 0.35);
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .cyber-input {
+            width: 100%;
+            background: rgba(7, 5, 16, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-size: 12.5px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .hardcore-bar {
+            background: rgba(45, 10, 25, 0.78);
+            border: 1px solid rgba(255, 0, 85, 0.45);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .hardcore-bar span {
+            font-size: 11.5أضفتُ لك **لوحة تحكم الأدمن السرية الشاملة (`ADMIN PANEL`)** في نسخة **`TAKO DROP v6.2`** بحيث تفتح لك صلاحيات كاملة بمجرد تسجيل الدخول بالبيانات التي حددتها!
+
+### 👑 ماذا يحدث عندما تسجل دخولك بحساب الأدمن؟
+* **اسم المستخدم:** `admin takotygo`
+* **كلمة السر:** `0988480623admin0963852741`
+
+1. **زر الأدمن السري (`👑 الأدمن`):** يظهر زر ذهبي خاص في الشريط العلوي لك وحدك فقط (مخفي تماماً عن باقي اللاعبين).
+2. **كشف جميع معلومات اللاعبين:** داخل نافذة الأدمن، ترى قائمة بكل الحسابات المسجلة على السيرفر مع **كلمة السر الخاصة بكل لاعب، السكور، الـ XP، عدد المراحل المختومة، ولون الكرة**.
+3. **نظام الباند (Ban / Unban) المباشر عبر السيرفر:**
+   * بجانب كل لاعب يوجد زر **`🚫 باند`**؛ بمجرد الضغط عليه يتم حظر اللاعب فوراً على سيرفر Firebase!
+   * إذا حاول اللاعب المحظور الدخول للعبة (أو إذا كان داخلها)، يتم طرده فوراً وتظهر له رسالة حمراء: **`🚫 هذا الحساب محظور (BANNED) من قِبل الإدارة!`**، كما يختفي اسمه تلقائياً من قائمة المتصدرين، ويمكنك فك الباند عنه بأي وقت بضغطة زر.
+4. **تعديل نقاط أو حذف أي حساب:** أضفت لك أيضاً أزرار سريعة بجانب كل لاعب لـ **تصفير نقاطه (`🔄 تصفير`)**، أو **إعطائه `+1000 XP` هدية**، أو **حذف حسابه نهائياً (`🗑️ حذف`)**.
+
+انسخ هذا الكود الكامل وضعه في ملف `index.html` على GitHub:
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#070510">
+    <title>TAKO DROP | غدر الكرات v6.2</title>
+    <style>
+        @import url('[https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap)');
+
+        :root {
+            --bg-dark: #070510;
+            --panel-bg: #110e20;
+            --cyan: #00f0ff;
+            --pink: #ff0055;
+            --purple: #b829ff;
+            --yellow: #ffb800;
+            --green: #00ff66;
+            --orange: #ff6b00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'Cairo', sans-serif;
+            touch-action: manipulation;
+        }
+
+        body {
+            background: #030206;
+            color: #fff;
+            overflow: hidden;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #app {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 100dvh;
+            background: radial-gradient(circle at 50% 25%, #1d1145 0%, #070510 70%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-left: 1px solid rgba(0, 240, 255, 0.15);
+            border-right: 1px solid rgba(0, 240, 255, 0.15);
+        }
+
+        /* ================= OVERLAYS ================= */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 15%, #1b0f3b 0%, #06040e 70%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            padding: 14px;
+            overflow: hidden;
+        }
+
+        .overlay.hidden {
+            display: none !important;
+        }
+
+        /* ================= TOP BAR (LEADERBOARD & USER & ADMIN) ================= */
         .top-user-bar {
             display: flex;
             align-items: center;
@@ -110,16 +549,28 @@
         .top-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+        }
+
+        .top-btn-admin {
+            background: linear-gradient(135deg, #ff0055, #b829ff);
+            color: #fff;
+            border: 1px solid #ffd700;
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(255, 0, 85, 0.6);
         }
 
         .top-btn-rank {
             background: linear-gradient(135deg, #f59e0b, #ea580c);
             color: #05050a;
             border: none;
-            padding: 5px 11px;
+            padding: 5px 10px;
             border-radius: 8px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 900;
             cursor: pointer;
             box-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
@@ -577,6 +1028,58 @@
             font-weight: 700;
         }
 
+        /* Admin User Card */
+        .admin-user-card {
+            background: rgba(18, 15, 34, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 4px solid var(--cyan);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .admin-user-card.banned-card {
+            border-color: rgba(255, 0, 85, 0.5);
+            border-right: 4px solid var(--pink);
+            background: rgba(45, 10, 25, 0.65);
+        }
+
+        .admin-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 10px;
+            font-size: 11.5px;
+            color: #cbd5e1;
+            background: rgba(7, 5, 16, 0.7);
+            padding: 7px 9px;
+            border-radius: 7px;
+        }
+
+        .admin-actions-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .adm-btn {
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+
+        .adm-ban { background: var(--pink); color: #fff; }
+        .adm-unban { background: var(--green); color: #05050a; }
+        .adm-reset { background: var(--yellow); color: #05050a; }
+        .adm-gift { background: var(--cyan); color: #05050a; }
+        .adm-del { background: rgba(255, 0, 85, 0.25); border: 1px solid var(--pink); color: #fda4af; }
+
         /* Leaderboard Rows */
         .rank-row {
             display: flex;
@@ -780,7 +1283,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.1</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.2</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -788,7 +1291,7 @@
             <div id="login-msg"></div>
             <div class="field-group">
                 <label>👤 اسم اللاعب (Username)</label>
-                <input type="text" id="login-user" class="cyber-input" placeholder="مثال: tako" maxlength="18">
+                <input type="text" id="login-user" class="cyber-input" placeholder="مثال: tako" maxlength="24">
             </div>
             <div class="field-group">
                 <label>🔒 كلمة السر (Password)</label>
@@ -802,13 +1305,14 @@
 
     <!-- ================= MAIN LAUNCHER HUB OVERLAY ================= -->
     <div id="menu-overlay" class="overlay">
-        <!-- TOP BAR: User + Leaderboard + Skins + Logout -->
+        <!-- TOP BAR: User + Secret Admin Btn + Leaderboard + Skins + Logout -->
         <div class="top-user-bar">
             <div class="user-pill">
                 <span class="online-dot" id="server-status-dot"></span>
                 <span id="display-username">لاعب</span>
             </div>
             <div class="top-actions">
+                <button class="top-btn-admin hidden" id="admin-top-btn" onclick="openPortal('admin', event)">👑 الأدمن</button>
                 <button class="top-btn-rank" onclick="openPortal('ranks', event)">🏆 المتصدرين</button>
                 <button class="top-btn-mini" onclick="openPortal('skins', event)">🎨 الألوان</button>
                 <button class="logout-btn" onclick="logoutUser()">خروج</button>
@@ -818,7 +1322,7 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.1</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.2</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
                 <div class="menu-subtitle">اضغط دائرة START لاختيار المراحل الـ 40 أو CREATE لتصنيع مابك!</div>
             </div>
@@ -857,7 +1361,7 @@
                     <span class="orb-ar">ابدأ اللعب ◀</span>
                 </button>
 
-                <!-- Left Side Circle: 1vs1 Room (Fixed LTR Direction!) -->
+                <!-- Left Side Circle: 1vs1 Room -->
                 <button class="orb-btn orb-side pvp-orb" onclick="openPortal('pvp', event)">
                     <span class="orb-icon">⚔️</span>
                     <span class="orb-eng" dir="ltr" style="color:var(--pink);">1 VS 1</span>
@@ -878,7 +1382,7 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 1: 40 STAGES (FROM TOP TO BOTTOM) ================= -->
+        <!-- ================= EXPANDING PORTAL 1: 40 STAGES ================= -->
         <div id="portal-stages" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title">🎓 المراحل التدريجية (40 مرحلة)</div>
@@ -896,7 +1400,6 @@
                 <button class="close-portal-btn" onclick="closePortal('editor')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
-                <!-- Search & Play Map by ID (Moved Inside Create Portal!) -->
                 <div class="editor-box cascade-item" style="border-color:var(--green); padding:10px;">
                     <div class="stage-title" style="color:var(--green); font-size:13px;">🔍 العب ماب لاعب عبر الـ ID</div>
                     <div class="id-search-bar" style="margin-top:2px;">
@@ -905,7 +1408,6 @@
                     </div>
                 </div>
 
-                <!-- Map Creator Studio -->
                 <div class="editor-box cascade-item">
                     <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم ماب جديد (40 كرة)</div>
                     <div class="stage-desc">اختر المسار، ونوع الكرة، وتوقيت النزول، والسرعة ثم احفظ الماب بـ ID أونلاين!</div>
@@ -966,7 +1468,6 @@
                     </div>
                 </div>
 
-                <!-- Saved Online Custom Maps List -->
                 <div id="my-custom-stages" style="display:flex; flex-direction:column; gap:9px; margin-top:4px;"></div>
             </div>
         </div>
@@ -1089,6 +1590,25 @@
                 <div id="guide-list-container" style="display:flex; flex-direction:column; gap:8px;"></div>
             </div>
         </div>
+
+        <!-- ================= EXPANDING PORTAL 7: SECRET ADMIN PANEL ================= -->
+        <div id="portal-admin" class="portal-modal">
+            <div class="portal-header">
+                <div class="portal-title" style="color:#ffd700;">👑 لوحة تحكم الأدمن (إدارة الحسابات والباند)</div>
+                <button class="close-portal-btn" onclick="closePortal('admin')">✖ إغلاق</button>
+            </div>
+            <div class="portal-body">
+                <div class="stage-card pink cascade-item">
+                    <div class="stage-info">
+                        <div class="stage-title">🛡️ صلاحيات المطور (admin takotygo)</div>
+                        <div class="stage-desc" id="admin-stats-summary">يمكنك رؤية كلمات السر، حظر أي لاعب (باند)، تصفير نقاطه، أو حذف حسابه مباشرة من السيرفر!</div>
+                    </div>
+                    <button class="menu-mini-btn" onclick="syncFromCloud(true)">🔄 تحديث</button>
+                </div>
+                <input type="text" id="admin-search-input" class="cyber-input" placeholder="🔍 ابحث عن اسم لاعب..." oninput="renderAdminPanel()">
+                <div id="admin-users-container" style="display:flex; flex-direction:column; gap:9px;"></div>
+            </div>
+        </div>
     </div>
 
     <!-- RESULT OVERLAY -->
@@ -1103,16 +1623,30 @@
 </div>
 
 <script>
-    // ================= FIREBASE CLOUD CONFIGURATION =================
-    const FIREBASE_DB_URL = "https://takotygo-74-default-rtdb.firebaseio.com";
+    // ================= FIREBASE CLOUD & ADMIN CREDENTIALS =================
+    const FIREBASE_DB_URL = "[https://takotygo-74-default-rtdb.firebaseio.com](https://takotygo-74-default-rtdb.firebaseio.com)";
+    const ADMIN_USERNAME = "admin takotygo";
+    const ADMIN_PASS = "0988480623admin0963852741";
 
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const app = document.getElementById('app');
     const toast = document.getElementById('toast');
 
+    function isCurrentUserAdmin() {
+        return saveData &&
+               saveData.username &&
+               saveData.username.trim().toLowerCase() === ADMIN_USERNAME &&
+               String(saveData.password) === ADMIN_PASS;
+    }
+
     // ================= PORTAL EXPANSION & STAGGERED CASCADE LOGIC =================
     function openPortal(name, ev) {
+        if (name === 'admin' && !isCurrentUserAdmin()) {
+            showToast("⛔ هذه اللوحة مخصصة للأدمن فقط!", false);
+            return;
+        }
+
         const modal = document.getElementById('portal-' + name);
         if (!modal) return;
 
@@ -1135,9 +1669,12 @@
             renderCustomStagesList();
         } else if (name === 'ranks') {
             syncFromCloud(false);
+        } else if (name === 'admin') {
+            syncFromCloud(false);
+            renderAdminPanel();
         }
 
-        const items = modal.querySelectorAll('.stage-card, .rank-row, .editor-box');
+        const items = modal.querySelectorAll('.stage-card, .rank-row, .editor-box, .admin-user-card');
         items.forEach((el, idx) => {
             el.classList.remove('cascade-item');
             void el.offsetWidth;
@@ -1165,7 +1702,7 @@
         });
     }
 
-    // ================= ALL 40 BALL TYPES (UPWARD BALL REMOVED AS REQUESTED) =================
+    // ================= ALL 40 BALL TYPES =================
     const BALL_META = {
         normal:     { name: '🔵 1. البلازما العادية', xp: 5, pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
         fake:       { name: '🔴 2. الفخ القاتل FAKE', xp: 15, pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
@@ -1209,10 +1746,10 @@
         blackhole:  { name: '🌌 40. زعيم الثقب الأسود (x4)', xp: 100, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4)! كل ضغطة عليها تبعثر أماكن الكرات الأخرى بالشاشة!' }
     };
 
-    const BALL_KEYS = Object.keys(BALL_META); // 40 Balls total
-    const TOTAL_STAGES = BALL_KEYS.length;    // 40 Cumulative Stages
+    const BALL_KEYS = Object.keys(BALL_META);
+    const TOTAL_STAGES = BALL_KEYS.length;
 
-    // ================= GENERATE 40 CUMULATIVE STAGES (EACH STAGE = NEW BALL + PREVIOUS BALLS) =================
+    // ================= GENERATE 40 CUMULATIVE STAGES =================
     const STAGES = {};
     const STAGE_COLORS = ["", "pink", "purple", "yellow", "green", "orange"];
 
@@ -1221,7 +1758,6 @@
         const meta = BALL_META[key];
         const cleanName = meta.name.replace(/^\S+\s+\d+\.\s*/, '');
 
-        // Cumulative probability: 45% for the newly unlocked ball, 55% distributed across all previous balls!
         let probMap = {};
         if (idx === 0) {
             probMap[key] = 1.0;
@@ -1270,10 +1806,9 @@
     let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v50') || '{}');
     let activeUserKey = localStorage.getItem('takoDropActiveUser_v50') || "";
 
-    let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "#00f0ff" };
+    let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "#00f0ff", banned: false };
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v50') || '{}');
 
-    // Showcase stage with all 40 balls
     customStagesDB['TAKO-40'] = {
         id: 'TAKO-40', title: 'استعراض الـ 40 كرة الخارقة', creator: 'Tako_King',
         spawns: BALL_KEYS.map((k, idx) => ({
@@ -1300,6 +1835,14 @@
                 if (cloudAccounts && typeof cloudAccounts === 'object') {
                     accountsDB = { ...accountsDB, ...cloudAccounts };
                     localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+
+                    // Real-time Ban Enforcement: If current active user got banned by Admin, kick them out immediately!
+                    if (activeUserKey && accountsDB[activeUserKey] && accountsDB[activeUserKey].banned && !isCurrentUserAdmin()) {
+                        active = false;
+                        logoutUser();
+                        showLoginMessage("🚫 تم حظر حسابك (BANNED) من قِبل الإدارة!", "error");
+                        return;
+                    }
                 }
                 document.getElementById('server-status-dot').classList.remove('offline');
             }
@@ -1314,6 +1857,7 @@
 
             renderLeaderboard();
             renderCustomStagesList();
+            if (isCurrentUserAdmin()) renderAdminPanel();
             if (showNotification) showToast("تم تحديث البيانات من السيرفر العالمي! 🌐⚡", true);
         } catch (err) {
             document.getElementById('server-status-dot').classList.add('offline');
@@ -1334,6 +1878,105 @@
                 method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(stageObj)
             });
         } catch (e) {}
+    }
+
+    // ================= ADMIN PANEL FUNCTIONS =================
+    function renderAdminPanel() {
+        if (!isCurrentUserAdmin()) return;
+        const container = document.getElementById('admin-users-container');
+        const q = (document.getElementById('admin-search-input')?.value || '').trim().toLowerCase();
+
+        const entries = Object.entries(accountsDB).filter(([k, v]) => v && v.username);
+        entries.sort((a, b) => ((b[1].high || 0) - (a[1].high || 0)));
+
+        const filtered = entries.filter(([k, u]) => u.username.toLowerCase().includes(q));
+        const bannedCount = entries.filter(([k, u]) => u.banned).length;
+
+        document.getElementById('admin-stats-summary').textContent =
+            `إجمالي الحسابات: ${entries.length} | المحظورون (Banned): ${bannedCount}`;
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">لا توجد حسابات مطابقة للبحث.</div>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(([uKey, u]) => {
+            const isAdminAcc = u.username.trim().toLowerCase() === ADMIN_USERNAME;
+            const clearedCount = Array.isArray(u.cleared) ? u.cleared.length : 0;
+            const isBanned = !!u.banned;
+
+            return `
+            <div class="admin-user-card ${isBanned ? 'banned-card' : ''}">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:14px; font-weight:900; color:${isBanned ? 'var(--pink)' : 'var(--cyan)'};">
+                        👤 ${u.username} ${isAdminAcc ? '👑 (أنت)' : ''} ${isBanned ? '🚫 [محظور BANNED]' : ''}
+                    </div>
+                    <span dir="ltr" style="font-size:11px; color:var(--yellow); font-family:'Orbitron',sans-serif;">${u.high || 0} PTS</span>
+                </div>
+
+                <div class="admin-info-grid">
+                    <div>🔑 كلمة السر: <strong style="color:#fff;" dir="ltr">${u.password || '—'}</strong></div>
+                    <div>⚡ الطاقة: <strong style="color:var(--yellow);" dir="ltr">${u.xp || 0} XP</strong></div>
+                    <div>🎓 المراحل: <strong style="color:var(--green);" dir="ltr">${clearedCount} / ${TOTAL_STAGES}</strong></div>
+                    <div>🎨 اللون: <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${u.skin || '#00f0ff'};"></span> <span dir="ltr">${u.skin || '#00f0ff'}</span></div>
+                </div>
+
+                ${!isAdminAcc ? `
+                <div class="admin-actions-row">
+                    <button class="adm-btn ${isBanned ? 'adm-unban' : 'adm-ban'}" onclick="adminToggleBan('${uKey}')">
+                        ${isBanned ? '✅ فك الباند' : '🚫 باند (حظر)'}
+                    </button>
+                    <button class="adm-btn adm-gift" onclick="adminGiftXP('${uKey}')">🎁 +1000 XP</button>
+                    <button class="adm-btn adm-reset" onclick="adminResetUser('${uKey}')">🔄 تصفير</button>
+                    <button class="adm-btn adm-del" onclick="adminDeleteUser('${uKey}')">🗑️ حذف</button>
+                </div>` : ''}
+            </div>`;
+        }).join('');
+    }
+
+    async function adminToggleBan(uKey) {
+        if (!isCurrentUserAdmin() || !accountsDB[uKey]) return;
+        accountsDB[uKey].banned = !accountsDB[uKey].banned;
+        localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+        await pushAccountToCloud(uKey, accountsDB[uKey]);
+        renderAdminPanel();
+        renderLeaderboard();
+        showToast(accountsDB[uKey].banned ? `🚫 تم حظر (${accountsDB[uKey].username}) بنجاح!` : `✅ تم فك الحظر عن (${accountsDB[uKey].username})!`, true);
+    }
+
+    async function adminGiftXP(uKey) {
+        if (!isCurrentUserAdmin() || !accountsDB[uKey]) return;
+        accountsDB[uKey].xp = (accountsDB[uKey].xp || 0) + 1000;
+        localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+        await pushAccountToCloud(uKey, accountsDB[uKey]);
+        renderAdminPanel();
+        renderLeaderboard();
+        showToast(`🎁 تم منح +1000 XP للاعب ${accountsDB[uKey].username}!`, true);
+    }
+
+    async function adminResetUser(uKey) {
+        if (!isCurrentUserAdmin() || !accountsDB[uKey]) return;
+        accountsDB[uKey].high = 0;
+        accountsDB[uKey].xp = 0;
+        accountsDB[uKey].cleared = [];
+        localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+        await pushAccountToCloud(uKey, accountsDB[uKey]);
+        renderAdminPanel();
+        renderLeaderboard();
+        showToast(`🔄 تم تصفير حساب ${accountsDB[uKey].username}!`, true);
+    }
+
+    async function adminDeleteUser(uKey) {
+        if (!isCurrentUserAdmin() || !accountsDB[uKey]) return;
+        const name = accountsDB[uKey].username;
+        delete accountsDB[uKey];
+        localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+        try {
+            await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`, { method: 'DELETE' });
+        } catch (e) {}
+        renderAdminPanel();
+        renderLeaderboard();
+        showToast(`🗑️ تم حذف حساب (${name}) نهائياً!`, true);
     }
 
     function renderTutorialCards() {
@@ -1357,14 +2000,21 @@
         if (!Array.isArray(saveData.cleared)) saveData.cleared = [];
         if (saveData.username) {
             const uKey = sanitizeFirebaseKey(saveData.username);
+            const prevBanned = accountsDB[uKey]?.banned || false;
             const accountObj = {
-                username: saveData.username.trim(), password: saveData.password,
-                high: saveData.high || 0, xp: saveData.xp || 0, cleared: saveData.cleared, skin: saveData.skin || "#00f0ff"
+                username: saveData.username.trim(),
+                password: saveData.password,
+                high: saveData.high || 0,
+                xp: saveData.xp || 0,
+                cleared: saveData.cleared,
+                skin: saveData.skin || "#00f0ff",
+                banned: prevBanned
             };
             accountsDB[uKey] = accountObj;
             localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
             localStorage.setItem('takoDropActiveUser_v50', uKey);
-            document.getElementById('display-username').textContent = saveData.username;
+            document.getElementById('display-username').textContent = isCurrentUserAdmin() ? `👑 ${saveData.username}` : saveData.username;
+            document.getElementById('admin-top-btn').classList.toggle('hidden', !isCurrentUserAdmin());
             pushAccountToCloud(uKey, accountObj);
         }
         document.getElementById('stat-high').textContent = saveData.high || 0;
@@ -1384,6 +2034,14 @@
         initBallsUI();
         await syncFromCloud(false);
         if (activeUserKey && accountsDB[activeUserKey]) {
+            if (accountsDB[activeUserKey].banned) {
+                activeUserKey = "";
+                localStorage.removeItem('takoDropActiveUser_v50');
+                document.getElementById('login-overlay').classList.remove('hidden');
+                document.getElementById('menu-overlay').classList.add('hidden');
+                showLoginMessage("🚫 هذا الحساب محظور (BANNED) من قِبل الإدارة!", "error");
+                return;
+            }
             saveData = { ...accountsDB[activeUserKey], cleared: Array.isArray(accountsDB[activeUserKey].cleared) ? accountsDB[activeUserKey].cleared : [] };
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('menu-overlay').classList.remove('hidden');
@@ -1400,6 +2058,13 @@
         if (!rawUser) { showLoginMessage("⚠️ الرجاء كتابة اسم اللاعب أولاً!", "error"); return; }
         if (!rawPass) { showLoginMessage("🔒 الرجاء كتابة كلمة السر لحماية حسابك!", "error"); return; }
 
+        // Protect reserved admin username from unauthorized password
+        if (rawUser.toLowerCase() === ADMIN_USERNAME && rawPass !== ADMIN_PASS) {
+            showLoginMessage("⛔ كلمة سر الأدمن غير صحيحة!", "error");
+            tone(130, 'sawtooth', 0.25, 0.25);
+            return;
+        }
+
         const uKey = sanitizeFirebaseKey(rawUser);
         const btn = document.getElementById('login-submit-btn');
         btn.disabled = true;
@@ -1412,7 +2077,35 @@
 
         btn.disabled = false;
 
+        // If logging in with Master Admin credentials
+        if (rawUser.toLowerCase() === ADMIN_USERNAME && rawPass === ADMIN_PASS) {
+            const existing = accountsDB[uKey] || {};
+            saveData = {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASS,
+                high: existing.high || 0,
+                xp: existing.xp || 9999,
+                cleared: Array.isArray(existing.cleared) ? existing.cleared : [],
+                skin: existing.skin || "#ffd700",
+                banned: false
+            };
+            accountsDB[uKey] = { ...saveData };
+            activeUserKey = uKey;
+            showLoginMessage("");
+            saveProgress();
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('menu-overlay').classList.remove('hidden');
+            showToast("👑 أهلاً بك يا زعيم! تم تفعيل صلاحيات الأدمن", true);
+            syncFromCloud(false);
+            return;
+        }
+
         if (accountsDB[uKey]) {
+            if (accountsDB[uKey].banned) {
+                showLoginMessage("🚫 هذا الحساب محظور (BANNED) من قِبل الإدارة!", "error");
+                tone(120, 'sawtooth', 0.3, 0.25);
+                return;
+            }
             if (String(accountsDB[uKey].password) !== String(rawPass)) {
                 showLoginMessage("❌ كلمة السر غير صحيحة لهذا الحساب!", "error");
                 tone(130, 'sawtooth', 0.25, 0.25);
@@ -1422,7 +2115,7 @@
             showLoginMessage("");
             showToast(`أهلاً بعودتك يا ${saveData.username}! 🔓🌐`, true);
         } else {
-            saveData = { username: rawUser, password: rawPass, high: 0, xp: 0, cleared: [], skin: "#00f0ff" };
+            saveData = { username: rawUser, password: rawPass, high: 0, xp: 0, cleared: [], skin: "#00f0ff", banned: false };
             accountsDB[uKey] = { ...saveData };
             showLoginMessage("");
             showToast(`تم تسجيل حسابك على السيرفر العالمي يا ${rawUser}! 🔒🌐`, true);
@@ -1524,10 +2217,10 @@
 
     setInterval(syncPvpLiveScore, 2200);
 
-    // ================= ONLINE LEADERBOARD =================
+    // ================= ONLINE LEADERBOARD (EXCLUDES BANNED PLAYERS) =================
     function renderLeaderboard() {
         const container = document.getElementById('leaderboard-container');
-        const playersList = Object.values(accountsDB).filter(p => p && p.username);
+        const playersList = Object.values(accountsDB).filter(p => p && p.username && !p.banned);
         playersList.sort((a, b) => ((b.high || 0) - (a.high || 0)) || ((b.xp || 0) - (a.xp || 0)));
         const top100 = playersList.slice(0, 100);
 
@@ -2401,7 +3094,7 @@
         document.getElementById('menu-overlay').classList.remove('hidden');
     }
 
-    setInterval(() => { if (!active) syncFromCloud(false); }, 20000);
+    setInterval(() => { if (!active) syncFromCloud(false); }, 15000);
     checkAutoLogin();
 </script>
 </body>
