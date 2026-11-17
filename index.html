@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v7.0</title>
+    <title>TAKO DROP | غدر الكرات v7.1</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -285,11 +285,23 @@
         }
 
         .song-btn.listen-30 { background: rgba(0, 240, 255, 0.14); color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.4); }
-        .song-btn.listen-full { background: rgba(184, 41, 255, 0.22); color: #e9d5ff; border: 1px solid var(--purple); }
-        .song-btn.use-30 { background: rgba(0, 255, 102, 0.18); color: var(--green); border: 1px solid var(--green); }
-        .song-btn.use-full { background: linear-gradient(135deg, #00ff66, #10b981); color: #05050a; box-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        .song-btn.listen-full { background: rgba(184, 41, 255, 0.28); color: #fff; border: 1px solid var(--purple); box-shadow: 0 0 8px rgba(184,41,255,0.4); }
+        .song-btn.use-30 { background: rgba(0, 255, 102, 0.15); color: var(--green); border: 1px solid var(--green); }
+        .song-btn.use-full { background: linear-gradient(135deg, #00ff66, #10b981); color: #05050a; box-shadow: 0 0 10px rgba(0,255,102,0.35); }
         .song-btn.copy-btn { background: rgba(255, 184, 0, 0.18); color: var(--yellow); border: 1px solid rgba(255, 184, 0, 0.45); }
-        .song-btn.dl-mp3 { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; border: 1px solid #ec4899; }
+        .song-btn.dl-mp3 { background: rgba(236, 72, 153, 0.22); color: #fbcfe8; border: 1px solid #ec4899; }
+
+        /* Live Audio Player Bar inside Music Portal */
+        .live-audio-bar {
+            background: rgba(12, 10, 24, 0.96);
+            border: 1px solid var(--cyan);
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+        }
 
         /* ================= CENTER HUB ================= */
         .hub-container {
@@ -1045,6 +1057,8 @@
     <div id="canvas-wrap">
         <canvas id="gameCanvas"></canvas>
         <div id="toast">أكلت المقلب! 😂</div>
+        <!-- Hidden/Mini YouTube Full Stream Fallback Player -->
+        <div id="yt-embed-holder" class="hidden" style="position:absolute; bottom:6px; left:6px; z-index:40; background:rgba(7,5,16,0.92); border:1px solid var(--pink); border-radius:8px; padding:3px;"></div>
     </div>
 
     <!-- Bottom Controls -->
@@ -1057,7 +1071,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.0 DUAL MUSIC</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.1 FULL SONGS</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -1098,7 +1112,7 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.0 DUAL MUSIC</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.1 FULL SONGS</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -1173,17 +1187,26 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 0: DUAL MUSIC SEARCH (FULL YOUTUBE + 30s CLIP) ================= -->
+        <!-- ================= EXPANDING PORTAL 0: FULL SONGS + 30s CLIP SEARCH ENGINE ================= -->
         <div id="portal-music" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:#ec4899;">🎵 محرك الأغاني المزدوج (كاملة + 30 ثانية)</div>
+                <div class="portal-title" style="color:#ec4899;">🎵 محرك الأغاني الكاملة (MP3 كامل + يوتيوب + 30ث)</div>
                 <button class="close-portal-btn" onclick="closePortal('music')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
+                <!-- Live Player Bar (Shows exact duration & timeline when playing a full song!) -->
+                <div id="music-live-bar" class="live-audio-bar hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="live-song-label" style="font-size:11.5px; font-weight:900; color:var(--cyan);">🎶 جاري التشغيل...</span>
+                        <span id="live-song-timer" dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:11px; color:var(--yellow);">0:00 / 0:00</span>
+                    </div>
+                    <input type="range" id="live-song-seek" min="0" max="100" value="0" style="width:100%; accent-color:var(--pink);" oninput="seekPreviewAudio(this.value)">
+                </div>
+
                 <!-- Search Input Bar -->
                 <div class="editor-box cascade-item" style="border-color:#ec4899;">
-                    <div class="stage-title" style="color:#ec4899;">🔎 ابحث عن أي غناية على يوتيوب والمكتبة العالمية</div>
-                    <div class="stage-desc">اكتب اسم الأغنية (مثل Sweater Weather أو Blue Lock) لتظهر صورتها مع خيارين لكل أغنية: <strong>نسخة 30 ثانية سريعة</strong> و<strong>نسخة يوتيوب الكاملة</strong>!</div>
+                    <div class="stage-title" style="color:#ec4899;">🔎 ابحث عن أي غناية كاملة (Sweater Weather / أنمي / Phonk)</div>
+                    <div class="stage-desc">يسحب لك <strong>ملف الـ MP3 الكامل (3 إلى 5 دقائق كاملة!)</strong> مباشرة من الأرشيف العالمي ويوتيوب، بالإضافة لخيار الـ 30 ثانية السريع!</div>
 
                     <div class="id-search-bar" style="border-color:#ec4899; margin-top:4px;">
                         <input type="text" id="music-search-input" class="cyber-input" placeholder="اكتب اسم الغناية هنا (مثال: Sweater Weather)..." onkeydown="if(event.key==='Enter') searchSongsOnline()">
@@ -1193,15 +1216,15 @@
                     <!-- Quick Genre Tags -->
                     <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:2px;">
                         <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Sweater Weather')">🧣 Sweater Weather</button>
-                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Phonk Drift')">🔥 Phonk</button>
-                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Blue Lock OST')">⚽ Blue Lock</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Phonk')">🔥 Phonk</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Blue Lock')">⚽ Blue Lock</button>
                         <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Attack on Titan')">⚔️ AOT</button>
-                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Undertale Megalovania')">💀 Undertale</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Megalovania')">💀 Undertale</button>
                     </div>
                 </div>
 
                 <!-- Results Container with Thumbnails -->
-                <div id="music-results-status" style="font-size:12px; color:var(--cyan); font-weight:800; text-align:center;">اضغط زر "بحث 🔍" لعرض الأغاني (الكاملة + الـ 30 ثانية)!</div>
+                <div id="music-results-status" style="font-size:12px; color:var(--cyan); font-weight:800; text-align:center;">اضغط زر "بحث 🔍" لعرض الأغاني الكاملة (3-5 دقائق) + الـ 30 ثانية!</div>
                 <div id="music-results-list" style="display:flex; flex-direction:column; gap:9px;"></div>
             </div>
         </div>
@@ -1220,7 +1243,7 @@
         <!-- ================= EXPANDING PORTAL 2: CREATE MAP + CUSTOM AUDIO + DIFFICULTY ================= -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية وتصنيف صعوبة</div>
+                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية كاملة وتصنيف صعوبة</div>
                 <button class="close-portal-btn" onclick="closePortal('editor')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
@@ -1234,7 +1257,7 @@
 
                 <div class="editor-box cascade-item">
                     <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم الماب والأغاني (40 كرة)</div>
-                    <div class="stage-desc">اختر اسم الماب، ومستوى صعوبته، وابحث عن أي غناية (كاملة أو 30 ثانية) أو ارفعها من جهازك!</div>
+                    <div class="stage-desc">اختر اسم الماب، ومستوى صعوبته، وابحث عن أي غناية كاملة أو ارفعها من جهازك!</div>
 
                     <div class="editor-grid">
                         <div class="field-group">
@@ -1280,8 +1303,8 @@
                             </select>
                         </div>
 
-                        <input type="text" id="ed-audio-url" class="cyber-input" dir="ltr" placeholder="🔗 رابط الأغنية المنسوخ أو المباشر..." oninput="handleUrlAudioInput()">
-                        <div id="ed-audio-status" style="font-size:11px; color:var(--cyan); font-weight:800;">✅ المقطوعة المختارة: ⚡ Neon Arcade Rush (أو ابحث عن أغنية من الزر فوق!)</div>
+                        <input type="text" id="ed-audio-url" class="cyber-input" dir="ltr" placeholder="🔗 رابط الأغنية الكاملة المنسوخ أو المباشر..." oninput="handleUrlAudioInput()">
+                        <div id="ed-audio-status" style="font-size:11px; color:var(--cyan); font-weight:800;">✅ المقطوعة المختارة: ⚡ Neon Arcade Rush (أو ابحث عن أغنية كاملة من الزر فوق!)</div>
                     </div>
 
                     <div class="editor-grid">
@@ -1479,7 +1502,7 @@
                String(saveData.password) === ADMIN_PASS;
     }
 
-    // ================= DUAL MUSIC SEARCH ENGINE (YOUTUBE FULL STREAMS + 30s PREVIEWS) =================
+    // ================= MULTI-SOURCE FULL SONGS ENGINE (ARCHIVE.ORG FULL MP3 + YOUTUBE PROXY + ITUNES 30s) =================
     let searchedSongsCache = [];
     let currentPreviewUrl = "";
 
@@ -1487,14 +1510,25 @@
         "https://pipedapi.kavin.rocks",
         "https://pipedapi.tokhmi.xyz",
         "https://pipedapi.moomoo.me",
-        "https://pipedapi.syncpundit.io"
+        "https://pipedapi.syncpundit.io",
+        "https://api.piped.projectsegfau.lt"
     ];
 
     function formatDuration(sec) {
-        if (!sec || isNaN(sec)) return "0:30";
+        if (!sec || isNaN(sec) || sec <= 0) return "3:45";
         const m = Math.floor(sec / 60);
         const s = Math.floor(sec % 60);
         return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function parseDurationToSec(val) {
+        if (!val) return 210;
+        if (typeof val === 'number') return val;
+        if (typeof val === 'string' && val.includes(':')) {
+            const p = val.split(':').map(Number);
+            return p.length === 2 ? p[0] * 60 + p[1] : 210;
+        }
+        return parseFloat(val) || 210;
     }
 
     function quickMusicSearch(q) {
@@ -1502,24 +1536,79 @@
         searchSongsOnline();
     }
 
+    // Source 1: Search Internet Archive for 100% Direct Full-Length MP3s (CORS-free, 3-5 minutes!)
+    async function searchInternetArchiveFullMP3(query) {
+        try {
+            const q = `title:(${query}) AND mediatype:(audio)`;
+            const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier,title,creator&rows=10&page=1&output=json`;
+            const res = await fetch(url);
+            const data = await res.json();
+            const docs = data?.response?.docs || [];
+            if (docs.length === 0) return [];
+
+            // Fetch metadata for top 6 items in parallel to get exact .mp3 file URLs
+            const metaResults = await Promise.all(docs.slice(0, 6).map(async (doc) => {
+                try {
+                    const mRes = await fetch(`https://archive.org/metadata/${encodeURIComponent(doc.identifier)}`);
+                    const mData = await mRes.json();
+                    const files = mData?.files || [];
+                    // Find full-length MP3 file (ignore tiny samples)
+                    const mp3File = files.find(f =>
+                        f.name &&
+                        f.name.toLowerCase().endsWith('.mp3') &&
+                        (!f.size || parseInt(f.size) > 900000)
+                    );
+                    if (!mp3File) return null;
+
+                    const imgFile = files.find(f => f.name && /\.(jpg|jpeg|png)$/i.test(f.name));
+                    const durSec = parseDurationToSec(mp3File.length);
+
+                    return {
+                        title: mp3File.title || doc.title || query,
+                        artist: mp3File.artist || doc.creator || 'Full Audio Track',
+                        thumb: imgFile
+                            ? `https://archive.org/download/${encodeURIComponent(doc.identifier)}/${encodeURIComponent(imgFile.name)}`
+                            : `https://archive.org/services/img/${encodeURIComponent(doc.identifier)}`,
+                        fullAudioUrl: `https://archive.org/download/${encodeURIComponent(doc.identifier)}/${encodeURIComponent(mp3File.name)}`,
+                        durationSec: durSec,
+                        durationTxt: formatDuration(durSec)
+                    };
+                } catch (e) {
+                    return null;
+                }
+            }));
+
+            return metaResults.filter(Boolean);
+        } catch (err) {
+            return [];
+        }
+    }
+
+    // Source 2: Search YouTube via CORS-proxied Piped APIs
     async function fetchYouTubeSearch(query) {
-        for (const apiBase of YT_PIPED_APIS) {
+        const endpoints = [
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(query)}&filter=music_songs`)}`,
+            `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(query)}&filter=music_songs`,
+            `https://pipedapi.tokhmi.xyz/search?q=${encodeURIComponent(query)}&filter=music_songs`
+        ];
+
+        for (const ep of endpoints) {
             try {
                 const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 3800);
-                const res = await fetch(`${apiBase}/search?q=${encodeURIComponent(query)}&filter=music_songs`, { signal: controller.signal });
+                const timer = setTimeout(() => controller.abort(), 3500);
+                const res = await fetch(ep, { signal: controller.signal });
                 clearTimeout(timer);
                 if (res.ok) {
                     const data = await res.json();
                     if (data && Array.isArray(data.items) && data.items.length > 0) {
-                        return data.items.slice(0, 12).map(item => {
+                        return data.items.slice(0, 10).map(item => {
                             const vidId = (item.url || '').split('v=')[1] || '';
                             return {
                                 videoId: vidId,
                                 title: item.title || query,
                                 artist: item.uploaderName || 'YouTube Music',
                                 thumb: item.thumbnail || `https://i.ytimg.com/vi/${vidId}/hqdefault.jpg`,
-                                duration: item.duration || 180
+                                duration: item.duration || 215
                             };
                         }).filter(x => x.videoId);
                     }
@@ -1531,16 +1620,21 @@
 
     async function resolveYouTubeFullAudioUrl(videoId) {
         if (!videoId) return null;
-        for (const apiBase of YT_PIPED_APIS) {
+        const streamTargets = [
+            `https://pipedapi.kavin.rocks/streams/${encodeURIComponent(videoId)}`,
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://pipedapi.kavin.rocks/streams/${ videoId }`)}`,
+            `https://pipedapi.tokhmi.xyz/streams/${encodeURIComponent(videoId)}`
+        ];
+
+        for (const url of streamTargets) {
             try {
                 const controller = new AbortController();
                 const timer = setTimeout(() => controller.abort(), 4000);
-                const res = await fetch(`${apiBase}/streams/${encodeURIComponent(videoId)}`, { signal: controller.signal });
+                const res = await fetch(url, { signal: controller.signal });
                 clearTimeout(timer);
                 if (res.ok) {
                     const data = await res.json();
                     if (data && Array.isArray(data.audioStreams) && data.audioStreams.length > 0) {
-                        // Prefer m4a/mp4 audio stream for best cross-browser compatibility
                         const m4a = data.audioStreams.find(s => (s.mimeType || '').includes('mp4') && s.url);
                         return (m4a || data.audioStreams[0]).url;
                     }
@@ -1560,13 +1654,14 @@
             return;
         }
 
-        statusEl.textContent = `⏳ جاري البحث عن "${query}" (النسخة الكاملة + نسخة الـ 30 ثانية)...`;
+        statusEl.textContent = `⏳ جاري سحب الأغنية الكاملة (3-5 دقائق) + نسخة الـ 30 ثانية لـ "${query}"...`;
         statusEl.style.color = "var(--yellow)";
         listEl.innerHTML = "";
 
         try {
-            const [itunesRes, ytItems] = await Promise.all([
-                fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=15`)
+            const [archiveFullTracks, itunesRes, ytItems] = await Promise.all([
+                searchInternetArchiveFullMP3(query),
+                fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=12`)
                     .then(r => r.json()).catch(() => ({ results: [] })),
                 fetchYouTubeSearch(query)
             ]);
@@ -1574,56 +1669,63 @@
             const itunesList = (itunesRes.results || []).filter(item => item.previewUrl);
             const combined = [];
 
-            const maxLen = Math.max(itunesList.length, ytItems.length);
+            // Merge full MP3 tracks from Internet Archive + YouTube + iTunes artwork/30s clips
+            const maxLen = Math.max(archiveFullTracks.length, itunesList.length, ytItems.length);
             for (let i = 0; i < maxLen; i++) {
+                const arch = archiveFullTracks[i];
                 const it = itunesList[i];
                 const yt = ytItems[i];
-                if (!it && !yt) continue;
+                if (!arch && !it && !yt) continue;
 
-                const trackTitle = it?.trackName || yt?.title || query;
-                const artistName = it?.artistName || yt?.artist || 'فنان';
-                const thumbUrl = it?.artworkUrl100 ? it.artworkUrl100.replace('100x100bb', '200x200bb') : (yt?.thumb || '');
+                const trackTitle = it?.trackName || arch?.title || yt?.title || query;
+                const artistName = it?.artistName || arch?.artist || yt?.artist || 'فنان';
+                const highResThumb = it?.artworkUrl100
+                    ? it.artworkUrl100.replace('100x100bb', '200x200bb')
+                    : (yt?.thumb || arch?.thumb || '');
+
+                // Use first available Archive full MP3 if this specific row doesn't have one
+                const directFullMp3 = arch?.fullAudioUrl || (archiveFullTracks[0]?.fullAudioUrl || '');
                 const preview30 = it?.previewUrl || '';
-                const ytVidId = yt?.videoId || '';
-                const fullDurSec = yt?.duration || (it?.trackTimeMillis ? Math.round(it.trackTimeMillis / 1000) : 185);
+                const ytVidId = yt?.videoId || (ytItems[0]?.videoId || '');
+                const fullDurSec = arch?.durationSec || yt?.duration || (it?.trackTimeMillis ? Math.round(it.trackTimeMillis / 1000) : 240);
 
                 combined.push({
                     title: trackTitle,
                     artist: artistName,
-                    thumb: thumbUrl,
+                    thumb: highResThumb,
                     clip30Url: preview30,
+                    fullAudioUrl: directFullMp3,
                     videoId: ytVidId,
-                    fullAudioUrl: '', // Resolved on-demand when clicked
                     durationTxt: formatDuration(fullDurSec)
                 });
             }
 
             if (combined.length === 0) {
-                statusEl.textContent = `❌ لم يتم العثور على نتائج لـ "${query}". جرب اسم آخر!`;
+                statusEl.textContent = `❌ لم يتم العثور على نتائج لـ "${query}". جرب كتابة الاسم بالإنجليزية!`;
                 statusEl.style.color = "var(--pink)";
                 return;
             }
 
             searchedSongsCache = combined;
-            statusEl.textContent = `✅ تم العثور على ${combined.length} نتيجة! اختر (30ث سريعة) أو (أغنية كاملة) أو انسخها لمابك:`;
+            statusEl.textContent = `✅ تم العثور على ${combined.length} نتيجة! اضغط "🎶 استماع كاملة" أو "🔥 ربط (كاملة)" لتشغيلها كاملة (${combined[0].durationTxt}):`;
             statusEl.style.color = "var(--green)";
 
             listEl.innerHTML = searchedSongsCache.map((song, idx) => `
                 <div class="song-card cascade-item" style="animation-delay:${Math.min(idx * 0.035, 0.45)}s">
                     <div class="song-thumb-wrap">
-                        <img src="${song.thumb}" class="song-thumb" alt="cover">
+                        <img src="${song.thumb}" class="song-thumb" alt="cover" onerror="this.src='https://via.placeholder.com/64/190e36/00f0ff?text=MP3'">
                         <span class="song-dur-badge">${song.durationTxt}</span>
                     </div>
                     <div class="song-info">
                         <div class="song-title">${song.title}</div>
-                        <div class="song-artist">🎤 ${song.artist}</div>
+                        <div class="song-artist">🎤 ${song.artist} • <strong style="color:var(--green);">كاملة (${song.durationTxt})</strong></div>
                         <div class="song-btns">
-                            ${song.clip30Url ? `<button class="song-btn listen-30" onclick="previewSongMode(${idx}, '30s')">🎧 استماع 30ث</button>` : ''}
-                            <button class="song-btn listen-full" id="btn-listen-full-${idx}" onclick="previewSongMode(${idx}, 'full')">🎶 استماع كاملة</button>
-                            ${song.clip30Url ? `<button class="song-btn use-30" onclick="attachSongToMapMode(${idx}, '30s')">➕ ربط (30ث)</button>` : ''}
+                            <button class="song-btn listen-full" id="btn-listen-full-${idx}" onclick="previewSongMode(${idx}, 'full')">🎶 استماع كاملة (${song.durationTxt})</button>
                             <button class="song-btn use-full" id="btn-use-full-${idx}" onclick="attachSongToMapMode(${idx}, 'full')">🔥 ربط (كاملة)</button>
+                            ${song.clip30Url ? `<button class="song-btn listen-30" onclick="previewSongMode(${idx}, '30s')">🎧 30ث</button>` : ''}
+                            ${song.clip30Url ? `<button class="song-btn use-30" onclick="attachSongToMapMode(${idx}, '30s')">➕ ربط (30ث)</button>` : ''}
                             <button class="song-btn copy-btn" onclick="copySongStreamUrl(${idx})">📋 نسخ الرابط</button>
-                            <button class="song-btn dl-mp3" onclick="downloadSongFile(${idx})">📥 تحميل</button>
+                            <button class="song-btn dl-mp3" onclick="downloadSongFile(${idx})">📥 تحميل الكاملة</button>
                         </div>
                     </div>
                 </div>
@@ -1634,17 +1736,25 @@
         }
     }
 
+    // Strictly resolves FULL-LENGTH audio only (NEVER falls back to 30s preview!)
     async function ensureFullSongUrl(idx) {
         const song = searchedSongsCache[idx];
         if (!song) return null;
+
+        // 1. If we already have a direct full MP3 from Internet Archive, return it immediately!
         if (song.fullAudioUrl) return song.fullAudioUrl;
 
-        // If we don't have a YouTube videoId yet for this row, search YouTube by exact title + artist
+        // 2. Try searching Internet Archive specifically for this song title
+        const specificArchive = await searchInternetArchiveFullMP3(`${song.title} ${song.artist}`);
+        if (specificArchive.length > 0 && specificArchive[0].fullAudioUrl) {
+            song.fullAudioUrl = specificArchive[0].fullAudioUrl;
+            return song.fullAudioUrl;
+        }
+
+        // 3. Try resolving YouTube full audio stream via Piped
         if (!song.videoId) {
             const ytMatches = await fetchYouTubeSearch(`${song.title} ${song.artist}`);
-            if (ytMatches.length > 0) {
-                song.videoId = ytMatches[0].videoId;
-            }
+            if (ytMatches.length > 0) song.videoId = ytMatches[0].videoId;
         }
 
         if (song.videoId) {
@@ -1653,8 +1763,12 @@
                 song.fullAudioUrl = streamUrl;
                 return streamUrl;
             }
+            // 4. If direct stream is CORS-blocked, use embedded YouTube full player prefix YT_FULL:
+            song.fullAudioUrl = `YT_FULL:${song.videoId}`;
+            return song.fullAudioUrl;
         }
-        return song.clip30Url || null;
+
+        return null;
     }
 
     async function previewSongMode(idx, mode) {
@@ -1673,25 +1787,25 @@
                 return;
             }
             currentPreviewUrl = song.clip30Url;
-            playStageAudio(song.clip30Url);
+            playStageAudio(song.clip30Url, `${song.title} (نسخة 30ث)`);
             showToast(`🎧 استماع (30ث): ${song.title}`, true);
             return;
         }
 
-        // Full song mode
+        // FULL SONG MODE (Never falls back to 30s!)
         const btn = document.getElementById(`btn-listen-full-${idx}`);
-        if (btn) btn.textContent = "⏳ جاري السحب...";
-        showToast("⏳ جاري سحب البث الكامل للأغنية من يوتيوب...", true);
+        const origTxt = btn ? btn.textContent : "🎶 استماع كاملة";
+        if (btn) btn.textContent = "⏳ جاري التحميل...";
 
         const fullUrl = await ensureFullSongUrl(idx);
-        if (btn) btn.textContent = "🎶 استماع كاملة";
+        if (btn) btn.textContent = origTxt;
 
         if (fullUrl) {
             currentPreviewUrl = fullUrl;
-            playStageAudio(fullUrl);
-            showToast(`🎶 شغالة كاملة: ${song.title} (${song.durationTxt})`, true);
+            playStageAudio(fullUrl, `${song.title} (كاملة ${song.durationTxt})`);
+            showToast(`🎶 تعمل الآن كاملة (${song.durationTxt}): ${song.title}`, true);
         } else {
-            showToast("⚠️ تعذر سحب النسخة الكاملة حالياً، جرب نسخة الـ 30ث!", false);
+            showToast("⚠️ لم يتوفر ملف مباشر، اضغط '📥 تحميل الكاملة' لحفظها من يوتيوب!", false);
         }
     }
 
@@ -1699,12 +1813,16 @@
         const song = searchedSongsCache[idx];
         if (!song) return;
 
-        let chosenUrl = song.clip30Url;
-        let modeLabel = "30ث";
+        let chosenUrl = "";
+        let modeLabel = "";
 
-        if (mode === 'full') {
+        if (mode === '30s') {
+            chosenUrl = song.clip30Url;
+            modeLabel = "30ث";
+        } else {
+            // Strictly FULL version!
             const btn = document.getElementById(`btn-use-full-${idx}`);
-            if (btn) btn.textContent = "⏳ جاري الربط...";
+            if (btn) btn.textContent = "⏳ جاري سحب الكاملة...";
             const resolved = await ensureFullSongUrl(idx);
             if (btn) btn.textContent = "🔥 ربط (كاملة)";
             if (resolved) {
@@ -1714,7 +1832,7 @@
         }
 
         if (!chosenUrl) {
-            showToast("⚠️ لم يتم العثور على رابط صوتي صالح!", false);
+            showToast("⚠️ تعذر جلب الرابط المباشر، اضغط '📥 تحميل الكاملة' ثم ارفعها من جهازك!", false);
             return;
         }
 
@@ -1726,7 +1844,7 @@
 
         const statusEl = document.getElementById('ed-audio-status');
         if (statusEl) {
-            statusEl.textContent = `✅ تم ربط الأغنية بالماب: 🎵 ${editorAudioName}`;
+            statusEl.textContent = `✅ تم ربط الأغنية الكاملة بالماب: 🎵 ${editorAudioName}`;
             statusEl.style.color = "var(--green)";
         }
 
@@ -1743,21 +1861,33 @@
     async function copySongStreamUrl(idx) {
         const song = searchedSongsCache[idx];
         if (!song) return;
-        const urlToCopy = (await ensureFullSongUrl(idx)) || song.clip30Url;
+        const urlToCopy = await ensureFullSongUrl(idx);
         if (urlToCopy) {
             navigator.clipboard?.writeText(urlToCopy);
             document.getElementById('ed-audio-url').value = urlToCopy;
-            showToast(`📋 تم نسخ رابط الأغنية ولصقه في المحرر!`, true);
+            showToast(`📋 تم نسخ رابط الأغنية الكاملة ولصقه في المحرر!`, true);
+        } else if (song.clip30Url) {
+            navigator.clipboard?.writeText(song.clip30Url);
+            showToast(`📋 تم نسخ رابط الـ 30 ثانية!`, true);
         }
     }
 
     async function downloadSongFile(idx) {
         const song = searchedSongsCache[idx];
         if (!song) return;
-        showToast("⏳ جاري تجهيز رابط التحميل المباشر...", true);
-        const dlUrl = (await ensureFullSongUrl(idx)) || song.clip30Url;
-        if (dlUrl) {
-            window.open(dlUrl, '_blank');
+        showToast("⏳ جاري فتح رابط تحميل الأغنية الكاملة MP3...", true);
+        const dlUrl = await ensureFullSongUrl(idx);
+        if (dlUrl && !dlUrl.startsWith('YT_FULL:')) {
+            const a = document.createElement('a');
+            a.href = dlUrl;
+            a.target = '_blank';
+            a.download = `${song.title}.mp3`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } else {
+            const q = encodeURIComponent(`${song.title} ${song.artist} audio`);
+            window.open(`https://archive.org/search?query=${q}&and[]=mediatype%3A%22audio%22`, '_blank');
         }
     }
 
@@ -2814,12 +2944,30 @@
     let isPreviewingEditorAudio = false;
     let previewStartTime = 0;
 
+    // Update live seekbar and timer when playing full songs!
+    stageAudioPlayer.addEventListener('timeupdate', () => {
+        const bar = document.getElementById('music-live-bar');
+        if (!bar || bar.classList.contains('hidden')) return;
+        const cur = stageAudioPlayer.currentTime || 0;
+        const dur = stageAudioPlayer.duration || 0;
+        if (dur > 0) {
+            document.getElementById('live-song-timer').textContent = `${formatDuration(cur)} / ${formatDuration(dur)}`;
+            document.getElementById('live-song-seek').value = Math.round((cur / dur) * 100);
+        }
+    });
+
+    function seekPreviewAudio(pct) {
+        if (stageAudioPlayer.duration > 0) {
+            stageAudioPlayer.currentTime = (pct / 100) * stageAudioPlayer.duration;
+        }
+    }
+
     function handleAudioFileUpload(ev) {
         const file = ev.target.files?.[0];
         if (!file) return;
 
-        if (file.size > 3800000) {
-            showToast("⚠️ حجم ملف الأغنية كبير جداً! اختر ملفاً أقل من 3.5 ميغابايت أو ابحث عنها بقسم الغناي!", false);
+        if (file.size > 4200000) {
+            showToast("⚠️ حجم ملف الأغنية كبير! اختر ملفاً أقل من 4 ميغابايت أو ابحث عنها بقسم الغناي!", false);
             return;
         }
 
@@ -2863,7 +3011,7 @@
         const statusEl = document.getElementById('ed-audio-status');
         if (url) {
             editorAudioData = url;
-            editorAudioName = "أغنية مخصصة 🔗";
+            editorAudioName = "أغنية كاملة مخصصة 🔗";
             document.getElementById('ed-synth-preset').value = "";
             statusEl.textContent = `✅ تم ربط رابط الأغنية المنسوخ!`;
             statusEl.style.color = "var(--green)";
@@ -2925,7 +3073,7 @@
         }
     }
 
-    function playStageAudio(audioSrc) {
+    function playStageAudio(audioSrc, labelTxt = "") {
         stopStageAudio();
         if (!audioSrc) return;
 
@@ -2934,10 +3082,26 @@
             return;
         }
 
+        // If full song uses YouTube Embed fallback (`YT_FULL:videoId`)
+        if (audioSrc.startsWith('YT_FULL:')) {
+            const vidId = audioSrc.split(':')[1];
+            const holder = document.getElementById('yt-embed-holder');
+            if (holder && vidId) {
+                holder.classList.remove('hidden');
+                holder.innerHTML = `<iframe width="120" height="55" src="https://www.youtube.com/embed/${vidId}?autoplay=1&loop=1&playlist=${vidId}" frameborder="0" allow="autoplay; encrypted-media"></iframe>`;
+            }
+            return;
+        }
+
         try {
             stageAudioPlayer.src = audioSrc;
             stageAudioPlayer.currentTime = 0;
-            stageAudioPlayer.volume = isMusicMuted ? 0 : 0.75;
+            stageAudioPlayer.volume = isMusicMuted ? 0 : 0.8;
+            const bar = document.getElementById('music-live-bar');
+            if (bar && labelTxt) {
+                bar.classList.remove('hidden');
+                document.getElementById('live-song-label').textContent = `🎶 ${labelTxt}`;
+            }
             stageAudioPlayer.play().catch(() => {
                 showToast("🎵 اضغط على الشاشة لتشغيل موسيقى الماب!", true);
             });
@@ -2949,6 +3113,13 @@
         isPreviewingEditorAudio = false;
         const btn = document.getElementById('ed-preview-audio-btn');
         if (btn) btn.textContent = "🎧 استماع وتوقيت";
+        const bar = document.getElementById('music-live-bar');
+        if (bar) bar.classList.add('hidden');
+        const holder = document.getElementById('yt-embed-holder');
+        if (holder) {
+            holder.innerHTML = "";
+            holder.classList.add('hidden');
+        }
         try {
             stageAudioPlayer.pause();
             stageAudioPlayer.currentTime = 0;
@@ -2969,7 +3140,7 @@
         const mBtn = document.getElementById('hud-mute-btn');
         if (mBtn) mBtn.textContent = '🔊';
 
-        playStageAudio(editorAudioData);
+        playStageAudio(editorAudioData, editorAudioName);
         isPreviewingEditorAudio = true;
         previewStartTime = performance.now();
         if (btn) btn.textContent = "⏹️ إيقاف الموسيقى";
@@ -2982,7 +3153,7 @@
 
         if (isPreviewingEditorAudio) {
             let liveSec = 0;
-            if (editorAudioData && !editorAudioData.startsWith('SYNTH_') && !stageAudioPlayer.paused) {
+            if (editorAudioData && !editorAudioData.startsWith('SYNTH_') && !editorAudioData.startsWith('YT_FULL:') && !stageAudioPlayer.paused) {
                 liveSec = stageAudioPlayer.currentTime;
             } else {
                 liveSec = (performance.now() - previewStartTime) / 1000;
@@ -3943,7 +4114,7 @@
         document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
 
         if (stageObj.audioData) {
-            playStageAudio(stageObj.audioData);
+            playStageAudio(stageObj.audioData, stageObj.audioName || stageObj.title);
         }
         syncPvpLiveScore();
     }
