@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v7.1</title>
+    <title>TAKO DROP | غدر الكرات v7.2</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -291,7 +291,6 @@
         .song-btn.copy-btn { background: rgba(255, 184, 0, 0.18); color: var(--yellow); border: 1px solid rgba(255, 184, 0, 0.45); }
         .song-btn.dl-mp3 { background: rgba(236, 72, 153, 0.22); color: #fbcfe8; border: 1px solid #ec4899; }
 
-        /* Live Audio Player Bar inside Music Portal */
         .live-audio-bar {
             background: rgba(12, 10, 24, 0.96);
             border: 1px solid var(--cyan);
@@ -918,7 +917,7 @@
         .hud-box { display: flex; flex-direction: column; align-items: center; }
         .hud-lbl { font-size: 9px; color: #64748b; font-weight: 800; }
         .hud-val {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 900;
             color: var(--cyan);
             text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
@@ -1043,7 +1042,7 @@
             <span class="hud-val" id="hud-stage">1</span>
         </div>
         <div class="hud-box">
-            <span class="hud-lbl">السكور / الـ XP المعلق</span>
+            <span class="hud-lbl">السكور / الخصم</span>
             <span class="hud-val" id="hud-score">0 / 10</span>
         </div>
         <div class="hud-box">
@@ -1071,7 +1070,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.1 FULL SONGS</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.2 PVP LIVE</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -1112,7 +1111,7 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.1 FULL SONGS</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.2 PVP LIVE</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -1194,7 +1193,7 @@
                 <button class="close-portal-btn" onclick="closePortal('music')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
-                <!-- Live Player Bar (Shows exact duration & timeline when playing a full song!) -->
+                <!-- Live Player Bar -->
                 <div id="music-live-bar" class="live-audio-bar hidden">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span id="live-song-label" style="font-size:11.5px; font-weight:900; color:var(--cyan);">🎶 جاري التشغيل...</span>
@@ -1213,7 +1212,6 @@
                         <button class="play-chip pink" onclick="searchSongsOnline()"><span>بحث 🔍</span></button>
                     </div>
 
-                    <!-- Quick Genre Tags -->
                     <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:2px;">
                         <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Sweater Weather')">🧣 Sweater Weather</button>
                         <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Phonk')">🔥 Phonk</button>
@@ -1223,7 +1221,7 @@
                     </div>
                 </div>
 
-                <!-- Results Container with Thumbnails -->
+                <!-- Results Container -->
                 <div id="music-results-status" style="font-size:12px; color:var(--cyan); font-weight:800; text-align:center;">اضغط زر "بحث 🔍" لعرض الأغاني الكاملة (3-5 دقائق) + الـ 30 ثانية!</div>
                 <div id="music-results-list" style="display:flex; flex-direction:column; gap:9px;"></div>
             </div>
@@ -1362,15 +1360,15 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 3: 1VS1 ROOM ================= -->
+        <!-- ================= EXPANDING PORTAL 3: 1VS1 ROOM (LIVE LOBBY EDITION) ================= -->
         <div id="portal-pvp" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي الثنائي (<span dir="ltr">1 VS 1</span>)</div>
+                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي المباشر (<span dir="ltr">1 VS 1</span>)</div>
                 <button class="close-portal-btn" onclick="closePortal('pvp')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="editor-box cascade-item" style="border-color:var(--pink);">
-                    <div class="stage-desc">اكتب كود الروم مع رفيقك واضغط "دخول روم التحدي". السيرفر سيولد مرحلة عشوائية موحدة من الـ 40 كرة بنفس التوقيت والمسارات والسرعة لكما معاً!</div>
+                    <div class="stage-desc">اكتب نفس كود الروم مع رفيقك واضغط <strong>"دخول لوبي التحدي"</strong>؛ ستريان بعضكما في غرفة الانتظار، وعند ضغط <strong>"ابدأ المعركة"</strong> ستنطلق المرحلة عندكما بنفس الثانية!</div>
 
                     <div class="field-group" style="margin-top:4px;">
                         <label>🔑 كود الروم المشترك (Room ID):</label>
@@ -1388,14 +1386,14 @@
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:4px;">
                         <button class="play-chip pink" style="padding:11px; font-size:12.5px;" onclick="createOrJoinPvpRoom(false)">
-                            <span>⚔️ دخول روم التحدي</span>
+                            <span>⚔️ دخول لوبي التحدي</span>
                         </button>
                         <button class="play-chip yellow" style="padding:11px; font-size:12.5px;" onclick="createOrJoinPvpRoom(true)">
-                            <span>🎲 توليد كرات جديدة للروم</span>
+                            <span>🎲 توليد كرات جديدة</span>
                         </button>
                     </div>
 
-                    <div id="pvp-status-box" class="hidden" style="background:rgba(255,0,85,0.12); border:1px solid var(--pink); padding:10px; border-radius:8px; text-align:center; margin-top:4px;">
+                    <div id="pvp-status-box" class="hidden" style="background:rgba(255,0,85,0.12); border:1px solid var(--pink); padding:12px; border-radius:10px; text-align:center; margin-top:6px;">
                         <div style="font-size:12px; color:#cbd5e1;" id="pvp-status-text">جاري مزامنة الروم مع السيرفر..</div>
                     </div>
                 </div>
@@ -1502,17 +1500,9 @@
                String(saveData.password) === ADMIN_PASS;
     }
 
-    // ================= MULTI-SOURCE FULL SONGS ENGINE (ARCHIVE.ORG FULL MP3 + YOUTUBE PROXY + ITUNES 30s) =================
+    // ================= MULTI-SOURCE FULL SONGS ENGINE =================
     let searchedSongsCache = [];
     let currentPreviewUrl = "";
-
-    const YT_PIPED_APIS = [
-        "https://pipedapi.kavin.rocks",
-        "https://pipedapi.tokhmi.xyz",
-        "https://pipedapi.moomoo.me",
-        "https://pipedapi.syncpundit.io",
-        "https://api.piped.projectsegfau.lt"
-    ];
 
     function formatDuration(sec) {
         if (!sec || isNaN(sec) || sec <= 0) return "3:45";
@@ -1536,7 +1526,6 @@
         searchSongsOnline();
     }
 
-    // Source 1: Search Internet Archive for 100% Direct Full-Length MP3s (CORS-free, 3-5 minutes!)
     async function searchInternetArchiveFullMP3(query) {
         try {
             const q = `title:(${query}) AND mediatype:(audio)`;
@@ -1546,13 +1535,11 @@
             const docs = data?.response?.docs || [];
             if (docs.length === 0) return [];
 
-            // Fetch metadata for top 6 items in parallel to get exact .mp3 file URLs
             const metaResults = await Promise.all(docs.slice(0, 6).map(async (doc) => {
                 try {
                     const mRes = await fetch(`https://archive.org/metadata/${encodeURIComponent(doc.identifier)}`);
                     const mData = await mRes.json();
                     const files = mData?.files || [];
-                    // Find full-length MP3 file (ignore tiny samples)
                     const mp3File = files.find(f =>
                         f.name &&
                         f.name.toLowerCase().endsWith('.mp3') &&
@@ -1584,7 +1571,6 @@
         }
     }
 
-    // Source 2: Search YouTube via CORS-proxied Piped APIs
     async function fetchYouTubeSearch(query) {
         const endpoints = [
             `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(query)}&filter=music_songs`)}`,
@@ -1622,7 +1608,7 @@
         if (!videoId) return null;
         const streamTargets = [
             `https://pipedapi.kavin.rocks/streams/${encodeURIComponent(videoId)}`,
-            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://pipedapi.kavin.rocks/streams/${ videoId }`)}`,
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://pipedapi.kavin.rocks/streams/${videoId}`)}`,
             `https://pipedapi.tokhmi.xyz/streams/${encodeURIComponent(videoId)}`
         ];
 
@@ -1669,7 +1655,6 @@
             const itunesList = (itunesRes.results || []).filter(item => item.previewUrl);
             const combined = [];
 
-            // Merge full MP3 tracks from Internet Archive + YouTube + iTunes artwork/30s clips
             const maxLen = Math.max(archiveFullTracks.length, itunesList.length, ytItems.length);
             for (let i = 0; i < maxLen; i++) {
                 const arch = archiveFullTracks[i];
@@ -1683,7 +1668,6 @@
                     ? it.artworkUrl100.replace('100x100bb', '200x200bb')
                     : (yt?.thumb || arch?.thumb || '');
 
-                // Use first available Archive full MP3 if this specific row doesn't have one
                 const directFullMp3 = arch?.fullAudioUrl || (archiveFullTracks[0]?.fullAudioUrl || '');
                 const preview30 = it?.previewUrl || '';
                 const ytVidId = yt?.videoId || (ytItems[0]?.videoId || '');
@@ -1707,7 +1691,7 @@
             }
 
             searchedSongsCache = combined;
-            statusEl.textContent = `✅ تم العثور على ${combined.length} نتيجة! اضغط "🎶 استماع كاملة" أو "🔥 ربط (كاملة)" لتشغيلها كاملة (${combined[0].durationTxt}):`;
+            statusEl.textContent = `✅ تم العثور على ${combined.length} نتيجة! اضغط "🎶 استماع كاملة" أو "🔥 ربط (كاملة)" لتشغيلها كاملة:`;
             statusEl.style.color = "var(--green)";
 
             listEl.innerHTML = searchedSongsCache.map((song, idx) => `
@@ -1736,22 +1720,17 @@
         }
     }
 
-    // Strictly resolves FULL-LENGTH audio only (NEVER falls back to 30s preview!)
     async function ensureFullSongUrl(idx) {
         const song = searchedSongsCache[idx];
         if (!song) return null;
-
-        // 1. If we already have a direct full MP3 from Internet Archive, return it immediately!
         if (song.fullAudioUrl) return song.fullAudioUrl;
 
-        // 2. Try searching Internet Archive specifically for this song title
         const specificArchive = await searchInternetArchiveFullMP3(`${song.title} ${song.artist}`);
         if (specificArchive.length > 0 && specificArchive[0].fullAudioUrl) {
             song.fullAudioUrl = specificArchive[0].fullAudioUrl;
             return song.fullAudioUrl;
         }
 
-        // 3. Try resolving YouTube full audio stream via Piped
         if (!song.videoId) {
             const ytMatches = await fetchYouTubeSearch(`${song.title} ${song.artist}`);
             if (ytMatches.length > 0) song.videoId = ytMatches[0].videoId;
@@ -1763,7 +1742,6 @@
                 song.fullAudioUrl = streamUrl;
                 return streamUrl;
             }
-            // 4. If direct stream is CORS-blocked, use embedded YouTube full player prefix YT_FULL:
             song.fullAudioUrl = `YT_FULL:${song.videoId}`;
             return song.fullAudioUrl;
         }
@@ -1792,7 +1770,6 @@
             return;
         }
 
-        // FULL SONG MODE (Never falls back to 30s!)
         const btn = document.getElementById(`btn-listen-full-${idx}`);
         const origTxt = btn ? btn.textContent : "🎶 استماع كاملة";
         if (btn) btn.textContent = "⏳ جاري التحميل...";
@@ -1820,7 +1797,6 @@
             chosenUrl = song.clip30Url;
             modeLabel = "30ث";
         } else {
-            // Strictly FULL version!
             const btn = document.getElementById(`btn-use-full-${idx}`);
             if (btn) btn.textContent = "⏳ جاري سحب الكاملة...";
             const resolved = await ensureFullSongUrl(idx);
@@ -2141,6 +2117,10 @@
 
     function closePortal(name) {
         if (name === 'editor' || name === 'music') stopStageAudio();
+        if (name === 'pvp' && pvpLobbyInterval) {
+            clearInterval(pvpLobbyInterval);
+            pvpLobbyInterval = null;
+        }
         const modal = document.getElementById('portal-' + name);
         if (!modal) return;
         modal.style.clipPath = `circle(0% at 50% 50%)`;
@@ -2150,6 +2130,10 @@
 
     function closeAllPortals() {
         stopStageAudio();
+        if (pvpLobbyInterval) {
+            clearInterval(pvpLobbyInterval);
+            pvpLobbyInterval = null;
+        }
         document.querySelectorAll('.portal-modal').forEach(m => {
             m.classList.remove('open');
             m.style.clipPath = `circle(0% at 50% 50%)`;
@@ -2203,7 +2187,7 @@
     const BALL_KEYS = Object.keys(BALL_META);
     const TOTAL_STAGES = BALL_KEYS.length;
 
-    // ================= GENERATE 40 CUMULATIVE STAGES WITH DIFFICULTY TIERS =================
+    // ================= GENERATE 40 CUMULATIVE STAGES =================
     const STAGES = {};
     const STAGE_COLORS = ["", "pink", "purple", "yellow", "green", "orange"];
 
@@ -2652,6 +2636,7 @@
 
     function logoutUser() {
         activeUserKey = "";
+        myPvpId = "";
         sessionStorage.removeItem('takoGhostAdminSession');
         localStorage.removeItem('takoDropActiveUser_v50');
         document.getElementById('login-user').value = "";
@@ -2661,79 +2646,218 @@
         checkAutoLogin();
     }
 
-    // ================= 1.VS.1 PVP ROOM LOGIC =================
+    // ================= 1.VS.1 PVP ROOM LOGIC (FIXED REAL-TIME LOBBY & SYNC) =================
     let activePvpRoomCode = "";
     let opponentText = "";
+    let pvpLobbyInterval = null;
+    let currentRoomCache = null;
+    let myPvpId = "";
+
+    function getMyPvpIdentity() {
+        if (!myPvpId) {
+            const base = isCurrentUserAdmin() ? "Tako_Master" : (saveData.username || "Player");
+            const suffix = Math.floor(10 + Math.random() * 89);
+            myPvpId = sanitizeFirebaseKey(base) + "_" + suffix;
+        }
+        const displayName = isCurrentUserAdmin() ? "Tako_Master" : (saveData.username || "لاعب");
+        return { id: myPvpId, name: displayName };
+    }
 
     async function createOrJoinPvpRoom(forceRegenerate = false) {
-        const roomCode = document.getElementById('pvp-room-input').value.trim().toUpperCase();
-        const ballCount = parseInt(document.getElementById('pvp-ball-count').value) || 25;
-        if (!roomCode) { showToast("اكتب كود الروم أولاً! ⚔️", false); return; }
+        const roomInput = document.getElementById('pvp-room-input');
+        const roomCode = (roomInput ? roomInput.value : 'TAKO-1V1').trim().toUpperCase();
+        const ballCount = parseInt(document.getElementById('pvp-ball-count')?.value) || 25;
+
+        if (!roomCode) {
+            showToast("اكتب كود الروم أولاً! ⚔️", false);
+            return;
+        }
 
         const statusBox = document.getElementById('pvp-status-box');
         const statusText = document.getElementById('pvp-status-text');
         statusBox.classList.remove('hidden');
-        statusText.textContent = `جاري الاتصال بروم [${roomCode}] ومزامنة الكرات.. 🌐`;
+        statusText.innerHTML = `⏳ جاري الاتصال بروم <b>[${roomCode}]</b> عبر السيرفر...`;
+
+        const me = getMyPvpIdentity();
 
         try {
-            const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`);
-            let roomData = null;
-            if (res.ok) roomData = await res.json();
+            const roomUrl = `${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`;
+            const res = await fetch(roomUrl);
+            let roomData = res.ok ? await res.json() : null;
 
-            if (!roomData || !roomData.spawns || forceRegenerate) {
+            if (!roomData || !Array.isArray(roomData.spawns) || forceRegenerate) {
                 let generatedSpawns = [];
-                let tAcc = 0.6;
+                let tAcc = 1.0;
                 for (let i = 0; i < ballCount; i++) {
                     const rndType = BALL_KEYS[Math.floor(Math.random() * BALL_KEYS.length)];
                     const rndLane = Math.floor(Math.random() * 4);
-                    const rndSpeed = +(3.9 + Math.random() * 0.9).toFixed(2);
+                    const rndSpeed = +(3.9 + Math.random() * 0.85).toFixed(2);
                     generatedSpawns.push({ lane: rndLane, type: rndType, time: +tAcc.toFixed(2), speed: rndSpeed });
-                    tAcc += 0.85;
+                    tAcc += 0.82;
                 }
 
                 roomData = {
                     id: roomCode,
-                    title: `روم التحدي الثنائي [${roomCode}]`,
-                    creator: isCurrentUserAdmin() ? 'Tako_Master' : (saveData.username || 'لاعب'),
+                    title: `روم التحدي [${roomCode}]`,
+                    creator: me.name,
                     diff: ballCount >= 40 ? 'demon_tako' : 'hard_tako',
                     audioData: 'SYNTH_2',
+                    status: 'waiting',
+                    matchId: Date.now(),
                     spawns: generatedSpawns,
                     players: {}
                 };
 
-                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`, {
-                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(roomData)
+                await fetch(roomUrl, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(roomData)
+                });
+            } else if (roomData.status === 'playing' && !forceRegenerate) {
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/status.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify('waiting')
+                });
+                roomData.status = 'waiting';
+            }
+
+            const myPlayerPayload = {
+                id: me.id,
+                name: me.name,
+                score: 0,
+                hearts: 3,
+                finished: false,
+                won: false,
+                updatedAt: Date.now()
+            };
+
+            await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/players/${encodeURIComponent(me.id)}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(myPlayerPayload)
+            });
+
+            activePvpRoomCode = roomCode;
+            currentRoomCache = roomData;
+            showToast(`✅ دخلت لوبي الروم [${roomCode}]! بانتظار بدء المعركة`, true);
+
+            startPvpLobbyPolling(roomCode);
+        } catch (err) {
+            statusText.innerHTML = `<span style="color:var(--pink);">❌ تعذر الاتصال بالسيرفر! تأكد من الإنترنت أو تفعيل Firebase.</span>`;
+        }
+    }
+
+    function startPvpLobbyPolling(roomCode) {
+        if (pvpLobbyInterval) clearInterval(pvpLobbyInterval);
+        const statusBox = document.getElementById('pvp-status-box');
+        const statusText = document.getElementById('pvp-status-text');
+        const me = getMyPvpIdentity();
+
+        const pollFn = async () => {
+            if (!activePvpRoomCode || active) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`);
+                if (!res.ok) return;
+                const roomData = await res.json();
+                if (!roomData) return;
+
+                currentRoomCache = roomData;
+                const playersObj = roomData.players || {};
+                const playersArr = Object.values(playersObj).filter(p => p && p.name);
+
+                const pListHTML = playersArr.map(p =>
+                    `<div style="padding:4px 8px; background:rgba(0,240,255,0.12); border:1px solid var(--cyan); border-radius:6px; display:inline-block; margin:3px; font-weight:900;">
+                        🟢 ${p.name} ${p.id === me.id ? '(أنت)' : '⚔️'}
+                    </div>`
+                ).join('');
+
+                statusBox.classList.remove('hidden');
+                statusText.innerHTML = `
+                    <div style="font-size:13px; font-weight:900; color:var(--yellow); margin-bottom:6px;">
+                        🔑 لوبي الروم: <span dir="ltr">[${roomCode}]</span> (${roomData.spawns?.length || 25} كرة)
+                    </div>
+                    <div style="margin-bottom:8px;">اللاعبون المتصلون الآن (${playersArr.length}):<br>${pListHTML}</div>
+                    <button class="play-chip green" style="width:100%; padding:10px; font-size:13px;" onclick="triggerPvpMatchStart('${roomCode}')">
+                        <span>🚀 ابدأ المعركة للطرفين الآن! (${playersArr.length} لاعب)</span>
+                    </button>
+                `;
+
+                if (roomData.status === 'playing') {
+                    clearInterval(pvpLobbyInterval);
+                    pvpLobbyInterval = null;
+                    statusBox.classList.add('hidden');
+                    closeAllPortals();
+                    showToast(`🔥 انطلقت معركة الـ 1vs1! اهزم خصمك!`, true);
+                    startCustomStage(roomData, true);
+                }
+            } catch (e) {}
+        };
+
+        pollFn();
+        pvpLobbyInterval = setInterval(pollFn, 1000);
+    }
+
+    async function triggerPvpMatchStart(roomCode) {
+        try {
+            if (currentRoomCache && currentRoomCache.players) {
+                for (const pid of Object.keys(currentRoomCache.players)) {
+                    currentRoomCache.players[pid].score = 0;
+                    currentRoomCache.players[pid].hearts = document.getElementById('hardcore-toggle')?.checked ? 1 : 3;
+                    currentRoomCache.players[pid].finished = false;
+                }
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/players.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentRoomCache.players)
                 });
             }
 
-            activePvpRoomCode = roomCode;
-            statusBox.classList.add('hidden');
-            closeAllPortals();
-            showToast(`دخلت روم التحدي [${roomCode}]! ⚔️🔥`, true);
-            startCustomStage(roomData, true);
-        } catch (err) {
-            statusText.textContent = "حدث خطأ بالاتصال بالسيرفر. جرب مجدداً!";
+            await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/status.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify('playing')
+            });
+        } catch (e) {
+            showToast("⚠️ تعذر بدء الروم، جرب مرة ثانية!", false);
         }
     }
 
     async function syncPvpLiveScore() {
-        if (!active || !activePvpRoomCode || !saveData.username) return;
-        const displayPName = isCurrentUserAdmin() ? "Tako_Master" : saveData.username;
-        const uKey = sanitizeFirebaseKey(displayPName);
+        if (!activePvpRoomCode) return;
+        const me = getMyPvpIdentity();
+
         try {
-            await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players/${encodeURIComponent(uKey)}.json`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: displayPName, score: score })
-            });
+            if (customMode && activeCustomStage) {
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players/${encodeURIComponent(me.id)}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id: me.id,
+                        name: me.name,
+                        score: score,
+                        hearts: hearts,
+                        finished: !active,
+                        updatedAt: Date.now()
+                    })
+                });
+            }
+
+            if (!active) return;
+
             const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players.json`);
             if (res.ok) {
                 const pMap = await res.json();
                 if (pMap) {
-                    const others = Object.values(pMap).filter(p => p && p.name && p.name.toLowerCase() !== displayPName.toLowerCase());
+                    const others = Object.values(pMap).filter(p => p && p.id !== me.id);
                     if (others.length > 0) {
                         others.sort((a, b) => (b.score || 0) - (a.score || 0));
-                        opponentText = ` | ⚔️ ${others[0].name}: ${others[0].score}`;
+                        const opp = others[0];
+                        const oppHearts = opp.hearts > 0 ? `⚡${opp.hearts}` : `💀 خسر`;
+                        opponentText = ` | ⚔️ ${opp.name}: ${opp.score} (${oppHearts})`;
+                        updateHUD();
+                    } else {
+                        opponentText = ` | ⚔️ بانتظار الخصم...`;
                         updateHUD();
                     }
                 }
@@ -2741,7 +2865,9 @@
         } catch (e) {}
     }
 
-    setInterval(syncPvpLiveScore, 2200);
+    setInterval(() => {
+        if (active && activePvpRoomCode) syncPvpLiveScore();
+    }, 900);
 
     // ================= ONLINE LEADERBOARD =================
     function renderLeaderboard() {
@@ -2944,7 +3070,6 @@
     let isPreviewingEditorAudio = false;
     let previewStartTime = 0;
 
-    // Update live seekbar and timer when playing full songs!
     stageAudioPlayer.addEventListener('timeupdate', () => {
         const bar = document.getElementById('music-live-bar');
         if (!bar || bar.classList.contains('hidden')) return;
@@ -3082,7 +3207,6 @@
             return;
         }
 
-        // If full song uses YouTube Embed fallback (`YT_FULL:videoId`)
         if (audioSrc.startsWith('YT_FULL:')) {
             const vidId = audioSrc.split(':')[1];
             const holder = document.getElementById('yt-embed-holder');
@@ -4119,15 +4243,41 @@
         syncPvpLiveScore();
     }
 
-    function finishGame(won) {
+    async function finishGame(won) {
         active = false;
         stopStageAudio();
-        syncPvpLiveScore();
+        await syncPvpLiveScore();
+
         const ov = document.getElementById('result-overlay');
         const t = document.getElementById('res-title');
         const d = document.getElementById('res-desc');
         const nb = document.getElementById('next-btn');
         ov.classList.remove('hidden');
+
+        let pvpResultBanner = "";
+        if (customMode && activePvpRoomCode) {
+            try {
+                const me = getMyPvpIdentity();
+                const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players.json`);
+                if (res.ok) {
+                    const pMap = await res.json();
+                    const others = Object.values(pMap || {}).filter(p => p && p.id !== me.id);
+                    if (others.length > 0) {
+                        const opp = others[0];
+                        if (score > (opp.score || 0)) {
+                            pvpResultBanner = `🏆 متقدم على ${opp.name} (${score} مقابل ${opp.score})!`;
+                        } else if (score < (opp.score || 0)) {
+                            pvpResultBanner = `⚠️ ${opp.name} متقدم عليك (${opp.score} مقابل ${score})!`;
+                        } else {
+                            pvpResultBanner = `🤝 تعادل مع ${opp.name} (${score} نقطة)!`;
+                        }
+                    }
+                }
+                fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/status.json`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify('waiting')
+                }).catch(()=>{});
+            } catch (e) {}
+        }
 
         const oldRank = getRankByXP(saveData.xp || 0).current;
 
@@ -4144,16 +4294,16 @@
             const newRank = getRankByXP(saveData.xp || 0).current;
             const rankUpTxt = newRank.id !== oldRank.id ? ` 🎉 ترقية إلى رتبة ${newRank.icon} ${newRank.name}!` : '';
 
-            t.textContent = customMode ? `أنهيت الماب بنجاح! 🏆` : `اجتزت المرحلة ${curStage} وفتحت المرحلة ${Math.min(TOTAL_STAGES, curStage + 1)}! 🔓🔥`;
-            d.textContent = `كسبت +${totalAwardedXP} XP ${firstClearBonus > 0 ? `(منها +${firstClearBonus} مكافأة أول مرة)` : ''}${rankUpTxt} | رصيدك: ${(saveData.xp || 0).toLocaleString()} XP`;
+            t.textContent = activePvpRoomCode ? `انتهت معركة الـ 1vs1! ⚔️🏆` : (customMode ? `أنهيت الماب بنجاح! 🏆` : `اجتزت المرحلة ${curStage} وفتحت المرحلة ${Math.min(TOTAL_STAGES, curStage + 1)}! 🔓🔥`);
+            d.textContent = `${pvpResultBanner ? pvpResultBanner + ' | ' : ''}كسبت +${totalAwardedXP} XP ${firstClearBonus > 0 ? `(منها +${firstClearBonus} مكافأة أول مرة)` : ''}${rankUpTxt} | رصيدك: ${(saveData.xp || 0).toLocaleString()} XP`;
             nb.style.display = (customMode || curStage >= TOTAL_STAGES) ? 'none' : 'block';
         } else {
             const consolationXP = Math.floor(pendingStageXP * 0.25);
             saveData.xp = (saveData.xp || 0) + consolationXP;
             saveProgress();
 
-            t.textContent = `فشل التحدي! 💔 (ضاع 75% من الـ XP المعلق)`;
-            d.textContent = `حصلت على +${consolationXP} XP فقط بسبب الخسارة.. اختم المرحلة كاملة لتكسب الـ XP كاملاً!`;
+            t.textContent = activePvpRoomCode ? `سقطت في معركة الـ 1vs1! 💀⚔️` : `فشل التحدي! 💔 (ضاع 75% من الـ XP المعلق)`;
+            d.textContent = `${pvpResultBanner ? pvpResultBanner + ' | ' : ''}حصلت على +${consolationXP} XP فقط بسبب الخسارة.. اختم المرحلة كاملة لتكسب الـ XP كاملاً!`;
             nb.style.display = 'none';
         }
     }
@@ -4164,6 +4314,10 @@
     function openMenu() {
         active = false;
         stopStageAudio();
+        if (pvpLobbyInterval) {
+            clearInterval(pvpLobbyInterval);
+            pvpLobbyInterval = null;
+        }
         saveProgress(); syncFromCloud(false);
         document.getElementById('result-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
