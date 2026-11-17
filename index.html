@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v6.7</title>
+    <title>TAKO DROP | غدر الكرات v6.9</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -76,20 +76,21 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 5px;
             background: rgba(17, 14, 32, 0.92);
             border: 1px solid rgba(0, 240, 255, 0.18);
             border-radius: 12px;
-            padding: 6px 10px;
+            padding: 6px 8px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             z-index: 5;
+            flex-wrap: wrap;
         }
 
         .user-pill {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12.5px;
+            gap: 5px;
+            font-size: 12px;
             font-weight: 800;
             color: #fff;
             cursor: pointer;
@@ -109,12 +110,11 @@
             box-shadow: 0 0 8px var(--yellow);
         }
 
-        /* Rank & Difficulty Pill Styles */
         .rank-tag, .diff-badge {
             font-family: 'Orbitron', 'Cairo', sans-serif;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 900;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 99px;
             direction: ltr;
             unicode-bidi: isolate;
@@ -136,40 +136,53 @@
         .top-actions {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+            flex-wrap: wrap;
         }
 
         .top-btn-admin {
             background: linear-gradient(135deg, #ff0055, #b829ff);
             color: #fff;
             border: 1px solid #ffd700;
-            padding: 5px 8px;
-            border-radius: 8px;
+            padding: 4px 7px;
+            border-radius: 7px;
+            font-size: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.6);
+        }
+
+        .top-btn-music {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 4px 8px;
+            border-radius: 7px;
             font-size: 10.5px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 0 14px rgba(255, 0, 85, 0.6);
+            box-shadow: 0 0 12px rgba(236, 72, 153, 0.45);
         }
 
         .top-btn-rank {
             background: linear-gradient(135deg, #f59e0b, #ea580c);
             color: #05050a;
             border: none;
-            padding: 5px 9px;
-            border-radius: 8px;
+            padding: 4px 8px;
+            border-radius: 7px;
             font-size: 10.5px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
         }
 
         .top-btn-mini {
             background: rgba(0, 240, 255, 0.12);
             border: 1px solid rgba(0, 240, 255, 0.35);
             color: var(--cyan);
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 10.5px;
+            padding: 4px 7px;
+            border-radius: 7px;
+            font-size: 10px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -178,12 +191,81 @@
             background: rgba(255, 0, 85, 0.15);
             border: 1px solid rgba(255, 0, 85, 0.4);
             color: #fda4af;
-            padding: 4px 7px;
-            border-radius: 8px;
-            font-size: 10.5px;
+            padding: 4px 6px;
+            border-radius: 7px;
+            font-size: 10px;
             font-weight: 800;
             cursor: pointer;
         }
+
+        /* ================= MUSIC HUB SONG CARDS ================= */
+        .song-card {
+            background: rgba(18, 15, 34, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-right: 4px solid #ec4899;
+            border-radius: 12px;
+            padding: 9px 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.45);
+        }
+
+        .song-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 9px;
+            object-fit: cover;
+            border: 2px solid rgba(236, 72, 153, 0.6);
+            flex-shrink: 0;
+            background: #090714;
+        }
+
+        .song-info {
+            flex: 1;
+            min-width: 0;
+            text-align: right;
+        }
+
+        .song-title {
+            font-size: 13px;
+            font-weight: 900;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-artist {
+            font-size: 11px;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+        }
+
+        .song-btns {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .song-btn {
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10.5px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .song-btn.listen { background: rgba(0, 240, 255, 0.16); color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.4); }
+        .song-btn.use-map { background: var(--green); color: #05050a; }
+        .song-btn.dl-mp3 { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; border: 1px solid #ec4899; text-decoration: none; }
 
         /* ================= CENTER HUB ================= */
         .hub-container {
@@ -230,7 +312,6 @@
             direction: ltr;
         }
 
-        /* Rank Progress Banner in Hub */
         .rank-progress-card {
             width: 100%;
             background: rgba(17, 14, 32, 0.9);
@@ -503,7 +584,7 @@
         }
 
         .portal-title {
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 900;
             color: #fff;
             display: flex;
@@ -791,16 +872,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 9px 12px;
+            padding: 9px 10px;
             background: rgba(7, 5, 16, 0.95);
             border-bottom: 1px solid rgba(0, 240, 255, 0.25);
             z-index: 10;
+            gap: 4px;
         }
 
         .hud-box { display: flex; flex-direction: column; align-items: center; }
-        .hud-lbl { font-size: 9.5px; color: #64748b; font-weight: 800; }
+        .hud-lbl { font-size: 9px; color: #64748b; font-weight: 800; }
         .hud-val {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 900;
             color: var(--cyan);
             text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
@@ -812,9 +894,9 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            padding: 5px 10px;
+            padding: 5px 9px;
             border-radius: 7px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -916,7 +998,10 @@
 <div id="app">
     <!-- Top In-Game HUD -->
     <div id="hud">
-        <button class="menu-mini-btn" onclick="openMenu()">🏠 الرئيسية</button>
+        <div style="display:flex; gap:4px;">
+            <button class="menu-mini-btn" onclick="openMenu()">🏠</button>
+            <button class="menu-mini-btn" id="hud-mute-btn" onclick="toggleMusicMute()">🔊</button>
+        </div>
         <div class="hud-box">
             <span class="hud-lbl">المرحلة / الصعوبة</span>
             <span class="hud-val" id="hud-stage">1</span>
@@ -948,7 +1033,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.7 BEATMAP</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.9 MUSIC HUB</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -970,7 +1055,7 @@
 
     <!-- ================= MAIN LAUNCHER HUB OVERLAY ================= -->
     <div id="menu-overlay" class="overlay">
-        <!-- TOP BAR -->
+        <!-- TOP BAR (NOW WITH "🎵 تحميل الغناي" BUTTON!) -->
         <div class="top-user-bar">
             <div class="user-pill" onclick="openPortal('tiers', event)">
                 <span class="online-dot" id="server-status-dot"></span>
@@ -979,6 +1064,7 @@
             </div>
             <div class="top-actions">
                 <button class="top-btn-admin hidden" id="admin-top-btn" onclick="openPortal('admin', event)">👑 الأدمن</button>
+                <button class="top-btn-music" onclick="openPortal('music', event)">🎵 تحميل الغناي</button>
                 <button class="top-btn-rank" onclick="openPortal('ranks', event)">🏆 المتصدرين</button>
                 <button class="top-btn-mini" onclick="openPortal('skins', event)">🎨 الأشكال</button>
                 <button class="logout-btn" onclick="logoutUser()">خروج</button>
@@ -988,7 +1074,7 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.7 BEATMAP</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.9 MUSIC HUB</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -1063,7 +1149,50 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 1: 40 STAGES (WITH 9 DIFFICULTY TIERS) ================= -->
+        <!-- ================= EXPANDING PORTAL 0: MUSIC SEARCH & YOUTUBE DOWNLOADER ================= -->
+        <div id="portal-music" class="portal-modal">
+            <div class="portal-header">
+                <div class="portal-title" style="color:#ec4899;">🎵 قسم تحميل الغناي وربطها بالماب</div>
+                <button class="close-portal-btn" onclick="closePortal('music')">✖ إغلاق</button>
+            </div>
+            <div class="portal-body">
+                <!-- Search Input Bar -->
+                <div class="editor-box cascade-item" style="border-color:#ec4899;">
+                    <div class="stage-title" style="color:#ec4899;">🔎 ابحث عن أي غناية بالاسم (تظهر صورتها وتسمعها وتضيفها فوراً!)</div>
+                    <div class="stage-desc">اكتب اسم أي أغنية، أو أنمي (مثل Blue Lock / Naruto)، أو Phonk واضغط بحث؛ يمكنك ربطها بمابك مباشرة بضغطة زر أو تنزيلها MP3!</div>
+
+                    <div class="id-search-bar" style="border-color:#ec4899; margin-top:4px;">
+                        <input type="text" id="music-search-input" class="cyber-input" placeholder="اكتب اسم الغناية هنا (مثال: Blue Lock أو Phonk أو Alan Walker)..." onkeydown="if(event.key==='Enter') searchSongsOnline()">
+                        <button class="play-chip pink" onclick="searchSongsOnline()"><span>بحث 🔍</span></button>
+                    </div>
+
+                    <!-- Quick Genre Tags -->
+                    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:2px;">
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Phonk Drift')">🔥 Phonk</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Blue Lock OST')">⚽ Blue Lock</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Geometry Dash')">📐 Geometry</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Attack on Titan')">⚔️ AOT</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Undertale Megalovania')">💀 Undertale</button>
+                    </div>
+                </div>
+
+                <!-- YouTube Direct MP3 Extractor Box -->
+                <div class="editor-box cascade-item" style="border-color:var(--purple); padding:10px;">
+                    <div class="stage-title" style="color:var(--purple); font-size:12.5px;">📺 بحث وتحويل مباشر من YouTube إلى MP3</div>
+                    <div class="stage-desc">إذا أردت فتح فيديو معين من يوتيوب وتحميله كملف MP3 لجهازك ثم رفعه للماب:</div>
+                    <div style="display:flex; gap:6px; margin-top:4px;">
+                        <button class="menu-mini-btn" style="flex:1; background:rgba(255,0,85,0.18); border-color:var(--pink);" onclick="openYouTubeSearch()">▶️ افتح بحث يوتيوب</button>
+                        <button class="menu-mini-btn" style="flex:1; background:rgba(184,41,255,0.18); border-color:var(--purple);" onclick="openYouTubeMp3Converter()">📥 محول يوتيوب MP3</button>
+                    </div>
+                </div>
+
+                <!-- Results Container with Thumbnails -->
+                <div id="music-results-status" style="font-size:12px; color:var(--cyan); font-weight:800; text-align:center;">اضغط زر "بحث 🔍" لعرض الأغاني مع صورها!</div>
+                <div id="music-results-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+        </div>
+
+        <!-- ================= EXPANDING PORTAL 1: 40 STAGES ================= -->
         <div id="portal-stages" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title">🎓 المراحل التدريجية (من سهل إلى Ultra Tako)</div>
@@ -1091,7 +1220,7 @@
 
                 <div class="editor-box cascade-item">
                     <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم الماب والأغاني (40 كرة)</div>
-                    <div class="stage-desc">اختر اسم الماب، ومستوى صعوبته، وارفع ملف غناية من جهازك ليشتغل مع الماب!</div>
+                    <div class="stage-desc">اختر اسم الماب، ومستوى صعوبته، وابحث عن أي غناية أو ارفعها من جهازك!</div>
 
                     <div class="editor-grid">
                         <div class="field-group">
@@ -1116,26 +1245,29 @@
 
                     <!-- Custom Song / Audio Upload Section -->
                     <div class="audio-upload-box">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:12px; font-weight:900; color:#e879f9;">🎵 أغنية / موسيقى الماب (اختياري):</span>
-                            <button class="menu-mini-btn" id="ed-preview-audio-btn" onclick="toggleEditorAudioPreview()">🎧 استماع وتوقيت</button>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                            <span style="font-size:12px; font-weight:900; color:#e879f9;">🎵 أغنية / موسيقى الماب:</span>
+                            <div style="display:flex; gap:5px;">
+                                <button class="top-btn-music" onclick="openPortal('music', event)">🔎 بحث وتحميل غناية</button>
+                                <button class="menu-mini-btn" id="ed-preview-audio-btn" onclick="toggleEditorAudioPreview()">🎧 استماع وتوقيت</button>
+                            </div>
                         </div>
 
                         <div class="editor-grid">
                             <label class="file-upload-lbl">
-                                📁 اختر ملف غناية من جهازك
+                                📁 ارفع ملف غناية من جهازك
                                 <input type="file" id="ed-audio-file" accept="audio/*" style="display:none;" onchange="handleAudioFileUpload(event)">
                             </label>
                             <select id="ed-synth-preset" class="cyber-input" onchange="handlePresetAudioChange()">
-                                <option value="">🔇 بدون إيقاع مدمج</option>
-                                <option value="SYNTH_1">🎹 إيقاع سايبر هادئ</option>
-                                <option value="SYNTH_2">⚡ إيقاع نيترو سريع</option>
-                                <option value="SYNTH_3">😈 إيقاع Demon الحماسي</option>
+                                <option value="">🔇 بدون موسيقى</option>
+                                <option value="SYNTH_1">🎹 Cyberpunk Chill (درامز وبيس هادئ)</option>
+                                <option value="SYNTH_2" selected>⚡ Neon Arcade Rush (إيقاع أركيد حماسي)</option>
+                                <option value="SYNTH_3">😈 Phonk Demon Bass (بيس ثقيل وسريع)</option>
                             </select>
                         </div>
 
                         <input type="text" id="ed-audio-url" class="cyber-input" dir="ltr" placeholder="🔗 أو الصق رابط مباشر لملف صوتي (https://.../song.mp3)" oninput="handleUrlAudioInput()">
-                        <div id="ed-audio-status" style="font-size:11px; color:var(--green); font-weight:800;">لم يتم اختيار أغنية بعد (يمكنك رفع ملف MP3/OGG أو اختيار إيقاع).</div>
+                        <div id="ed-audio-status" style="font-size:11px; color:var(--cyan); font-weight:800;">✅ المقطوعة المختارة: ⚡ Neon Arcade Rush (أو ابحث عن أغنية من الزر فوق!)</div>
                     </div>
 
                     <div class="editor-grid">
@@ -1333,7 +1465,127 @@
                String(saveData.password) === ADMIN_PASS;
     }
 
-    // ================= 9 STAGE DIFFICULTY TIERS (FOR BUILT-IN & CUSTOM STAGES) =================
+    // ================= ONLINE MUSIC SEARCH & DOWNLOADER ENGINE (WITH THUMBNAILS) =================
+    let searchedSongsCache = [];
+    let currentPreviewUrl = "";
+
+    function quickMusicSearch(q) {
+        document.getElementById('music-search-input').value = q;
+        searchSongsOnline();
+    }
+
+    async function searchSongsOnline() {
+        const query = document.getElementById('music-search-input').value.trim();
+        const statusEl = document.getElementById('music-results-status');
+        const listEl = document.getElementById('music-results-list');
+
+        if (!query) {
+            showToast("اكتب اسم الغناية أولاً للبحث! 🎵", false);
+            return;
+        }
+
+        statusEl.textContent = `⏳ جاري البحث عن "${query}" وجلب صور الأغاني...`;
+        statusEl.style.color = "var(--yellow)";
+        listEl.innerHTML = "";
+
+        try {
+            const url = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=18`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (!data.results || data.results.length === 0) {
+                statusEl.textContent = `❌ لم يتم العثور على نتائج لـ "${query}". جرب كتابة الاسم بالإنجليزية أو افتح بحث يوتيوب!`;
+                statusEl.style.color = "var(--pink)";
+                return;
+            }
+
+            searchedSongsCache = data.results.filter(item => item.previewUrl);
+            statusEl.textContent = `✅ تم العثور على ${searchedSongsCache.length} غناية! اضغط "➕ ربط بالماب" لإضافتها لمابك فوراً:`;
+            statusEl.style.color = "var(--green)";
+
+            listEl.innerHTML = searchedSongsCache.map((song, idx) => {
+                const thumb = (song.artworkUrl100 || '').replace('100x100bb', '200x200bb');
+                const title = song.trackName || 'أغنية';
+                const artist = song.artistName || 'فنان';
+                const audioUrl = song.previewUrl;
+
+                return `
+                <div class="song-card cascade-item" style="animation-delay:${Math.min(idx * 0.04, 0.5)}s">
+                    <img src="${thumb}" class="song-thumb" alt="cover">
+                    <div class="song-info">
+                        <div class="song-title">${title}</div>
+                        <div class="song-artist">🎤 ${artist}</div>
+                        <div class="song-btns">
+                            <button class="song-btn listen" onclick="previewSearchedSong(${idx})">🎧 استماع</button>
+                            <button class="song-btn use-map" onclick="attachSearchedSongToMap(${idx})">➕ ربط بالماب</button>
+                            <a href="${audioUrl}" target="_blank" download="${title}.m4a" class="song-btn dl-mp3">📥 تحميل MP3</a>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        } catch (err) {
+            statusEl.textContent = "⚠️ تعذر الاتصال بمحرك الأغاني، تأكد من اتصال الإنترنت.";
+            statusEl.style.color = "var(--pink)";
+        }
+    }
+
+    function previewSearchedSong(idx) {
+        const song = searchedSongsCache[idx];
+        if (!song || !song.previewUrl) return;
+
+        if (currentPreviewUrl === song.previewUrl && !stageAudioPlayer.paused) {
+            stopStageAudio();
+            currentPreviewUrl = "";
+            showToast("⏹️ تم إيقاف معاينة الأغنية", false);
+            return;
+        }
+
+        isMusicMuted = false;
+        const mBtn = document.getElementById('hud-mute-btn');
+        if (mBtn) mBtn.textContent = '🔊';
+
+        currentPreviewUrl = song.previewUrl;
+        playStageAudio(song.previewUrl);
+        showToast(`🎧 جاري تشغيل: ${song.trackName}`, true);
+    }
+
+    function attachSearchedSongToMap(idx) {
+        const song = searchedSongsCache[idx];
+        if (!song || !song.previewUrl) return;
+
+        editorAudioData = song.previewUrl;
+        editorAudioName = `${song.trackName} - ${song.artistName}`;
+
+        document.getElementById('ed-audio-url').value = song.previewUrl;
+        document.getElementById('ed-synth-preset').value = "";
+
+        const statusEl = document.getElementById('ed-audio-status');
+        if (statusEl) {
+            statusEl.textContent = `✅ تم ربط الأغنية بالماب: 🎵 ${editorAudioName}`;
+            statusEl.style.color = "var(--green)";
+        }
+
+        const edTitle = document.getElementById('ed-title');
+        if (edTitle && !edTitle.value.trim()) {
+            edTitle.value = `ماب ${song.trackName}`;
+        }
+
+        closePortal('music');
+        openPortal('editor');
+        showToast(`✅ تم إرفاق "${song.trackName}" بالماب! صمم كراتك الآن 🎵🛠️`, true);
+    }
+
+    function openYouTubeSearch() {
+        const q = document.getElementById('music-search-input').value.trim() || 'Phonk Music';
+        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`, '_blank');
+    }
+
+    function openYouTubeMp3Converter() {
+        window.open('https://cnvmp3.com/', '_blank');
+        showToast("انسخ رابط أي فيديو من يوتيوب وحمله MP3 ثم ارفعه بزر '📁 ارفع ملف غناية'!", true);
+    }
+
+    // ================= 9 STAGE DIFFICULTY TIERS =================
     const STAGE_DIFFICULTIES = {
         easy:        { id: 'easy',        label: 'سهل',         icon: '🟢', color: '#4ade80', bg: 'rgba(74, 222, 128, 0.16)' },
         normal:      { id: 'normal',      label: 'عادي',        icon: '🔵', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.16)' },
@@ -1552,6 +1804,11 @@
             renderTutorialCards();
         } else if (name === 'editor') {
             renderCustomStagesList();
+        } else if (name === 'music') {
+            if (searchedSongsCache.length === 0) {
+                document.getElementById('music-search-input').value = "Phonk";
+                searchSongsOnline();
+            }
         } else if (name === 'ranks') {
             syncFromCloud(false);
         } else if (name === 'skins') {
@@ -1563,7 +1820,7 @@
             renderAdminPanel();
         }
 
-        const items = modal.querySelectorAll('.stage-card, .rank-row, .editor-box, .admin-user-card');
+        const items = modal.querySelectorAll('.stage-card, .rank-row, .editor-box, .admin-user-card, .song-card');
         items.forEach((el, idx) => {
             el.classList.remove('cascade-item');
             void el.offsetWidth;
@@ -1577,7 +1834,7 @@
     }
 
     function closePortal(name) {
-        if (name === 'editor') stopStageAudio();
+        if (name === 'editor' || name === 'music') stopStageAudio();
         const modal = document.getElementById('portal-' + name);
         if (!modal) return;
         modal.style.clipPath = `circle(0% at 50% 50%)`;
@@ -1708,7 +1965,7 @@
         creator: 'Tako_King',
         diff: 'ultra_tako',
         audioData: 'SYNTH_3',
-        audioName: '😈 إيقاع Demon الحماسي',
+        audioName: '😈 Phonk Demon Bass',
         spawns: BALL_KEYS.map((k, idx) => ({
             lane: idx % 4,
             type: k,
@@ -1886,7 +2143,7 @@
         showToast(`🗑️ تم حذف حساب (${name}) نهائياً!`, true);
     }
 
-    // ================= PROGRESSIVE STAGE LOCKING (WITH DIFFICULTY BADGES) =================
+    // ================= PROGRESSIVE STAGE LOCKING =================
     function isStageUnlocked(stageNum) {
         if (stageNum <= 1 || isCurrentUserAdmin()) return true;
         const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
@@ -2232,12 +2489,148 @@
         }).join('');
     }
 
+    // ================= PRO MULTI-TRACK DRUM & SYNTHWAVE ENGINE =================
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    let noiseBuffer = null;
+    let isMusicMuted = false;
+    let beatPulseRadius = 0;
+
+    function ensureAudioCtx() {
+        if (!audioCtx) {
+            audioCtx = new AudioCtx();
+            const bufferSize = audioCtx.sampleRate * 0.5;
+            noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function tone(freq, type = 'sine', dur = 0.1, vol = 0.15) {
+        try {
+            ensureAudioCtx();
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            g.gain.setValueAtTime(vol, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+            osc.connect(g); g.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + dur);
+        } catch(e) {}
+    }
+
+    function playKick(vol = 0.35) {
+        if (isMusicMuted) return;
+        try {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(145, now);
+            osc.frequency.exponentialRampToValueAtTime(36, now + 0.12);
+            g.gain.setValueAtTime(vol, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+            osc.connect(g); g.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + 0.24);
+            beatPulseRadius = 6;
+        } catch (e) {}
+    }
+
+    function playSnare(vol = 0.18) {
+        if (isMusicMuted) return;
+        try {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = noiseBuffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.setValueAtTime(650, now);
+            const g = audioCtx.createGain();
+            g.gain.setValueAtTime(vol, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+            noise.connect(filter); filter.connect(g); g.connect(audioCtx.destination);
+            noise.start(now); noise.stop(now + 0.14);
+
+            const osc = audioCtx.createOscillator();
+            const og = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(185, now);
+            osc.frequency.exponentialRampToValueAtTime(85, now + 0.07);
+            og.gain.setValueAtTime(vol * 0.7, now);
+            og.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.connect(og); og.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + 0.08);
+        } catch (e) {}
+    }
+
+    function playHiHat(open = false, vol = 0.06) {
+        if (isMusicMuted) return;
+        try {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const dur = open ? 0.12 : 0.035;
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = noiseBuffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.setValueAtTime(6500, now);
+            const g = audioCtx.createGain();
+            g.gain.setValueAtTime(vol, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+            noise.connect(filter); filter.connect(g); g.connect(audioCtx.destination);
+            noise.start(now); noise.stop(now + dur);
+        } catch (e) {}
+    }
+
+    function playSynthNote(freq, dur = 0.18, isBass = false, vol = 0.1) {
+        if (isMusicMuted || !freq) return;
+        try {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const filter = audioCtx.createBiquadFilter();
+            const g = audioCtx.createGain();
+
+            osc.type = isBass ? 'sawtooth' : 'square';
+            osc.frequency.setValueAtTime(freq, now);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(isBass ? 420 : 1850, now);
+            filter.frequency.exponentialRampToValueAtTime(isBass ? 110 : 480, now + dur);
+
+            g.gain.setValueAtTime(vol, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+            osc.connect(filter); filter.connect(g); g.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + dur);
+        } catch (e) {}
+    }
+
+    function toggleMusicMute() {
+        isMusicMuted = !isMusicMuted;
+        const btn = document.getElementById('hud-mute-btn');
+        if (btn) btn.textContent = isMusicMuted ? '🔇' : '🔊';
+        if (isMusicMuted) {
+            try { stageAudioPlayer.volume = 0; } catch(e){}
+            showToast("🔇 تم كتم الموسيقى", false);
+        } else {
+            try { stageAudioPlayer.volume = 0.75; } catch(e){}
+            showToast("🔊 تم تشغيل الموسيقى", true);
+        }
+    }
+
     // ================= LEVEL EDITOR + CUSTOM SONG / AUDIO ENGINE =================
     let editorSpawns = [];
     let lastGeneratedCode = "";
     let lastShortId = "";
-    let editorAudioData = "";
-    let editorAudioName = "";
+    let editorAudioData = "SYNTH_2";
+    let editorAudioName = "⚡ Neon Arcade Rush";
 
     let stageAudioPlayer = new Audio();
     stageAudioPlayer.loop = true;
@@ -2249,9 +2642,8 @@
         const file = ev.target.files?.[0];
         if (!file) return;
 
-        // Limit file size to ~3.5MB so it syncs smoothly with Firebase Realtime Database
         if (file.size > 3800000) {
-            showToast("⚠️ حجم ملف الأغنية كبير جداً! اختر ملفاً أقل من 3.5 ميغابايت أو ضع رابطاً مباشراً", false);
+            showToast("⚠️ حجم ملف الأغنية كبير جداً! اختر ملفاً أقل من 3.5 ميغابايت أو ابحث عنها بقسم الغناي!", false);
             return;
         }
 
@@ -2280,12 +2672,12 @@
             const selText = document.getElementById('ed-synth-preset').selectedOptions[0].text;
             editorAudioName = selText;
             document.getElementById('ed-audio-url').value = "";
-            statusEl.textContent = `✅ تم اختيار: ${selText}`;
+            statusEl.textContent = `✅ المقطوعة المختارة: ${selText}`;
             statusEl.style.color = "var(--cyan)";
         } else if (!document.getElementById('ed-audio-url').value) {
             editorAudioData = "";
             editorAudioName = "";
-            statusEl.textContent = "لم يتم اختيار أغنية بعد.";
+            statusEl.textContent = "🔇 بدون موسيقى مرفقة.";
             statusEl.style.color = "#94a3b8";
         }
     }
@@ -2304,15 +2696,48 @@
 
     function startSynthBeatLoop(preset) {
         stopSynthBeatLoop();
-        const bpm = preset === 'SYNTH_3' ? 155 : (preset === 'SYNTH_2' ? 132 : 108);
-        const stepMs = Math.round((60 / bpm) * 500);
-        const bassNotes = preset === 'SYNTH_3' ? [110, 130.8, 146.8, 164.8, 130.8, 110, 98, 123.5] : [130.8, 164.8, 196, 220, 164.8, 196, 246.9, 196];
+        const tracks = {
+            SYNTH_1: {
+                bpm: 112,
+                bass: [73.4, 0, 73.4, 0, 87.3, 0, 87.3, 0, 65.4, 0, 65.4, 0, 82.4, 0, 73.4, 0],
+                lead: [293.7, 0, 440, 349.2, 0, 523.3, 440, 0, 261.6, 0, 392, 349.2, 0, 440, 329.6, 0]
+            },
+            SYNTH_2: {
+                bpm: 130,
+                bass: [55, 55, 110, 55, 65.4, 65.4, 130.8, 65.4, 73.4, 73.4, 146.8, 73.4, 61.7, 61.7, 123.5, 82.4],
+                lead: [440, 523.3, 659.3, 523.3, 587.3, 523.3, 440, 392, 523.3, 659.3, 784, 659.3, 587.3, 493.9, 440, 329.6]
+            },
+            SYNTH_3: {
+                bpm: 146,
+                bass: [65.4, 0, 65.4, 65.4, 0, 65.4, 77.8, 0, 65.4, 0, 65.4, 65.4, 0, 73.4, 69.3, 65.4],
+                lead: [523.3, 0, 523.3, 622.3, 523.3, 0, 493.9, 0, 523.3, 0, 698.5, 622.3, 523.3, 493.9, 466.2, 392]
+            }
+        };
+
+        const tr = tracks[preset] || tracks.SYNTH_2;
+        const stepMs = Math.round((60 / tr.bpm / 4) * 1000);
         let step = 0;
 
         synthBeatInterval = setInterval(() => {
-            const freq = bassNotes[step % bassNotes.length];
-            tone(freq, step % 2 === 0 ? 'sawtooth' : 'triangle', 0.14, 0.11);
-            if (step % 4 === 0) tone(65, 'sine', 0.12, 0.18);
+            if (isMusicMuted) return;
+            const s = step % 16;
+
+            if (s % 4 === 0 || (preset === 'SYNTH_3' && s === 10)) {
+                playKick(0.32);
+            }
+            if (s === 4 || s === 12) {
+                playSnare(0.17);
+            }
+            if (s % 2 === 1) {
+                playHiHat(s === 7 || s === 15, 0.055);
+            }
+            if (tr.bass[s]) {
+                playSynthNote(tr.bass[s], stepMs * 0.0018, true, 0.12);
+            }
+            if (tr.lead[s]) {
+                playSynthNote(tr.lead[s], stepMs * 0.0014, false, 0.065);
+            }
+
             step++;
         }, stepMs);
     }
@@ -2336,7 +2761,7 @@
         try {
             stageAudioPlayer.src = audioSrc;
             stageAudioPlayer.currentTime = 0;
-            stageAudioPlayer.volume = 0.75;
+            stageAudioPlayer.volume = isMusicMuted ? 0 : 0.75;
             stageAudioPlayer.play().catch(() => {
                 showToast("🎵 اضغط على الشاشة لتشغيل موسيقى الماب!", true);
             });
@@ -2361,21 +2786,24 @@
             return;
         }
         if (!editorAudioData) {
-            showToast("اختر ملف غناية أو إيقاع أولاً للاستماع! 🎵", false);
+            showToast("اختر غناية أو إيقاع أولاً للاستماع! 🎵", false);
             return;
         }
+        isMusicMuted = false;
+        const mBtn = document.getElementById('hud-mute-btn');
+        if (mBtn) mBtn.textContent = '🔊';
+
         playStageAudio(editorAudioData);
         isPreviewingEditorAudio = true;
         previewStartTime = performance.now();
         if (btn) btn.textContent = "⏹️ إيقاف الموسيقى";
-        showToast("🎧 الموسيقى تعمل! اضغط 'أضف الكرة' لالتقاط التوقيت تلقائياً", true);
+        showToast("🎧 الأغنية تعمل! اضغط 'أضف الكرة' لالتقاط التوقيت تلقائياً", true);
     }
 
     function addBallToEditor() {
         const lane = parseInt(document.getElementById('ed-lane').value);
         const type = document.getElementById('ed-type').value;
 
-        // If previewing audio, auto-capture current song timestamp!
         if (isPreviewingEditorAudio) {
             let liveSec = 0;
             if (editorAudioData && !editorAudioData.startsWith('SYNTH_') && !stageAudioPlayer.paused) {
@@ -2570,24 +2998,7 @@
             { lane: 2, type: ballType, time: 2.3, speed: 4.1 },
             { lane: 0, type: ballType, time: 4.1, speed: 4.2 }
         ];
-        startCustomStage({ id: 'DEMO', title: `تجربة: ${BALL_META[ballType].name}`, creator: 'النظام', diff: 'easy', spawns: demoSpawns }, false);
-    }
-
-    // ================= AUDIO SYNTHESIZER =================
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    let audioCtx = null;
-    function tone(freq, type = 'sine', dur = 0.1, vol = 0.15) {
-        try {
-            if (!audioCtx) audioCtx = new AudioCtx();
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            g.gain.setValueAtTime(vol, audioCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-            osc.connect(g); g.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + dur);
-        } catch(e) {}
+        startCustomStage({ id: 'DEMO', title: `تجربة: ${BALL_META[ballType].name}`, creator: 'النظام', diff: 'easy', audioData: 'SYNTH_1', spawns: demoSpawns }, false);
     }
 
     // ================= CUSTOM BALL SHAPE RENDERER (FOR 15 SKINS) =================
@@ -3049,6 +3460,7 @@
     function loop(ts) {
         const speedFactor = ts < slowMoUntil ? 0.48 : 1.0;
         const activeSkinObj = getSkinObj(saveData.skin);
+        beatPulseRadius = Math.max(0, beatPulseRadius - 0.35);
 
         if (active) {
             if (customMode) {
@@ -3216,19 +3628,20 @@
             }
         }
 
-        // ================= RENDER CYBER SCENE =================
+        // ================= RENDER CYBER SCENE (WITH BASS PULSE) =================
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         gridOffset = (gridOffset + 1.5 * speedFactor) % 40;
-        ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)'; ctx.lineWidth = 1;
+        ctx.strokeStyle = beatPulseRadius > 2 ? 'rgba(0, 240, 255, 0.12)' : 'rgba(0, 240, 255, 0.05)';
+        ctx.lineWidth = 1;
         for (let y = gridOffset; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
 
         for (let i = 0; i < 4; i++) {
             const x = lanes[i];
             ctx.strokeStyle = 'rgba(0, 240, 255, 0.16)'; ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, hitY); ctx.stroke();
-            ctx.beginPath(); ctx.arc(x, hitY, 26, 0, Math.PI * 2);
+            ctx.beginPath(); ctx.arc(x, hitY, 26 + beatPulseRadius, 0, Math.PI * 2);
             ctx.strokeStyle = ts < mirrorUntil ? '#e879f9' : (combo >= 10 ? '#ff0055' : 'rgba(0, 240, 255, 0.65)');
             ctx.lineWidth = 3; ctx.stroke();
-            ctx.beginPath(); ctx.arc(x, hitY, 5, 0, Math.PI * 2); ctx.fillStyle = '#00f0ff'; ctx.fill();
+            ctx.beginPath(); ctx.arc(x, hitY, 5 + beatPulseRadius * 0.4, 0, Math.PI * 2); ctx.fillStyle = '#00f0ff'; ctx.fill();
         }
 
         balls.forEach(b => {
@@ -3335,6 +3748,9 @@
         balls = []; particles = []; floatTexts = []; lastSpawn = performance.now(); active = true;
         document.getElementById('menu-overlay').classList.add('hidden');
         document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
+
+        const autoPreset = num >= 28 ? 'SYNTH_3' : (num >= 12 ? 'SYNTH_2' : 'SYNTH_1');
+        playStageAudio(autoPreset);
     }
 
     function startCustomStage(stageObj, isPvp = false) {
