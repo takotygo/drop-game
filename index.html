@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v6.3</title>
+    <title>TAKO DROP | غدر الكرات v6.7</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -63,15 +63,11 @@
             z-index: 50;
             display: flex;
             flex-direction: column;
-            padding: 14px;
+            padding: 12px 14px;
             overflow: hidden;
         }
 
-        .overlay.hidden {
-            display: none !important;
-        }
-
-        .hidden {
+        .overlay.hidden, .hidden {
             display: none !important;
         }
 
@@ -84,7 +80,7 @@
             background: rgba(17, 14, 32, 0.92);
             border: 1px solid rgba(0, 240, 255, 0.18);
             border-radius: 12px;
-            padding: 7px 10px;
+            padding: 6px 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             z-index: 5;
         }
@@ -93,9 +89,10 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 800;
             color: #fff;
+            cursor: pointer;
         }
 
         .online-dot {
@@ -104,11 +101,36 @@
             border-radius: 50%;
             background: var(--green);
             box-shadow: 0 0 8px var(--green);
+            flex-shrink: 0;
         }
 
         .online-dot.offline {
             background: var(--yellow);
             box-shadow: 0 0 8px var(--yellow);
+        }
+
+        /* Rank & Difficulty Pill Styles */
+        .rank-tag, .diff-badge {
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 7px;
+            border-radius: 99px;
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            white-space: nowrap;
+        }
+
+        @keyframes insaneGlow {
+            0%, 100% { box-shadow: 0 0 10px #ff0055, 0 0 18px #ffd700; transform: scale(1); }
+            50% { box-shadow: 0 0 16px #00f0ff, 0 0 26px #ff0055; transform: scale(1.04); }
+        }
+
+        .insane-anim {
+            animation: insaneGlow 1.6s infinite ease-in-out;
         }
 
         .top-actions {
@@ -121,9 +143,9 @@
             background: linear-gradient(135deg, #ff0055, #b829ff);
             color: #fff;
             border: 1px solid #ffd700;
-            padding: 5px 9px;
+            padding: 5px 8px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 900;
             cursor: pointer;
             box-shadow: 0 0 14px rgba(255, 0, 85, 0.6);
@@ -133,16 +155,13 @@
             background: linear-gradient(135deg, #f59e0b, #ea580c);
             color: #05050a;
             border: none;
-            padding: 5px 10px;
+            padding: 5px 9px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 900;
             cursor: pointer;
             box-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
-            transition: transform 0.15s;
         }
-
-        .top-btn-rank:active { transform: scale(0.93); }
 
         .top-btn-mini {
             background: rgba(0, 240, 255, 0.12);
@@ -150,7 +169,7 @@
             color: var(--cyan);
             padding: 4px 8px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -159,9 +178,9 @@
             background: rgba(255, 0, 85, 0.15);
             border: 1px solid rgba(255, 0, 85, 0.4);
             color: #fda4af;
-            padding: 4px 8px;
+            padding: 4px 7px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -173,7 +192,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 0 6px 0;
+            padding: 8px 0 4px 0;
             position: relative;
         }
 
@@ -192,16 +211,16 @@
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 1.5px;
-            padding: 3px 14px;
+            padding: 2px 13px;
             border-radius: 99px;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
             direction: ltr;
             unicode-bidi: isolate;
         }
 
         .glitch-title {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 900;
             color: #fff;
             font-family: 'Orbitron', 'Cairo', sans-serif;
@@ -211,32 +230,63 @@
             direction: ltr;
         }
 
-        .menu-subtitle {
-            color: #94a3b8;
+        /* Rank Progress Banner in Hub */
+        .rank-progress-card {
+            width: 100%;
+            background: rgba(17, 14, 32, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 11px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .rank-prog-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-size: 11.5px;
-            font-weight: 700;
-            margin-top: 4px;
+            font-weight: 800;
+        }
+
+        .rank-bar-bg {
+            width: 100%;
+            height: 7px;
+            background: rgba(7, 5, 16, 0.95);
+            border-radius: 99px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .rank-bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            transition: width 0.35s ease;
         }
 
         .stats-grid {
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 7px;
         }
 
         .stat-card {
             background: rgba(17, 14, 32, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            padding: 8px 4px;
+            padding: 6px 4px;
             text-align: center;
         }
 
-        .stat-label { font-size: 10px; color: #94a3b8; font-weight: 700; margin-bottom: 2px; }
+        .stat-label { font-size: 9.5px; color: #94a3b8; font-weight: 700; margin-bottom: 1px; }
         .stat-val {
             font-family: 'Orbitron', 'Cairo', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 900;
             direction: ltr;
             unicode-bidi: isolate;
@@ -249,7 +299,7 @@
         .orbs-stage {
             position: relative;
             width: 100%;
-            height: 260px;
+            height: 235px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -258,8 +308,8 @@
 
         .ambient-ring {
             position: absolute;
-            width: 215px;
-            height: 215px;
+            width: 205px;
+            height: 205px;
             border-radius: 50%;
             border: 2px dashed rgba(0, 240, 255, 0.22);
             animation: spinSlow 14s linear infinite;
@@ -268,8 +318,8 @@
 
         .ambient-ring-2 {
             position: absolute;
-            width: 248px;
-            height: 248px;
+            width: 236px;
+            height: 236px;
             border-radius: 50%;
             border: 1px solid rgba(255, 0, 85, 0.15);
             animation: spinSlow 22s linear infinite reverse;
@@ -305,8 +355,8 @@
         }
 
         .orb-start {
-            width: 162px;
-            height: 162px;
+            width: 154px;
+            height: 154px;
             background: radial-gradient(circle at 35% 30%, #19355c 0%, #091326 65%, #050811 100%);
             border: 4px solid var(--cyan);
             animation: pulseMainOrb 2.2s infinite ease-in-out;
@@ -314,7 +364,7 @@
 
         .orb-start .orb-eng {
             font-family: 'Orbitron', sans-serif;
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 900;
             letter-spacing: 2px;
             color: #fff;
@@ -324,15 +374,15 @@
         }
 
         .orb-start .orb-ar {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             color: var(--cyan);
             margin-top: 2px;
         }
 
         .orb-side {
-            width: 98px;
-            height: 98px;
+            width: 94px;
+            height: 94px;
             background: radial-gradient(circle at 35% 30%, #2b1442 0%, #11091c 75%);
             border: 3px solid var(--purple);
             box-shadow: 0 0 22px rgba(184, 41, 255, 0.45), inset 0 0 15px rgba(184, 41, 255, 0.3);
@@ -351,14 +401,14 @@
         }
 
         .orb-side .orb-icon {
-            font-size: 22px;
+            font-size: 21px;
             line-height: 1;
             margin-bottom: 3px;
         }
 
         .orb-side .orb-eng {
             font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 900;
             letter-spacing: 0.5px;
             direction: ltr;
@@ -366,7 +416,7 @@
         }
 
         .orb-side .orb-ar {
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 800;
             color: #cbd5e1;
         }
@@ -375,7 +425,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 7px;
         }
 
         .id-search-bar {
@@ -408,7 +458,7 @@
             background: rgba(45, 10, 25, 0.78);
             border: 1px solid rgba(255, 0, 85, 0.45);
             border-radius: 10px;
-            padding: 8px 12px;
+            padding: 7px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -416,7 +466,7 @@
         }
 
         .hardcore-bar span {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             color: #fda4af;
         }
@@ -523,8 +573,14 @@
         .stage-card.pink { border-right-color: var(--pink); }
         .stage-card.orange { border-right-color: var(--orange); }
 
+        .stage-card.locked-stage {
+            opacity: 0.55;
+            border-right-color: #475569 !important;
+            background: rgba(12, 10, 22, 0.85);
+        }
+
         .stage-info { text-align: right; flex: 1; }
-        .stage-title { font-size: 13.5px; font-weight: 900; color: #fff; margin-bottom: 2px; }
+        .stage-title { font-size: 13.5px; font-weight: 900; color: #fff; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .stage-desc { font-size: 11px; color: #94a3b8; line-height: 1.35; }
 
         .play-chip {
@@ -547,6 +603,24 @@
         .play-chip.green { background: var(--green); color: #05050a; }
         .play-chip.pink { background: var(--pink); color: #fff; }
         .play-chip.orange { background: var(--orange); color: #fff; }
+        .play-chip.locked-btn {
+            background: #1e293b !important;
+            color: #94a3b8 !important;
+            box-shadow: none !important;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .skin-orb-preview {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            position: relative;
+        }
 
         /* Level Editor Box */
         .editor-box {
@@ -567,6 +641,32 @@
 
         .field-group { display: flex; flex-direction: column; gap: 4px; }
         .field-group label { font-size: 11px; color: #94a3b8; font-weight: 800; }
+
+        .audio-upload-box {
+            background: rgba(7, 5, 16, 0.9);
+            border: 1px dashed rgba(184, 41, 255, 0.55);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-upload-lbl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(184, 41, 255, 0.18);
+            border: 1px solid var(--purple);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+        }
 
         .spawn-list {
             max-height: 130px;
@@ -650,23 +750,25 @@
             justify-content: space-between;
             background: rgba(18, 15, 34, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 9px 12px;
+            padding: 9px 10px;
             border-radius: 9px;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 800;
+            gap: 6px;
         }
 
         .rank-badge {
-            min-width: 34px;
-            height: 25px;
+            min-width: 32px;
+            height: 24px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            font-size: 10.5px;
             direction: ltr;
+            flex-shrink: 0;
         }
 
         .rank-1 { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #000; box-shadow: 0 0 10px #ffd700; }
@@ -816,11 +918,11 @@
     <div id="hud">
         <button class="menu-mini-btn" onclick="openMenu()">🏠 الرئيسية</button>
         <div class="hud-box">
-            <span class="hud-lbl">المرحلة</span>
+            <span class="hud-lbl">المرحلة / الصعوبة</span>
             <span class="hud-val" id="hud-stage">1</span>
         </div>
         <div class="hud-box">
-            <span class="hud-lbl">السكور / الهدف</span>
+            <span class="hud-lbl">السكور / الـ XP المعلق</span>
             <span class="hud-val" id="hud-score">0 / 10</span>
         </div>
         <div class="hud-box">
@@ -846,7 +948,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.3</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v6.7 BEATMAP</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -868,16 +970,17 @@
 
     <!-- ================= MAIN LAUNCHER HUB OVERLAY ================= -->
     <div id="menu-overlay" class="overlay">
-        <!-- TOP BAR: User + Secret Admin Btn + Leaderboard + Skins + Logout -->
+        <!-- TOP BAR -->
         <div class="top-user-bar">
-            <div class="user-pill">
+            <div class="user-pill" onclick="openPortal('tiers', event)">
                 <span class="online-dot" id="server-status-dot"></span>
                 <span id="display-username">لاعب</span>
+                <span id="top-rank-badge" class="rank-tag">🥉 Bronze</span>
             </div>
             <div class="top-actions">
                 <button class="top-btn-admin hidden" id="admin-top-btn" onclick="openPortal('admin', event)">👑 الأدمن</button>
                 <button class="top-btn-rank" onclick="openPortal('ranks', event)">🏆 المتصدرين</button>
-                <button class="top-btn-mini" onclick="openPortal('skins', event)">🎨 الألوان</button>
+                <button class="top-btn-mini" onclick="openPortal('skins', event)">🎨 الأشكال</button>
                 <button class="logout-btn" onclick="logoutUser()">خروج</button>
             </div>
         </div>
@@ -885,9 +988,19 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.3</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v6.7 BEATMAP</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
-                <div class="menu-subtitle">اضغط دائرة START لاختيار المراحل الـ 40 أو CREATE لتصنيع مابك!</div>
+            </div>
+
+            <!-- Interactive Rank Tier Progress Card -->
+            <div class="rank-progress-card" onclick="openPortal('tiers', event)">
+                <div class="rank-prog-top">
+                    <span id="hub-rank-current" style="color:var(--cyan);">🥉 الرتبة: Bronze</span>
+                    <span id="hub-rank-next" style="color:#94a3b8; font-size:10.5px;">اضغط لعرض سلم الرتب 🏅</span>
+                </div>
+                <div class="rank-bar-bg">
+                    <div class="rank-bar-fill" id="hub-rank-bar"></div>
+                </div>
             </div>
 
             <!-- 3 Stats Boxes -->
@@ -932,23 +1045,28 @@
                 </button>
             </div>
 
-            <!-- Bottom Quick Actions: Guide + Hardcore -->
+            <!-- Bottom Quick Actions: Guide + Ranks + Hardcore -->
             <div class="hub-bottom">
-                <button class="menu-mini-btn" style="width:100%; padding:9px; border-color:rgba(0,240,255,0.35); color:var(--cyan);" onclick="openPortal('guide', event)">
-                    📖 دليل الـ 40 كرة وتجربتها الفورية
-                </button>
+                <div style="display:flex; gap:6px;">
+                    <button class="menu-mini-btn" style="flex:1; padding:8px; border-color:rgba(0,240,255,0.35); color:var(--cyan);" onclick="openPortal('guide', event)">
+                        📖 موسوعة الـ 40 كرة
+                    </button>
+                    <button class="menu-mini-btn" style="flex:1; padding:8px; border-color:rgba(255,184,0,0.4); color:var(--yellow);" onclick="openPortal('tiers', event)">
+                        🏅 سلم الرتب (Ranks)
+                    </button>
+                </div>
 
                 <label class="hardcore-bar">
-                    <span>🔥 طور الجلطة (قلب واحد + نقاط وXP مضاعف)</span>
+                    <span>🔥 طور الجلطة (قلب واحد + مضاعفة الـ XP عند الفوز x2)</span>
                     <input type="checkbox" id="hardcore-toggle">
                 </label>
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 1: 40 STAGES ================= -->
+        <!-- ================= EXPANDING PORTAL 1: 40 STAGES (WITH 9 DIFFICULTY TIERS) ================= -->
         <div id="portal-stages" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title">🎓 المراحل التدريجية (40 مرحلة)</div>
+                <div class="portal-title">🎓 المراحل التدريجية (من سهل إلى Ultra Tako)</div>
                 <button class="close-portal-btn" onclick="closePortal('stages')">✖ إغلاق</button>
             </div>
             <div class="portal-body" id="stages-scroll-body">
@@ -956,10 +1074,10 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 2: CREATE MAP + SEARCH BY ID ================= -->
+        <!-- ================= EXPANDING PORTAL 2: CREATE MAP + CUSTOM AUDIO + DIFFICULTY ================= -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب والبحث بالـ ID</div>
+                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية وتصنيف صعوبة</div>
                 <button class="close-portal-btn" onclick="closePortal('editor')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
@@ -972,12 +1090,52 @@
                 </div>
 
                 <div class="editor-box cascade-item">
-                    <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم ماب جديد (40 كرة)</div>
-                    <div class="stage-desc">اختر المسار، ونوع الكرة، وتوقيت النزول، والسرعة ثم احفظ الماب بـ ID أونلاين!</div>
+                    <div class="stage-title" style="color:var(--cyan); font-size:13.5px;">⚙️ استوديو تصميم الماب والأغاني (40 كرة)</div>
+                    <div class="stage-desc">اختر اسم الماب، ومستوى صعوبته، وارفع ملف غناية من جهازك ليشتغل مع الماب!</div>
 
-                    <div class="field-group">
-                        <label>اسم الماب الخاص بك:</label>
-                        <input type="text" id="ed-title" class="cyber-input" placeholder="مثال: ماب تاكو المستحيل">
+                    <div class="editor-grid">
+                        <div class="field-group">
+                            <label>اسم الماب الخاص بك:</label>
+                            <input type="text" id="ed-title" class="cyber-input" placeholder="مثال: ماب تاكو الحماسي">
+                        </div>
+                        <div class="field-group">
+                            <label>🔥 تصنيف صعوبة المرحلة:</label>
+                            <select id="ed-diff" class="cyber-input">
+                                <option value="easy">🟢 سهل (Easy)</option>
+                                <option value="normal">🔵 عادي (Normal)</option>
+                                <option value="medium">🟡 متوسط (Medium)</option>
+                                <option value="hard">🟠 صعب (Hard)</option>
+                                <option value="easy_tako" selected>⚡ Easy Tako</option>
+                                <option value="medium_tako">💜 Medium Tako</option>
+                                <option value="hard_tako">🔥 Hard Tako</option>
+                                <option value="demon_tako">😈 Demon Tako</option>
+                                <option value="ultra_tako">💀🌌 Ultra Tako</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Custom Song / Audio Upload Section -->
+                    <div class="audio-upload-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:12px; font-weight:900; color:#e879f9;">🎵 أغنية / موسيقى الماب (اختياري):</span>
+                            <button class="menu-mini-btn" id="ed-preview-audio-btn" onclick="toggleEditorAudioPreview()">🎧 استماع وتوقيت</button>
+                        </div>
+
+                        <div class="editor-grid">
+                            <label class="file-upload-lbl">
+                                📁 اختر ملف غناية من جهازك
+                                <input type="file" id="ed-audio-file" accept="audio/*" style="display:none;" onchange="handleAudioFileUpload(event)">
+                            </label>
+                            <select id="ed-synth-preset" class="cyber-input" onchange="handlePresetAudioChange()">
+                                <option value="">🔇 بدون إيقاع مدمج</option>
+                                <option value="SYNTH_1">🎹 إيقاع سايبر هادئ</option>
+                                <option value="SYNTH_2">⚡ إيقاع نيترو سريع</option>
+                                <option value="SYNTH_3">😈 إيقاع Demon الحماسي</option>
+                            </select>
+                        </div>
+
+                        <input type="text" id="ed-audio-url" class="cyber-input" dir="ltr" placeholder="🔗 أو الصق رابط مباشر لملف صوتي (https://.../song.mp3)" oninput="handleUrlAudioInput()">
+                        <div id="ed-audio-status" style="font-size:11px; color:var(--green); font-weight:800;">لم يتم اختيار أغنية بعد (يمكنك رفع ملف MP3/OGG أو اختيار إيقاع).</div>
                     </div>
 
                     <div class="editor-grid">
@@ -1005,7 +1163,7 @@
                     </div>
 
                     <button class="play-chip" style="width:100%; padding:10px;" onclick="addBallToEditor()">
-                        <span>➕ أضف الكرة إلى الماب</span>
+                        <span>➕ أضف الكرة إلى الماب (يلتقط توقيت الأغنية تلقائياً 🎵)</span>
                     </button>
 
                     <div class="spawn-list" id="ed-balls-list">
@@ -1014,10 +1172,10 @@
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                         <button class="play-chip green" style="padding:10px;" onclick="saveCustomStage()">
-                            <span>💾 حفظ ورفع أونلاين (ID)</span>
+                            <span>💾 حفظ ورفع الماب والأغنية (ID)</span>
                         </button>
                         <button class="play-chip yellow" style="padding:10px;" onclick="testEditorStage()">
-                            <span>▶️ تجربة الماب</span>
+                            <span>▶️ تجربة الماب مع الأغنية</span>
                         </button>
                     </div>
 
@@ -1084,7 +1242,7 @@
             <div class="portal-body">
                 <div class="stage-card yellow cascade-item" style="margin-bottom:4px;">
                     <div class="stage-info">
-                        <div class="stage-title">🌍 الترتيب العالمي المباشر</div>
+                        <div class="stage-title">🌍 الترتيب العالمي المباشر مع الرتب</div>
                         <div class="stage-desc" id="my-rank-summary">جاري جلب بيانات المتصدرين من السيرفر...</div>
                     </div>
                     <button class="menu-mini-btn" onclick="syncFromCloud(true)">🔄 تحديث</button>
@@ -1093,53 +1251,14 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 5: SKINS ================= -->
+        <!-- ================= EXPANDING PORTAL 5: 15 SKINS (0 XP TO 100K XP) ================= -->
         <div id="portal-skins" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--cyan);">🎨 ألوان الكرات والطاقة</div>
+                <div class="portal-title" style="color:var(--cyan);">🎨 أشكال وألوان الكرات (0 إلى 100K XP)</div>
                 <button class="close-portal-btn" onclick="closePortal('skins')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
-                <div class="stage-card cascade-item" style="animation-delay:0.03s">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:30px; height:30px; border-radius:50%; background:#00f0ff; box-shadow:0 0 12px #00f0ff;"></div>
-                        <div>
-                            <div class="stage-title">نواة السايبر (الافتراضي)</div>
-                            <div class="stage-desc">مفتوح دائماً</div>
-                        </div>
-                    </div>
-                    <button class="play-chip" onclick="selectSkin('#00f0ff')"><span>تفعيل</span></button>
-                </div>
-                <div class="stage-card pink cascade-item" style="animation-delay:0.08s">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:30px; height:30px; border-radius:50%; background:#ff0055; box-shadow:0 0 12px #ff0055;"></div>
-                        <div>
-                            <div class="stage-title">لهب البلازما القرمزي</div>
-                            <div class="stage-desc">يتطلب 150 XP</div>
-                        </div>
-                    </div>
-                    <button class="play-chip pink" onclick="unlockSkin('#ff0055', 150)"><span>اختيار</span></button>
-                </div>
-                <div class="stage-card green cascade-item" style="animation-delay:0.13s">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:30px; height:30px; border-radius:50%; background:#00ff66; box-shadow:0 0 12px #00ff66;"></div>
-                        <div>
-                            <div class="stage-title">شيفرة الماتريكس</div>
-                            <div class="stage-desc">يتطلب 400 XP</div>
-                        </div>
-                    </div>
-                    <button class="play-chip green" onclick="unlockSkin('#00ff66', 400)"><span>اختيار</span></button>
-                </div>
-                <div class="stage-card yellow cascade-item" style="animation-delay:0.18s">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:30px; height:30px; border-radius:50%; background:#ffb800; box-shadow:0 0 12px #ffb800;"></div>
-                        <div>
-                            <div class="stage-title">البرق الذهبي الخارق</div>
-                            <div class="stage-desc">يتطلب 900 XP</div>
-                        </div>
-                    </div>
-                    <button class="play-chip yellow" onclick="unlockSkin('#ffb800', 900)"><span>اختيار</span></button>
-                </div>
+                <div id="skins-list-container" style="display:flex; flex-direction:column; gap:9px;"></div>
             </div>
         </div>
 
@@ -1154,17 +1273,28 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 7: SECRET ADMIN PANEL ================= -->
+        <!-- ================= EXPANDING PORTAL 7: RANK TIERS LADDER ================= -->
+        <div id="portal-tiers" class="portal-modal">
+            <div class="portal-header">
+                <div class="portal-title" style="color:var(--yellow);">🏅 سلم الرتب العالمية (Ranked Tiers)</div>
+                <button class="close-portal-btn" onclick="closePortal('tiers')">✖ إغلاق</button>
+            </div>
+            <div class="portal-body">
+                <div id="tiers-list-container" style="display:flex; flex-direction:column; gap:9px;"></div>
+            </div>
+        </div>
+
+        <!-- ================= EXPANDING PORTAL 8: SECRET ADMIN PANEL ================= -->
         <div id="portal-admin" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:#ffd700;">👑 لوحة تحكم الأدمن (الباند وكشف الحسابات)</div>
+                <div class="portal-title" style="color:#ffd700;">👑 لوحة الأدمن المخفية (إدارة وباند)</div>
                 <button class="close-portal-btn" onclick="closePortal('admin')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="stage-card pink cascade-item">
                     <div class="stage-info">
-                        <div class="stage-title">🛡️ صلاحيات المطور (admin takotygo)</div>
-                        <div class="stage-desc" id="admin-stats-summary">يمكنك رؤية كلمات السر، حظر أي لاعب (باند)، تصفير نقاطه، أو حذف حسابه مباشرة من السيرفر!</div>
+                        <div class="stage-title">👻 وضع الشبح مفعّل (حسابك مخفي عن المتصدرين)</div>
+                        <div class="stage-desc" id="admin-stats-summary">يمكنك رؤية كلمات السر، حظر أي لاعب (باند)، تصفير نقاطه، أو حذف حسابه مباشرة!</div>
                     </div>
                     <button class="menu-mini-btn" onclick="syncFromCloud(true)">🔄 تحديث</button>
                 </div>
@@ -1186,7 +1316,7 @@
 </div>
 
 <script>
-    // ================= FIREBASE CLOUD & ADMIN CREDENTIALS =================
+    // ================= FIREBASE CLOUD & GHOST ADMIN CREDENTIALS =================
     const FIREBASE_DB_URL = "https://takotygo-74-default-rtdb.firebaseio.com";
     const ADMIN_USERNAME = "admin takotygo";
     const ADMIN_PASS = "0988480623admin0963852741";
@@ -1201,6 +1331,200 @@
                saveData.username &&
                saveData.username.trim().toLowerCase() === ADMIN_USERNAME &&
                String(saveData.password) === ADMIN_PASS;
+    }
+
+    // ================= 9 STAGE DIFFICULTY TIERS (FOR BUILT-IN & CUSTOM STAGES) =================
+    const STAGE_DIFFICULTIES = {
+        easy:        { id: 'easy',        label: 'سهل',         icon: '🟢', color: '#4ade80', bg: 'rgba(74, 222, 128, 0.16)' },
+        normal:      { id: 'normal',      label: 'عادي',        icon: '🔵', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.16)' },
+        medium:      { id: 'medium',      label: 'متوسط',       icon: '🟡', color: '#facc15', bg: 'rgba(250, 204, 21, 0.16)' },
+        hard:        { id: 'hard',        label: 'صعب',         icon: '🟠', color: '#fb923c', bg: 'rgba(251, 146, 60, 0.18)' },
+        easy_tako:   { id: 'easy_tako',   label: 'Easy Tako',   icon: '⚡', color: '#00f0ff', bg: 'rgba(0, 240, 255, 0.18)' },
+        medium_tako: { id: 'medium_tako', label: 'Medium Tako', icon: '💜', color: '#c084fc', bg: 'rgba(192, 132, 252, 0.20)' },
+        hard_tako:   { id: 'hard_tako',   label: 'Hard Tako',   icon: '🔥', color: '#f43f5e', bg: 'rgba(244, 63, 94, 0.22)' },
+        demon_tako:  { id: 'demon_tako',  label: 'Demon Tako',  icon: '😈', color: '#ff0055', bg: 'rgba(255, 0, 85, 0.26)' },
+        ultra_tako:  { id: 'ultra_tako',  label: 'Ultra Tako',  icon: '💀🌌',color: '#ffd700', bg: 'linear-gradient(135deg, rgba(255,0,85,0.45), rgba(147,51,234,0.45))', ultra: true }
+    };
+
+    function getStageDifficultyKeyByNum(sNum) {
+        if (sNum <= 4)  return 'easy';
+        if (sNum <= 8)  return 'normal';
+        if (sNum <= 13) return 'medium';
+        if (sNum <= 18) return 'hard';
+        if (sNum <= 23) return 'easy_tako';
+        if (sNum <= 28) return 'medium_tako';
+        if (sNum <= 33) return 'hard_tako';
+        if (sNum <= 37) return 'demon_tako';
+        return 'ultra_tako';
+    }
+
+    function getDifficultyBadgeHTML(diffKey) {
+        const d = STAGE_DIFFICULTIES[diffKey] || STAGE_DIFFICULTIES.easy_tako;
+        const glowClass = d.ultra ? 'insane-anim' : '';
+        return `<span class="diff-badge ${glowClass}" style="background:${d.bg}; color:${d.color}; border:1px solid ${d.color};">${d.icon} ${d.label}</span>`;
+    }
+
+    // ================= 8 COMPETITIVE PLAYER RANK TIERS =================
+    const RANK_TIERS = [
+        { id: 'bronze',   name: 'Bronze',      icon: '🥉', minXP: 0,      color: '#d97706', bg: 'rgba(217, 119, 6, 0.18)',   desc: 'بداية رحلة التحدي في عالم الكرات الخادعة' },
+        { id: 'silver',   name: 'Silver',      icon: '🥈', minXP: 500,    color: '#cbd5e1', bg: 'rgba(203, 213, 225, 0.18)', desc: 'ردة فعل سريعة ومعرفة جيدة بالفخاخ الأساسية' },
+        { id: 'gold',     name: 'Gold',        icon: '🥇', minXP: 2000,   color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.20)',  desc: 'لاعب ذهبي متمرس في كشف الخدع المزدوجة' },
+        { id: 'platinum', name: 'Platinum',    icon: '💠', minXP: 5000,   color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.20)',  desc: 'سيطرة عالية على المسارات الأربعة تحت الضغط' },
+        { id: 'diamond',  name: 'Diamond',     icon: '💎', minXP: 12000,  color: '#00f0ff', bg: 'rgba(0, 240, 255, 0.22)',   desc: 'نخبة الألماس! دقة PERFECT عالية جداً' },
+        { id: 'master',   name: 'Master Tako', icon: '⚡', minXP: 25000,  color: '#b829ff', bg: 'rgba(184, 41, 255, 0.24)',  desc: 'ماستر تاكو الخارق! لا تخدعه البوابات ولا السراب' },
+        { id: 'demon',    name: 'Demon Tako',  icon: '😈', minXP: 55000,  color: '#ff0055', bg: 'rgba(255, 0, 85, 0.26)',    desc: 'شيطان السرعة المرعب! يختم أصعب المراحل بقلب واحد' },
+        { id: 'insane',   name: 'Insane Tako', icon: '🔥👑',minXP: 100000, color: '#ffd700', bg: 'linear-gradient(135deg, rgba(255,0,85,0.45), rgba(184,41,255,0.45))', desc: 'الرتبة الإعجازية القصوى (100,000 XP)! أسطورة اللعبة بلا منازع', insane: true }
+    ];
+
+    function getRankByXP(xpVal) {
+        const xp = xpVal || 0;
+        let current = RANK_TIERS[0];
+        let next = null;
+        for (let i = 0; i < RANK_TIERS.length; i++) {
+            if (xp >= RANK_TIERS[i].minXP) {
+                current = RANK_TIERS[i];
+                next = RANK_TIERS[i + 1] || null;
+            }
+        }
+        return { current, next };
+    }
+
+    function getRankBadgeHTML(xpVal) {
+        const { current } = getRankByXP(xpVal);
+        const extraClass = current.insane ? 'insane-anim' : '';
+        return `<span class="rank-tag ${extraClass}" style="background:${current.bg}; color:${current.color}; border:1px solid ${current.color};">${current.icon} ${current.name}</span>`;
+    }
+
+    function updateRankUI() {
+        const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
+        const { current, next } = getRankByXP(myXP);
+
+        const topBadge = document.getElementById('top-rank-badge');
+        if (topBadge) {
+            topBadge.className = `rank-tag ${current.insane ? 'insane-anim' : ''}`;
+            topBadge.style.background = current.bg;
+            topBadge.style.color = current.color;
+            topBadge.style.border = `1px solid ${current.color}`;
+            topBadge.textContent = `${current.icon} ${current.name}`;
+        }
+
+        const curEl = document.getElementById('hub-rank-current');
+        const nextEl = document.getElementById('hub-rank-next');
+        const barEl = document.getElementById('hub-rank-bar');
+
+        if (curEl && nextEl && barEl) {
+            curEl.style.color = current.color;
+            curEl.innerHTML = `${current.icon} الرتبة: <strong dir="ltr">${current.name}</strong>`;
+
+            if (next) {
+                const spanXP = next.minXP - current.minXP;
+                const earnedInTier = myXP - current.minXP;
+                const pct = Math.min(100, Math.max(2, (earnedInTier / spanXP) * 100));
+                const rem = Math.max(0, next.minXP - myXP);
+                nextEl.innerHTML = `باقي <strong dir="ltr" style="color:var(--yellow);">${rem.toLocaleString()} XP</strong> لرتبة <span dir="ltr" style="color:${next.color};">${next.icon} ${next.name}</span>`;
+                barEl.style.width = pct + '%';
+                barEl.style.background = `linear-gradient(90deg, ${current.color}, ${next.color})`;
+                barEl.style.boxShadow = `0 0 10px ${current.color}`;
+            } else {
+                nextEl.innerHTML = `<span style="color:#ffd700;">👑 وصلت إلى القمة الأسطورية (MAX RANK)!</span>`;
+                barEl.style.width = '100%';
+                barEl.style.background = 'linear-gradient(90deg, #ff0055, #ffd700, #00f0ff)';
+                barEl.style.boxShadow = '0 0 14px #ffd700';
+            }
+        }
+    }
+
+    function renderTiersLadder() {
+        const container = document.getElementById('tiers-list-container');
+        if (!container) return;
+        const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
+        const { current } = getRankByXP(myXP);
+
+        container.innerHTML = RANK_TIERS.map((rt, idx) => {
+            const isUnlocked = myXP >= rt.minXP;
+            const isCurrent = current.id === rt.id;
+            const statusTxt = isCurrent ? 'رتبتك الحالية 🔥' : (isUnlocked ? 'مفتوحة ✅' : `🔒 ${rt.minXP.toLocaleString()} XP`);
+
+            return `
+            <div class="stage-card cascade-item" style="border-right-color:${rt.color}; ${isCurrent ? 'border:1px solid ' + rt.color + '; background:rgba(255,255,255,0.06);' : ''}; animation-delay:${idx * 0.04}s">
+                <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                    <div class="skin-orb-preview ${rt.insane ? 'insane-anim' : ''}" style="background:${rt.bg}; border:2px solid ${rt.color}; box-shadow:0 0 14px ${rt.color};">
+                        <span>${rt.icon}</span>
+                    </div>
+                    <div class="stage-info">
+                        <div class="stage-title" style="color:${rt.color};" dir="ltr">${idx + 1}. ${rt.name}</div>
+                        <div class="stage-desc">${rt.desc} — <strong dir="ltr" style="color:var(--yellow);">يتطلب ${rt.minXP.toLocaleString()} XP</strong></div>
+                    </div>
+                </div>
+                <span class="rank-tag" style="background:${rt.bg}; color:${rt.color}; border:1px solid ${rt.color}; font-size:10.5px;">${statusTxt}</span>
+            </div>`;
+        }).join('');
+    }
+
+    // ================= 15 CUSTOM BALL SKINS & SHAPES (0 XP TO 100,000 XP) =================
+    const SKINS_CATALOG = [
+        { id: 'cyber_cyan',   name: '1. نواة السايبر الزرقاء',     cost: 0,      color: '#00f0ff', core: '#ffffff', shape: 'ring',    icon: '🔵', desc: 'الشكل الكلاسيكي المشع (مجاني - 0 XP)' },
+        { id: 'crimson_fire', name: '2. لهب البلازما القرمزي',     cost: 150,    color: '#ff0055', core: '#ffe4e6', shape: 'ring',    icon: '🔴', desc: 'طاقة نارية حمراء متوهجة' },
+        { id: 'matrix_code',  name: '3. شيفرة الماتريكس الخضراء',   cost: 400,    color: '#00ff66', core: '#052e16', shape: 'cross',   icon: '🟢', desc: 'نواة رقمية متقاطعة عالية الدقة' },
+        { id: 'gold_bolt',    name: '4. البرق الذهبي الخارق',      cost: 1000,   color: '#ffb800', core: '#ffffff', shape: 'star',    icon: '⭐', desc: 'كرة ذهبية بداخلها نجمة خماسية مضيئة' },
+        { id: 'amethyst_hex', name: '5. كريستال الأرجوان السداسي', cost: 2500,   color: '#b829ff', core: '#f3e8ff', shape: 'hex',     icon: '🟣', desc: 'درع هندسي سداسي الأضلاع' },
+        { id: 'toxic_bio',    name: '6. النواة النووية المشعة',     cost: 5000,   color: '#a3e635', core: '#1a2e05', shape: 'bio',     icon: '☢️', desc: 'ثلاث نوى ذرية تدور داخل الكرة' },
+        { id: 'sharingan',    name: '7. عين الشارينغان القرمزية',   cost: 10000,  color: '#dc2626', core: '#000000', shape: 'eye',     icon: '👁️', desc: 'عين أسطورية بنقطة سوداء وحلقات دوران' },
+        { id: 'frost_heart',  name: '8. نبض الصقيع الجليدي',       cost: 18000,  color: '#38bdf8', core: '#ffffff', shape: 'diamond', icon: '💎', desc: 'جوهرة ألماسية زرقاء صافية' },
+        { id: 'solar_flare',  name: '9. الانفجار الشمسي الحارق',   cost: 28000,  color: '#ff6b00', core: '#fef08a', shape: 'sun',     icon: '☀️', desc: 'شمس مصغرة بهالة لهب مزدوجة' },
+        { id: 'neon_vortex',  name: '10. دوامة النيون الوردية',    cost: 40000,  color: '#f472b6', core: '#500724', shape: 'vortex',  icon: '🌀', desc: 'دوامة حلزونية تخطف الأبصار أثناء النزول' },
+        { id: 'blood_moon',   name: '11. القمر الدموي المظلم',     cost: 52000,  color: '#991b1b', core: '#fca5a5', shape: 'crescent',icon: '🩸', desc: 'هلال قمر دموي بوهج مرعب' },
+        { id: 'emerald_king', name: '12. تاج الزمرد الملكي',       cost: 65000,  color: '#10b981', core: '#ffd700', shape: 'crown',   icon: '👑', desc: 'زمرد أخضر ملكي مرصع بنواة ذهبية' },
+        { id: 'cyber_galaxy', name: '13. المجرة الكونية المتغيرة', cost: 78000,  color: '#818cf8', core: '#ffffff', shape: 'galaxy',  icon: '🌌', desc: 'تغير طيفها الكوني مع مدار نجمي' },
+        { id: 'omega_prism',  name: '14. طيف الأوميغا القوسي',     cost: 90000,  color: '#e879f9', core: '#ffffff', shape: 'rainbow', icon: '🌈', desc: 'تتلون بألوان الطيف السبعة أثناء الطيران!' },
+        { id: 'tako_100k',    name: '15. زعيم التنين الأسود (100K)',cost: 100000, color: '#ffd700', core: '#05050a', shape: 'dragon',  icon: '🐉', desc: 'الشكل النهائي الأسطوري لملوك Insane Tako (100,000 XP)!' }
+    ];
+
+    function getSkinObj(skinIdOrColor) {
+        return SKINS_CATALOG.find(s => s.id === skinIdOrColor || s.color === skinIdOrColor) || SKINS_CATALOG[0];
+    }
+
+    function renderSkinsShop() {
+        const container = document.getElementById('skins-list-container');
+        if (!container) return;
+        const curSkin = getSkinObj(saveData.skin);
+        const myXP = isCurrentUserAdmin() ? 999999 : (saveData.xp || 0);
+
+        container.innerHTML = SKINS_CATALOG.map((sk, idx) => {
+            const isSelected = curSkin.id === sk.id;
+            const isUnlocked = myXP >= sk.cost || isCurrentUserAdmin();
+            const btnText = isSelected ? 'مفعّل ✅' : (isUnlocked ? 'تفعيل ⚡' : `🔒 ${sk.cost.toLocaleString()} XP`);
+            const btnClass = isSelected ? 'green' : (isUnlocked ? '' : 'locked-btn');
+
+            return `
+            <div class="stage-card cascade-item" style="border-right-color:${sk.color}; animation-delay:${Math.min(idx * 0.035, 0.5)}s">
+                <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                    <div class="skin-orb-preview" style="background:radial-gradient(circle at 35% 35%, ${sk.core}, ${sk.color}); box-shadow:0 0 15px ${sk.color}; border:2px solid #fff;">
+                        <span>${sk.icon}</span>
+                    </div>
+                    <div class="stage-info">
+                        <div class="stage-title" style="color:${sk.color};">${sk.name}</div>
+                        <div class="stage-desc">${sk.desc} — <strong dir="ltr" style="color:var(--yellow);">${sk.cost.toLocaleString()} XP</strong></div>
+                    </div>
+                </div>
+                <button class="play-chip ${btnClass}" onclick="selectOrUnlockSkin('${sk.id}')"><span>${btnText}</span></button>
+            </div>`;
+        }).join('');
+    }
+
+    function selectOrUnlockSkin(skinId) {
+        const sk = getSkinObj(skinId);
+        const myXP = isCurrentUserAdmin() ? 999999 : (saveData.xp || 0);
+        if (myXP >= sk.cost || isCurrentUserAdmin()) {
+            saveData.skin = sk.id;
+            saveProgress();
+            renderSkinsShop();
+            tone(740, 'triangle', 0.12, 0.2);
+            showToast(`تم تفعيل [${sk.name}] بنجاح! 🎨🔥`, true);
+        } else {
+            tone(150, 'sawtooth', 0.2, 0.2);
+            showToast(`🔒 تحتاج ${sk.cost.toLocaleString()} XP لفتح هذا الشكل! (لديك ${myXP.toLocaleString()} XP)`, false);
+        }
     }
 
     // ================= PORTAL EXPANSION & STAGGERED CASCADE LOGIC =================
@@ -1226,12 +1550,14 @@
 
         if (name === 'stages') {
             renderTutorialCards();
-            const body = document.getElementById('stages-scroll-body');
-            if (body) body.scrollTop = 0;
         } else if (name === 'editor') {
             renderCustomStagesList();
         } else if (name === 'ranks') {
             syncFromCloud(false);
+        } else if (name === 'skins') {
+            renderSkinsShop();
+        } else if (name === 'tiers') {
+            renderTiersLadder();
         } else if (name === 'admin') {
             syncFromCloud(false);
             renderAdminPanel();
@@ -1241,7 +1567,7 @@
         items.forEach((el, idx) => {
             el.classList.remove('cascade-item');
             void el.offsetWidth;
-            el.style.animationDelay = `${Math.min(idx * 0.035, 0.65)}s`;
+            el.style.animationDelay = `${Math.min(idx * 0.03, 0.55)}s`;
             el.classList.add('cascade-item');
         });
 
@@ -1251,6 +1577,7 @@
     }
 
     function closePortal(name) {
+        if (name === 'editor') stopStageAudio();
         const modal = document.getElementById('portal-' + name);
         if (!modal) return;
         modal.style.clipPath = `circle(0% at 50% 50%)`;
@@ -1259,6 +1586,7 @@
     }
 
     function closeAllPortals() {
+        stopStageAudio();
         document.querySelectorAll('.portal-modal').forEach(m => {
             m.classList.remove('open');
             m.style.clipPath = `circle(0% at 50% 50%)`;
@@ -1267,52 +1595,52 @@
 
     // ================= ALL 40 BALL TYPES =================
     const BALL_META = {
-        normal:     { name: '🔵 1. البلازما العادية', xp: 5, pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
-        fake:       { name: '🔴 2. الفخ القاتل FAKE', xp: 15, pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
-        sw:         { name: '🟣 3. الغدارة المراوغة', xp: 20, pts: 2, color: '#b829ff', desc: 'تقفز بآخر لحظة إلى المسار المجاور!' },
-        brk:        { name: '🛑 4. كرة الفرامل', xp: 25, pts: 2, color: '#ffb800', desc: 'تتجمد بالهواء فجأة لتخدع توقيتك ثم تتابع نزولها!' },
-        arm:        { name: '🛡️ 5. المدرعة x2', xp: 30, pts: 3, color: '#ffb800', desc: 'تحتاج ضغطة لكسر الدرع وضغطة ثانية لالتقاطها.' },
-        ghost:      { name: '👻 6. الكرة الشبحية', xp: 35, pts: 3, color: '#94a3b8', desc: 'تختفي بمنتصف الطريق وتكمل نزولها شبه شفافة!' },
-        nitro:      { name: '🚀 7. النيترو الصاروخية', xp: 40, pts: 4, color: '#ff6b00', desc: 'تنزل ببطء ثم تشتعل وتنطلق كالصاروخ نحو الخط!' },
-        dbl:        { name: '🧠 8. الخدعة المزدوجة', xp: 45, pts: 4, color: '#00ff66', desc: 'تتظاهر أنها FAKE ثم ترجع حقيقية خضراء قبل الخط!' },
-        zig:        { name: '🐍 9. الزلزال المتعرجة', xp: 50, pts: 5, color: '#f472b6', desc: 'تراوغ مرتين متتاليتين بين المسارات بسرعة خاطفة!' },
-        bounce:     { name: '🏀 10. طابة النط المرتدة', xp: 60, pts: 6, color: '#38bdf8', desc: 'لما تضغطها عند الخط بترجع تنط لورا بالهواء ثم تعود!' },
-        boss:       { name: '👑 11. الزعيم المدرعة x3', xp: 70, pts: 7, color: '#ffd700', desc: 'درع ثلاثي (x3) وتقفز لمسار مجاور عند كسر درعها!' },
-        portal:     { name: '🌀 12. كرة البوابة (Portal)', xp: 55, pts: 5, color: '#a855f7', desc: 'تختفي بنصف المسار وتخرج من سقف مسار آخر بسرعة أعلى!' },
-        pendulum:   { name: '⏳ 13. كرة البندول المتأرجحة', xp: 55, pts: 5, color: '#38bdf8', desc: 'تتأرجح يميناً ويساراً بين المسارات أثناء نزولها!' },
-        magnet:     { name: '🧲 14. كرة المغناطيس', xp: 60, pts: 5, color: '#ef4444', desc: 'تسحب الكرات الأخرى المجاورة لتجبرها على الدخول بمسارها!' },
-        boomerang:  { name: '🪃 15. الارتداد العكسي (بوميرانج)', xp: 65, pts: 6, color: '#fbbf24', desc: 'تلمس الخط وتصعد للأعلى لوحدها ثم تعود، امسكها بالمرة الثانية!' },
-        swapper:    { name: '🔄 16. كرة التبديل (Swapper)', xp: 65, pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى بمسار مجاور قبل الخط!' },
-        splitter:   { name: '➗ 17. الكرة المنقسمة (Splitter)', xp: 65, pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين بمسارين متجاورين!' },
-        matryoshka: { name: '🪆 18. كرة الماتريوشكا الروسية', xp: 75, pts: 7, color: '#f97316', desc: 'كرة كبيرة تصغر وتنط للأعلى 3 مرات عند الخط قبل اختفائها!' },
-        spawner:    { name: '🤰 19. الكرة الأم (Spawner)', xp: 65, pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها أثناء نزولها!' },
-        twin:       { name: '🔗 20. التوأم المربوط', xp: 70, pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها بمسار آخر بنفس اللحظة مربوطتين بليزر!' },
-        mirage:     { name: '🏜️ 21. كرة السراب (Mirage)', xp: 65, pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين تختفيان قبل الخط وتبقى الحقيقية!' },
-        chameleon:  { name: '🦎 22. كرة الحرباء', xp: 55, pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار وتكشف حقيقتها بآخر لحظة!' },
-        smoke:      { name: '💨 23. قنبلة الدخان (Smoke)', xp: 70, pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات لثانية كاملة!' },
-        flash:      { name: '📸 24. كرة الفلاش الضوئي', xp: 70, pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور أثناء الوميض!' },
-        micro:      { name: '🔬 25. الكرة المتقلصة (Micro)', xp: 55, pts: 5, color: '#38bdf8', desc: 'تبدأ كبيرة وتصغر تدريجياً حتى تصبح نقطة صغيرة عند الخط!' },
-        mirror:     { name: '🪞 26. الشاشة المقلوبة (Mirror)', xp: 80, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً (1 يصير 4، و2 يصير 3) أثناء وجودها!' },
-        heartbeat:  { name: '💓 27. كرة النبض (Heartbeat)', xp: 55, pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات متقطعة حتى تصل للخط!' },
-        slowmo:     { name: '🐢 28. كرة تبطيء الزمن (Slow-Mo)', xp: 50, pts: 5, color: '#2dd4bf', desc: 'عند كسر درعها تبطئ كل الكرات بالشاشة لمدة ثانيتين!' },
-        glitchspd:  { name: '⚡ 29. التسارع العشوائي (Glitch)', xp: 65, pts: 6, color: '#facc15', desc: 'تتغير سرعتها كل ربع ثانية بشكل جنوني غير متوقع!' },
-        timebomb:   { name: '💣 30. القنبلة الموقوتة (Timer)', xp: 75, pts: 7, color: '#ef4444', desc: 'عليها عداد ثواني؛ اضغط زر مسارها فور وصول العداد لـ 0.0 بالهواء!' },
-        laserhold:  { name: '🔋 31. شعاع الليزر الطويل', xp: 65, pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر، اضغط على رأسها وذيلها المتصل عند الخط!' },
-        swipe:      { name: '➡️ 32. كرة السهم الموجه (Swipe)', xp: 65, pts: 6, color: '#fb923c', desc: 'عليها سهم؛ تندفع بآخر لحظة باتجاه السهم للمسار المجاور!' },
-        overcharge: { name: '⚡ 33. الكرة المشحونة (Double Tap)', xp: 70, pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط لتفريغ شحنتها!' },
-        shieldgrd:  { name: '🛡️ 34. كرة الأمان العابرة', xp: 45, pts: 4, color: '#4ade80', desc: 'كرة خضراء مسالمة تمر من الخط بسلام وتمنحك XP مجاني إذا تركتها!' },
-        mine:       { name: '☠️ 35. كرة اللغم الأرضي (Mine)', xp: 50, pts: 5, color: '#dc2626', desc: 'لا تختفي مثل الـ FAKE بل تمر فوق الدائرة! إذا ضغطتها تنقص قلبين!' },
-        vampire:    { name: '🧛 36. كرة مصاص الدماء', xp: 65, pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 40 XP من رصيدك وتطير للأعلى!' },
-        virus:      { name: '🦠 37. كرة الفيروس المعدي', xp: 70, pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة بها إلى كرات شبحية عند اقترابها!' },
-        freeze:     { name: '❄️ 38. كرة الجليد (Freeze)', xp: 65, pts: 6, color: '#7dd3fc', desc: 'إذا ضغطت مسارها بكير بالغلط تجمد الزر لمدة 1.5 ثانية!' },
-        sniper:     { name: '🎯 39. كرة القناص (Sniper)', xp: 75, pts: 7, color: '#f87171', desc: 'تصوب بعلامة 🎯 على مسار آخر وتنطلق إليه بزاوية مائلة كالرصاصة!' },
-        blackhole:  { name: '🌌 40. زعيم الثقب الأسود (x4)', xp: 100, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4)! كل ضغطة عليها تبعثر أماكن الكرات الأخرى بالشاشة!' }
+        normal:     { name: '🔵 1. البلازما العادية', xp: 1,  pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
+        fake:       { name: '🔴 2. الفخ القاتل FAKE', xp: 2,  pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
+        sw:         { name: '🟣 3. الغدارة المراوغة', xp: 3,  pts: 2, color: '#b829ff', desc: 'تقفز بآخر لحظة إلى المسار المجاور!' },
+        brk:        { name: '🛑 4. كرة الفرامل', xp: 3,  pts: 2, color: '#ffb800', desc: 'تتجمد بالهواء فجأة لتخدع توقيتك ثم تتابع نزولها!' },
+        arm:        { name: '🛡️ 5. المدرعة x2', xp: 4,  pts: 3, color: '#ffb800', desc: 'تحتاج ضغطة لكسر الدرع وضغطة ثانية لالتقاطها.' },
+        ghost:      { name: '👻 6. الكرة الشبحية', xp: 4,  pts: 3, color: '#94a3b8', desc: 'تختفي بمنتصف الطريق وتكمل نزولها شبه شفافة!' },
+        nitro:      { name: '🚀 7. النيترو الصاروخية', xp: 5,  pts: 4, color: '#ff6b00', desc: 'تنزل ببطء ثم تشتعل وتنطلق كالصاروخ نحو الخط!' },
+        dbl:        { name: '🧠 8. الخدعة المزدوجة', xp: 5,  pts: 4, color: '#00ff66', desc: 'تتظاهر أنها FAKE ثم ترجع حقيقية خضراء قبل الخط!' },
+        zig:        { name: '🐍 9. الزلزال المتعرجة', xp: 6,  pts: 5, color: '#f472b6', desc: 'تراوغ مرتين متتاليتين بين المسارات بسرعة خاطفة!' },
+        bounce:     { name: '🏀 10. طابة النط المرتدة', xp: 7,  pts: 6, color: '#38bdf8', desc: 'لما تضغطها عند الخط بترجع تنط لورا بالهواء ثم تعود!' },
+        boss:       { name: '👑 11. الزعيم المدرعة x3', xp: 9,  pts: 7, color: '#ffd700', desc: 'درع ثلاثي (x3) وتقفز لمسار مجاور عند كسر درعها!' },
+        portal:     { name: '🌀 12. كرة البوابة (Portal)', xp: 6,  pts: 5, color: '#a855f7', desc: 'تختفي بنصف المسار وتخرج من سقف مسار آخر بسرعة أعلى!' },
+        pendulum:   { name: '⏳ 13. كرة البندول المتأرجحة', xp: 6,  pts: 5, color: '#38bdf8', desc: 'تتأرجح يميناً ويساراً بين المسارات أثناء نزولها!' },
+        magnet:     { name: '🧲 14. كرة المغناطيس', xp: 7,  pts: 5, color: '#ef4444', desc: 'تسحب الكرات الأخرى المجاورة لتجبرها على الدخول بمسارها!' },
+        boomerang:  { name: '🪃 15. الارتداد العكسي (بوميرانج)', xp: 8,  pts: 6, color: '#fbbf24', desc: 'تلمس الخط وتصعد للأعلى لوحدها ثم تعود، امسكها بالمرة الثانية!' },
+        swapper:    { name: '🔄 16. كرة التبديل (Swapper)', xp: 8,  pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى بمسار مجاور قبل الخط!' },
+        splitter:   { name: '➗ 17. الكرة المنقسمة (Splitter)', xp: 8,  pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين بمسارين متجاورين!' },
+        matryoshka: { name: '🪆 18. كرة الماتريوشكا الروسية', xp: 10, pts: 7, color: '#f97316', desc: 'كرة كبيرة تصغر وتنط للأعلى 3 مرات عند الخط قبل اختفائها!' },
+        spawner:    { name: '🤰 19. الكرة الأم (Spawner)', xp: 8,  pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها أثناء نزولها!' },
+        twin:       { name: '🔗 20. التوأم المربوط', xp: 9,  pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها بمسار آخر بنفس اللحظة مربوطتين بليزر!' },
+        mirage:     { name: '🏜️ 21. كرة السراب (Mirage)', xp: 8,  pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين تختفيان قبل الخط وتبقى الحقيقية!' },
+        chameleon:  { name: '🦎 22. كرة الحرباء', xp: 6,  pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار وتكشف حقيقتها بآخر لحظة!' },
+        smoke:      { name: '💨 23. قنبلة الدخان (Smoke)', xp: 9,  pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات لثانية كاملة!' },
+        flash:      { name: '📸 24. كرة الفلاش الضوئي', xp: 9,  pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور أثناء الوميض!' },
+        micro:      { name: '🔬 25. الكرة المتقلصة (Micro)', xp: 6,  pts: 5, color: '#38bdf8', desc: 'تبدأ كبيرة وتصغر تدريجياً حتى تصبح نقطة صغيرة عند الخط!' },
+        mirror:     { name: '🪞 26. الشاشة المقلوبة (Mirror)', xp: 11, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً (1 يصير 4، و2 يصير 3) أثناء وجودها!' },
+        heartbeat:  { name: '💓 27. كرة النبض (Heartbeat)', xp: 6,  pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات متقطعة حتى تصل للخط!' },
+        slowmo:     { name: '🐢 28. كرة تبطيء الزمن (Slow-Mo)', xp: 6,  pts: 5, color: '#2dd4bf', desc: 'عند كسر درعها تبطئ كل الكرات بالشاشة لمدة ثانيتين!' },
+        glitchspd:  { name: '⚡ 29. التسارع العشوائي (Glitch)', xp: 8,  pts: 6, color: '#facc15', desc: 'تتغير سرعتها كل ربع ثانية بشكل جنوني غير متوقع!' },
+        timebomb:   { name: '💣 30. القنبلة الموقوتة (Timer)', xp: 10, pts: 7, color: '#ef4444', desc: 'عليها عداد ثواني؛ اضغط زر مسارها فور وصول العداد لـ 0.0 بالهواء!' },
+        laserhold:  { name: '🔋 31. شعاع الليزر الطويل', xp: 8,  pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر، اضغط على رأسها وذيلها المتصل عند الخط!' },
+        swipe:      { name: '➡️ 32. كرة السهم الموجه (Swipe)', xp: 8,  pts: 6, color: '#fb923c', desc: 'عليها سهم؛ تندفع بآخر لحظة باتجاه السهم للمسار المجاور!' },
+        overcharge: { name: '⚡ 33. الكرة المشحونة (Double Tap)', xp: 9,  pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط لتفريغ شحنتها!' },
+        shieldgrd:  { name: '🛡️ 34. كرة الأمان العابرة', xp: 5,  pts: 4, color: '#4ade80', desc: 'كرة خضراء مسالمة تمر من الخط بسلام وتمنحك XP مجاني إذا تركتها!' },
+        mine:       { name: '☠️ 35. كرة اللغم الأرضي (Mine)', xp: 6,  pts: 5, color: '#dc2626', desc: 'لا تختفي مثل الـ FAKE بل تمر فوق الدائرة! إذا ضغطتها تنقص قلبين!' },
+        vampire:    { name: '🧛 36. كرة مصاص الدماء', xp: 8,  pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 25 XP من رصيدك وتطير للأعلى!' },
+        virus:      { name: '🦠 37. كرة الفيروس المعدي', xp: 9,  pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة بها إلى كرات شبحية عند اقترابها!' },
+        freeze:     { name: '❄️ 38. كرة الجليد (Freeze)', xp: 8,  pts: 6, color: '#7dd3fc', desc: 'إذا ضغطت مسارها بكير بالغلط تجمد الزر لمدة 1.5 ثانية!' },
+        sniper:     { name: '🎯 39. كرة القناص (Sniper)', xp: 11, pts: 7, color: '#f87171', desc: 'تصوب بعلامة 🎯 على مسار آخر وتنطلق إليه بزاوية مائلة كالرصاصة!' },
+        blackhole:  { name: '🌌 40. زعيم الثقب الأسود (x4)', xp: 15, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4)! كل ضغطة عليها تبعثر أماكن الكرات الأخرى بالشاشة!' }
     };
 
     const BALL_KEYS = Object.keys(BALL_META);
     const TOTAL_STAGES = BALL_KEYS.length;
 
-    // ================= GENERATE 40 CUMULATIVE STAGES =================
+    // ================= GENERATE 40 CUMULATIVE STAGES WITH DIFFICULTY TIERS =================
     const STAGES = {};
     const STAGE_COLORS = ["", "pink", "purple", "yellow", "green", "orange"];
 
@@ -1320,6 +1648,7 @@
         const stageNum = idx + 1;
         const meta = BALL_META[key];
         const cleanName = meta.name.replace(/^\S+\s+\d+\.\s*/, '');
+        const diffKey = getStageDifficultyKeyByNum(stageNum);
 
         let probMap = {};
         if (idx === 0) {
@@ -1335,13 +1664,14 @@
         STAGES[stageNum] = {
             name: `مرحلة ${stageNum}`,
             title: `المرحلة ${stageNum}: ${cleanName}`,
+            diff: diffKey,
             desc: idx === 0
                 ? `${meta.desc}`
                 : `تُدخل [${cleanName}] + مزيج من الـ ${idx} كرات السابقة! — ${meta.desc}`,
             colorClass: STAGE_COLORS[idx % STAGE_COLORS.length],
-            target: Math.min(20, 6 + Math.floor(idx / 3)),
-            speed: +(3.8 + Math.min(0.9, idx * 0.02)).toFixed(2),
-            spawn: Math.max(800, 1020 - idx * 5),
+            target: Math.min(22, 7 + Math.floor(idx / 3)),
+            speed: +(3.8 + Math.min(0.95, idx * 0.022)).toFixed(2),
+            spawn: Math.max(790, 1020 - idx * 5),
             p: probMap
         };
     });
@@ -1369,11 +1699,16 @@
     let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v50') || '{}');
     let activeUserKey = localStorage.getItem('takoDropActiveUser_v50') || "";
 
-    let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "#00f0ff", banned: false };
+    let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "cyber_cyan", banned: false };
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v50') || '{}');
 
     customStagesDB['TAKO-40'] = {
-        id: 'TAKO-40', title: 'استعراض الـ 40 كرة الخارقة', creator: 'Tako_King',
+        id: 'TAKO-40',
+        title: 'استعراض الـ 40 كرة الخارقة',
+        creator: 'Tako_King',
+        diff: 'ultra_tako',
+        audioData: 'SYNTH_3',
+        audioName: '😈 إيقاع Demon الحماسي',
         spawns: BALL_KEYS.map((k, idx) => ({
             lane: idx % 4,
             type: k,
@@ -1387,6 +1722,13 @@
     }
 
     async function syncFromCloud(showNotification = false) {
+        const adminKey = sanitizeFirebaseKey(ADMIN_USERNAME);
+        if (accountsDB[adminKey]) {
+            delete accountsDB[adminKey];
+            localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+            fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(adminKey)}.json`, { method: 'DELETE' }).catch(()=>{});
+        }
+
         try {
             const [accRes, stgRes] = await Promise.all([
                 fetch(`${FIREBASE_DB_URL}/accounts.json`),
@@ -1396,7 +1738,9 @@
             if (accRes.ok) {
                 const cloudAccounts = await accRes.json();
                 if (cloudAccounts && typeof cloudAccounts === 'object') {
+                    delete cloudAccounts[adminKey];
                     accountsDB = { ...accountsDB, ...cloudAccounts };
+                    delete accountsDB[adminKey];
                     localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
 
                     if (activeUserKey && accountsDB[activeUserKey] && accountsDB[activeUserKey].banned && !isCurrentUserAdmin()) {
@@ -1427,6 +1771,7 @@
     }
 
     async function pushAccountToCloud(uKey, accountObj) {
+        if (uKey === sanitizeFirebaseKey(ADMIN_USERNAME) || accountObj.username?.trim().toLowerCase() === ADMIN_USERNAME) return;
         try {
             await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`, {
                 method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(accountObj)
@@ -1448,14 +1793,14 @@
         const container = document.getElementById('admin-users-container');
         const q = (document.getElementById('admin-search-input')?.value || '').trim().toLowerCase();
 
-        const entries = Object.entries(accountsDB).filter(([k, v]) => v && v.username);
+        const entries = Object.entries(accountsDB).filter(([k, v]) => v && v.username && v.username.trim().toLowerCase() !== ADMIN_USERNAME);
         entries.sort((a, b) => ((b[1].high || 0) - (a[1].high || 0)));
 
         const filtered = entries.filter(([k, u]) => u.username.toLowerCase().includes(q));
         const bannedCount = entries.filter(([k, u]) => u.banned).length;
 
         document.getElementById('admin-stats-summary').textContent =
-            `إجمالي الحسابات: ${entries.length} | المحظورون (Banned): ${bannedCount}`;
+            `إجمالي اللاعبين: ${entries.length} | المحظورون (Banned): ${bannedCount}`;
 
         if (filtered.length === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">لا توجد حسابات مطابقة للبحث.</div>`;
@@ -1463,27 +1808,27 @@
         }
 
         container.innerHTML = filtered.map(([uKey, u]) => {
-            const isAdminAcc = u.username.trim().toLowerCase() === ADMIN_USERNAME;
             const clearedCount = Array.isArray(u.cleared) ? u.cleared.length : 0;
             const isBanned = !!u.banned;
+            const skObj = getSkinObj(u.skin);
+            const rBadge = getRankBadgeHTML(u.xp || 0);
 
             return `
             <div class="admin-user-card ${isBanned ? 'banned-card' : ''}">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-size:14px; font-weight:900; color:${isBanned ? 'var(--pink)' : 'var(--cyan)'};">
-                        👤 ${u.username} ${isAdminAcc ? '👑 (أنت)' : ''} ${isBanned ? '🚫 [محظور BANNED]' : ''}
+                    <div style="font-size:13.5px; font-weight:900; color:${isBanned ? 'var(--pink)' : 'var(--cyan)'}; display:flex; align-items:center; gap:6px;">
+                        <span>👤 ${u.username}</span> ${rBadge} ${isBanned ? '🚫 [BANNED]' : ''}
                     </div>
                     <span dir="ltr" style="font-size:11px; color:var(--yellow); font-family:'Orbitron',sans-serif;">${u.high || 0} PTS</span>
                 </div>
 
                 <div class="admin-info-grid">
                     <div>🔑 كلمة السر: <strong style="color:#fff;" dir="ltr">${u.password || '—'}</strong></div>
-                    <div>⚡ الطاقة: <strong style="color:var(--yellow);" dir="ltr">${u.xp || 0} XP</strong></div>
+                    <div>⚡ الطاقة: <strong style="color:var(--yellow);" dir="ltr">${(u.xp || 0).toLocaleString()} XP</strong></div>
                     <div>🎓 المراحل: <strong style="color:var(--green);" dir="ltr">${clearedCount} / ${TOTAL_STAGES}</strong></div>
-                    <div>🎨 اللون: <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${u.skin || '#00f0ff'};"></span> <span dir="ltr">${u.skin || '#00f0ff'}</span></div>
+                    <div>🎨 الشكل: <span>${skObj.icon} ${skObj.name.split('.')[1] || skObj.name}</span></div>
                 </div>
 
-                ${!isAdminAcc ? `
                 <div class="admin-actions-row">
                     <button class="adm-btn ${isBanned ? 'adm-unban' : 'adm-ban'}" onclick="adminToggleBan('${uKey}')">
                         ${isBanned ? '✅ فك الباند' : '🚫 باند (حظر)'}
@@ -1491,7 +1836,7 @@
                     <button class="adm-btn adm-gift" onclick="adminGiftXP('${uKey}')">🎁 +1000 XP</button>
                     <button class="adm-btn adm-reset" onclick="adminResetUser('${uKey}')">🔄 تصفير</button>
                     <button class="adm-btn adm-del" onclick="adminDeleteUser('${uKey}')">🗑️ حذف</button>
-                </div>` : ''}
+                </div>
             </div>`;
         }).join('');
     }
@@ -1541,47 +1886,78 @@
         showToast(`🗑️ تم حذف حساب (${name}) نهائياً!`, true);
     }
 
+    // ================= PROGRESSIVE STAGE LOCKING (WITH DIFFICULTY BADGES) =================
+    function isStageUnlocked(stageNum) {
+        if (stageNum <= 1 || isCurrentUserAdmin()) return true;
+        const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
+        return clearedArr.includes(stageNum - 1);
+    }
+
     function renderTutorialCards() {
         const container = document.getElementById('tutorial-list-container');
         const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
         container.innerHTML = Object.keys(STAGES).map((k, idx) => {
-            const st = STAGES[k];
-            const isCleared = clearedArr.includes(parseInt(k));
+            const sNum = parseInt(k);
+            const st = STAGES[sNum];
+            const isCleared = clearedArr.includes(sNum);
+            const unlocked = isStageUnlocked(sNum);
+            const diffBadge = getDifficultyBadgeHTML(st.diff);
+
             return `
-            <div class="stage-card ${st.colorClass} cascade-item" style="animation-delay:${Math.min(idx * 0.03, 0.6)}s">
+            <div class="stage-card ${st.colorClass} ${unlocked ? '' : 'locked-stage'} cascade-item" style="animation-delay:${Math.min(idx * 0.025, 0.5)}s">
                 <div class="stage-info">
-                    <div class="stage-title">${st.title} ${isCleared ? '✅' : ''}</div>
-                    <div class="stage-desc">${st.desc}</div>
+                    <div class="stage-title">
+                        <span>${unlocked ? '' : '🔒 '} ${st.title} ${isCleared ? '✅' : ''}</span>
+                        ${diffBadge}
+                    </div>
+                    <div class="stage-desc">
+                        ${unlocked ? st.desc : `مغلقة 🔒 — يجب عليك ختم المرحلة ${sNum - 1} أولاً لفتح هذه المرحلة!`}
+                    </div>
                 </div>
-                <button class="play-chip ${st.colorClass}" onclick="startStage(${k})"><span>ابدأ ◀</span></button>
+                <button class="play-chip ${unlocked ? st.colorClass : 'locked-btn'}" onclick="tryStartStage(${sNum})">
+                    <span>${unlocked ? 'ابدأ ◀' : 'مقفل 🔒'}</span>
+                </button>
             </div>`;
         }).join('');
+    }
+
+    function tryStartStage(sNum) {
+        if (!isStageUnlocked(sNum)) {
+            tone(140, 'sawtooth', 0.2, 0.2);
+            showToast(`🔒 المرحلة ${sNum} مقفلة! اختم المرحلة ${sNum - 1} أولاً لفتحها`, false);
+            return;
+        }
+        startStage(sNum);
     }
 
     function saveProgress() {
         if (!Array.isArray(saveData.cleared)) saveData.cleared = [];
         if (saveData.username) {
             const uKey = sanitizeFirebaseKey(saveData.username);
-            const prevBanned = accountsDB[uKey]?.banned || false;
-            const accountObj = {
-                username: saveData.username.trim(),
-                password: saveData.password,
-                high: saveData.high || 0,
-                xp: saveData.xp || 0,
-                cleared: saveData.cleared,
-                skin: saveData.skin || "#00f0ff",
-                banned: prevBanned
-            };
-            accountsDB[uKey] = accountObj;
-            localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
-            localStorage.setItem('takoDropActiveUser_v50', uKey);
-            document.getElementById('display-username').textContent = isCurrentUserAdmin() ? `👑 ${saveData.username}` : saveData.username;
+            document.getElementById('display-username').textContent = isCurrentUserAdmin() ? `👑 الأدمن` : saveData.username;
             document.getElementById('admin-top-btn').classList.toggle('hidden', !isCurrentUserAdmin());
-            pushAccountToCloud(uKey, accountObj);
+
+            if (!isCurrentUserAdmin()) {
+                const prevBanned = accountsDB[uKey]?.banned || false;
+                const accountObj = {
+                    username: saveData.username.trim(),
+                    password: saveData.password,
+                    high: saveData.high || 0,
+                    xp: saveData.xp || 0,
+                    cleared: saveData.cleared,
+                    skin: saveData.skin || "cyber_cyan",
+                    banned: prevBanned
+                };
+                accountsDB[uKey] = accountObj;
+                localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+                localStorage.setItem('takoDropActiveUser_v50', uKey);
+                pushAccountToCloud(uKey, accountObj);
+            }
         }
         document.getElementById('stat-high').textContent = saveData.high || 0;
         document.getElementById('stat-cleared').textContent = `${saveData.cleared.length} / ${TOTAL_STAGES}`;
-        document.getElementById('stat-xp').textContent = `${saveData.xp || 0} XP`;
+        document.getElementById('stat-xp').textContent = `${(saveData.xp || 0).toLocaleString()} XP`;
+        updateRankUI();
         renderTutorialCards();
         renderCustomStagesList();
     }
@@ -1595,8 +1971,26 @@
     async function checkAutoLogin() {
         initBallsUI();
         await syncFromCloud(false);
+
+        const savedAdminSession = sessionStorage.getItem('takoGhostAdminSession') === '1';
+        if (savedAdminSession) {
+            saveData = {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASS,
+                high: 0,
+                xp: 100000,
+                cleared: BALL_KEYS.map((_, i) => i + 1),
+                skin: "tako_100k",
+                banned: false
+            };
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('menu-overlay').classList.remove('hidden');
+            saveProgress();
+            return;
+        }
+
         if (activeUserKey && accountsDB[activeUserKey]) {
-            if (accountsDB[activeUserKey].banned && accountsDB[activeUserKey].username?.toLowerCase() !== ADMIN_USERNAME) {
+            if (accountsDB[activeUserKey].banned) {
                 activeUserKey = "";
                 localStorage.removeItem('takoDropActiveUser_v50');
                 document.getElementById('login-overlay').classList.remove('hidden');
@@ -1627,6 +2021,32 @@
         }
 
         const uKey = sanitizeFirebaseKey(rawUser);
+
+        if (rawUser.toLowerCase() === ADMIN_USERNAME && rawPass === ADMIN_PASS) {
+            delete accountsDB[uKey];
+            localStorage.setItem('takoDropAccounts_v50', JSON.stringify(accountsDB));
+            fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`, { method: 'DELETE' }).catch(()=>{});
+
+            sessionStorage.setItem('takoGhostAdminSession', '1');
+            saveData = {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASS,
+                high: 0,
+                xp: 100000,
+                cleared: BALL_KEYS.map((_, i) => i + 1),
+                skin: "tako_100k",
+                banned: false
+            };
+            activeUserKey = "";
+            showLoginMessage("");
+            saveProgress();
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('menu-overlay').classList.remove('hidden');
+            showToast("👻 دخلت بوضع الأدمن الخفي! (غير مرئي بالمتصدرين)", true);
+            syncFromCloud(false);
+            return;
+        }
+
         const btn = document.getElementById('login-submit-btn');
         btn.disabled = true;
         showLoginMessage("🌐 جاري التحقق من السيرفر العالمي...", "info");
@@ -1637,28 +2057,6 @@
         } catch (e) {}
 
         btn.disabled = false;
-
-        if (rawUser.toLowerCase() === ADMIN_USERNAME && rawPass === ADMIN_PASS) {
-            const existing = accountsDB[uKey] || {};
-            saveData = {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASS,
-                high: existing.high || 0,
-                xp: existing.xp || 9999,
-                cleared: Array.isArray(existing.cleared) ? existing.cleared : [],
-                skin: existing.skin || "#ffd700",
-                banned: false
-            };
-            accountsDB[uKey] = { ...saveData };
-            activeUserKey = uKey;
-            showLoginMessage("");
-            saveProgress();
-            document.getElementById('login-overlay').classList.add('hidden');
-            document.getElementById('menu-overlay').classList.remove('hidden');
-            showToast("👑 أهلاً بك يا زعيم! تم تفعيل صلاحيات الأدمن", true);
-            syncFromCloud(false);
-            return;
-        }
 
         if (accountsDB[uKey]) {
             if (accountsDB[uKey].banned) {
@@ -1675,12 +2073,13 @@
             showLoginMessage("");
             showToast(`أهلاً بعودتك يا ${saveData.username}! 🔓🌐`, true);
         } else {
-            saveData = { username: rawUser, password: rawPass, high: 0, xp: 0, cleared: [], skin: "#00f0ff", banned: false };
+            saveData = { username: rawUser, password: rawPass, high: 0, xp: 0, cleared: [], skin: "cyber_cyan", banned: false };
             accountsDB[uKey] = { ...saveData };
             showLoginMessage("");
             showToast(`تم تسجيل حسابك على السيرفر العالمي يا ${rawUser}! 🔒🌐`, true);
         }
 
+        sessionStorage.removeItem('takoGhostAdminSession');
         activeUserKey = uKey;
         saveProgress();
         document.getElementById('login-overlay').classList.add('hidden');
@@ -1690,6 +2089,7 @@
 
     function logoutUser() {
         activeUserKey = "";
+        sessionStorage.removeItem('takoGhostAdminSession');
         localStorage.removeItem('takoDropActiveUser_v50');
         document.getElementById('login-user').value = "";
         document.getElementById('login-pass').value = "";
@@ -1731,7 +2131,9 @@
                 roomData = {
                     id: roomCode,
                     title: `روم التحدي الثنائي [${roomCode}]`,
-                    creator: saveData.username || 'لاعب',
+                    creator: isCurrentUserAdmin() ? 'Tako_Master' : (saveData.username || 'لاعب'),
+                    diff: ballCount >= 40 ? 'demon_tako' : 'hard_tako',
+                    audioData: 'SYNTH_2',
                     spawns: generatedSpawns,
                     players: {}
                 };
@@ -1753,18 +2155,19 @@
 
     async function syncPvpLiveScore() {
         if (!active || !activePvpRoomCode || !saveData.username) return;
-        const uKey = sanitizeFirebaseKey(saveData.username);
+        const displayPName = isCurrentUserAdmin() ? "Tako_Master" : saveData.username;
+        const uKey = sanitizeFirebaseKey(displayPName);
         try {
             await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players/${encodeURIComponent(uKey)}.json`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: saveData.username, score: score })
+                body: JSON.stringify({ name: displayPName, score: score })
             });
             const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players.json`);
             if (res.ok) {
                 const pMap = await res.json();
                 if (pMap) {
-                    const others = Object.values(pMap).filter(p => p && p.name && p.name.toLowerCase() !== saveData.username.toLowerCase());
+                    const others = Object.values(pMap).filter(p => p && p.name && p.name.toLowerCase() !== displayPName.toLowerCase());
                     if (others.length > 0) {
                         others.sort((a, b) => (b.score || 0) - (a.score || 0));
                         opponentText = ` | ⚔️ ${others[0].name}: ${others[0].score}`;
@@ -1780,15 +2183,19 @@
     // ================= ONLINE LEADERBOARD =================
     function renderLeaderboard() {
         const container = document.getElementById('leaderboard-container');
-        const playersList = Object.values(accountsDB).filter(p => p && p.username && !p.banned);
+        const playersList = Object.values(accountsDB).filter(
+            p => p && p.username && !p.banned && p.username.trim().toLowerCase() !== ADMIN_USERNAME
+        );
         playersList.sort((a, b) => ((b.high || 0) - (a.high || 0)) || ((b.xp || 0) - (a.xp || 0)));
         const top100 = playersList.slice(0, 100);
 
         const myName = saveData.username || "أنت";
         const myRankIndex = top100.findIndex(p => p.username.toLowerCase() === myName.toLowerCase());
-        const myRank = myRankIndex !== -1 ? myRankIndex + 1 : 1;
+        const myRank = myRankIndex !== -1 ? myRankIndex + 1 : "-";
 
-        document.getElementById('my-rank-summary').textContent = `ترتيبك العالمي: المركز #${myRank} من أصل ${top100.length} لاعب أونلاين 🔥`;
+        document.getElementById('my-rank-summary').textContent = isCurrentUserAdmin()
+            ? `👻 حساب الأدمن مخفي تماماً عن المتصدرين | إجمالي اللاعبين: ${top100.length}`
+            : `ترتيبك العالمي: المركز #${myRank} من أصل ${top100.length} لاعب أونلاين 🔥`;
 
         if (top100.length === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">لا يوجد لاعبون مسجلون بعد.</div>`;
@@ -1803,32 +2210,182 @@
             else if (r === 2) { badgeClass = 'rank-2'; medal = '🥈 2'; }
             else if (r === 3) { badgeClass = 'rank-3'; medal = '🥉 3'; }
 
-            const isMe = item.username.toLowerCase() === myName.toLowerCase();
+            const isMe = !isCurrentUserAdmin() && item.username.toLowerCase() === myName.toLowerCase();
             const rowStyle = isMe ? 'border: 1px solid var(--cyan); background: rgba(0, 240, 255, 0.14);' : '';
+            const skObj = getSkinObj(item.skin);
+            const rBadge = getRankBadgeHTML(item.xp || 0);
 
             return `
                 <div class="rank-row cascade-item" style="${rowStyle}; animation-delay:${Math.min(idx * 0.035, 0.5)}s">
-                    <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
                         <div class="rank-badge ${badgeClass}">${medal}</div>
+                        <span>${skObj.icon}</span>
                         <span style="color:${isMe ? 'var(--cyan)' : '#fff'};">${item.username} ${isMe ? '(أنت)' : ''}</span>
+                        ${rBadge}
                     </div>
-                    <div style="display:flex; gap:10px; align-items:center;" dir="ltr">
-                        <span style="font-size:11px; color:var(--yellow);">${item.xp || 0} XP</span>
-                        <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px;">${item.high || 0} PTS</span>
+                    <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;" dir="ltr">
+                        <span style="font-size:10.5px; color:var(--yellow);">${(item.xp || 0).toLocaleString()} XP</span>
+                        <span style="font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:12.5px;">${item.high || 0} PTS</span>
                     </div>
                 </div>
             `;
         }).join('');
     }
 
-    // ================= LEVEL EDITOR =================
+    // ================= LEVEL EDITOR + CUSTOM SONG / AUDIO ENGINE =================
     let editorSpawns = [];
     let lastGeneratedCode = "";
     let lastShortId = "";
+    let editorAudioData = "";
+    let editorAudioName = "";
+
+    let stageAudioPlayer = new Audio();
+    stageAudioPlayer.loop = true;
+    let synthBeatInterval = null;
+    let isPreviewingEditorAudio = false;
+    let previewStartTime = 0;
+
+    function handleAudioFileUpload(ev) {
+        const file = ev.target.files?.[0];
+        if (!file) return;
+
+        // Limit file size to ~3.5MB so it syncs smoothly with Firebase Realtime Database
+        if (file.size > 3800000) {
+            showToast("⚠️ حجم ملف الأغنية كبير جداً! اختر ملفاً أقل من 3.5 ميغابايت أو ضع رابطاً مباشراً", false);
+            return;
+        }
+
+        const statusEl = document.getElementById('ed-audio-status');
+        statusEl.textContent = "⏳ جاري قراءة وتجهيز ملف الأغنية...";
+        statusEl.style.color = "var(--yellow)";
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            editorAudioData = e.target.result;
+            editorAudioName = file.name;
+            document.getElementById('ed-synth-preset').value = "";
+            document.getElementById('ed-audio-url').value = "";
+            statusEl.textContent = `✅ تم إرفاق الأغنية: ${file.name} (جاهزة للرفع مع الماب!)`;
+            statusEl.style.color = "var(--green)";
+            showToast(`🎵 تم تحميل الأغنية (${file.name}) بنجاح!`, true);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handlePresetAudioChange() {
+        const val = document.getElementById('ed-synth-preset').value;
+        const statusEl = document.getElementById('ed-audio-status');
+        if (val) {
+            editorAudioData = val;
+            const selText = document.getElementById('ed-synth-preset').selectedOptions[0].text;
+            editorAudioName = selText;
+            document.getElementById('ed-audio-url').value = "";
+            statusEl.textContent = `✅ تم اختيار: ${selText}`;
+            statusEl.style.color = "var(--cyan)";
+        } else if (!document.getElementById('ed-audio-url').value) {
+            editorAudioData = "";
+            editorAudioName = "";
+            statusEl.textContent = "لم يتم اختيار أغنية بعد.";
+            statusEl.style.color = "#94a3b8";
+        }
+    }
+
+    function handleUrlAudioInput() {
+        const url = document.getElementById('ed-audio-url').value.trim();
+        const statusEl = document.getElementById('ed-audio-status');
+        if (url) {
+            editorAudioData = url;
+            editorAudioName = "أغنية عبر الرابط 🔗";
+            document.getElementById('ed-synth-preset').value = "";
+            statusEl.textContent = `✅ تم ربط رابط الأغنية الخارجي!`;
+            statusEl.style.color = "var(--green)";
+        }
+    }
+
+    function startSynthBeatLoop(preset) {
+        stopSynthBeatLoop();
+        const bpm = preset === 'SYNTH_3' ? 155 : (preset === 'SYNTH_2' ? 132 : 108);
+        const stepMs = Math.round((60 / bpm) * 500);
+        const bassNotes = preset === 'SYNTH_3' ? [110, 130.8, 146.8, 164.8, 130.8, 110, 98, 123.5] : [130.8, 164.8, 196, 220, 164.8, 196, 246.9, 196];
+        let step = 0;
+
+        synthBeatInterval = setInterval(() => {
+            const freq = bassNotes[step % bassNotes.length];
+            tone(freq, step % 2 === 0 ? 'sawtooth' : 'triangle', 0.14, 0.11);
+            if (step % 4 === 0) tone(65, 'sine', 0.12, 0.18);
+            step++;
+        }, stepMs);
+    }
+
+    function stopSynthBeatLoop() {
+        if (synthBeatInterval) {
+            clearInterval(synthBeatInterval);
+            synthBeatInterval = null;
+        }
+    }
+
+    function playStageAudio(audioSrc) {
+        stopStageAudio();
+        if (!audioSrc) return;
+
+        if (audioSrc.startsWith('SYNTH_')) {
+            startSynthBeatLoop(audioSrc);
+            return;
+        }
+
+        try {
+            stageAudioPlayer.src = audioSrc;
+            stageAudioPlayer.currentTime = 0;
+            stageAudioPlayer.volume = 0.75;
+            stageAudioPlayer.play().catch(() => {
+                showToast("🎵 اضغط على الشاشة لتشغيل موسيقى الماب!", true);
+            });
+        } catch (e) {}
+    }
+
+    function stopStageAudio() {
+        stopSynthBeatLoop();
+        isPreviewingEditorAudio = false;
+        const btn = document.getElementById('ed-preview-audio-btn');
+        if (btn) btn.textContent = "🎧 استماع وتوقيت";
+        try {
+            stageAudioPlayer.pause();
+            stageAudioPlayer.currentTime = 0;
+        } catch (e) {}
+    }
+
+    function toggleEditorAudioPreview() {
+        const btn = document.getElementById('ed-preview-audio-btn');
+        if (isPreviewingEditorAudio) {
+            stopStageAudio();
+            return;
+        }
+        if (!editorAudioData) {
+            showToast("اختر ملف غناية أو إيقاع أولاً للاستماع! 🎵", false);
+            return;
+        }
+        playStageAudio(editorAudioData);
+        isPreviewingEditorAudio = true;
+        previewStartTime = performance.now();
+        if (btn) btn.textContent = "⏹️ إيقاف الموسيقى";
+        showToast("🎧 الموسيقى تعمل! اضغط 'أضف الكرة' لالتقاط التوقيت تلقائياً", true);
+    }
 
     function addBallToEditor() {
         const lane = parseInt(document.getElementById('ed-lane').value);
         const type = document.getElementById('ed-type').value;
+
+        // If previewing audio, auto-capture current song timestamp!
+        if (isPreviewingEditorAudio) {
+            let liveSec = 0;
+            if (editorAudioData && !editorAudioData.startsWith('SYNTH_') && !stageAudioPlayer.paused) {
+                liveSec = stageAudioPlayer.currentTime;
+            } else {
+                liveSec = (performance.now() - previewStartTime) / 1000;
+            }
+            document.getElementById('ed-time').value = Math.max(0.2, +liveSec.toFixed(2));
+        }
+
         const timeInput = parseFloat(document.getElementById('ed-time').value);
         const speedInput = parseFloat(document.getElementById('ed-speed').value);
         const time = isNaN(timeInput) || timeInput < 0 ? 0 : timeInput;
@@ -1836,8 +2393,12 @@
 
         editorSpawns.push({ lane, type, time, speed });
         editorSpawns.sort((a, b) => a.time - b.time);
-        document.getElementById('ed-time').value = +(time + 0.8).toFixed(2);
+
+        if (!isPreviewingEditorAudio) {
+            document.getElementById('ed-time').value = +(time + 0.8).toFixed(2);
+        }
         renderEditorBalls();
+        tone(600, 'sine', 0.06, 0.12);
     }
 
     function removeEditorBall(idx) {
@@ -1864,16 +2425,36 @@
             showToast("أضف كرة واحدة على الأقل لحفظ الماب! 🛠️", false);
             return;
         }
-        const title = document.getElementById('ed-title').value.trim() || `ماب ${saveData.username || 'خاص'}`;
+        const creatorName = isCurrentUserAdmin() ? 'Tako_King' : (saveData.username || 'لاعب');
+        const title = document.getElementById('ed-title').value.trim() || `ماب ${creatorName}`;
+        const diffKey = document.getElementById('ed-diff').value || 'easy_tako';
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         const shortId = `TK-${randomNum}`;
 
-        const stageObj = { id: shortId, title: title, creator: saveData.username || 'لاعب', spawns: [...editorSpawns] };
+        const stageObj = {
+            id: shortId,
+            title: title,
+            creator: creatorName,
+            diff: diffKey,
+            audioData: editorAudioData || "",
+            audioName: editorAudioName || "",
+            spawns: [...editorSpawns]
+        };
+
         customStagesDB[shortId] = stageObj;
-        localStorage.setItem('cyberDropCustomStages_v50', JSON.stringify(customStagesDB));
+        try {
+            localStorage.setItem('cyberDropCustomStages_v50', JSON.stringify(customStagesDB));
+        } catch (storageErr) {}
+
         await pushStageToCloud(shortId, stageObj);
 
-        const compactPayload = { t: title, c: stageObj.creator, s: editorSpawns.map(x => [x.lane, x.type, x.time, x.speed]) };
+        const compactPayload = {
+            t: title,
+            c: stageObj.creator,
+            d: diffKey,
+            a: (editorAudioData && !editorAudioData.startsWith('data:')) ? editorAudioData : '',
+            s: editorSpawns.map(x => [x.lane, x.type, x.time, x.speed])
+        };
         const portableCode = "TK#" + btoa(encodeURIComponent(JSON.stringify(compactPayload)));
 
         lastShortId = shortId;
@@ -1882,7 +2463,7 @@
         document.getElementById('generated-id-text').textContent = shortId;
         document.getElementById('generated-id-box').classList.remove('hidden');
         renderCustomStagesList();
-        showToast(`تم رفع الماب أونلاين! الـ ID هو: ${shortId} 🌐🎉`, true);
+        showToast(`تم رفع الماب ${editorAudioName ? 'مع الأغنية 🎵' : ''} أونلاين! الـ ID: ${shortId} 🌐`, true);
     }
 
     function copyStageId(portable) {
@@ -1894,8 +2475,17 @@
 
     function testEditorStage() {
         if (editorSpawns.length === 0) { showToast("أضف كرات أولاً لتجربة الماب! ⚡", false); return; }
+        const diffKey = document.getElementById('ed-diff').value || 'easy_tako';
         closeAllPortals();
-        startCustomStage({ id: 'TEST', title: document.getElementById('ed-title').value.trim() || 'تجربة مابك', creator: saveData.username, spawns: [...editorSpawns] }, false);
+        startCustomStage({
+            id: 'TEST',
+            title: document.getElementById('ed-title').value.trim() || 'تجربة مابك',
+            creator: saveData.username,
+            diff: diffKey,
+            audioData: editorAudioData || "",
+            audioName: editorAudioName || "",
+            spawns: [...editorSpawns]
+        }, false);
     }
 
     function renderCustomStagesList() {
@@ -1906,11 +2496,18 @@
             keys.map((k, idx) => {
                 const st = customStagesDB[k];
                 if (!st || !st.spawns || st.type === 'upward') return '';
+                const diffBadge = getDifficultyBadgeHTML(st.diff || 'easy_tako');
+                const songPill = st.audioData ? `<span style="color:#e879f9; font-size:10.5px;">🎵 ${st.audioName || 'موسيقى مرفقة'}</span>` : '';
+
                 return `
                 <div class="stage-card green cascade-item" style="animation-delay:${0.15 + idx * 0.04}s">
                     <div class="stage-info">
-                        <div class="stage-title">${st.title} <span dir="ltr" style="color:var(--yellow); font-family:'Orbitron',sans-serif; font-size:12px;">[${st.id}]</span></div>
-                        <div class="stage-desc">صممها: ${st.creator} • عدد الكرات: ${st.spawns.length}</div>
+                        <div class="stage-title">
+                            <span>${st.title}</span>
+                            <span dir="ltr" style="color:var(--yellow); font-family:'Orbitron',sans-serif; font-size:11.5px;">[${st.id}]</span>
+                            ${diffBadge}
+                        </div>
+                        <div class="stage-desc">صممها: ${st.creator} • الكرات: ${st.spawns.length} ${songPill ? ' • ' + songPill : ''}</div>
                     </div>
                     <button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button>
                 </div>`;
@@ -1934,7 +2531,7 @@
                 const cloudStage = await res.json();
                 if (cloudStage && cloudStage.spawns) {
                     customStagesDB[upper] = cloudStage;
-                    localStorage.setItem('cyberDropCustomStages_v50', JSON.stringify(customStagesDB));
+                    try { localStorage.setItem('cyberDropCustomStages_v50', JSON.stringify(customStagesDB)); } catch(e){}
                     renderCustomStagesList();
                     closeAllPortals();
                     startCustomStage(cloudStage, false);
@@ -1946,7 +2543,14 @@
         if (raw.startsWith("TK#")) {
             try {
                 const decoded = JSON.parse(decodeURIComponent(atob(raw.slice(3))));
-                const stageObj = { id: "CUSTOM", title: decoded.t || "ماب مشارك", creator: decoded.c || "لاعب", spawns: decoded.s.map(arr => ({ lane: arr[0], type: arr[1], time: arr[2], speed: arr[3] })) };
+                const stageObj = {
+                    id: "CUSTOM",
+                    title: decoded.t || "ماب مشارك",
+                    creator: decoded.c || "لاعب",
+                    diff: decoded.d || "easy_tako",
+                    audioData: decoded.a || "",
+                    spawns: decoded.s.map(arr => ({ lane: arr[0], type: arr[1], time: arr[2], speed: arr[3] }))
+                };
                 closeAllPortals();
                 startCustomStage(stageObj, false);
                 return;
@@ -1966,13 +2570,7 @@
             { lane: 2, type: ballType, time: 2.3, speed: 4.1 },
             { lane: 0, type: ballType, time: 4.1, speed: 4.2 }
         ];
-        startCustomStage({ id: 'DEMO', title: `تجربة: ${BALL_META[ballType].name}`, creator: 'النظام', spawns: demoSpawns }, false);
-    }
-
-    function selectSkin(color) { saveData.skin = color; saveProgress(); showToast("تم تفعيل لون الكرة بنجاح! ⚡", true); }
-    function unlockSkin(color, cost) {
-        if (saveData.xp >= cost) { saveData.skin = color; saveProgress(); showToast("تم اختيار شكل الكرة بنجاح! 🔥", true); }
-        else { showToast(`تحتاج ${cost} XP لفتح هذا الشكل!`, false); }
+        startCustomStage({ id: 'DEMO', title: `تجربة: ${BALL_META[ballType].name}`, creator: 'النظام', diff: 'easy', spawns: demoSpawns }, false);
     }
 
     // ================= AUDIO SYNTHESIZER =================
@@ -1992,6 +2590,131 @@
         } catch(e) {}
     }
 
+    // ================= CUSTOM BALL SHAPE RENDERER (FOR 15 SKINS) =================
+    function drawPolygonPath(ctx, x, y, r, sides, rot) {
+        ctx.beginPath();
+        for (let i = 0; i < sides; i++) {
+            const a = rot + (i * Math.PI * 2) / sides;
+            const px = x + Math.cos(a) * r;
+            const py = y + Math.sin(a) * r;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+    }
+
+    function drawStarPath(ctx, x, y, points, outerR, innerR, rot) {
+        ctx.beginPath();
+        for (let i = 0; i < points * 2; i++) {
+            const r = i % 2 === 0 ? outerR : innerR;
+            const a = rot + (i * Math.PI) / points;
+            const px = x + Math.cos(a) * r;
+            const py = y + Math.sin(a) * r;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+    }
+
+    function drawCustomBallSkin(ctx, b, ts, skObj, overrideColor) {
+        let baseCol = overrideColor || skObj.color;
+        if (!overrideColor && skObj.shape === 'rainbow') {
+            const hue = (ts * 0.25 + b.y * 0.8) % 360;
+            baseCol = `hsl(${hue}, 95%, 60%)`;
+        } else if (!overrideColor && skObj.shape === 'galaxy') {
+            const hue = 230 + Math.sin(ts * 0.005) * 45;
+            baseCol = `hsl(${hue}, 90%, 65%)`;
+        }
+
+        ctx.shadowColor = baseCol;
+        ctx.shadowBlur = 16;
+
+        const grad = ctx.createRadialGradient(b.x - b.r * 0.3, b.y - b.r * 0.3, 2, b.x, b.y, b.r);
+        grad.addColorStop(0, skObj.core || '#ffffff');
+        grad.addColorStop(0.45, baseCol);
+        grad.addColorStop(1, '#05050a');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ffffff';
+
+        const sh = skObj.shape;
+        if (sh === 'star' || sh === 'rainbow') {
+            ctx.fillStyle = '#ffffff';
+            drawStarPath(ctx, b.x, b.y, 5, b.r * 0.62, b.r * 0.28, b.rot);
+            ctx.fill();
+        } else if (sh === 'hex') {
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 6, b.rot);
+            ctx.stroke();
+        } else if (sh === 'diamond') {
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.6, 4, b.rot);
+            ctx.fill();
+        } else if (sh === 'cross') {
+            ctx.strokeStyle = '#00ff66';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(b.x - b.r * 0.55, b.y); ctx.lineTo(b.x + b.r * 0.55, b.y);
+            ctx.moveTo(b.x, b.y - b.r * 0.55); ctx.lineTo(b.x, b.y + b.r * 0.55);
+            ctx.stroke();
+        } else if (sh === 'eye') {
+            ctx.fillStyle = '#000';
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.28, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 1.8;
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.58, 0, Math.PI * 2); ctx.stroke();
+            for (let t = 0; t < 3; t++) {
+                const a = b.rot + (t * Math.PI * 2) / 3;
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(b.x + Math.cos(a) * b.r * 0.58, b.y + Math.sin(a) * b.r * 0.58, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        } else if (sh === 'bio') {
+            for (let t = 0; t < 3; t++) {
+                const a = b.rot + (t * Math.PI * 2) / 3;
+                ctx.strokeStyle = '#1a2e05'; ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.arc(b.x + Math.cos(a) * b.r * 0.35, b.y + Math.sin(a) * b.r * 0.35, 4.5, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        } else if (sh === 'sun') {
+            ctx.strokeStyle = '#fef08a';
+            drawStarPath(ctx, b.x, b.y, 8, b.r * 0.78, b.r * 0.42, -b.rot);
+            ctx.stroke();
+        } else if (sh === 'vortex' || sh === 'galaxy') {
+            ctx.strokeStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r * 0.4, b.rot, b.rot + Math.PI * 1.3);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r * 0.7, -b.rot, -b.rot + Math.PI * 1.3);
+            ctx.stroke();
+        } else if (sh === 'crescent') {
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = baseCol;
+            ctx.beginPath(); ctx.arc(b.x + 4, b.y - 2, b.r * 0.42, 0, Math.PI * 2); ctx.fill();
+        } else if (sh === 'crown') {
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.5;
+            drawStarPath(ctx, b.x, b.y, 6, b.r * 0.68, b.r * 0.35, b.rot);
+            ctx.stroke();
+        } else if (sh === 'dragon') {
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.5;
+            drawStarPath(ctx, b.x, b.y, 8, b.r + 3, b.r * 0.65, b.rot);
+            ctx.stroke();
+            ctx.fillStyle = '#ff0055';
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.32, 0, Math.PI * 2); ctx.fill();
+        } else {
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, Math.max(3, b.r - 6), b.rot, b.rot + Math.PI);
+            ctx.stroke();
+        }
+    }
+
     // ================= 40-BALL GAMEPLAY ENGINE =================
     let curStage = 1;
     let customMode = false;
@@ -2000,6 +2723,7 @@
     let stageStartTime = 0;
 
     let score = 0;
+    let pendingStageXP = 0;
     let clearedBallsCount = 0;
     let combo = 0;
     let hearts = 3;
@@ -2035,15 +2759,17 @@
 
     function updateHUD() {
         if (customMode) {
-            document.getElementById('hud-stage').textContent = activeCustomStage.id;
+            const dObj = STAGE_DIFFICULTIES[activeCustomStage.diff] || STAGE_DIFFICULTIES.easy_tako;
+            document.getElementById('hud-stage').textContent = `${activeCustomStage.id} (${dObj.icon} ${dObj.label})`;
             const total = activeCustomStage.spawns.length;
-            document.getElementById('hud-score').textContent = `${score} PTS (${clearedBallsCount}/${total})${opponentText}`;
+            document.getElementById('hud-score').textContent = `${score} PTS | +${pendingStageXP} XP${opponentText}`;
             document.getElementById('progress-fill').style.width = Math.min(100, (clearedBallsCount / Math.max(1, total)) * 100) + '%';
         } else {
             const st = STAGES[curStage];
-            document.getElementById('hud-stage').textContent = st.name;
-            const cTxt = combo >= 5 ? ` 🔥x${combo}` : (combo > 1 ? ` x${combo}` : '');
-            document.getElementById('hud-score').textContent = `${clearedBallsCount} / ${st.target}${cTxt}`;
+            const dObj = STAGE_DIFFICULTIES[st.diff] || STAGE_DIFFICULTIES.easy;
+            document.getElementById('hud-stage').textContent = `${st.name} (${dObj.icon} ${dObj.label})`;
+            const cTxt = combo >= 5 ? ` 🔥x${combo}` : '';
+            document.getElementById('hud-score').textContent = `${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)${cTxt}`;
             const pct = Math.min(100, (clearedBallsCount / st.target) * 100);
             document.getElementById('progress-fill').style.width = pct + '%';
         }
@@ -2153,22 +2879,25 @@
         if (hearts <= 0) finishGame(false);
     }
 
-    function rewardBallSuccess(ballType, x, y, customLabel) {
+    function rewardBallSuccess(ballType, x, y, customLabel, accuracyRatio = 1.0) {
         combo++;
         const meta = BALL_META[ballType] || BALL_META.normal;
         const hcMult = document.getElementById('hardcore-toggle').checked ? 2 : 1;
-        const feverMult = combo >= 10 ? 2 : 1;
-        const ptsEarned = meta.pts * hcMult * feverMult;
-        const xpEarned = meta.xp * hcMult;
+        const feverMult = combo >= 12 ? 2 : 1;
+
+        const isPracticeMode = customMode && (activeCustomStage?.id === 'DEMO' || activeCustomStage?.id === 'TEST');
+
+        const ptsEarned = Math.max(1, Math.round(meta.pts * hcMult * feverMult * accuracyRatio));
+        const xpEarned = isPracticeMode ? 0 : Math.max(1, Math.round(meta.xp * hcMult * accuracyRatio));
 
         score += ptsEarned;
-        saveData.xp = (saveData.xp || 0) + xpEarned;
+        pendingStageXP += xpEarned;
         clearedBallsCount++;
 
         if (score > (saveData.high || 0)) saveData.high = score;
-        saveProgress(); updateHUD();
+        updateHUD();
 
-        const label = customLabel || `${meta.name.split(' ')[1] || meta.name} +${xpEarned} XP`;
+        const label = customLabel || `${accuracyRatio >= 1 ? 'PERFECT! 🎯' : 'GOOD ⚡'} +${xpEarned} XP`;
         addFloat(x, y, label, meta.color); burst(x, y, meta.color);
 
         if (customMode) {
@@ -2209,7 +2938,7 @@
         if (targetBall.type === 'timebomb' && targetBall.y > 10) {
             targetBall.state = 'dead';
             tone(740, 'triangle', 0.12, 0.22);
-            rewardBallSuccess('timebomb', targetBall.x, targetBall.y, "تفكيك القنبلة! 💣 +75 XP");
+            rewardBallSuccess('timebomb', targetBall.x, targetBall.y, "تفكيك القنبلة! 💣", 1.0);
             return;
         }
 
@@ -2228,7 +2957,8 @@
             hurt("البوميرانج لا تُضغط بالمرة الأولى! 🪃"); return;
         }
 
-        if (Math.abs(targetBall.y - hitY) <= 68 && targetBall.state !== 'faked') {
+        const distFromCenter = Math.abs(targetBall.y - hitY);
+        if (distFromCenter <= 68 && targetBall.state !== 'faked') {
             if (targetBall.armor > 1) {
                 targetBall.armor--;
                 tone(480, 'square', 0.09, 0.2);
@@ -2267,9 +2997,11 @@
                 return;
             }
 
-            targetBall.state = 'dead'; tone(650, 'triangle', 0.09, 0.2);
-            setTimeout(() => tone(920, 'sine', 0.1, 0.18), 35);
-            rewardBallSuccess(targetBall.type, targetBall.x, hitY - 20);
+            const isPerfect = distFromCenter <= 24;
+            targetBall.state = 'dead';
+            tone(isPerfect ? 720 : 580, 'triangle', 0.09, 0.2);
+            setTimeout(() => tone(isPerfect ? 980 : 780, 'sine', 0.1, 0.18), 35);
+            rewardBallSuccess(targetBall.type, targetBall.x, hitY - 20, null, isPerfect ? 1.0 : 0.55);
             return;
         }
 
@@ -2316,6 +3048,7 @@
 
     function loop(ts) {
         const speedFactor = ts < slowMoUntil ? 0.48 : 1.0;
+        const activeSkinObj = getSkinObj(saveData.skin);
 
         if (active) {
             if (customMode) {
@@ -2463,17 +3196,17 @@
 
                 if (b.state === 'faked') {
                     document.getElementById('btn-' + b.lane).classList.add('warn');
-                    if (b.y > hitY + 55) { rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! +15 XP 🧠"); balls.splice(i, 1); }
+                    if (b.y > hitY + 55) { rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! 🧠", 1.0); balls.splice(i, 1); }
                 } else if (b.type === 'mine') {
                     document.getElementById('btn-' + b.lane).classList.add('warn');
-                    if (b.y > hitY + 58) { rewardBallSuccess('mine', lanes[b.lane], hitY - 28, "تجنبت اللغم! +50 XP ☠️"); balls.splice(i, 1); }
+                    if (b.y > hitY + 58) { rewardBallSuccess('mine', lanes[b.lane], hitY - 28, "تجنبت اللغم! ☠️", 1.0); balls.splice(i, 1); }
                 } else if (b.type === 'shieldgrd') {
-                    if (b.y > hitY + 55) { rewardBallSuccess('shieldgrd', lanes[b.lane], hitY - 28, "مرت بسلام! +45 XP 🛡️"); balls.splice(i, 1); }
+                    if (b.y > hitY + 55) { rewardBallSuccess('shieldgrd', lanes[b.lane], hitY - 28, "مرت بسلام! 🛡️", 1.0); balls.splice(i, 1); }
                 } else if (b.y > hitY + 62) {
                     if (b.type === 'vampire') {
-                        saveData.xp = Math.max(0, (saveData.xp || 0) - 40);
+                        saveData.xp = Math.max(0, (saveData.xp || 0) - 25);
                         saveProgress();
-                        showToast("مصاص الدماء سرق 40 XP من رصيدك! 🧛🩸", false);
+                        showToast("مصاص الدماء سرق 25 XP من رصيدك! 🧛🩸", false);
                     } else {
                         hurt("فاتتك الكرة! ❌");
                     }
@@ -2524,23 +3257,22 @@
             } else {
                 if (b.state === 'ghosted') ctx.globalAlpha = 0.09;
 
-                let col = saveData.skin || '#00f0ff';
+                let overrideCol = null;
                 if (b.state !== 'fall' || ['mine', 'shieldgrd', 'timebomb', 'chameleon'].includes(b.type)) {
-                    col = BALL_META[b.type]?.color || col;
+                    overrideCol = BALL_META[b.type]?.color || null;
                 }
                 if (b.type === 'chameleon') {
                     const colors = ['#00f0ff', '#ff0055', '#00ff66', '#ffb800', '#b829ff'];
-                    col = colors[Math.floor(ts / 140) % colors.length];
+                    overrideCol = colors[Math.floor(ts / 140) % colors.length];
                 }
 
-                ctx.shadowColor = col; ctx.shadowBlur = 15; ctx.fillStyle = col;
-                ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+                drawCustomBallSkin(ctx, b, ts, activeSkinObj, overrideCol);
 
                 if (b.armor > 1) {
                     ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : (b.type === 'boss' ? '#ffd700' : '#ffb800');
                     ctx.lineWidth = 3.5;
                     ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
-                    ctx.fillStyle = '#05050a'; ctx.font = '900 11px Orbitron'; ctx.textAlign = 'center';
+                    ctx.fillStyle = '#ffffff'; ctx.font = '900 11px Orbitron'; ctx.textAlign = 'center';
                     ctx.fillText('x' + b.armor, b.x, b.y + 4);
                 } else if (b.type === 'timebomb') {
                     const rem = Math.max(0, (b.bombDeadline - ts) / 1000).toFixed(1);
@@ -2552,9 +3284,6 @@
                 } else if (b.type === 'swipe') {
                     ctx.fillStyle = '#05050a'; ctx.font = '900 12px Cairo'; ctx.textAlign = 'center';
                     ctx.fillText(b.swipeDir, b.x, b.y + 4);
-                } else {
-                    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
-                    ctx.beginPath(); ctx.arc(b.x, b.y, Math.max(3, b.r - 6), b.rot, b.rot + Math.PI); ctx.stroke();
                 }
             }
             ctx.restore();
@@ -2601,7 +3330,7 @@
         closeAllPortals();
         resize(); resetEffects();
         customMode = false; activePvpRoomCode = ""; opponentText = "";
-        curStage = num; score = 0; clearedBallsCount = 0; combo = 0;
+        curStage = num; score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
         hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
         balls = []; particles = []; floatTexts = []; lastSpawn = performance.now(); active = true;
         document.getElementById('menu-overlay').classList.add('hidden');
@@ -2615,16 +3344,21 @@
         if (!isPvp) { activePvpRoomCode = ""; opponentText = ""; }
         activeCustomStage = stageObj;
         customQueue = stageObj.spawns.map(s => ({ ...s })).sort((a, b) => a.time - b.time);
-        score = 0; clearedBallsCount = 0; combo = 0;
+        score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
         hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
         balls = []; particles = []; floatTexts = []; stageStartTime = performance.now(); active = true;
         document.getElementById('menu-overlay').classList.add('hidden');
         document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
+
+        if (stageObj.audioData) {
+            playStageAudio(stageObj.audioData);
+        }
         syncPvpLiveScore();
     }
 
     function finishGame(won) {
         active = false;
+        stopStageAudio();
         syncPvpLiveScore();
         const ov = document.getElementById('result-overlay');
         const t = document.getElementById('res-title');
@@ -2632,15 +3366,31 @@
         const nb = document.getElementById('next-btn');
         ov.classList.remove('hidden');
 
+        const oldRank = getRankByXP(saveData.xp || 0).current;
+
         if (won) {
-            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) saveData.cleared.push(curStage);
+            let firstClearBonus = 0;
+            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) {
+                saveData.cleared.push(curStage);
+                firstClearBonus = curStage * 10;
+            }
+            const totalAwardedXP = pendingStageXP + firstClearBonus;
+            saveData.xp = (saveData.xp || 0) + totalAwardedXP;
             saveProgress();
-            t.textContent = customMode ? `أنهيت التحدي بنجاح! 🏆` : `اجتزت المرحلة ${curStage}! 🔥`;
-            d.textContent = `السكور النهائي: ${score} PTS${opponentText} | رصيدك: ${saveData.xp} XP`;
+
+            const newRank = getRankByXP(saveData.xp || 0).current;
+            const rankUpTxt = newRank.id !== oldRank.id ? ` 🎉 ترقية إلى رتبة ${newRank.icon} ${newRank.name}!` : '';
+
+            t.textContent = customMode ? `أنهيت الماب بنجاح! 🏆` : `اجتزت المرحلة ${curStage} وفتحت المرحلة ${Math.min(TOTAL_STAGES, curStage + 1)}! 🔓🔥`;
+            d.textContent = `كسبت +${totalAwardedXP} XP ${firstClearBonus > 0 ? `(منها +${firstClearBonus} مكافأة أول مرة)` : ''}${rankUpTxt} | رصيدك: ${(saveData.xp || 0).toLocaleString()} XP`;
             nb.style.display = (customMode || curStage >= TOTAL_STAGES) ? 'none' : 'block';
         } else {
-            t.textContent = `فشل التحدي! 💔`;
-            d.textContent = `سكورك: ${score} PTS${opponentText}.. ركز بالمسارات وجرب مرة ثانية!`;
+            const consolationXP = Math.floor(pendingStageXP * 0.25);
+            saveData.xp = (saveData.xp || 0) + consolationXP;
+            saveProgress();
+
+            t.textContent = `فشل التحدي! 💔 (ضاع 75% من الـ XP المعلق)`;
+            d.textContent = `حصلت على +${consolationXP} XP فقط بسبب الخسارة.. اختم المرحلة كاملة لتكسب الـ XP كاملاً!`;
             nb.style.display = 'none';
         }
     }
@@ -2649,7 +3399,9 @@
     function retryStage() { if (customMode) startCustomStage(activeCustomStage, !!activePvpRoomCode); else startStage(curStage); }
 
     function openMenu() {
-        active = false; saveProgress(); syncFromCloud(false);
+        active = false;
+        stopStageAudio();
+        saveProgress(); syncFromCloud(false);
         document.getElementById('result-overlay').classList.add('hidden');
         document.getElementById('menu-overlay').classList.remove('hidden');
     }
