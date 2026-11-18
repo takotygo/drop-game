@@ -1991,40 +1991,157 @@
         ctx.restore();
     }
 
-    function drawCustomBallSkin(ctx, b, ts, skObj, blObj, overrideColor) {
+        function drawCustomBallSkin(ctx, b, ts, skObj, blObj, overrideColor) {
         drawBacklightEffect(ctx, b, ts, blObj);
 
+        const id = skObj.num || 1;
+        const frameType = id % 5;         // 5 إطارات خارجية مختلفة
+        const coreMat = Math.floor(id / 5) % 4; // 4 خامات داخلية مختلفة
+        const orbitType = Math.floor(id / 20) % 5; // 5 تأثيرات دوارة حول الطابة
+        const shapeIdx = id % 14;         // 14 نقش داخلي مختلف
+
         let baseCol = overrideColor || skObj.color;
-        if (!overrideColor && skObj.shape === 'rainbow') baseCol = `hsl(${(ts * 0.25 + b.y * 0.8) % 360}, 95%, 60%)`;
+        let secCol = skObj.core || '#ffffff';
+        if (!overrideColor && (id >= 90 || skObj.shape === 'rainbow')) {
+            baseCol = `hsl(${(ts * 0.25 + id * 25) % 360}, 95%, 58%)`;
+        }
 
-        // Luxury 3D Sphere + Outer Rim Glow
+        ctx.save();
         ctx.shadowColor = baseCol;
-        ctx.shadowBlur = 22;
+        ctx.shadowBlur = id >= 66 ? 26 : 18;
 
-        const grad = ctx.createRadialGradient(b.x - b.r * 0.35, b.y - b.r * 0.35, 2, b.x, b.y, b.r);
-        grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.28, skObj.core || '#ffffff');
-        grad.addColorStop(0.62, baseCol);
-        grad.addColorStop(1, '#05050a');
+        // ================= 1. الإطار الخارجي (Outer Frame) =================
+        if (frameType === 1) {
+            // إطار سايبر متقطع يدور
+            ctx.strokeStyle = baseCol; ctx.lineWidth = 2.5;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 4, b.rot, b.rot + Math.PI * 2); ctx.stroke();
+            ctx.setLineDash([]);
+        } else if (frameType === 2) {
+            // مسننات / أشواك طاقة خارجية
+            ctx.strokeStyle = secCol; ctx.lineWidth = 2;
+            drawStarPath(ctx, b.x, b.y, 12, b.r + 5, b.r - 1, -b.rot * 0.8); ctx.stroke();
+        } else if (frameType === 3) {
+            // حلقات كوكبية مائلة (مثل زحل)
+            ctx.save();
+            ctx.translate(b.x, b.y); ctx.rotate(b.rot * 0.4);
+            ctx.strokeStyle = secCol; ctx.lineWidth = 2.2;
+            ctx.beginPath(); ctx.ellipse(0, 0, b.r + 8, b.r * 0.35, 0.3, 0, Math.PI * 2); ctx.stroke();
+            ctx.restore();
+        } else if (frameType === 4) {
+            // درع سداسي خارجي متوهج
+            ctx.strokeStyle = baseCol; ctx.lineWidth = 2.5;
+            drawPolygonPath(ctx, b.x, b.y, b.r + 4, 6, b.rot * 0.6); ctx.stroke();
+        }
+
+        // ================= 2. خامة جسم الطابة (Base Material) =================
+        const grad = ctx.createRadialGradient(b.x - b.r * 0.32, b.y - b.r * 0.32, 2, b.x, b.y, b.r);
+        if (coreMat === 0) {
+            // كريستال ساطع
+            grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.35, secCol); grad.addColorStop(0.75, baseCol); grad.addColorStop(1, '#05050a');
+        } else if (coreMat === 1) {
+            // نواة مظلمة مشعة من الأطراف (Dark Matter)
+            grad.addColorStop(0, '#090714'); grad.addColorStop(0.55, '#1a1033'); grad.addColorStop(0.85, baseCol); grad.addColorStop(1, '#ffffff');
+        } else if (coreMat === 2) {
+            // معدن ذهبي / نيون مزدوج
+            grad.addColorStop(0, secCol); grad.addColorStop(0.5, baseCol); grad.addColorStop(1, '#000000');
+        } else {
+            // بلازما متوهجة بالكامل
+            grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.5, baseCol); grad.addColorStop(1, secCol);
+        }
 
         ctx.fillStyle = grad;
         ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = id >= 66 ? '#ffd700' : 'rgba(255,255,255,0.85)'; ctx.stroke();
 
-        // Glossy Rim & Luxury Pattern
-        ctx.lineWidth = 2.2; ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-        ctx.stroke();
-
-        const sh = skObj.shape;
-        if (sh === 'star' || sh === 'rainbow') { ctx.fillStyle = 'rgba(255,255,255,0.75)'; drawStarPath(ctx, b.x, b.y, 5, b.r * 0.65, b.r * 0.28, b.rot); ctx.fill(); }
-        else if (sh === 'hex') { drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 6, b.rot); ctx.stroke(); }
-        else if (sh === 'diamond') { ctx.fillStyle = 'rgba(255,255,255,0.65)'; drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 4, b.rot); ctx.fill(); }
-        else if (sh === 'dragon' || sh === 'crown') { ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.5; drawStarPath(ctx, b.x, b.y, 8, b.r + 3, b.r * 0.65, b.rot); ctx.stroke(); }
-        else { ctx.beginPath(); ctx.arc(b.x, b.y, Math.max(3, b.r - 5), b.rot, b.rot + Math.PI); ctx.stroke(); }
-
-        // ONLY SHOW: (1) Multi-tap Armor Count (x2, x3, x4) & (2) Exploding Timebomb Countdown!
-        // All other traps remain 100% SECRET until their trigger point!
+        // ================= 3. النقش الداخلي (14 Core Pattern) =================
         ctx.shadowBlur = 0;
+        if (shapeIdx === 0) {
+            ctx.fillStyle = '#ffffff'; drawStarPath(ctx, b.x, b.y, 5, b.r * 0.68, b.r * 0.28, b.rot); ctx.fill();
+        } else if (shapeIdx === 1) {
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.2;
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 6, b.rot); ctx.stroke();
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.38, 6, -b.rot); ctx.stroke();
+        } else if (shapeIdx === 2) {
+            ctx.fillStyle = 'rgba(255,255,255,0.88)'; drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot); ctx.fill();
+        } else if (shapeIdx === 3) {
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.8;
+            const c = b.r * 0.55;
+            ctx.beginPath(); ctx.moveTo(b.x - c, b.y); ctx.lineTo(b.x + c, b.y); ctx.moveTo(b.x, b.y - c); ctx.lineTo(b.x, b.y + c); ctx.stroke();
+        } else if (shapeIdx === 4) {
+            // عين الشارينغان
+            ctx.fillStyle = '#05050a'; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.26, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#05050a'; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.58, 0, Math.PI * 2); ctx.stroke();
+            for (let t = 0; t < 3; t++) { const a = b.rot + (t * Math.PI * 2) / 3; ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * b.r * 0.58, b.y + Math.sin(a) * b.r * 0.58, 3, 0, Math.PI * 2); ctx.fill(); }
+        } else if (shapeIdx === 5) {
+            // نووي
+            ctx.strokeStyle = '#05050a'; ctx.lineWidth = 2.4;
+            for (let t = 0; t < 3; t++) { const a = b.rot + (t * Math.PI * 2) / 3; ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * b.r * 0.36, b.y + Math.sin(a) * b.r * 0.36, 4.8, 0, Math.PI * 2); ctx.stroke(); }
+        } else if (shapeIdx === 6) {
+            // دوامة
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.2;
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.35, b.rot, b.rot + Math.PI * 1.3); ctx.stroke();
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.68, -b.rot, -b.rot + Math.PI * 1.3); ctx.stroke();
+        } else if (shapeIdx === 7) {
+            // هلال
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.55, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = baseCol; ctx.beginPath(); ctx.arc(b.x + 5, b.y - 3, b.r * 0.45, 0, Math.PI * 2); ctx.fill();
+        } else if (shapeIdx === 8) {
+            // مثلثين متعاكسين (نجمة داوود هندسية)
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 3, b.rot); ctx.stroke();
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 3, b.rot + Math.PI); ctx.stroke();
+        } else if (shapeIdx === 9) {
+            // نجمة ثمانية
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.2;
+            drawStarPath(ctx, b.x, b.y, 8, b.r * 0.75, b.r * 0.35, b.rot); ctx.stroke();
+        } else if (shapeIdx === 10) {
+            // علامة البرق داخل الطابة
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.moveTo(b.x + 2, b.y - 10); ctx.lineTo(b.x - 6, b.y + 1); ctx.lineTo(b.x, b.y + 1);
+            ctx.lineTo(b.x - 2, b.y + 10); ctx.lineTo(b.x + 6, b.y - 1); ctx.lineTo(b.x, b.y - 1);
+            ctx.closePath(); ctx.fill();
+        } else if (shapeIdx === 11) {
+            // حلقات متحدة المركز
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.65, 0, Math.PI * 2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.32, 0, Math.PI * 2); ctx.stroke();
+        } else if (shapeIdx === 12) {
+            // مربعين متداخلين
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot); ctx.stroke();
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot + Math.PI / 4); ctx.stroke();
+        } else {
+            // جوهرة ثلاثية الأضلاع
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 3, b.rot); ctx.fill();
+        }
 
+        // ================= 4. عناصر متحركة حول الطابة (Orbiting Accents) =================
+        if (orbitType === 1) {
+            // قمرين صغيرين يدوران حول الطابة
+            for (let k = 0; k < 2; k++) {
+                const a = b.rot * 1.4 + k * Math.PI;
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * (b.r + 5), b.y + Math.sin(a) * (b.r + 5), 3, 0, Math.PI * 2); ctx.fill();
+            }
+        } else if (orbitType === 2) {
+            // 4 شرارات متوهجة بالزوايا
+            for (let k = 0; k < 4; k++) {
+                const a = -b.rot + (k * Math.PI) / 2;
+                ctx.fillStyle = '#ffd700';
+                ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * (b.r + 4), b.y + Math.sin(a) * (b.r + 4), 2.5, 0, Math.PI * 2); ctx.fill();
+            }
+        } else if (orbitType === 3) {
+            // نبض دائري متوسع
+            const pulseR = b.r + 2 + ((ts * 0.02) % 8);
+            ctx.strokeStyle = baseCol; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(b.x, b.y, pulseR, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.restore();
+
+        // ================= أرقام الكبسات والقنبلة فقط (باقي المقالب سرية 100%) =================
         if (b.armor > 1) {
             ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : '#ffd700';
             ctx.lineWidth = 4;
