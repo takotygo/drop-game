@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v8.2</title>
+    <title>TAKO DROP | غدر الكرات v8.3</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -109,7 +109,7 @@
         .insane-anim { animation: insaneGlow 1.6s infinite ease-in-out; }
 
         .top-actions { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-        .top-btn-admin { background: linear-gradient(135deg, #ff0055, #b829ff); color: #fff; border: 1px solid #ffd700; padding: 4px 7px; border-radius: 7px; font-size: 10px; font-weight: 900; cursor: pointer; }
+        .top-btn-admin { background: linear-gradient(135deg, #ff0055, #b829ff); color: #fff; border: 1px solid #ffd700; padding: 4px 7px; border-radius: 7px; font-size: 10px; font-weight: 900; cursor: pointer; box-shadow: 0 0 12px rgba(255, 0, 85, 0.6); }
         .top-btn-pass { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #05050a; border: 1px solid #fff; padding: 4px 8px; border-radius: 7px; font-size: 10.5px; font-weight: 900; cursor: pointer; box-shadow: 0 0 14px rgba(255, 215, 0, 0.55); }
         .top-btn-music { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.35); padding: 4px 7px; border-radius: 7px; font-size: 10px; font-weight: 900; cursor: pointer; }
         .top-btn-rank { background: linear-gradient(135deg, #38bdf8, #0284c7); color: #05050a; border: none; padding: 4px 7px; border-radius: 7px; font-size: 10px; font-weight: 900; cursor: pointer; }
@@ -238,7 +238,7 @@
         .song-btn.listen-full { background: rgba(184, 41, 255, 0.28); color: #fff; border: 1px solid var(--purple); }
         .song-btn.use-30 { background: rgba(0, 255, 102, 0.15); color: var(--green); border: 1px solid var(--green); }
         .song-btn.use-full { background: linear-gradient(135deg, #00ff66, #10b981); color: #05050a; }
-        .live-audio-bar { background: rgba(12, 10, 24, 0.96); border: 1px solid var(--cyan); border-radius: 10px; padding: 8px 10px; }
+        .live-audio-bar { background: rgba(12, 10, 24, 0.96); border: 1px solid var(--cyan); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 5px; }
 
         /* ================= CENTER HUB ================= */
         .hub-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 6px 0 4px 0; position: relative; }
@@ -410,7 +410,7 @@
 
     <!-- LOGIN OVERLAY -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.2 PRO</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 COMPLETE</div>
         <div class="glitch-title" style="margin-bottom:6px;" data-i18n="login_title">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px; font-size:12px; color:#94a3b8; text-align:center;" data-i18n="login_sub">حسابك محمي بكلمة سر على السيرفر العالمي!</div>
 
@@ -454,7 +454,7 @@
 
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.2 PRO</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 COMPLETE</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -545,7 +545,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 2: HORIZONTAL DROP PASS (DIRECT WHATSAPP BUY, NO GREEN BOX) -->
+        <!-- PORTAL 2: HORIZONTAL DROP PASS (DIRECT WHATSAPP BUY) -->
         <div id="portal-droppass" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--gold);">🎫 الموسم الأول: DROP PASS (LVL 1 - 100)</div>
@@ -661,14 +661,27 @@
         <!-- PORTAL 6: MUSIC SEARCH -->
         <div id="portal-music" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:#ec4899;">🎵 محرك الأغاني الكاملة</div>
+                <div class="portal-title" style="color:#ec4899;">🎵 محرك الأغاني الكاملة (MP3 + 30ث)</div>
                 <button class="close-portal-btn" onclick="closePortal('music')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
+                <div id="music-live-bar" class="live-audio-bar hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="live-song-label" style="font-size:11.5px; font-weight:900; color:var(--cyan);">🎶 جاري التشغيل...</span>
+                        <span id="live-song-timer" dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:11px; color:var(--yellow);">0:00 / 0:00</span>
+                    </div>
+                    <input type="range" id="live-song-seek" min="0" max="100" value="0" style="width:100%; accent-color:var(--pink);" oninput="seekPreviewAudio(this.value)">
+                </div>
+
                 <div class="editor-box" style="border-color:#ec4899;">
                     <div class="id-search-bar" style="border-color:#ec4899;">
-                        <input type="text" id="music-search-input" class="cyber-input" placeholder="اكتب اسم الغناية..." onkeydown="if(event.key==='Enter') searchSongsOnline()">
+                        <input type="text" id="music-search-input" class="cyber-input" placeholder="اكتب اسم الغناية (مثال: Sweater Weather)..." onkeydown="if(event.key==='Enter') searchSongsOnline()">
                         <button class="play-chip pink" onclick="searchSongsOnline()"><span>بحث 🔍</span></button>
+                    </div>
+                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Sweater Weather')">🧣 Sweater Weather</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Phonk')">🔥 Phonk</button>
+                        <button class="menu-mini-btn" style="font-size:10px;" onclick="quickMusicSearch('Blue Lock')">⚽ Blue Lock</button>
                     </div>
                 </div>
                 <div id="music-results-status" style="font-size:12px; color:var(--cyan); font-weight:800; text-align:center;">ابحث عن أي أغنية!</div>
@@ -679,11 +692,12 @@
         <!-- PORTAL 7: CREATE MAP -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب</div>
+                <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية وتصنيف صعوبة</div>
                 <button class="close-portal-btn" onclick="closePortal('editor')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="editor-box" style="border-color:var(--green); padding:10px;">
+                    <div class="stage-title" style="color:var(--green); font-size:13px;">🔍 العب ماب لاعب عبر الـ ID</div>
                     <div class="id-search-bar">
                         <input type="text" id="stage-id-input" class="cyber-input" placeholder="اكتب الـ ID هنا (مثال: TAKO-40)">
                         <button class="play-chip green" onclick="playStageById()"><span>تشغيل ◀</span></button>
@@ -713,9 +727,16 @@
                     </div>
 
                     <div class="audio-upload-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                            <span style="font-size:12px; font-weight:900; color:#e879f9;">🎵 أغنية / موسيقى الماب:</span>
+                            <div style="display:flex; gap:5px;">
+                                <button class="top-btn-music" onclick="openPortal('music', event)">🔎 بحث غناية</button>
+                                <button class="menu-mini-btn" id="ed-preview-audio-btn" onclick="toggleEditorAudioPreview()">🎧 استماع وتوقيت</button>
+                            </div>
+                        </div>
                         <div class="editor-grid">
                             <label class="file-upload-lbl">
-                                📁 ارفع غناية
+                                📁 ارفع غناية من جهازك
                                 <input type="file" id="ed-audio-file" accept="audio/*" style="display:none;" onchange="handleAudioFileUpload(event)">
                             </label>
                             <select id="ed-synth-preset" class="cyber-input" onchange="handlePresetAudioChange()">
@@ -751,12 +772,12 @@
                         </div>
                     </div>
 
-                    <button class="play-chip" style="width:100%; padding:10px;" onclick="addBallToEditor()"><span>➕ أضف الكرة</span></button>
+                    <button class="play-chip" style="width:100%; padding:10px;" onclick="addBallToEditor()"><span>➕ أضف الكرة إلى الماب</span></button>
                     <div class="spawn-list" id="ed-balls-list"></div>
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                         <button class="play-chip green" style="padding:10px;" onclick="saveCustomStage()"><span>💾 حفظ ورفع (ID)</span></button>
-                        <button class="play-chip yellow" style="padding:10px;" onclick="testEditorStage()"><span>▶️ تجربة</span></button>
+                        <button class="play-chip yellow" style="padding:10px;" onclick="testEditorStage()"><span>▶️ تجربة الماب</span></button>
                     </div>
                     <div id="generated-id-box" class="hidden" style="background:rgba(0,255,102,0.12); border:1px solid var(--green); padding:10px; border-radius:8px; text-align:center;">
                         <div id="generated-id-text" dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:var(--green);">TK-0000</div>
@@ -770,11 +791,12 @@
         <!-- PORTAL 8: 1VS1 ROOM -->
         <div id="portal-pvp" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي (<span dir="ltr">1 VS 1</span>)</div>
+                <div class="portal-title" style="color:var(--pink);">⚔️ روم التحدي المباشر (<span dir="ltr">1 VS 1</span>)</div>
                 <button class="close-portal-btn" onclick="closePortal('pvp')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="editor-box" style="border-color:var(--pink);">
+                    <div class="stage-desc">اكتب نفس كود الروم مع رفيقك واضغط <strong>"دخول اللوبي"</strong>، وعند ضغط <strong>"ابدأ المعركة"</strong> تنطلق المرحلة عندكما بنفس الثانية!</div>
                     <div class="field-group">
                         <label>🔑 كود الروم (Room ID):</label>
                         <input type="text" id="pvp-room-input" class="cyber-input" dir="ltr" value="TAKO-1V1">
@@ -874,8 +896,8 @@
         <button class="menu-mini-btn" style="width:100%; padding:11px; font-size:13.5px;" onclick="openMenu()">العودة للقائمة الرئيسية 🏠</button>
     </div>
 </div>
-
 <script>
+    // ================= FIREBASE CLOUD & GHOST ADMIN CREDENTIALS =================
     const FIREBASE_DB_URL = "https://takotygo-74-default-rtdb.firebaseio.com";
     const ADMIN_USERNAME = "admin takotygo";
     const ADMIN_PASS = "0988480623admin0963852741";
@@ -887,11 +909,13 @@
     const toast = document.getElementById('toast');
 
     function isCurrentUserAdmin() {
-        return saveData && saveData.username &&
+        return saveData &&
+               saveData.username &&
                saveData.username.trim().toLowerCase() === ADMIN_USERNAME &&
                String(saveData.password) === ADMIN_PASS;
     }
 
+    // ================= 20 SECRET PROMO CODES =================
     const SECRET_CODES_MAP = {
         "TAKO-VIP1": 1, "TAKO-VIP2": 2, "TAKO-VIP3": 3, "TAKO-VIP4": 4, "TAKO-VIP5": 5,
         "TAKO-VIP6": 6, "TAKO-VIP7": 7, "TAKO-VIP8": 8, "TAKO-VIP9": 9, "TAKO-VIP10": 10,
@@ -899,6 +923,7 @@
         "SYRIA-2026": 16, "GHOST-777": 17, "DEMON-999": 18, "ULTRA-MAX": 19, "TAKO-100K": 20
     };
 
+    // ================= 100 LUXURY BALL SKINS & 100 BACKLIGHT TRAILS =================
     const BALL_SHAPES_POOL = ['ring', 'star', 'hex', 'diamond', 'cross', 'eye', 'bio', 'sun', 'vortex', 'crescent', 'crown', 'dragon', 'galaxy', 'rainbow'];
     const BALL_ICONS_POOL = ['🔵', '🔴', '🟢', '⭐', '🟣', '☢️', '👁️', '💎', '☀️', '🌀', '🩸', '👑', '🌌', '🌈', '🐉', '⚡', '🔥', '❄️', '☄️', '🔱'];
     const ARABIC_SKIN_TITLES = [
@@ -916,24 +941,49 @@
         const hue = (i * 37) % 360;
         const secHue = (hue + 140) % 360;
         const col = `hsl(${hue}, 95%, 58%)`;
-        const coreCol = i % 3 === 0 ? '#ffffff' : `hsl(${secHue}, 95%, 80%)`;
+        const coreCol = i % 3 === 0 ? '#ffffff' : `hsl(${secHue}, 95%, 82%)`;
         const shape = BALL_SHAPES_POOL[i % BALL_SHAPES_POOL.length];
         const icon = BALL_ICONS_POOL[i % BALL_ICONS_POOL.length];
         const baseName = ARABIC_SKIN_TITLES[(i - 1) % ARABIC_SKIN_TITLES.length];
 
         let unlockType = 'shop', cost = 0, passLvl = 0, codeIdx = 0, rarityTag = '';
-        if (i <= 50) { unlockType = 'shop'; cost = i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.85) * 28); rarityTag = `متجر (${cost.toLocaleString()} XP)`; }
-        else if (i <= 65) { unlockType = 'pass_free'; passLvl = (i - 50) * 6; rarityTag = `🎁 مجاني Drop Pass (LVL ${passLvl})`; }
-        else if (i <= 80) { unlockType = 'pass_vip'; passLvl = (i - 65) * 6 + 2; if (i === 80) passLvl = 100; rarityTag = `👑 نادر جداً VIP Pass (LVL ${passLvl})`; }
-        else { unlockType = 'code'; codeIdx = i - 80; rarityTag = `🔒 حصري بكود سري (#${codeIdx})`; }
+        if (i <= 50) {
+            unlockType = 'shop';
+            cost = i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.85) * 28);
+            rarityTag = `متجر (${cost.toLocaleString()} XP)`;
+        } else if (i <= 65) {
+            unlockType = 'pass_free';
+            passLvl = (i - 50) * 6;
+            rarityTag = `🎁 مجاني Drop Pass (LVL ${passLvl})`;
+        } else if (i <= 80) {
+            unlockType = 'pass_vip';
+            passLvl = (i - 65) * 6 + 2;
+            if (i === 80) passLvl = 100;
+            rarityTag = `👑 نادر جداً VIP Pass (LVL ${passLvl})`;
+        } else {
+            unlockType = 'code';
+            codeIdx = i - 80;
+            rarityTag = `🔒 حصري بكود سري (#${codeIdx})`;
+        }
 
-        SKINS_CATALOG.push({ id: `ball_${i}`, num: i, name: `${i}. طابة ${baseName}`, unlockType, cost, passLvl, codeIdx, color: col, core: coreCol, shape: i >= 66 ? (i % 2 === 0 ? 'dragon' : 'rainbow') : shape, icon: i >= 81 ? '👑' : icon, desc: rarityTag });
-        BACKLIGHTS_CATALOG.push({ id: `bl_${i}`, num: i, name: `${i}. باك لايت ${baseName}`, unlockType, cost: unlockType === 'shop' ? (i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.8) * 25)) : 0, passLvl: unlockType === 'pass_free' ? ((i - 50) * 6 - 3) : (unlockType === 'pass_vip' ? ((i - 65) * 6 - 1) : 0), codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 62%)`, icon: i % 2 === 0 ? '✨' : '🔥', desc: rarityTag });
+        SKINS_CATALOG.push({
+            id: `ball_${i}`, num: i, name: `${i}. طابة ${baseName}`, unlockType, cost, passLvl, codeIdx,
+            color: col, core: coreCol, shape: i >= 66 ? (i % 2 === 0 ? 'dragon' : 'rainbow') : shape,
+            icon: i >= 81 ? '👑' : icon, desc: rarityTag
+        });
+
+        BACKLIGHTS_CATALOG.push({
+            id: `bl_${i}`, num: i, name: `${i}. باك لايت ${baseName}`, unlockType,
+            cost: unlockType === 'shop' ? (i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.8) * 25)) : 0,
+            passLvl: unlockType === 'pass_free' ? ((i - 50) * 6 - 3) : (unlockType === 'pass_vip' ? ((i - 65) * 6 - 1) : 0),
+            codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 62%)`, icon: i % 2 === 0 ? '✨' : '🔥', desc: rarityTag
+        });
     }
 
     function getSkinObj(skinId) { return SKINS_CATALOG.find(s => s.id === skinId || s.color === skinId) || SKINS_CATALOG[0]; }
     function getBacklightObj(blId) { return BACKLIGHTS_CATALOG.find(b => b.id === blId || b.color === blId) || BACKLIGHTS_CATALOG[0]; }
 
+    // ================= DROP PASS (LEFT-TO-RIGHT HORIZONTAL) =================
     const XP_PER_PASS_LEVEL = 250;
     function getDropPassLevel(xpVal) { const xp = isCurrentUserAdmin() ? 100000 : (xpVal || 0); return Math.min(100, Math.max(1, Math.floor(xp / XP_PER_PASS_LEVEL) + 1)); }
     function hasVipDropPass() { return isCurrentUserAdmin() || !!saveData.vipPass; }
@@ -1010,10 +1060,9 @@
         }
     }
 
-    // ================= HORIZONTAL DROP PASS LOGIC =================
     function scrollDropPass(offsetPx) {
         const wrap = document.getElementById('droppass-tiers-container');
-        if (wrap) wrap.scrollBy({ left: -offsetPx, behavior: 'smooth' });
+        if (wrap) wrap.scrollBy({ left: offsetPx, behavior: 'smooth' }); // LTR scroll (Left to Right)
     }
 
     function scrollToMyPassLevel() {
@@ -1030,7 +1079,7 @@
 
         document.getElementById('pass-lvl-title').textContent = `🎫 مستواك في الدروب باس: LVL ${myLvl} / 100 ${vipActive ? '👑 (VIP مفعّل)' : ''}`;
         const xpIntoLvl = myXP % XP_PER_PASS_LEVEL;
-        document.getElementById('pass-xp-sub').textContent = myLvl >= 100 ? `👑 ختمت الـ 100 لفل!` : `التقدم للفل القادم: ${xpIntoLvl} / ${XP_PER_PASS_LEVEL} XP • اسحب بالعرض ↔️`;
+        document.getElementById('pass-xp-sub').textContent = myLvl >= 100 ? `👑 ختمت الـ 100 لفل!` : `التقدم للفل القادم: ${xpIntoLvl} / ${XP_PER_PASS_LEVEL} XP • اسحب من اليسار لليمين ➡️`;
         document.getElementById('pass-progress-fill').style.width = `${Math.min(100, myLvl)}%`;
 
         const buyBtn = document.getElementById('buy-pass-btn');
@@ -1039,8 +1088,9 @@
         const activeBallId = getSkinObj(saveData.skin).id;
         const activeBlId = getBacklightObj(saveData.backlight).id;
         const container = document.getElementById('droppass-tiers-container');
-        let colsHTML = [];
+        container.style.direction = 'ltr'; // Force Left-to-Right (LVL 1 on Left -> LVL 100 on Right)
 
+        let colsHTML = [];
         for (let lvl = 1; lvl <= 100; lvl++) {
             const reached = myLvl >= lvl;
             const isCurrent = myLvl === lvl;
@@ -1057,24 +1107,24 @@
             let freeBoxHTML = freeItem ? `
                 <span class="slot-track-tag">🎁 مجاني</span>
                 <div class="pass-orb-mini" style="background:radial-gradient(circle at 35% 35%, ${freeItem.core || freeItem.secColor}, ${freeItem.color}); box-shadow:0 0 12px ${freeItem.color};"><span>${freeItem.icon}</span></div>
-                <div style="font-size:10px; font-weight:900; color:${freeItem.color}; line-height:1.25;">${freeItem.name}</div>
+                <div style="font-size:10px; font-weight:900; color:${freeItem.color}; line-height:1.25; direction:rtl;">${freeItem.name}</div>
                 <button class="pass-equip-btn ${(freeTab === 'balls' ? activeBallId : activeBlId) === freeItem.id ? 'equipped' : (reached ? '' : 'locked')}" onclick="equipFromDropPass('${freeTab}', '${freeItem.id}')">${(freeTab === 'balls' ? activeBallId : activeBlId) === freeItem.id ? 'مفعّل ✅' : (reached ? 'تفعيل ⚡' : `🔒 LVL ${lvl}`)}</button>
             ` : `
                 <span class="slot-track-tag">🎁 مجاني</span>
                 <div style="font-size:22px; margin:6px 0;">⚡</div>
-                <div style="font-size:10px; font-weight:800; color:#94a3b8;">+${lvl * 15} نقاط فخر</div>
+                <div style="font-size:10px; font-weight:800; color:#94a3b8; direction:rtl;">+${lvl * 15} نقاط فخر</div>
                 <div style="font-size:9.5px; font-weight:900; color:${reached ? 'var(--green)' : '#475569'};">${reached ? 'مكتسب ✅' : '🔒 مقفل'}</div>
             `;
 
             let vipBoxHTML = vipItem ? `
                 <span class="slot-track-tag vip-tag">👑 VIP نادر</span>
                 <div class="pass-orb-mini" style="background:radial-gradient(circle at 35% 35%, ${vipItem.core || vipItem.secColor}, ${vipItem.color}); box-shadow:0 0 15px ${vipItem.color}; border-color:var(--gold);"><span>${vipItem.icon}</span></div>
-                <div style="font-size:10px; font-weight:900; color:${vipItem.color}; line-height:1.25;">${vipItem.name}</div>
+                <div style="font-size:10px; font-weight:900; color:${vipItem.color}; line-height:1.25; direction:rtl;">${vipItem.name}</div>
                 <button class="pass-equip-btn ${(vipTab === 'balls' ? activeBallId : activeBlId) === vipItem.id ? 'equipped' : ((reached && vipActive) ? '' : 'locked')}" style="${!vipActive ? 'background:rgba(255,215,0,0.22); color:var(--gold); cursor:pointer;' : ''}" onclick="${!vipActive ? 'contactWhatsAppForPass()' : `equipFromDropPass('${vipTab}', '${vipItem.id}')`}">${(vipTab === 'balls' ? activeBallId : activeBlId) === vipItem.id ? 'مفعّل 👑' : ((reached && vipActive) ? 'تفعيل ⚡' : (vipActive ? `🔒 LVL ${lvl}` : '👑 شراء VIP'))}</button>
             ` : `
                 <span class="slot-track-tag vip-tag">👑 VIP</span>
                 <div style="font-size:22px; margin:6px 0;">👑</div>
-                <div style="font-size:10px; font-weight:800; color:var(--gold);">صندوق طاقة VIP</div>
+                <div style="font-size:10px; font-weight:800; color:var(--gold); direction:rtl;">صندوق طاقة VIP</div>
                 <div style="font-size:9.5px; font-weight:900; color:${(reached && vipActive) ? 'var(--gold)' : '#fda4af'};">${(reached && vipActive) ? 'مكتسب 👑' : '🔒 VIP'}</div>
             `;
 
@@ -1207,6 +1257,77 @@
 
     function switchUserAccount() { closeAllPortals(); logoutUser(); }
 
+    // ================= MUSIC SEARCH ENGINE =================
+    let searchedSongsCache = [];
+    function formatDuration(sec) { if (!sec || isNaN(sec) || sec <= 0) return "3:45"; const m = Math.floor(sec / 60), s = Math.floor(sec % 60); return `${m}:${s < 10 ? '0' : ''}${s}`; }
+    function quickMusicSearch(q) { document.getElementById('music-search-input').value = q; searchSongsOnline(); }
+
+    async function searchInternetArchiveFullMP3(query) {
+        try {
+            const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(`title:(${query}) AND mediatype:(audio)`)}&fl[]=identifier,title,creator&rows=8&page=1&output=json`;
+            const res = await fetch(url); const data = await res.json();
+            const docs = data?.response?.docs || [];
+            const metaResults = await Promise.all(docs.slice(0, 5).map(async doc => {
+                try {
+                    const mRes = await fetch(`https://archive.org/metadata/${encodeURIComponent(doc.identifier)}`);
+                    const mData = await mRes.json();
+                    const mp3File = (mData?.files || []).find(f => f.name && f.name.toLowerCase().endsWith('.mp3') && (!f.size || parseInt(f.size) > 900000));
+                    if (!mp3File) return null;
+                    return { title: mp3File.title || doc.title || query, artist: mp3File.artist || doc.creator || 'Full MP3', thumb: `https://archive.org/services/img/${encodeURIComponent(doc.identifier)}`, fullAudioUrl: `https://archive.org/download/${encodeURIComponent(doc.identifier)}/${encodeURIComponent(mp3File.name)}`, durationTxt: formatDuration(parseFloat(mp3File.length) || 210) };
+                } catch (e) { return null; }
+            }));
+            return metaResults.filter(Boolean);
+        } catch (err) { return []; }
+    }
+
+    async function searchSongsOnline() {
+        const query = document.getElementById('music-search-input').value.trim();
+        const statusEl = document.getElementById('music-results-status'), listEl = document.getElementById('music-results-list');
+        if (!query) return;
+        statusEl.textContent = `⏳ جاري البحث عن "${query}"...`; listEl.innerHTML = "";
+        try {
+            const [archList, itunesRes] = await Promise.all([
+                searchInternetArchiveFullMP3(query),
+                fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=10`).then(r => r.json()).catch(() => ({ results: [] }))
+            ]);
+            const itList = (itunesRes.results || []).filter(x => x.previewUrl);
+            const combined = [];
+            for (let i = 0; i < Math.max(archList.length, itList.length); i++) {
+                const a = archList[i], it = itList[i]; if (!a && !it) continue;
+                combined.push({
+                    title: it?.trackName || a?.title || query, artist: it?.artistName || a?.artist || 'فنان',
+                    thumb: it?.artworkUrl100 ? it.artworkUrl100.replace('100x100bb', '200x200bb') : (a?.thumb || ''),
+                    clip30Url: it?.previewUrl || '', fullAudioUrl: a?.fullAudioUrl || (archList[0]?.fullAudioUrl || ''),
+                    durationTxt: a?.durationTxt || '3:30'
+                });
+            }
+            searchedSongsCache = combined;
+            statusEl.textContent = combined.length ? `✅ تم العثور على ${combined.length} نتيجة:` : `❌ لا توجد نتائج`;
+            listEl.innerHTML = combined.map((s, idx) => `
+                <div class="song-card">
+                    <div class="song-thumb-wrap"><img src="${s.thumb}" class="song-thumb"><span class="song-dur-badge">${s.durationTxt}</span></div>
+                    <div class="song-info">
+                        <div class="song-title">${s.title}</div>
+                        <div class="song-artist">🎤 ${s.artist}</div>
+                        <div class="song-btns">
+                            ${s.fullAudioUrl ? `<button class="song-btn listen-full" onclick="previewSongMode(${idx},'full')">🎶 كاملة</button><button class="song-btn use-full" onclick="attachSongToMapMode(${idx},'full')">🔥 ربط كاملة</button>` : ''}
+                            ${s.clip30Url ? `<button class="song-btn listen-30" onclick="previewSongMode(${idx},'30s')">🎧 30ث</button><button class="song-btn use-30" onclick="attachSongToMapMode(${idx},'30s')">➕ ربط 30ث</button>` : ''}
+                        </div>
+                    </div>
+                </div>`).join('');
+        } catch (e) {}
+    }
+
+    function previewSongMode(idx, mode) { const s = searchedSongsCache[idx]; if (!s) return; playStageAudio(mode === 'full' ? (s.fullAudioUrl || s.clip30Url) : s.clip30Url, s.title); }
+    function attachSongToMapMode(idx, mode) {
+        const s = searchedSongsCache[idx]; if (!s) return;
+        const url = mode === 'full' ? (s.fullAudioUrl || s.clip30Url) : s.clip30Url;
+        editorAudioData = url; editorAudioName = s.title;
+        document.getElementById('ed-audio-url').value = url;
+        document.getElementById('ed-audio-status').textContent = `✅ تم ربط الأغنية: ${s.title}`;
+        closePortal('music'); openPortal('editor');
+    }
+
     // ================= DIFFICULTIES, RANKS & 40 BALLS =================
     const STAGE_DIFFICULTIES = {
         easy: { id: 'easy', label: 'سهل', icon: '🟢', color: '#4ade80', bg: 'rgba(74, 222, 128, 0.16)' },
@@ -1283,46 +1404,46 @@
     }
 
     const BALL_META = {
-        normal:     { name: '🔵 1. البلازما العادية', icon: '',   xp: 1,  pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
-        fake:       { name: '🔴 2. الفخ القاتل FAKE', icon: '⚡', xp: 2,  pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
-        sw:         { name: '🟣 3. الغدارة المراوغة', icon: '↪️', xp: 3,  pts: 2, color: '#b829ff', desc: 'تقفز بآخر لحظة إلى المسار المجاور!' },
-        brk:        { name: '🛑 4. كرة الفرامل',      icon: '🛑', xp: 3,  pts: 2, color: '#ffb800', desc: 'تتجمد بالهواء فجأة ثم تتابع نزولها!' },
-        arm:        { name: '🛡️ 5. المدرعة x2',       icon: '🛡️', xp: 4,  pts: 3, color: '#ffb800', desc: 'تحتاج ضغطة لكسر الدرع وضغطة ثانية لالتقاطها.' },
-        ghost:      { name: '👻 6. الكرة الشبحية',    icon: '👻', xp: 4,  pts: 3, color: '#94a3b8', desc: 'تختفي بمنتصف الطريق وتكمل نزولها شبه شفافة!' },
-        nitro:      { name: '🚀 7. النيترو الصاروخية',icon: '🚀', xp: 5,  pts: 4, color: '#ff6b00', desc: 'تنزل ببطء ثم تشتعل وتنطلق كالصاروخ!' },
-        dbl:        { name: '🧠 8. الخدعة المزدوجة',  icon: '🧠', xp: 5,  pts: 4, color: '#00ff66', desc: 'تتظاهر أنها FAKE ثم ترجع حقيقية خضراء!' },
-        zig:        { name: '🐍 9. الزلزال المتعرجة', icon: '🐍', xp: 6,  pts: 5, color: '#f472b6', desc: 'تراوغ مرتين متتاليتين بين المسارات!' },
-        bounce:     { name: '🏀 10. طابة النط المرتدة',icon:'🏀', xp: 7,  pts: 6, color: '#38bdf8', desc: 'تنط لورا بالهواء عند ضغطها ثم تعود!' },
-        boss:       { name: '👑 11. الزعيم المدرعة x3',icon:'👑', xp: 9,  pts: 7, color: '#ffd700', desc: 'درع ثلاثي (x3) وتقفز لمسار مجاور!' },
-        portal:     { name: '🌀 12. كرة البوابة',     icon: '🌀', xp: 6,  pts: 5, color: '#a855f7', desc: 'تختفي بنصف المسار وتخرج من سقف مسار آخر!' },
-        pendulum:   { name: '⏳ 13. كرة البندول',     icon: '⏳', xp: 6,  pts: 5, color: '#38bdf8', desc: 'تتأرجح يميناً ويساراً أثناء نزولها!' },
-        magnet:     { name: '🧲 14. كرة المغناطيس',   icon: '🧲', xp: 7,  pts: 5, color: '#ef4444', desc: 'تسحب الكرات المجاورة لمسارها!' },
-        boomerang:  { name: '🪃 15. البوميرانج',      icon: '🪃', xp: 8,  pts: 6, color: '#fbbf24', desc: 'تلمس الخط وتصعد لوحدها ثم تعود، امسكها بالمرة الثانية!' },
-        swapper:    { name: '🔄 16. كرة التبديل',     icon: '🔄', xp: 8,  pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى!' },
-        splitter:   { name: '➗ 17. الكرة المنقسمة',  icon: '➗', xp: 8,  pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين!' },
-        matryoshka: { name: '🪆 18. الماتريوشكا',     icon: '🪆', xp: 10, pts: 7, color: '#f97316', desc: 'تصغر وتنط للأعلى 3 مرات عند الخط!' },
-        spawner:    { name: '🤰 19. الكرة الأم',      icon: '🤰', xp: 8,  pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها!' },
-        twin:       { name: '🔗 20. التوأم المربوط',  icon: '🔗', xp: 9,  pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها مربوطتين بليزر!' },
-        mirage:     { name: '🏜️ 21. كرة السراب',      icon: '🏜️', xp: 8,  pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين!' },
-        chameleon:  { name: '🦎 22. كرة الحرباء',     icon: '🦎', xp: 6,  pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار!' },
-        smoke:      { name: '💨 23. قنبلة الدخان',    icon: '💨', xp: 9,  pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات!' },
-        flash:      { name: '📸 24. كرة الفلاش',      icon: '📸', xp: 9,  pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور!' },
-        micro:      { name: '🔬 25. الكرة المتقلصة',  icon: '🔬', xp: 6,  pts: 5, color: '#38bdf8', desc: 'تصغر تدريجياً حتى تصبح نقطة صغيرة!' },
-        mirror:     { name: '🪞 26. الشاشة المقلوبة', icon: '🪞', xp: 11, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً!' },
-        heartbeat:  { name: '💓 27. كرة النبض',       icon: '💓', xp: 6,  pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات!' },
-        slowmo:     { name: '🐢 28. تبطيء الزمن',     icon: '🐢', xp: 6,  pts: 5, color: '#2dd4bf', desc: 'تبطئ كل الكرات عند كسر درعها!' },
-        glitchspd:  { name: '⚡ 29. تسارع الغليتش',   icon: '⚡', xp: 8,  pts: 6, color: '#facc15', desc: 'تتغير سرعتها بشكل جنوني!' },
-        timebomb:   { name: '💣 30. القنبلة الموقوتة',icon: '💣', xp: 10, pts: 7, color: '#ef4444', desc: 'اضغط زر مسارها قبل انتهاء العداد!' },
-        laserhold:  { name: '🔋 31. شعاع الليزر',     icon: '🔋', xp: 8,  pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر متصل!' },
-        swipe:      { name: '➡️ 32. السهم الموجه',    icon: '➡️', xp: 8,  pts: 6, color: '#fb923c', desc: 'تندفع بآخر لحظة باتجاه السهم!' },
-        overcharge: { name: '⚡ 33. الكرة المشحونة',  icon: '⚡', xp: 9,  pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط!' },
-        shieldgrd:  { name: '🛡️ 34. كرة الأمان',      icon: '🛡️', xp: 5,  pts: 4, color: '#4ade80', desc: 'اتركها تمر بسلام لتكسب XP مجاني!' },
-        mine:       { name: '☠️ 35. اللغم الأرضي',    icon: '☠️', xp: 6,  pts: 5, color: '#dc2626', desc: 'إذا ضغطتها تنقص قلبين!' },
-        vampire:    { name: '🧛 36. مصاص الدماء',     icon: '🧛', xp: 8,  pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 25 XP!' },
-        virus:      { name: '🦠 37. الفيروس المعدي',  icon: '🦠', xp: 9,  pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة إلى شبحية!' },
-        freeze:     { name: '❄️ 38. كرة الجليد',      icon: '❄️', xp: 8,  pts: 6, color: '#7dd3fc', desc: 'تجمد الزر إذا ضغطت بكير!' },
-        sniper:     { name: '🎯 39. كرة القناص',      icon: '🎯', xp: 11, pts: 7, color: '#f87171', desc: 'تنطلق بزاوية مائلة كالرصاصة!' },
-        blackhole:  { name: '🌌 40. الثقب الأسود x4', icon: '🌌', xp: 15, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4) وتبعثر المسارات!' }
+        normal:     { name: '🔵 1. البلازما العادية', xp: 1,  pts: 1, color: '#00f0ff', desc: 'تنزل بسرعة ثابتة، اضغط لحظة وصولها للدائرة.' },
+        fake:       { name: '🔴 2. الفخ القاتل FAKE', xp: 2,  pts: 2, color: '#ff0055', desc: 'تتحول للأحمر وتختفي قبل الخط.. إياك أن تضغط!' },
+        sw:         { name: '🟣 3. الغدارة المراوغة', xp: 3,  pts: 2, color: '#b829ff', desc: 'تقفز بآخر لحظة إلى المسار المجاور!' },
+        brk:        { name: '🛑 4. كرة الفرامل',      xp: 3,  pts: 2, color: '#ffb800', desc: 'تتجمد بالهواء فجأة ثم تتابع نزولها!' },
+        arm:        { name: '🛡️ 5. المدرعة x2',       xp: 4,  pts: 3, color: '#ffb800', desc: 'تحتاج ضغطة لكسر الدرع وضغطة ثانية لالتقاطها.' },
+        ghost:      { name: '👻 6. الكرة الشبحية',    xp: 4,  pts: 3, color: '#94a3b8', desc: 'تختفي بمنتصف الطريق وتكمل نزولها شبه شفافة!' },
+        nitro:      { name: '🚀 7. النيترو الصاروخية',xp: 5,  pts: 4, color: '#ff6b00', desc: 'تنزل ببطء ثم تشتعل وتنطلق كالصاروخ!' },
+        dbl:        { name: '🧠 8. الخدعة المزدوجة',  xp: 5,  pts: 4, color: '#00ff66', desc: 'تتظاهر أنها FAKE ثم ترجع حقيقية خضراء!' },
+        zig:        { name: '🐍 9. الزلزال المتعرجة', xp: 6,  pts: 5, color: '#f472b6', desc: 'تراوغ مرتين متتاليتين بين المسارات!' },
+        bounce:     { name: '🏀 10. طابة النط المرتدة',xp: 7, pts: 6, color: '#38bdf8', desc: 'تنط لورا بالهواء عند ضغطها ثم تعود!' },
+        boss:       { name: '👑 11. الزعيم المدرعة x3',xp: 9, pts: 7, color: '#ffd700', desc: 'درع ثلاثي (x3) وتقفز لمسار مجاور!' },
+        portal:     { name: '🌀 12. كرة البوابة',     xp: 6,  pts: 5, color: '#a855f7', desc: 'تختفي بنصف المسار وتخرج من سقف مسار آخر!' },
+        pendulum:   { name: '⏳ 13. كرة البندول',     xp: 6,  pts: 5, color: '#38bdf8', desc: 'تتأرجح يميناً ويساراً أثناء نزولها!' },
+        magnet:     { name: '🧲 14. كرة المغناطيس',   xp: 7,  pts: 5, color: '#ef4444', desc: 'تسحب الكرات المجاورة لمسارها!' },
+        boomerang:  { name: '🪃 15. البوميرانج',      xp: 8,  pts: 6, color: '#fbbf24', desc: 'تلمس الخط وتصعد لوحدها ثم تعود، امسكها بالمرة الثانية!' },
+        swapper:    { name: '🔄 16. كرة التبديل',     xp: 8,  pts: 6, color: '#c084fc', desc: 'تتبادل مكانها مع كرة أخرى!' },
+        splitter:   { name: '➗ 17. الكرة المنقسمة',  xp: 8,  pts: 6, color: '#ec4899', desc: 'تنشطر في الهواء إلى كرتين!' },
+        matryoshka: { name: '🪆 18. الماتريوشكا',     xp: 10, pts: 7, color: '#f97316', desc: 'تصغر وتنط للأعلى 3 مرات عند الخط!' },
+        spawner:    { name: '🤰 19. الكرة الأم',      xp: 8,  pts: 6, color: '#84cc16', desc: 'تفرخ كرة صغيرة سريعة أمامها!' },
+        twin:       { name: '🔗 20. التوأم المربوط',  xp: 9,  pts: 7, color: '#06b6d4', desc: 'تنزل مع توأمها مربوطتين بليزر!' },
+        mirage:     { name: '🏜️ 21. كرة السراب',      xp: 8,  pts: 6, color: '#fcd34d', desc: 'تنزل مع نسختين وهميتين!' },
+        chameleon:  { name: '🦎 22. كرة الحرباء',     xp: 6,  pts: 5, color: '#4ade80', desc: 'تغير لونها باستمرار!' },
+        smoke:      { name: '💨 23. قنبلة الدخان',    xp: 9,  pts: 6, color: '#64748b', desc: 'تطلق غيمة دخان تغطي أسفل المسارات!' },
+        flash:      { name: '📸 24. كرة الفلاش',      xp: 9,  pts: 6, color: '#ffffff', desc: 'تومض بضوء ساطع وتقفز لمسار مجاور!' },
+        micro:      { name: '🔬 25. الكرة المتقلصة',  xp: 6,  pts: 5, color: '#38bdf8', desc: 'تصغر تدريجياً حتى تصبح نقطة صغيرة!' },
+        mirror:     { name: '🪞 26. الشاشة المقلوبة', xp: 11, pts: 8, color: '#e879f9', desc: 'تعكس أزرار التحكم مؤقتاً!' },
+        heartbeat:  { name: '💓 27. كرة النبض',       xp: 6,  pts: 5, color: '#f43f5e', desc: 'تتحرك وتقف على شكل نبضات!' },
+        slowmo:     { name: '🐢 28. تبطيء الزمن',     xp: 6,  pts: 5, color: '#2dd4bf', desc: 'تبطئ كل الكرات عند كسر درعها!' },
+        glitchspd:  { name: '⚡ 29. تسارع الغليتش',   xp: 8,  pts: 6, color: '#facc15', desc: 'تتغير سرعتها بشكل جنوني!' },
+        timebomb:   { name: '💣 30. القنبلة الموقوتة',xp: 10, pts: 7, color: '#ef4444', desc: 'اضغط زر مسارها قبل انتهاء العداد!' },
+        laserhold:  { name: '🔋 31. شعاع الليزر',     xp: 8,  pts: 6, color: '#00ff66', desc: 'لها ذيل ليزر متصل!' },
+        swipe:      { name: '➡️ 32. السهم الموجه',    xp: 8,  pts: 6, color: '#fb923c', desc: 'تندفع بآخر لحظة باتجاه السهم!' },
+        overcharge: { name: '⚡ 33. الكرة المشحونة',  xp: 9,  pts: 7, color: '#fde047', desc: 'تحتاج نقرتين سريعتين عند الخط!' },
+        shieldgrd:  { name: '🛡️ 34. كرة الأمان',      xp: 5,  pts: 4, color: '#4ade80', desc: 'اتركها تمر بسلام لتكسب XP مجاني!' },
+        mine:       { name: '☠️ 35. اللغم الأرضي',    xp: 6,  pts: 5, color: '#dc2626', desc: 'إذا ضغطتها تنقص قلبين!' },
+        vampire:    { name: '🧛 36. مصاص الدماء',     xp: 8,  pts: 6, color: '#991b1b', desc: 'إذا فاتتك تسرق 25 XP!' },
+        virus:      { name: '🦠 37. الفيروس المعدي',  xp: 9,  pts: 7, color: '#84cc16', desc: 'تحول الكرات المحيطة إلى شبحية!' },
+        freeze:     { name: '❄️ 38. كرة الجليد',      xp: 8,  pts: 6, color: '#7dd3fc', desc: 'تجمد الزر إذا ضغطت بكير!' },
+        sniper:     { name: '🎯 39. كرة القناص',      xp: 11, pts: 7, color: '#f87171', desc: 'تنطلق بزاوية مائلة كالرصاصة!' },
+        blackhole:  { name: '🌌 40. الثقب الأسود x4', xp: 15, pts: 10, color: '#9333ea', desc: 'درع رباعي (x4) وتبعثر المسارات!' }
     };
 
     const BALL_KEYS = Object.keys(BALL_META);
@@ -1526,9 +1647,7 @@
     async function handleLogin() {
         const u = document.getElementById('login-user').value.trim(), p = document.getElementById('login-pass').value.trim();
         if (!u || !p) { showLoginMessage("⚠️ أدخل الاسم وكلمة السر!", "error"); return; }
-        if (u.toLowerCase() === ADMIN_USERNAME && p === ADMIN_PASS) {
-            sessionStorage.setItem('takoGhostAdminSession', '1'); checkAutoLogin(); return;
-        }
+        if (u.toLowerCase() === ADMIN_USERNAME && p === ADMIN_PASS) { sessionStorage.setItem('takoGhostAdminSession', '1'); checkAutoLogin(); return; }
         const uKey = sanitizeFirebaseKey(u);
         try { const res = await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`); if (res.ok) { const acc = await res.json(); if (acc) accountsDB[uKey] = acc; } } catch (e) {}
         if (accountsDB[uKey]) {
@@ -1542,13 +1661,109 @@
         document.getElementById('login-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden');
     }
 
-    function logoutUser() { activeUserKey = ""; sessionStorage.removeItem('takoGhostAdminSession'); localStorage.removeItem('takoDropActiveUser_v50'); closeAllPortals(); checkAutoLogin(); }
+    function logoutUser() { activeUserKey = ""; myPvpId = ""; sessionStorage.removeItem('takoGhostAdminSession'); localStorage.removeItem('takoDropActiveUser_v50'); closeAllPortals(); checkAutoLogin(); }
 
-    // ================= PORTAL CONTROL =================
+    // ================= 1VS1 REAL-TIME LOBBY & SYNC =================
+    let activePvpRoomCode = "", opponentText = "", pvpLobbyInterval = null, currentRoomCache = null, myPvpId = "";
+
+    function getMyPvpIdentity() {
+        if (!myPvpId) {
+            const base = isCurrentUserAdmin() ? "Tako_Master" : (saveData.username || "Player");
+            myPvpId = sanitizeFirebaseKey(base) + "_" + Math.floor(10 + Math.random() * 89);
+        }
+        return { id: myPvpId, name: isCurrentUserAdmin() ? "Tako_Master" : (saveData.username || "لاعب") };
+    }
+
+    async function createOrJoinPvpRoom(forceRegenerate = false) {
+        const roomCode = (document.getElementById('pvp-room-input')?.value || 'TAKO-1V1').trim().toUpperCase();
+        const ballCount = parseInt(document.getElementById('pvp-ball-count')?.value) || 25;
+        if (!roomCode) return;
+        const statusBox = document.getElementById('pvp-status-box'), statusText = document.getElementById('pvp-status-text');
+        statusBox.classList.remove('hidden'); statusText.innerHTML = `⏳ جاري الاتصال بروم <b>[${roomCode}]</b>...`;
+        const me = getMyPvpIdentity();
+
+        try {
+            const roomUrl = `${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`;
+            const res = await fetch(roomUrl);
+            let roomData = res.ok ? await res.json() : null;
+
+            if (!roomData || !Array.isArray(roomData.spawns) || forceRegenerate) {
+                let generatedSpawns = [], tAcc = 1.0;
+                for (let i = 0; i < ballCount; i++) {
+                    generatedSpawns.push({ lane: Math.floor(Math.random() * 4), type: BALL_KEYS[Math.floor(Math.random() * BALL_KEYS.length)], time: +tAcc.toFixed(2), speed: +(3.9 + Math.random() * 0.85).toFixed(2) });
+                    tAcc += 0.82;
+                }
+                roomData = { id: roomCode, title: `روم [${roomCode}]`, creator: me.name, diff: 'hard_tako', audioData: 'SYNTH_2', status: 'waiting', spawns: generatedSpawns, players: {} };
+                await fetch(roomUrl, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(roomData) });
+            } else if (roomData.status === 'playing' && !forceRegenerate) {
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/status.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify('waiting') });
+                roomData.status = 'waiting';
+            }
+
+            await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/players/${encodeURIComponent(me.id)}.json`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: me.id, name: me.name, score: 0, hearts: 3, finished: false, updatedAt: Date.now() })
+            });
+
+            activePvpRoomCode = roomCode; currentRoomCache = roomData;
+            startPvpLobbyPolling(roomCode);
+        } catch (err) { statusText.innerHTML = `<span style="color:var(--pink);">❌ تعذر الاتصال بالسيرفر!</span>`; }
+    }
+
+    function startPvpLobbyPolling(roomCode) {
+        if (pvpLobbyInterval) clearInterval(pvpLobbyInterval);
+        const statusBox = document.getElementById('pvp-status-box'), statusText = document.getElementById('pvp-status-text'), me = getMyPvpIdentity();
+        const pollFn = async () => {
+            if (!activePvpRoomCode || active) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}.json`);
+                if (!res.ok) return;
+                const roomData = await res.json(); if (!roomData) return;
+                currentRoomCache = roomData;
+                const playersArr = Object.values(roomData.players || {}).filter(p => p && p.name);
+                const pListHTML = playersArr.map(p => `<div style="padding:4px 8px; background:rgba(0,240,255,0.12); border:1px solid var(--cyan); border-radius:6px; display:inline-block; margin:3px; font-weight:900;">🟢 ${p.name} ${p.id === me.id ? '(أنت)' : '⚔️'}</div>`).join('');
+                statusBox.classList.remove('hidden');
+                statusText.innerHTML = `<div style="font-size:13px; font-weight:900; color:var(--yellow); margin-bottom:6px;">🔑 لوبي الروم: [${roomCode}]</div><div style="margin-bottom:8px;">المتصلون (${playersArr.length}):<br>${pListHTML}</div><button class="play-chip green" style="width:100%; padding:10px;" onclick="triggerPvpMatchStart('${roomCode}')"><span>🚀 ابدأ المعركة للطرفين الآن!</span></button>`;
+                if (roomData.status === 'playing') { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; statusBox.classList.add('hidden'); closeAllPortals(); startCustomStage(roomData, true); }
+            } catch (e) {}
+        };
+        pollFn(); pvpLobbyInterval = setInterval(pollFn, 1000);
+    }
+
+    async function triggerPvpMatchStart(roomCode) {
+        try {
+            if (currentRoomCache?.players) {
+                for (const pid of Object.keys(currentRoomCache.players)) { currentRoomCache.players[pid].score = 0; currentRoomCache.players[pid].hearts = 3; currentRoomCache.players[pid].finished = false; }
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/players.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(currentRoomCache.players) });
+            }
+            await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(roomCode)}/status.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify('playing') });
+        } catch (e) {}
+    }
+
+    async function syncPvpLiveScore() {
+        if (!activePvpRoomCode) return;
+        const me = getMyPvpIdentity();
+        try {
+            if (customMode && activeCustomStage) {
+                await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players/${encodeURIComponent(me.id)}.json`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: me.id, name: me.name, score, hearts, finished: !active, updatedAt: Date.now() })
+                });
+            }
+            if (!active) return;
+            const res = await fetch(`${FIREBASE_DB_URL}/pvp_rooms/${encodeURIComponent(activePvpRoomCode)}/players.json`);
+            if (res.ok) {
+                const others = Object.values(await res.json() || {}).filter(p => p && p.id !== me.id).sort((a, b) => (b.score || 0) - (a.score || 0));
+                if (others.length) { opponentText = ` | ⚔️ ${others[0].name}: ${others[0].score} (${others[0].hearts > 0 ? '⚡' + others[0].hearts : '💀'})`; updateHUD(); }
+            }
+        } catch (e) {}
+    }
+    setInterval(() => { if (active && activePvpRoomCode) syncPvpLiveScore(); }, 900);
+
+    // ================= PORTAL CONTROL & LEADERBOARD =================
     function openPortal(name, ev) {
         if (name === 'admin' && !isCurrentUserAdmin()) return;
-        const modal = document.getElementById('portal-' + name);
-        if (!modal) return;
+        const modal = document.getElementById('portal-' + name); if (!modal) return;
         if (name === 'stages') renderTutorialCards();
         else if (name === 'droppass') renderDropPassPortal();
         else if (name === 'mail') renderMailboxPortal();
@@ -1560,14 +1775,28 @@
         modal.classList.add('open'); modal.style.clipPath = `circle(150% at 50% 50%)`;
         playSfxTone(520, 'sine', 0.08, 0.12);
     }
-    function closePortal(name) { const m = document.getElementById('portal-' + name); if (m) { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; } }
-    function closeAllPortals() { document.querySelectorAll('.portal-modal').forEach(m => { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; }); }
+    function closePortal(name) {
+        if (name === 'editor' || name === 'music') stopStageAudio();
+        if (name === 'pvp' && pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; }
+        const m = document.getElementById('portal-' + name); if (m) { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; }
+    }
+    function closeAllPortals() {
+        stopStageAudio();
+        if (pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; }
+        document.querySelectorAll('.portal-modal').forEach(m => { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; });
+    }
 
-    // ================= AUDIO ENGINE =================
+    function renderLeaderboard() {
+        const list = Object.values(accountsDB).filter(p => p && p.username && !p.banned && p.username.toLowerCase() !== ADMIN_USERNAME).sort((a, b) => (b.high || 0) - (a.high || 0)).slice(0, 100);
+        document.getElementById('my-rank-summary').textContent = `إجمالي اللاعبين: ${list.length}`;
+        document.getElementById('leaderboard-container').innerHTML = list.map((it, i) => `<div class="rank-row"><span>#${i+1} ${it.username} ${it.vipPass?'👑':''}</span><span dir="ltr" style="color:var(--cyan);">${it.high||0} PTS</span></div>`).join('');
+    }
+
+    // ================= FULL DRUM & SYNTH AUDIO ENGINE =================
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null, noiseBuffer = null, isMusicMuted = false, beatPulseRadius = 0;
     let stageAudioPlayer = new Audio(); stageAudioPlayer.loop = true;
-    let synthBeatInterval = null;
+    let synthBeatInterval = null, isPreviewingEditorAudio = false;
 
     function ensureAudioCtx() {
         if (!audioCtx) {
@@ -1588,66 +1817,131 @@
         } catch(e) {}
     }
 
+    function playKick(vol = 0.34) {
+        if (isMusicMuted || musicVolume <= 0.01) return;
+        try {
+            ensureAudioCtx(); const now = audioCtx.currentTime, osc = audioCtx.createOscillator(), g = audioCtx.createGain();
+            osc.type = 'sine'; osc.frequency.setValueAtTime(145, now); osc.frequency.exponentialRampToValueAtTime(36, now + 0.12);
+            g.gain.setValueAtTime(vol * musicVolume, now); g.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+            osc.connect(g); g.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.24);
+            beatPulseRadius = 6;
+        } catch(e) {}
+    }
+
+    function playSnare(vol = 0.17) {
+        if (isMusicMuted || musicVolume <= 0.01) return;
+        try {
+            ensureAudioCtx(); const now = audioCtx.currentTime, n = audioCtx.createBufferSource(); n.buffer = noiseBuffer;
+            const f = audioCtx.createBiquadFilter(); f.type = 'highpass'; f.frequency.setValueAtTime(650, now);
+            const g = audioCtx.createGain(); g.gain.setValueAtTime(vol * musicVolume, now); g.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+            n.connect(f); f.connect(g); g.connect(audioCtx.destination); n.start(now); n.stop(now + 0.14);
+        } catch(e) {}
+    }
+
+    function playHiHat(open = false, vol = 0.06) {
+        if (isMusicMuted || musicVolume <= 0.01) return;
+        try {
+            ensureAudioCtx(); const now = audioCtx.currentTime, n = audioCtx.createBufferSource(); n.buffer = noiseBuffer;
+            const f = audioCtx.createBiquadFilter(); f.type = 'highpass'; f.frequency.setValueAtTime(6500, now);
+            const g = audioCtx.createGain(); g.gain.setValueAtTime(vol * musicVolume, now); g.gain.exponentialRampToValueAtTime(0.001, now + (open ? 0.12 : 0.035));
+            n.connect(f); f.connect(g); g.connect(audioCtx.destination); n.start(now); n.stop(now + (open ? 0.12 : 0.035));
+        } catch(e) {}
+    }
+
+    function playSynthNote(freq, dur = 0.18, isBass = false, vol = 0.1) {
+        if (isMusicMuted || !freq || musicVolume <= 0.01) return;
+        try {
+            ensureAudioCtx(); const now = audioCtx.currentTime, osc = audioCtx.createOscillator(), f = audioCtx.createBiquadFilter(), g = audioCtx.createGain();
+            osc.type = isBass ? 'sawtooth' : 'square'; osc.frequency.setValueAtTime(freq, now);
+            f.type = 'lowpass'; f.frequency.setValueAtTime(isBass ? 420 : 1850, now); f.frequency.exponentialRampToValueAtTime(isBass ? 110 : 480, now + dur);
+            g.gain.setValueAtTime(vol * musicVolume, now); g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+            osc.connect(f); f.connect(g); g.connect(audioCtx.destination); osc.start(now); osc.stop(now + dur);
+        } catch(e) {}
+    }
+
+    function startSynthBeatLoop(preset) {
+        stopStageAudio();
+        const tracks = {
+            SYNTH_1: { bpm: 112, bass: [73.4,0,73.4,0,87.3,0,87.3,0,65.4,0,65.4,0,82.4,0,73.4,0], lead: [293.7,0,440,349.2,0,523.3,440,0,261.6,0,392,349.2,0,440,329.6,0] },
+            SYNTH_2: { bpm: 130, bass: [55,55,110,55,65.4,65.4,130.8,65.4,73.4,73.4,146.8,73.4,61.7,61.7,123.5,82.4], lead: [440,523.3,659.3,523.3,587.3,523.3,440,392,523.3,659.3,784,659.3,587.3,493.9,440,329.6] },
+            SYNTH_3: { bpm: 146, bass: [65.4,0,65.4,65.4,0,65.4,77.8,0,65.4,0,65.4,65.4,0,73.4,69.3,65.4], lead: [523.3,0,523.3,622.3,523.3,0,493.9,0,523.3,0,698.5,622.3,523.3,493.9,466.2,392] }
+        };
+        const tr = tracks[preset] || tracks.SYNTH_2, stepMs = Math.round((60 / tr.bpm / 4) * 1000);
+        let step = 0;
+        synthBeatInterval = setInterval(() => {
+            if (isMusicMuted) return;
+            const s = step % 16;
+            if (s % 4 === 0 || (preset === 'SYNTH_3' && s === 10)) playKick();
+            if (s === 4 || s === 12) playSnare();
+            if (s % 2 === 1) playHiHat(s === 7 || s === 15);
+            if (tr.bass[s]) playSynthNote(tr.bass[s], stepMs * 0.0018, true, 0.12);
+            if (tr.lead[s]) playSynthNote(tr.lead[s], stepMs * 0.0014, false, 0.065);
+            step++;
+        }, stepMs);
+    }
+
     function playStageAudio(src) {
         stopStageAudio();
         if (!src) return;
-        if (src.startsWith('SYNTH_')) {
-            let step = 0;
-            synthBeatInterval = setInterval(() => {
-                if (isMusicMuted || musicVolume <= 0.01) return;
-                if (step % 4 === 0) { beatPulseRadius = 6; playSfxTone(110, 'sine', 0.12, 0.25 * musicVolume); }
-                step++;
-            }, 135);
-            return;
-        }
+        if (src.startsWith('SYNTH_')) { startSynthBeatLoop(src); return; }
         try { stageAudioPlayer.src = src; stageAudioPlayer.volume = isMusicMuted ? 0 : musicVolume; stageAudioPlayer.play().catch(()=>{}); } catch(e){}
     }
 
-    function stopStageAudio() { if (synthBeatInterval) { clearInterval(synthBeatInterval); synthBeatInterval = null; } try { stageAudioPlayer.pause(); stageAudioPlayer.currentTime = 0; } catch(e){} }
+    function stopStageAudio() {
+        if (synthBeatInterval) { clearInterval(synthBeatInterval); synthBeatInterval = null; }
+        isPreviewingEditorAudio = false;
+        try { stageAudioPlayer.pause(); stageAudioPlayer.currentTime = 0; } catch(e){}
+    }
     function toggleMusicMute() { isMusicMuted = !isMusicMuted; document.getElementById('hud-mute-btn').textContent = isMusicMuted ? '🔇' : '🔊'; try { stageAudioPlayer.volume = isMusicMuted ? 0 : musicVolume; } catch(e){} }
 
-    // ================= 1VS1, LEADERBOARD, EDITOR & MUSIC STUBS =================
-    let activePvpRoomCode = "", opponentText = "", editorSpawns = [], editorAudioData = "SYNTH_2";
-    function renderLeaderboard() {
-        const list = Object.values(accountsDB).filter(p => p && p.username && !p.banned && p.username.toLowerCase() !== ADMIN_USERNAME).sort((a, b) => (b.high || 0) - (a.high || 0)).slice(0, 100);
-        document.getElementById('my-rank-summary').textContent = `إجمالي اللاعبين: ${list.length}`;
-        document.getElementById('leaderboard-container').innerHTML = list.map((it, i) => `<div class="rank-row"><span>#${i+1} ${it.username} ${it.vipPass?'👑':''}</span><span dir="ltr" style="color:var(--cyan);">${it.high||0} PTS</span></div>`).join('');
-    }
+    // ================= LEVEL EDITOR =================
+    let editorSpawns = [], editorAudioData = "SYNTH_2", editorAudioName = "⚡ Neon Arcade Rush";
     function renderCustomStagesList() {
         document.getElementById('my-custom-stages').innerHTML = Object.values(customStagesDB).map(st => st?.spawns ? `<div class="stage-card green"><div class="stage-info"><div class="stage-title">${st.title} [${st.id}]</div></div><button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button></div>` : '').join('');
     }
-    function addBallToEditor() { editorSpawns.push({ lane: parseInt(document.getElementById('ed-lane').value), type: document.getElementById('ed-type').value, time: parseFloat(document.getElementById('ed-time').value)||0.8, speed: parseFloat(document.getElementById('ed-speed').value)||4.2 }); document.getElementById('ed-balls-list').innerHTML = editorSpawns.map((b,i)=>`<div class="spawn-item">#${i+1} مسار ${b.lane+1} | ${b.type}</div>`).join(''); }
-    async function saveCustomStage() { if(!editorSpawns.length) return; const id = `TK-${Math.floor(1000+Math.random()*9000)}`; const obj = { id, title: document.getElementById('ed-title').value||'ماب', creator: saveData.username, diff: document.getElementById('ed-diff').value, audioData: editorAudioData, spawns: [...editorSpawns] }; customStagesDB[id] = obj; await pushStageToCloud(id, obj); document.getElementById('generated-id-text').textContent = id; document.getElementById('generated-id-box').classList.remove('hidden'); renderCustomStagesList(); }
+    function addBallToEditor() {
+        const t = parseFloat(document.getElementById('ed-time').value) || 0.8;
+        editorSpawns.push({ lane: parseInt(document.getElementById('ed-lane').value), type: document.getElementById('ed-type').value, time: t, speed: parseFloat(document.getElementById('ed-speed').value) || 4.2 });
+        editorSpawns.sort((a, b) => a.time - b.time);
+        document.getElementById('ed-time').value = +(t + 0.8).toFixed(2);
+        document.getElementById('ed-balls-list').innerHTML = editorSpawns.map((b, i) => `<div class="spawn-item"><span>#${i+1} | مسار ${b.lane+1} | ${BALL_META[b.type]?.name || b.type}</span><button class="logout-btn" onclick="editorSpawns.splice(${i},1); addBallToEditorRender();">✖</button></div>`).join('');
+    }
+    function addBallToEditorRender() { document.getElementById('ed-balls-list').innerHTML = editorSpawns.map((b, i) => `<div class="spawn-item"><span>#${i+1} | مسار ${b.lane+1} | ${BALL_META[b.type]?.name || b.type}</span><button class="logout-btn" onclick="editorSpawns.splice(${i},1); addBallToEditorRender();">✖</button></div>`).join(''); }
+    async function saveCustomStage() {
+        if (!editorSpawns.length) return;
+        const id = `TK-${Math.floor(1000 + Math.random() * 9000)}`;
+        const obj = { id, title: document.getElementById('ed-title').value || 'ماب', creator: saveData.username, diff: document.getElementById('ed-diff').value, audioData: editorAudioData, spawns: [...editorSpawns] };
+        customStagesDB[id] = obj; await pushStageToCloud(id, obj);
+        document.getElementById('generated-id-text').textContent = id; document.getElementById('generated-id-box').classList.remove('hidden'); renderCustomStagesList();
+    }
     function copyStageId() { navigator.clipboard?.writeText(document.getElementById('generated-id-text').textContent); showToast("تم النسخ! 📋", true); }
-    function testEditorStage() { if(editorSpawns.length) { closeAllPortals(); startCustomStage({ id:'TEST', title:'تجربة', diff:'easy_tako', audioData: editorAudioData, spawns: editorSpawns }, false); } }
-    function playStageById(id) { const k = (id || document.getElementById('stage-id-input').value).trim().toUpperCase(); if(customStagesDB[k]) { closeAllPortals(); startCustomStage(customStagesDB[k], false); } }
-    function startSingleBallDemo(t) { closeAllPortals(); startCustomStage({ id:'DEMO', title:t, diff:'easy', audioData:'SYNTH_1', spawns:[{lane:1,type:t,time:0.5,speed:4},{lane:2,type:t,time:2,speed:4}] }, false); }
-    function handleAudioFileUpload(ev) { const f = ev.target.files?.[0]; if(!f) return; const r = new FileReader(); r.onload = e => { editorAudioData = e.target.result; }; r.readAsDataURL(f); }
+    function testEditorStage() { if (editorSpawns.length) { closeAllPortals(); startCustomStage({ id: 'TEST', title: 'تجربة', diff: 'easy_tako', audioData: editorAudioData, spawns: editorSpawns }, false); } }
+    function playStageById(id) { const k = (id || document.getElementById('stage-id-input').value).trim().toUpperCase(); if (customStagesDB[k]) { closeAllPortals(); startCustomStage(customStagesDB[k], false); } }
+    function startSingleBallDemo(t) { closeAllPortals(); startCustomStage({ id: 'DEMO', title: t, diff: 'easy', audioData: 'SYNTH_1', spawns: [{ lane: 1, type: t, time: 0.5, speed: 4 }, { lane: 2, type: t, time: 2, speed: 4 }] }, false); }
+    function handleAudioFileUpload(ev) { const f = ev.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = e => { editorAudioData = e.target.result; }; r.readAsDataURL(f); }
     function handlePresetAudioChange() { editorAudioData = document.getElementById('ed-synth-preset').value; }
     function handleUrlAudioInput() { editorAudioData = document.getElementById('ed-audio-url').value.trim(); }
-    async function searchSongsOnline() { const q = document.getElementById('music-search-input').value.trim(); if(!q) return; const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&media=music&entity=song&limit=8`).then(r=>r.json()).catch(()=>({results:[]})); document.getElementById('music-results-list').innerHTML = (res.results||[]).map(s=>`<div class="song-card"><img src="${s.artworkUrl100}" class="song-thumb"><div class="song-info"><div class="song-title">${s.trackName}</div><button class="song-btn use-30" onclick="editorAudioData='${s.previewUrl}'; closePortal('music'); openPortal('editor');">➕ ربط بالماب</button></div></div>`).join(''); }
-    async function createOrJoinPvpRoom() { const code = document.getElementById('pvp-room-input').value.trim().toUpperCase(); const spawns = Array.from({length:25},(_,i)=>({lane:i%4,type:BALL_KEYS[i%BALL_KEYS.length],time:+(0.8+i*0.85).toFixed(2),speed:4.2})); activePvpRoomCode = code; closeAllPortals(); startCustomStage({ id:code, title:`روم ${code}`, diff:'hard_tako', audioData:'SYNTH_2', spawns }, true); }
+    function toggleEditorAudioPreview() { if (isPreviewingEditorAudio) stopStageAudio(); else { playStageAudio(editorAudioData); isPreviewingEditorAudio = true; } }
 
-    // ================= ULTRA-VISIBLE BACKLIGHT TRAILS & CLEAR LUXURY BALL RENDERER =================
+    // ================= ULTRA-VISIBLE BACKLIGHT TRAILS & LUXURY SECRET-TRAP BALLS =================
     function drawPolygonPath(ctx, x, y, r, sides, rot) {
         ctx.beginPath();
-        for (let i = 0; i < sides; i++) { const a = rot + (i * Math.PI * 2) / sides; ctx[i===0?'moveTo':'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
+        for (let i = 0; i < sides; i++) { const a = rot + (i * Math.PI * 2) / sides; ctx[i === 0 ? 'moveTo' : 'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
         ctx.closePath();
     }
 
     function drawStarPath(ctx, x, y, points, outerR, innerR, rot) {
         ctx.beginPath();
-        for (let i = 0; i < points * 2; i++) { const r = i % 2 === 0 ? outerR : innerR, a = rot + (i * Math.PI) / points; ctx[i===0?'moveTo':'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
+        for (let i = 0; i < points * 2; i++) { const r = i % 2 === 0 ? outerR : innerR, a = rot + (i * Math.PI) / points; ctx[i === 0 ? 'moveTo' : 'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
         ctx.closePath();
     }
 
-    // 1. ULTRA-VISIBLE DYNAMIC BACKLIGHT TRAILS
     function drawBacklightEffect(ctx, b, ts, blObj) {
         if (!blObj) return;
         if (!b.trail) b.trail = [];
         if (active) {
             b.trail.push({ x: b.x, y: b.y });
-            if (b.trail.length > 26) b.trail.shift(); // Long, vivid motion trail
+            if (b.trail.length > 26) b.trail.shift();
         }
         if (b.trail.length < 2) return;
 
@@ -1660,7 +1954,7 @@
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.shadowColor = mainCol;
-        ctx.shadowBlur = 26; // Extra bright neon glow!
+        ctx.shadowBlur = 26;
 
         const len = b.trail.length;
         for (let i = 0; i < len - 1; i++) {
@@ -1670,17 +1964,14 @@
             ctx.strokeStyle = (i % 2 === 0 && styleId >= 3) ? secCol : mainCol;
 
             if (styleId === 0) {
-                // Wide Laser Beam + Bright White Core
                 ctx.lineWidth = Math.max(4, b.r * 1.35 * ratio);
                 ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                 ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1.5, b.r * 0.45 * ratio); ctx.stroke();
             } else if (styleId === 1) {
-                // Electric Lightning Zig-Zag
                 ctx.lineWidth = Math.max(3, 8.5 * ratio);
                 const jitter = (i % 2 === 0 ? 1 : -1) * (12 * ratio);
                 ctx.beginPath(); ctx.moveTo(p1.x + jitter, p1.y); ctx.lineTo(p2.x - jitter, p2.y); ctx.stroke();
             } else if (styleId === 2) {
-                // Double Glowing Cyber Rails
                 const offset = b.r * 0.72 * ratio;
                 ctx.lineWidth = Math.max(2.5, 6 * ratio);
                 ctx.beginPath();
@@ -1688,13 +1979,11 @@
                 ctx.moveTo(p1.x + offset, p1.y); ctx.lineTo(p2.x + offset, p2.y);
                 ctx.stroke();
             } else if (styleId === 3) {
-                // DNA Sine Wave Ribbon
                 const w1 = Math.sin(ts * 0.025 + i * 0.55) * (14 * ratio);
                 const w2 = Math.sin(ts * 0.025 + (i + 1) * 0.55) * (14 * ratio);
                 ctx.lineWidth = Math.max(3, 9.5 * ratio);
                 ctx.beginPath(); ctx.moveTo(p1.x + w1, p1.y); ctx.lineTo(p2.x + w2, p2.y); ctx.stroke();
             } else {
-                // Pulsing Plasma Flame
                 ctx.lineWidth = Math.max(4, b.r * 1.4 * ratio + Math.sin(ts * 0.03 + i) * 4);
                 ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
             }
@@ -1702,79 +1991,67 @@
         ctx.restore();
     }
 
-    // 2. LUXURY BALL SKIN + CRYSTAL-CLEAR TYPE & ARMOR INDICATORS
     function drawCustomBallSkin(ctx, b, ts, skObj, blObj, overrideColor) {
         drawBacklightEffect(ctx, b, ts, blObj);
 
         let baseCol = overrideColor || skObj.color;
         if (!overrideColor && skObj.shape === 'rainbow') baseCol = `hsl(${(ts * 0.25 + b.y * 0.8) % 360}, 95%, 60%)`;
 
+        // Luxury 3D Sphere + Outer Rim Glow
         ctx.shadowColor = baseCol;
-        ctx.shadowBlur = 18;
+        ctx.shadowBlur = 22;
 
-        const grad = ctx.createRadialGradient(b.x - b.r * 0.3, b.y - b.r * 0.3, 2, b.x, b.y, b.r);
-        grad.addColorStop(0, skObj.core || '#ffffff');
-        grad.addColorStop(0.45, baseCol);
+        const grad = ctx.createRadialGradient(b.x - b.r * 0.35, b.y - b.r * 0.35, 2, b.x, b.y, b.r);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.28, skObj.core || '#ffffff');
+        grad.addColorStop(0.62, baseCol);
         grad.addColorStop(1, '#05050a');
 
         ctx.fillStyle = grad;
         ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
 
-        // Decorative Luxury Skin Pattern
-        ctx.lineWidth = 2; ctx.strokeStyle = '#ffffff';
+        // Glossy Rim & Luxury Pattern
+        ctx.lineWidth = 2.2; ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.stroke();
+
         const sh = skObj.shape;
-        if (sh === 'star' || sh === 'rainbow') { ctx.fillStyle = 'rgba(255,255,255,0.65)'; drawStarPath(ctx, b.x, b.y, 5, b.r * 0.65, b.r * 0.28, b.rot); ctx.fill(); }
+        if (sh === 'star' || sh === 'rainbow') { ctx.fillStyle = 'rgba(255,255,255,0.75)'; drawStarPath(ctx, b.x, b.y, 5, b.r * 0.65, b.r * 0.28, b.rot); ctx.fill(); }
         else if (sh === 'hex') { drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 6, b.rot); ctx.stroke(); }
-        else if (sh === 'diamond') { ctx.fillStyle = 'rgba(255,255,255,0.55)'; drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 4, b.rot); ctx.fill(); }
+        else if (sh === 'diamond') { ctx.fillStyle = 'rgba(255,255,255,0.65)'; drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 4, b.rot); ctx.fill(); }
         else if (sh === 'dragon' || sh === 'crown') { ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.5; drawStarPath(ctx, b.x, b.y, 8, b.r + 3, b.r * 0.65, b.rot); ctx.stroke(); }
         else { ctx.beginPath(); ctx.arc(b.x, b.y, Math.max(3, b.r - 5), b.rot, b.rot + Math.PI); ctx.stroke(); }
 
-        // ================= CRYSTAL-CLEAR MECHANIC OVERLAY (NEVER HIDDEN BY SKINS!) =================
+        // ONLY SHOW: (1) Multi-tap Armor Count (x2, x3, x4) & (2) Exploding Timebomb Countdown!
+        // All other traps remain 100% SECRET until their trigger point!
         ctx.shadowBlur = 0;
 
-        // A) If Armored (x2, x3, x4): Draw glowing outer shield ring + High-Contrast Dark Badge with Bold Number!
         if (b.armor > 1) {
             ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : '#ffd700';
             ctx.lineWidth = 4;
             ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
 
-            // Dark high-contrast circle backdrop so "x3" / "x4" is 100% readable over any fancy skin
             ctx.fillStyle = 'rgba(5, 5, 12, 0.88)';
             ctx.beginPath(); ctx.arc(b.x, b.y, 13.5, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2; ctx.stroke();
 
-            ctx.font = '900 14px Orbitron';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            ctx.font = '900 14px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillStyle = '#ffd700';
             ctx.fillText('x' + b.armor, b.x, b.y + 1);
             return;
         }
 
-        // B) If Timebomb: High-contrast countdown timer
         if (b.type === 'timebomb') {
             const rem = Math.max(0, (b.bombDeadline - ts) / 1000).toFixed(1);
-            ctx.fillStyle = 'rgba(0,0,0,0.85)';
+            ctx.fillStyle = 'rgba(0,0,0,0.88)';
             ctx.beginPath(); ctx.arc(b.x, b.y, 14, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#ff4d4d'; ctx.lineWidth = 2; ctx.stroke();
             ctx.fillStyle = '#ff4d4d'; ctx.font = '900 11px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText(rem, b.x, b.y + 1);
             return;
         }
-
-        // C) For any Special Ball (non-normal): Clear centered icon badge with dark halo!
-        const meta = BALL_META[b.type];
-        if (b.type !== 'normal' && meta && meta.icon) {
-            ctx.fillStyle = 'rgba(5, 5, 14, 0.72)';
-            ctx.beginPath(); ctx.arc(b.x, b.y, 12, 0, Math.PI * 2); ctx.fill();
-            ctx.font = '900 13px Cairo';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = '#ffffff';
-            ctx.fillText(b.type === 'swipe' ? b.swipeDir : meta.icon, b.x, b.y + 1);
-        }
     }
 
-    // ================= GAMEPLAY LOOP =================
+    // ================= FULL 40-BALL GAMEPLAY ENGINE =================
     let curStage = 1, customMode = false, activeCustomStage = null, customQueue = [], stageStartTime = 0;
     let score = 0, pendingStageXP = 0, clearedBallsCount = 0, combo = 0, hearts = 3, active = false;
     let balls = [], particles = [], floatTexts = [], lastSpawn = 0, hitY = 0, lanes = [0, 0, 0, 0], gridOffset = 0;
@@ -1791,12 +2068,13 @@
     function updateHUD() {
         if (customMode) {
             document.getElementById('hud-stage').textContent = activeCustomStage.id;
-            document.getElementById('hud-score').textContent = `${score} PTS | +${pendingStageXP} XP`;
+            document.getElementById('hud-score').textContent = `${score} PTS | +${pendingStageXP} XP${opponentText}`;
             document.getElementById('progress-fill').style.width = Math.min(100, (clearedBallsCount / Math.max(1, activeCustomStage.spawns.length)) * 100) + '%';
         } else {
             const st = STAGES[curStage];
             document.getElementById('hud-stage').textContent = st.name;
-            document.getElementById('hud-score').textContent = `${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)`;
+            const cTxt = combo >= 5 ? ` 🔥x${combo}` : '';
+            document.getElementById('hud-score').textContent = `${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)${cTxt}`;
             document.getElementById('progress-fill').style.width = Math.min(100, (clearedBallsCount / st.target) * 100) + '%';
         }
         document.getElementById('hud-hearts').textContent = '⚡'.repeat(Math.max(0, hearts)) + '🖤'.repeat(Math.max(0, 3 - hearts));
@@ -1824,9 +2102,10 @@
         const mainBall = createBallObject(lane, type, speed); balls.push(mainBall);
         if (type === 'twin') { const p = createBallObject((lane + 1) % 4, 'normal', speed); p.linkedTo = mainBall; balls.push(p); }
         else if (type === 'mirage') { const i1 = createBallObject((lane + 1) % 4, 'normal', speed), i2 = createBallObject((lane + 2) % 4, 'normal', speed); i1.isIllusion = true; i2.isIllusion = true; balls.push(i1, i2); }
+        else if (type === 'laserhold') { setTimeout(() => { if (active) { const t = createBallObject(lane, 'normal', speed); t.isLaserTail = true; balls.push(t); } }, 220); }
     }
 
-    function burst(x, y, color) { for (let i = 0; i < 12; i++) { const a = Math.random() * Math.PI * 2, s = Math.random() * 5 + 2; particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, color, sz: Math.random() * 4 + 2 }); } }
+    function burst(x, y, color) { for (let i = 0; i < 14; i++) { const a = Math.random() * Math.PI * 2, s = Math.random() * 5 + 2; particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, color, sz: Math.random() * 4 + 2 }); } }
     function addFloat(x, y, txt, color) { floatTexts.push({ x, y, txt, color, alpha: 1 }); }
 
     function hurt(reason, dmg = 1) {
@@ -1839,31 +2118,54 @@
         combo++;
         const meta = BALL_META[ballType] || BALL_META.normal;
         const hc = document.getElementById('hardcore-toggle').checked ? 2 : 1;
-        const pts = Math.max(1, Math.round(meta.pts * hc * acc)), xp = Math.max(1, Math.round(meta.xp * hc * acc));
+        const fever = combo >= 12 ? 2 : 1;
+        const isPractice = customMode && (activeCustomStage?.id === 'DEMO' || activeCustomStage?.id === 'TEST');
+        const pts = Math.max(1, Math.round(meta.pts * hc * fever * acc));
+        const xp = isPractice ? 0 : Math.max(1, Math.round(meta.xp * hc * acc));
         score += pts; pendingStageXP += xp; clearedBallsCount++;
         if (score > (saveData.high || 0)) saveData.high = score;
-        updateHUD(); addFloat(x, y, customLabel || `+${xp} XP`, meta.color); burst(x, y, meta.color);
+        updateHUD(); addFloat(x, y, customLabel || `${acc >= 1 ? 'PERFECT! 🎯' : 'GOOD ⚡'} +${xp} XP`, meta.color); burst(x, y, meta.color);
         if (!customMode && clearedBallsCount >= STAGES[curStage].target) finishGame(true);
-        else if (customMode && clearedBallsCount >= activeCustomStage.spawns.length && balls.length <= 1 && customQueue.length === 0) setTimeout(() => { if (active) finishGame(true); }, 250);
+        else if (customMode && clearedBallsCount >= activeCustomStage.spawns.length && balls.length <= 1 && customQueue.length === 0) setTimeout(() => { if (active) finishGame(true); }, 260);
     }
 
     function pressLane(rawLane) {
         if (!active) return;
         const now = performance.now(), lane = now < mirrorUntil ? (3 - rawLane) : rawLane;
-        if (now < frozenLaneUntil[lane]) { showToast("متجمد! ❄️", false); return; }
+        if (now < frozenLaneUntil[lane]) { playSfxTone(180, 'sine', 0.1, 0.2); showToast(`المسار ${lane + 1} متجمد! ❄️`, false); return; }
         const btn = document.getElementById('btn-' + lane); btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 100);
         const laneBalls = balls.filter(b => b.lane === lane && b.state !== 'dead' && b.state !== 'bouncing_up' && !b.isIllusion).sort((a, b) => Math.abs(a.y - hitY) - Math.abs(b.y - hitY));
-        if (!laneBalls.length) { hurt("تسرعت! 💨"); return; }
+        if (!laneBalls.length) { hurt("تسرعت! ما في كرة 💨"); return; }
+
         const b = laneBalls[0];
-        if (b.type === 'timebomb' && b.y > 10) { b.state = 'dead'; rewardBallSuccess('timebomb', b.x, b.y, "💣 تفكيك!"); return; }
-        if (b.state === 'faked' && Math.abs(b.y - hitY) < 140) { b.state = 'dead'; hurt("مقلب FAKE! 😂"); return; }
-        if (b.type === 'mine' && Math.abs(b.y - hitY) < 90) { b.state = 'dead'; hurt("لغم! ☠️", 2); return; }
-        if (Math.abs(b.y - hitY) <= 68 && b.state !== 'faked') {
-            if (b.armor > 1) { b.armor--; playSfxTone(480, 'square', 0.09, 0.2); burst(b.x, b.y, '#ffd700'); if (b.type === 'boss' && b.armor === 2) b.lane = b.targetLane; return; }
-            if (b.type === 'bounce' && !b.bounced) { b.bounced = true; b.state = 'bouncing_up'; b.vy = -10.5; return; }
-            b.state = 'dead'; playSfxTone(720, 'triangle', 0.09, 0.2); rewardBallSuccess(b.type, b.x, hitY - 20); return;
+        if (b.type === 'timebomb' && b.y > 10) { b.state = 'dead'; playSfxTone(740, 'triangle', 0.12, 0.22); rewardBallSuccess('timebomb', b.x, b.y, "💣 تفكيك القنبلة!"); return; }
+        if (b.state === 'faked' && Math.abs(b.y - hitY) < 140) { b.state = 'dead'; burst(lanes[lane], hitY, '#ff0055'); hurt("بلعت مقلب الـ FAKE! 😂"); return; }
+        if (b.type === 'mine' && Math.abs(b.y - hitY) < 90) { b.state = 'dead'; burst(lanes[lane], hitY, '#dc2626'); hurt("انفجر اللغم! (-2 طاقة) ☠️", 2); return; }
+        if (b.type === 'boomerang' && !b.bounced && Math.abs(b.y - hitY) < 85) { b.state = 'dead'; hurt("البوميرانج لا تُضغط أول مرة! 🪃"); return; }
+
+        const dist = Math.abs(b.y - hitY);
+        if (dist <= 68 && b.state !== 'faked') {
+            if (b.armor > 1) {
+                b.armor--; playSfxTone(480, 'square', 0.09, 0.2); burst(b.x, b.y, '#ffd700');
+                if (b.type === 'slowmo') { slowMoUntil = now + 2400; addFloat(b.x, b.y - 25, "تبطيء الزمن! 🐢", "#2dd4bf"); }
+                else if (b.type === 'blackhole') { balls.forEach(o => { if (o !== b) o.lane = Math.floor(Math.random() * 4); }); addFloat(b.x, b.y - 25, "بعثرة الثقب الأسود! 🌌", "#9333ea"); }
+                else if (b.type === 'boss' && b.armor === 2) { b.lane = b.targetLane; addFloat(b.x, b.y - 20, "الزعيم قفز! 👑", "#ffd700"); }
+                return;
+            }
+            if (b.type === 'bounce' && !b.bounced) { b.bounced = true; b.state = 'bouncing_up'; b.vy = -10.5; if (Math.random() < 0.5) b.lane = b.targetLane; playSfxTone(540, 'triangle', 0.12, 0.22); return; }
+            if (b.type === 'matryoshka' && b.matryoshkaCount > 0) { b.matryoshkaCount--; b.r -= 5; b.state = 'bouncing_up'; b.vy = -8.2; playSfxTone(580, 'triangle', 0.1, 0.2); return; }
+
+            b.state = 'dead'; playSfxTone(dist <= 24 ? 720 : 580, 'triangle', 0.09, 0.2);
+            rewardBallSuccess(b.type, b.x, hitY - 20, null, dist <= 24 ? 1.0 : 0.55);
+            return;
         }
-        hurt("بكير كتير! ⏳");
+        if (b.y > 20 && b.y < hitY - 68) {
+            if (b.armor > 1) { b.armor--; playSfxTone(520, 'square', 0.08, 0.2); burst(b.x, b.y, '#ffd700'); return; }
+            if (b.type === 'freeze') { frozenLaneUntil[lane] = now + 1500; playSfxTone(160, 'sawtooth', 0.2, 0.2); return; }
+            hurt("ضغطت بكير كتير! ⏳");
+        } else {
+            hurt("ما في كرة عالخط! 💨");
+        }
     }
 
     document.querySelectorAll('.lane-btn').forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); pressLane(parseInt(b.getAttribute('data-lane'))); }));
@@ -1883,45 +2185,111 @@
                 spawnBallWithExtras(Math.floor(Math.random() * 4), pickType(STAGES[curStage].p), STAGES[curStage].speed); lastSpawn = ts;
             }
 
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById('btn-' + i);
+                btn.classList.remove('warn');
+                btn.classList.toggle('frozen', ts < frozenLaneUntil[i]);
+                btn.classList.toggle('mirrored', ts < mirrorUntil);
+            }
+
             for (let i = balls.length - 1; i >= 0; i--) {
                 const b = balls[i]; b.rot += 0.06;
                 if (b.state === 'dead') { balls.splice(i, 1); continue; }
-                if (b.state === 'bouncing_up') { b.y += b.vy; b.vy += 0.44; if (b.vy >= 0) b.state = 'after_bounce'; continue; }
+                if (b.type === 'timebomb' && ts >= b.bombDeadline) { b.state = 'dead'; burst(b.x, b.y, '#ef4444'); hurt("انفجرت القنبلة! 💣💥"); balls.splice(i, 1); continue; }
+                if (b.state === 'bouncing_up') { b.y += b.vy * speedFactor; b.vy += 0.44 * speedFactor; if (b.vy >= 0) { b.state = 'after_bounce'; b.speed = b.baseSpeed * 1.1; } b.x += (lanes[b.lane] - b.x) * 0.25; continue; }
+
+                if (b.type === 'pendulum') { b.phase += 0.065 * speedFactor; b.lane = Math.max(0, Math.min(3, b.origLane + Math.round(Math.sin(b.phase)))); }
+                else if (b.type === 'micro') b.r = Math.max(8, 22 - (b.y / hitY) * 13);
+                else if (b.type === 'glitchspd' && Math.random() < 0.12) b.speed = b.baseSpeed * (0.35 + Math.random() * 1.9);
+
                 if (b.state === 'fall' && b.y >= b.trigY) {
-                    if (b.isIllusion) { balls.splice(i, 1); continue; }
-                    if (b.type === 'fake') b.state = 'faked';
-                    else if (b.type === 'sw' || b.type === 'swipe') { b.state = 'switched'; b.lane = b.targetLane; }
-                    else if (b.type === 'portal') { b.state = 'teleported'; b.y = 15; b.lane = b.targetLane; b.x = lanes[b.lane]; b.trail = []; }
-                    else if (b.type === 'nitro') { b.state = 'nitro_boost'; b.speed = b.baseSpeed * 2.2; }
+                    if (b.isIllusion) { burst(b.x, b.y, '#fcd34d'); balls.splice(i, 1); continue; }
+                    if (b.type === 'fake') { b.state = 'faked'; playSfxTone(240, 'sawtooth', 0.09, 0.14); }
+                    else if (b.type === 'sw' || b.type === 'swipe') { b.state = 'switched'; b.lane = b.targetLane; playSfxTone(520, 'sine', 0.08, 0.15); }
+                    else if (b.type === 'brk') { b.state = 'braking'; b.brakeUntil = ts + 420; }
+                    else if (b.type === 'dbl') { b.state = 'dbl_fake'; b.brakeUntil = ts + 250; }
+                    else if (b.type === 'ghost') b.state = 'ghosted';
+                    else if (b.type === 'nitro') { b.state = 'nitro_boost'; b.speed = b.baseSpeed * 2.3; }
+                    else if (b.type === 'zig') { b.state = 'zig_1'; b.lane = b.targetLane; b.brakeUntil = ts + 170; }
+                    else if (b.type === 'portal') { b.state = 'teleported'; b.y = 15; b.lane = b.targetLane; b.x = lanes[b.lane]; b.speed = b.baseSpeed * 1.35; b.trail = []; }
+                    else if (b.type === 'magnet') { b.state = 'magnetized'; balls.forEach(o => { if (o !== b && Math.abs(o.y - b.y) < 180) o.lane = b.lane; }); }
+                    else if (b.type === 'swapper') { b.state = 'swapped'; const o = balls.find(x => x !== b && x.state !== 'dead'); if (o) { const t = b.lane; b.lane = o.lane; o.lane = t; } }
+                    else if (b.type === 'splitter') { b.state = 'split_done'; const c = createBallObject(b.lane === 0 ? 1 : b.lane - 1, 'normal', b.speed); c.y = b.y; c.x = b.x; balls.push(c); }
+                    else if (b.type === 'spawner') { b.state = 'spawned_child'; const c = createBallObject(b.lane, 'normal', b.speed * 1.45); c.y = b.y + 32; c.r = 14; balls.push(c); }
+                    else if (b.type === 'smoke') { b.state = 'smoked'; smokeUntil = ts + 1250; }
+                    else if (b.type === 'flash') { b.state = 'flashed'; flashAlpha = 0.85; b.lane = b.targetLane; }
+                    else if (b.type === 'mirror') { b.state = 'mirrored'; mirrorUntil = ts + 2500; }
+                    else if (b.type === 'virus') { b.state = 'infected'; balls.forEach(o => { if (o !== b) o.state = 'ghosted'; }); }
+                    else if (b.type === 'sniper') { b.state = 'sniped'; b.lane = b.targetLane; b.speed = b.baseSpeed * 1.85; }
                     else b.state = 'triggered';
                 }
-                b.y += b.speed * speedFactor;
-                b.x += (lanes[b.lane] - b.x) * 0.28;
-                if (b.state === 'faked' && b.y > hitY + 55) { rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! 🧠"); balls.splice(i, 1); }
-                else if (b.y > hitY + 62) { hurt("فاتتك الكرة! ❌"); balls.splice(i, 1); }
+
+                if (b.state === 'braking') { if (ts >= b.brakeUntil) b.state = 'after_brk'; }
+                else if (b.state === 'dbl_fake') { b.y += b.speed * 0.45 * speedFactor; if (ts >= b.brakeUntil) b.state = 'real_again'; }
+                else if (b.state === 'zig_1') { b.y += b.speed * 0.75 * speedFactor; if (ts >= b.brakeUntil) { b.state = 'zig_2'; b.lane = b.secondLane; } }
+                else if (b.type === 'heartbeat') b.y += b.speed * (Math.sin(ts * 0.016) > 0 ? 1.85 : 0.1) * speedFactor;
+                else b.y += b.speed * speedFactor;
+
+                b.x += (lanes[b.lane] - b.x) * (b.type === 'sniper' ? 0.16 : 0.28);
+
+                if (b.type === 'boomerang' && !b.bounced && b.y >= hitY - 5) { b.bounced = true; b.state = 'bouncing_up'; b.vy = -10.8; continue; }
+
+                if (b.state === 'faked') {
+                    document.getElementById('btn-' + b.lane).classList.add('warn');
+                    if (b.y > hitY + 55) { rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! 🧠"); balls.splice(i, 1); }
+                } else if (b.type === 'mine') {
+                    if (b.y >= b.trigY) document.getElementById('btn-' + b.lane).classList.add('warn');
+                    if (b.y > hitY + 58) { rewardBallSuccess('mine', lanes[b.lane], hitY - 28, "تجنبت اللغم! ☠️"); balls.splice(i, 1); }
+                } else if (b.type === 'shieldgrd') {
+                    if (b.y > hitY + 55) { rewardBallSuccess('shieldgrd', lanes[b.lane], hitY - 28, "مرت بسلام! 🛡️"); balls.splice(i, 1); }
+                } else if (b.y > hitY + 62) {
+                    if (b.type === 'vampire') { saveData.xp = Math.max(0, (saveData.xp || 0) - 25); saveProgress(); showToast("مصاص الدماء سرق 25 XP! 🧛", false); }
+                    else hurt("فاتتك الكرة! ❌");
+                    balls.splice(i, 1);
+                    if (customMode && balls.length === 0 && customQueue.length === 0 && hearts > 0) finishGame(true);
+                }
             }
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         gridOffset = (gridOffset + 1.5 * speedFactor) % 40;
-        ctx.strokeStyle = 'rgba(0, 240, 255, 0.06)'; ctx.lineWidth = 1;
+        ctx.strokeStyle = beatPulseRadius > 2 ? 'rgba(0, 240, 255, 0.12)' : 'rgba(0, 240, 255, 0.05)';
+        ctx.lineWidth = 1;
         for (let y = gridOffset; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
 
         for (let i = 0; i < 4; i++) {
             const x = lanes[i];
             ctx.strokeStyle = 'rgba(0, 240, 255, 0.16)'; ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, hitY); ctx.stroke();
             ctx.beginPath(); ctx.arc(x, hitY, 26 + beatPulseRadius, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(0, 240, 255, 0.65)'; ctx.lineWidth = 3; ctx.stroke();
+            ctx.strokeStyle = ts < mirrorUntil ? '#e879f9' : (combo >= 10 ? '#ff0055' : 'rgba(0, 240, 255, 0.65)');
+            ctx.lineWidth = 3; ctx.stroke();
+            ctx.beginPath(); ctx.arc(x, hitY, 5 + beatPulseRadius * 0.4, 0, Math.PI * 2); ctx.fillStyle = '#00f0ff'; ctx.fill();
         }
 
+        balls.forEach(b => { if (b.linkedTo && b.linkedTo.state !== 'dead') { ctx.save(); ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(b.linkedTo.x, b.linkedTo.y); ctx.stroke(); ctx.restore(); } });
         particles.forEach((p, idx) => { p.x += p.vx; p.y += p.vy; p.alpha -= 0.035; if (p.alpha <= 0) { particles.splice(idx, 1); return; } ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
 
         balls.forEach(b => {
             ctx.save();
-            if (b.state === 'faked') { ctx.fillStyle = '#ff0055'; ctx.font = '900 18px Cairo'; ctx.textAlign = 'center'; ctx.fillText('⚡ FAKE!', b.x, b.y); }
-            else drawCustomBallSkin(ctx, b, ts, activeSkinObj, activeBlObj);
+            if (b.state === 'faked' || b.state === 'dbl_fake') {
+                ctx.fillStyle = '#ff0055'; ctx.font = '900 18px Cairo'; ctx.textAlign = 'center'; ctx.fillText('⚡ FAKE!', b.x, b.y);
+            } else {
+                if (b.state === 'ghosted') ctx.globalAlpha = 0.09;
+                let overrideCol = null;
+                if (b.type === 'chameleon') overrideCol = ['#00f0ff', '#ff0055', '#00ff66', '#ffb800', '#b829ff'][Math.floor(ts / 140) % 5];
+                else if (b.state !== 'fall') overrideCol = BALL_META[b.type]?.color || null;
+                drawCustomBallSkin(ctx, b, ts, activeSkinObj, activeBlObj, overrideCol);
+            }
             ctx.restore();
         });
+
+        if (ts < smokeUntil) {
+            ctx.save();
+            const g = ctx.createLinearGradient(0, hitY - 170, 0, canvas.height);
+            g.addColorStop(0, 'rgba(15,23,42,0)'); g.addColorStop(0.35, 'rgba(15,23,42,0.95)'); g.addColorStop(1, 'rgba(7,5,16,0.98)');
+            ctx.fillStyle = g; ctx.fillRect(0, hitY - 170, canvas.width, 230); ctx.restore();
+        }
+        if (flashAlpha > 0) { ctx.save(); ctx.fillStyle = `rgba(255,255,255,${flashAlpha})`; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.restore(); flashAlpha = Math.max(0, flashAlpha - 0.04); }
 
         floatTexts.forEach((f, idx) => { f.y -= 1.8; f.alpha -= 0.025; if (f.alpha <= 0) { floatTexts.splice(idx, 1); return; } ctx.save(); ctx.globalAlpha = f.alpha; ctx.fillStyle = f.color; ctx.font = '900 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(f.txt, f.x, f.y); ctx.restore(); });
 
@@ -1929,40 +2297,56 @@
     }
     requestAnimationFrame(loop);
 
+    function resetEffects() { smokeUntil = 0; flashAlpha = 0; mirrorUntil = 0; slowMoUntil = 0; frozenLaneUntil = [0, 0, 0, 0]; }
+
     function startStage(num) {
-        closeAllPortals(); resize(); customMode = false; curStage = num; score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
-        hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3; balls = []; particles = []; floatTexts = [];
+        closeAllPortals(); resize(); resetEffects();
+        customMode = false; activePvpRoomCode = ""; opponentText = "";
+        curStage = num; score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
+        hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
+        balls = []; particles = []; floatTexts = [];
         stageStartTime = performance.now(); lastSpawn = stageStartTime; active = true;
         document.getElementById('menu-overlay').classList.add('hidden'); document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
-        playStageAudio('SYNTH_2');
+        playStageAudio(num >= 28 ? 'SYNTH_3' : (num >= 12 ? 'SYNTH_2' : 'SYNTH_1'));
     }
 
     function startCustomStage(stageObj, isPvp = false) {
-        closeAllPortals(); resize(); customMode = true; activeCustomStage = stageObj;
+        closeAllPortals(); resize(); resetEffects();
+        customMode = true; if (!isPvp) { activePvpRoomCode = ""; opponentText = ""; }
+        activeCustomStage = stageObj;
         customQueue = stageObj.spawns.map(s => ({ ...s })).sort((a, b) => a.time - b.time);
-        score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0; hearts = 3; balls = []; particles = []; floatTexts = [];
-        stageStartTime = performance.now(); active = true;
+        score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
+        hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
+        balls = []; particles = []; floatTexts = []; stageStartTime = performance.now(); active = true;
         document.getElementById('menu-overlay').classList.add('hidden'); document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
         if (stageObj.audioData) playStageAudio(stageObj.audioData);
+        syncPvpLiveScore();
     }
 
-    function finishGame(won) {
-        active = false; stopStageAudio();
+    async function finishGame(won) {
+        active = false; stopStageAudio(); await syncPvpLiveScore();
         const ov = document.getElementById('result-overlay'), t = document.getElementById('res-title'), d = document.getElementById('res-desc'), nb = document.getElementById('next-btn');
         ov.classList.remove('hidden');
+
         if (won) {
-            if (!customMode && !saveData.cleared.includes(curStage)) saveData.cleared.push(curStage);
-            saveData.xp = (saveData.xp || 0) + pendingStageXP + (curStage * 10); saveProgress();
-            t.textContent = `🏆 تم اجتياز المرحلة!`; d.textContent = `كسبت +${pendingStageXP + curStage * 10} XP | Drop Pass: LVL ${getDropPassLevel(saveData.xp)}`;
+            let bonus = 0;
+            if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) { saveData.cleared.push(curStage); bonus = curStage * 10; }
+            const totalXP = pendingStageXP + bonus;
+            saveData.xp = (saveData.xp || 0) + totalXP; saveProgress();
+            t.textContent = activePvpRoomCode ? `انتهت معركة الـ 1vs1! ⚔️🏆` : `اجتزت المرحلة بنجاح! 🏆🔥`;
+            d.textContent = `كسبت +${totalXP} XP | مستواك في الدروب باس: LVL ${getDropPassLevel(saveData.xp)}`;
             nb.style.display = (customMode || curStage >= TOTAL_STAGES) ? 'none' : 'block';
         } else {
-            t.textContent = `💔 فشل التحدي!`; d.textContent = `حاول مجدداً!`; nb.style.display = 'none';
+            const cXP = Math.floor(pendingStageXP * 0.25);
+            saveData.xp = (saveData.xp || 0) + cXP; saveProgress();
+            t.textContent = `💔 فشل التحدي!`; d.textContent = `حصلت على +${cXP} XP.. حاول مجدداً!`;
+            nb.style.display = 'none';
         }
     }
 
     function nextStage() { if (curStage < TOTAL_STAGES) startStage(curStage + 1); }
     function retryStage() { if (customMode) startCustomStage(activeCustomStage, !!activePvpRoomCode); else startStage(curStage); }
-    function openMenu() { active = false; stopStageAudio(); saveProgress(); syncFromCloud(false); document.getElementById('result-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); }
+    function openMenu() { active = false; stopStageAudio(); if (pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; } saveProgress(); syncFromCloud(false); document.getElementById('result-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); }
 
     setInterval(() => { if (!active) syncFromCloud(false); }, 15000);
     checkAutoLogin();
