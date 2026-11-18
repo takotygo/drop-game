@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v7.2</title>
+    <title>TAKO DROP | غدر الكرات v7.3</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -667,6 +667,18 @@
             animation: cascadeDown 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
+        /* Section Banner inside Stages List */
+        .campaign-divider {
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.22), rgba(184, 41, 255, 0.22));
+            border: 1px solid var(--pink);
+            border-radius: 11px;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            text-align: right;
+            box-shadow: 0 0 18px rgba(255, 0, 85, 0.25);
+        }
+
         /* Stage Cards */
         .stage-card {
             background: rgba(18, 15, 34, 0.94);
@@ -1042,7 +1054,7 @@
             <span class="hud-val" id="hud-stage">1</span>
         </div>
         <div class="hud-box">
-            <span class="hud-lbl">السكور / الخصم</span>
+            <span class="hud-lbl">الهدف / الوقت</span>
             <span class="hud-val" id="hud-score">0 / 10</span>
         </div>
         <div class="hud-box">
@@ -1070,7 +1082,7 @@
 
     <!-- ================= SECURE ONLINE LOGIN OVERLAY ================= -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.2 PVP LIVE</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v7.3 MARATHON</div>
         <div class="glitch-title" style="margin-bottom:6px;">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px;">حسابك محمي بكلمة سر على السيرفر العالمي، ولا يمكن لأحد فتح حسابك إلا بكلمة سرك!</div>
 
@@ -1111,7 +1123,7 @@
         <!-- CENTER HUB -->
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.2 PVP LIVE</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v7.3 MARATHON</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -1134,7 +1146,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">المراحل المختومة</div>
-                    <div class="stat-val val-cyan" id="stat-cleared" dir="ltr">0 / 40</div>
+                    <div class="stat-val val-cyan" id="stat-cleared" dir="ltr">0 / 62</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">نقاط الطاقة XP</div>
@@ -1227,10 +1239,10 @@
             </div>
         </div>
 
-        <!-- ================= EXPANDING PORTAL 1: 40 STAGES ================= -->
+        <!-- ================= EXPANDING PORTAL 1: 40 BASE STAGES + 22 MARATHON STAGES ================= -->
         <div id="portal-stages" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title">🎓 المراحل التدريجية (من سهل إلى Ultra Tako)</div>
+                <div class="portal-title">🎓 المراحل (40 أساسية + 22 ماراثون صمود 🔥)</div>
                 <button class="close-portal-btn" onclick="closePortal('stages')">✖ إغلاق</button>
             </div>
             <div class="portal-body" id="stages-scroll-body">
@@ -2185,12 +2197,15 @@
     };
 
     const BALL_KEYS = Object.keys(BALL_META);
-    const TOTAL_STAGES = BALL_KEYS.length;
+    const BASE_STAGES_COUNT = BALL_KEYS.length; // 40 Base Stages
+    const MARATHON_STAGES_COUNT = 22;           // 22 Post-Campaign Marathon Stages (1.5m to 4m each)
+    const TOTAL_STAGES = BASE_STAGES_COUNT + MARATHON_STAGES_COUNT; // 62 Total Stages
 
-    // ================= GENERATE 40 CUMULATIVE STAGES =================
+    // ================= GENERATE 40 BASE STAGES + 22 MARATHON STAGES =================
     const STAGES = {};
     const STAGE_COLORS = ["", "pink", "purple", "yellow", "green", "orange"];
 
+    // 1) Base Stages (1 to 40)
     BALL_KEYS.forEach((key, idx) => {
         const stageNum = idx + 1;
         const meta = BALL_META[key];
@@ -2212,6 +2227,7 @@
             name: `مرحلة ${stageNum}`,
             title: `المرحلة ${stageNum}: ${cleanName}`,
             diff: diffKey,
+            isMarathon: false,
             desc: idx === 0
                 ? `${meta.desc}`
                 : `تُدخل [${cleanName}] + مزيج من الـ ${idx} كرات السابقة! — ${meta.desc}`,
@@ -2222,6 +2238,77 @@
             p: probMap
         };
     });
+
+    // 2) 22 Marathon Stages (Stages 41 to 62) -> Each takes 1.5 minutes (90s) to 4.0 minutes (240s)!
+    // Custom curated ball pools for Marathon 1..14, and from Marathon 15..22 ALL 40 balls are active!
+    const MARATHON_THEMES = [
+        { title: "ماراثون 1: بداية الصمود",       poolEnd: 6,  diff: "easy_tako" },
+        { title: "ماراثون 2: اندفاع النيترو",     poolEnd: 9,  diff: "easy_tako" },
+        { title: "ماراثون 3: ارتداد الزعماء",     poolEnd: 11, diff: "easy_tako" },
+        { title: "ماراثون 4: فخاخ البوابات",      poolEnd: 13, diff: "medium_tako" },
+        { title: "ماراثون 5: حقل المغناطيس",      poolEnd: 15, diff: "medium_tako" },
+        { title: "ماراثون 6: انشطار الماتريوشكا", poolEnd: 18, diff: "medium_tako" },
+        { title: "ماراثون 7: التوأم والسراب",     poolEnd: 21, diff: "hard_tako" },
+        { title: "ماراثون 8: عاصفة الدخان والفلاش",poolEnd: 24, diff: "hard_tako" },
+        { title: "ماراثون 9: المرايا المقلوبة",   poolEnd: 26, diff: "hard_tako" },
+        { title: "ماراثون 10: نبضات الزمن",       poolEnd: 29, diff: "hard_tako" },
+        { title: "ماراثون 11: القنابل والليزر",   poolEnd: 31, diff: "demon_tako" },
+        { title: "ماراثون 12: الشحنة المزدوجة",   poolEnd: 34, diff: "demon_tako" },
+        { title: "ماراثون 13: حقل الألغام والدماء",poolEnd: 36, diff: "demon_tako" },
+        { title: "ماراثون 14: الصقيع والقناص",    poolEnd: 39, diff: "demon_tako" },
+        // From Marathon 15 to 22 -> ALL 40 BALLS UNLEASHED!
+        { title: "ماراثون 15: انطلاق الـ 40 طابة الشامل!", poolEnd: 40, diff: "demon_tako" },
+        { title: "ماراثون 16: طوفان الكرات الكامل",        poolEnd: 40, diff: "demon_tako" },
+        { title: "ماراثون 17: جنون المسارات الأربعة",      poolEnd: 40, diff: "ultra_tako" },
+        { title: "ماراثون 18: إعصار الثقب الأسود الشامل",  poolEnd: 40, diff: "ultra_tako" },
+        { title: "ماراثون 19: جحيم الـ 40 خدعة",           poolEnd: 40, diff: "ultra_tako" },
+        { title: "ماراثون 20: امتحان الصمود الأقصى",       poolEnd: 40, diff: "ultra_tako" },
+        { title: "ماراثون 21: ما قبل القمة المستحيلة",     poolEnd: 40, diff: "ultra_tako" },
+        { title: "ماراثون 22: التحدي النهائي (4 دقائق كاملة!)", poolEnd: 40, diff: "ultra_tako" }
+    ];
+
+    for (let m = 1; m <= MARATHON_STAGES_COUNT; m++) {
+        const stageNum = BASE_STAGES_COUNT + m; // 41 to 62
+        const theme = MARATHON_THEMES[m - 1];
+
+        // Duration scales smoothly from 90 seconds (1:30) at m=1 up to 240 seconds (4:00) at m=22
+        const durationSec = Math.round(90 + ((m - 1) / (MARATHON_STAGES_COUNT - 1)) * 150);
+        const spawnMs = Math.max(720, 880 - m * 7);
+        // Target balls calculated so clearing the stage takes the full 1.5 to 4 minutes
+        const targetBalls = Math.round((durationSec * 1000) / (spawnMs * 1.05));
+
+        let probMap = {};
+        if (m >= 15) {
+            // Marathon 15 to 22: All 40 balls distributed!
+            const share = 1.0 / BALL_KEYS.length;
+            BALL_KEYS.forEach(k => { probMap[k] = share; });
+        } else {
+            // Marathon 1 to 14: Curated progressive pool of balls up to theme.poolEnd
+            const activeSlice = BALL_KEYS.slice(0, theme.poolEnd);
+            const share = 1.0 / activeSlice.length;
+            activeSlice.forEach(k => { probMap[k] = share; });
+        }
+
+        const durFormatted = formatDuration(durationSec);
+
+        STAGES[stageNum] = {
+            name: `ماراثون ${m}`,
+            title: `${theme.title}`,
+            diff: theme.diff,
+            isMarathon: true,
+            marathonIndex: m,
+            durationSec: durationSec,
+            durationTxt: durFormatted,
+            desc: m >= 15
+                ? `⏱️ المدة: ${durFormatted} دقيقة (${targetBalls} كرة) — 🔥 جميع الـ 40 طابة تنزل في هذه المرحلة!`
+                : `⏱️ المدة: ${durFormatted} دقيقة (${targetBalls} كرة) — توزيع متدرج لأول ${theme.poolEnd} نوع من الطابات!`,
+            colorClass: m >= 15 ? "pink" : STAGE_COLORS[m % STAGE_COLORS.length],
+            target: targetBalls,
+            speed: +(4.25 + Math.min(0.85, m * 0.035)).toFixed(2),
+            spawn: spawnMs,
+            p: probMap
+        };
+    }
 
     function initBallsUI() {
         const selectEl = document.getElementById('ed-type');
@@ -2433,7 +2520,7 @@
         showToast(`🗑️ تم حذف حساب (${name}) نهائياً!`, true);
     }
 
-    // ================= PROGRESSIVE STAGE LOCKING =================
+    // ================= PROGRESSIVE STAGE LOCKING (40 BASE + 22 MARATHON) =================
     function isStageUnlocked(stageNum) {
         if (stageNum <= 1 || isCurrentUserAdmin()) return true;
         const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
@@ -2443,35 +2530,65 @@
     function renderTutorialCards() {
         const container = document.getElementById('tutorial-list-container');
         const clearedArr = Array.isArray(saveData.cleared) ? saveData.cleared : [];
-        container.innerHTML = Object.keys(STAGES).map((k, idx) => {
+        const baseCompleted = clearedArr.includes(BASE_STAGES_COUNT) || isCurrentUserAdmin();
+
+        let htmlParts = [];
+
+        Object.keys(STAGES).forEach((k, idx) => {
             const sNum = parseInt(k);
             const st = STAGES[sNum];
             const isCleared = clearedArr.includes(sNum);
             const unlocked = isStageUnlocked(sNum);
             const diffBadge = getDifficultyBadgeHTML(st.diff);
 
-            return `
-            <div class="stage-card ${st.colorClass} ${unlocked ? '' : 'locked-stage'} cascade-item" style="animation-delay:${Math.min(idx * 0.025, 0.5)}s">
+            // Insert Marathon Header before stage 41
+            if (sNum === BASE_STAGES_COUNT + 1) {
+                htmlParts.push(`
+                    <div class="campaign-divider cascade-item">
+                        <div style="font-size:14px; font-weight:900; color:#ffd700; margin-bottom:2px;">
+                            🔥 الماراثون الأسطوري (22 مرحلة طويلة: 1:30 إلى 4:00 دقائق)
+                        </div>
+                        <div style="font-size:11px; color:#fda4af; font-weight:700;">
+                            ${baseCompleted
+                                ? '✅ تم فتح طور الماراثون! من المرحلة 15 وما فوق تنزل جميع الـ 40 طابة معاً!'
+                                : '🔒 يُفتح هذا القسم تلقائياً فور ختمك للمرحلة 40 الأساسية!'}
+                        </div>
+                    </div>
+                `);
+            }
+
+            const prevName = sNum === BASE_STAGES_COUNT + 1
+                ? `المرحلة ${BASE_STAGES_COUNT} الأساسية`
+                : (st.isMarathon ? `ماراثون ${st.marathonIndex - 1}` : `المرحلة ${sNum - 1}`);
+
+            htmlParts.push(`
+            <div class="stage-card ${st.colorClass} ${unlocked ? '' : 'locked-stage'} cascade-item" style="animation-delay:${Math.min(idx * 0.02, 0.5)}s">
                 <div class="stage-info">
                     <div class="stage-title">
                         <span>${unlocked ? '' : '🔒 '} ${st.title} ${isCleared ? '✅' : ''}</span>
                         ${diffBadge}
                     </div>
                     <div class="stage-desc">
-                        ${unlocked ? st.desc : `مغلقة 🔒 — يجب عليك ختم المرحلة ${sNum - 1} أولاً لفتح هذه المرحلة!`}
+                        ${unlocked ? st.desc : `مغلقة 🔒 — يجب عليك ختم (${prevName}) أولاً لفتح هذه المرحلة!`}
                     </div>
                 </div>
                 <button class="play-chip ${unlocked ? st.colorClass : 'locked-btn'}" onclick="tryStartStage(${sNum})">
                     <span>${unlocked ? 'ابدأ ◀' : 'مقفل 🔒'}</span>
                 </button>
-            </div>`;
-        }).join('');
+            </div>`);
+        });
+
+        container.innerHTML = htmlParts.join('');
     }
 
     function tryStartStage(sNum) {
         if (!isStageUnlocked(sNum)) {
             tone(140, 'sawtooth', 0.2, 0.2);
-            showToast(`🔒 المرحلة ${sNum} مقفلة! اختم المرحلة ${sNum - 1} أولاً لفتحها`, false);
+            const st = STAGES[sNum];
+            const reqTxt = sNum === BASE_STAGES_COUNT + 1
+                ? `اختم المرحلة ${BASE_STAGES_COUNT} الأساسية أولاً لفتح الماراثون!`
+                : `اختم المرحلة السابقة أولاً لفتحها!`;
+            showToast(`🔒 مقفلة! ${reqTxt}`, false);
             return;
         }
         startStage(sNum);
@@ -2526,7 +2643,7 @@
                 password: ADMIN_PASS,
                 high: 0,
                 xp: 100000,
-                cleared: BALL_KEYS.map((_, i) => i + 1),
+                cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1),
                 skin: "tako_100k",
                 banned: false
             };
@@ -2580,7 +2697,7 @@
                 password: ADMIN_PASS,
                 high: 0,
                 xp: 100000,
-                cleared: BALL_KEYS.map((_, i) => i + 1),
+                cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1),
                 skin: "tako_100k",
                 banned: false
             };
@@ -2589,7 +2706,7 @@
             saveProgress();
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('menu-overlay').classList.remove('hidden');
-            showToast("👻 دخلت بوضع الأدمن الخفي! (غير مرئي بالمتصدرين)", true);
+            showToast("👻 دخلت بوضع الأدمن الخفي! (جميع الـ 62 مرحلة مفتوحة)", true);
             syncFromCloud(false);
             return;
         }
@@ -2646,7 +2763,7 @@
         checkAutoLogin();
     }
 
-    // ================= 1.VS.1 PVP ROOM LOGIC (FIXED REAL-TIME LOBBY & SYNC) =================
+    // ================= 1.VS.1 PVP ROOM LOGIC =================
     let activePvpRoomCode = "";
     let opponentText = "";
     let pvpLobbyInterval = null;
@@ -3651,7 +3768,15 @@
             const dObj = STAGE_DIFFICULTIES[st.diff] || STAGE_DIFFICULTIES.easy;
             document.getElementById('hud-stage').textContent = `${st.name} (${dObj.icon} ${dObj.label})`;
             const cTxt = combo >= 5 ? ` 🔥x${combo}` : '';
-            document.getElementById('hud-score').textContent = `${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)${cTxt}`;
+
+            if (st.isMarathon) {
+                const elapsedSec = active ? Math.floor((performance.now() - stageStartTime) / 1000) : 0;
+                const remSec = Math.max(0, st.durationSec - elapsedSec);
+                document.getElementById('hud-score').textContent = `⏱️ ${formatDuration(remSec)} | ${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)${cTxt}`;
+            } else {
+                document.getElementById('hud-score').textContent = `${clearedBallsCount}/${st.target} (+${pendingStageXP} XP)${cTxt}`;
+            }
+
             const pct = Math.min(100, (clearedBallsCount / st.target) * 100);
             document.getElementById('progress-fill').style.width = pct + '%';
         }
@@ -3928,6 +4053,8 @@
         if (k === 'j' || k === '3') pressLane(2); if (k === 'k' || k === '4') pressLane(3);
     });
 
+    let lastMarathonTimerTick = 0;
+
     function loop(ts) {
         const speedFactor = ts < slowMoUntil ? 0.48 : 1.0;
         const activeSkinObj = getSkinObj(saveData.skin);
@@ -3943,6 +4070,17 @@
             } else {
                 const st = STAGES[curStage];
                 if (ts - lastSpawn > st.spawn) { spawnRandomBall(); lastSpawn = ts; }
+
+                // Live countdown update for 1.5m - 4m Marathon stages
+                if (st.isMarathon && ts - lastMarathonTimerTick > 500) {
+                    lastMarathonTimerTick = ts;
+                    updateHUD();
+                    const elapsedSec = (ts - stageStartTime) / 1000;
+                    if (elapsedSec >= st.durationSec && hearts > 0) {
+                        finishGame(true);
+                        return;
+                    }
+                }
             }
 
             for (let i = 0; i < 4; i++) {
@@ -4216,7 +4354,10 @@
         customMode = false; activePvpRoomCode = ""; opponentText = "";
         curStage = num; score = 0; pendingStageXP = 0; clearedBallsCount = 0; combo = 0;
         hearts = document.getElementById('hardcore-toggle').checked ? 1 : 3;
-        balls = []; particles = []; floatTexts = []; lastSpawn = performance.now(); active = true;
+        balls = []; particles = []; floatTexts = [];
+        stageStartTime = performance.now();
+        lastSpawn = stageStartTime;
+        active = true;
         document.getElementById('menu-overlay').classList.add('hidden');
         document.getElementById('result-overlay').classList.add('hidden'); updateHUD();
 
@@ -4285,7 +4426,8 @@
             let firstClearBonus = 0;
             if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) {
                 saveData.cleared.push(curStage);
-                firstClearBonus = curStage * 10;
+                const stObj = STAGES[curStage];
+                firstClearBonus = stObj?.isMarathon ? (stObj.marathonIndex * 45) : (curStage * 10);
             }
             const totalAwardedXP = pendingStageXP + firstClearBonus;
             saveData.xp = (saveData.xp || 0) + totalAwardedXP;
@@ -4294,7 +4436,11 @@
             const newRank = getRankByXP(saveData.xp || 0).current;
             const rankUpTxt = newRank.id !== oldRank.id ? ` 🎉 ترقية إلى رتبة ${newRank.icon} ${newRank.name}!` : '';
 
-            t.textContent = activePvpRoomCode ? `انتهت معركة الـ 1vs1! ⚔️🏆` : (customMode ? `أنهيت الماب بنجاح! 🏆` : `اجتزت المرحلة ${curStage} وفتحت المرحلة ${Math.min(TOTAL_STAGES, curStage + 1)}! 🔓🔥`);
+            const stageDisplayName = STAGES[curStage]?.isMarathon ? `ماراثون ${STAGES[curStage].marathonIndex}` : `المرحلة ${curStage}`;
+
+            t.textContent = activePvpRoomCode
+                ? `انتهت معركة الـ 1vs1! ⚔️🏆`
+                : (customMode ? `أنهيت الماب بنجاح! 🏆` : `اجتزت ${stageDisplayName} بنجاح! 🔓🔥`);
             d.textContent = `${pvpResultBanner ? pvpResultBanner + ' | ' : ''}كسبت +${totalAwardedXP} XP ${firstClearBonus > 0 ? `(منها +${firstClearBonus} مكافأة أول مرة)` : ''}${rankUpTxt} | رصيدك: ${(saveData.xp || 0).toLocaleString()} XP`;
             nb.style.display = (customMode || curStage >= TOTAL_STAGES) ? 'none' : 'block';
         } else {
