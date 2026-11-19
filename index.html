@@ -116,7 +116,7 @@
         .top-btn-mini { position: relative; background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.35); color: var(--cyan); padding: 4px 7px; border-radius: 7px; font-size: 10.5px; font-weight: 800; cursor: pointer; }
         .mail-dot { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px var(--pink); }
 
-        /* ================= HORIZONTAL DROP PASS (PUBG ROYALE STYLE) ================= */
+        /* ================= HORIZONTAL DROP PASS (LTR) ================= */
         .pass-horizontal-wrap {
             display: flex;
             flex-direction: row;
@@ -128,6 +128,7 @@
             -webkit-overflow-scrolling: touch;
             flex: 1;
             align-items: stretch;
+            direction: ltr;
         }
         .pass-horizontal-wrap::-webkit-scrollbar { height: 7px; }
         .pass-horizontal-wrap::-webkit-scrollbar-track { background: rgba(7, 5, 16, 0.9); border-radius: 99px; }
@@ -410,7 +411,7 @@
 
     <!-- LOGIN OVERLAY -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 COMPLETE</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 FINAL</div>
         <div class="glitch-title" style="margin-bottom:6px;" data-i18n="login_title">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px; font-size:12px; color:#94a3b8; text-align:center;" data-i18n="login_sub">حسابك محمي بكلمة سر على السيرفر العالمي!</div>
 
@@ -454,7 +455,7 @@
 
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 COMPLETE</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 FINAL</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -545,7 +546,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 2: HORIZONTAL DROP PASS (DIRECT WHATSAPP BUY) -->
+        <!-- PORTAL 2: HORIZONTAL DROP PASS (LTR + 30-DAY TIMER + DIRECT WHATSAPP BUY) -->
         <div id="portal-droppass" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--gold);">🎫 الموسم الأول: DROP PASS (LVL 1 - 100)</div>
@@ -556,7 +557,8 @@
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
                         <div>
                             <div style="font-size:14px; font-weight:900; color:var(--gold);" id="pass-lvl-title">🎫 مستواك في الدروب باس: LVL 1 / 100</div>
-                            <div style="font-size:10.5px; color:#cbd5e1;" id="pass-xp-sub">اسحب بالعرض لتصفح جوائز الـ 100 لفل!</div>
+                            <div id="pass-timer-badge" style="font-size:11px; font-weight:900; color:var(--cyan); margin-top:2px;">⏳ 30 يوم و 0 ساعة</div>
+                            <div style="font-size:10.5px; color:#cbd5e1;" id="pass-xp-sub">اسحب من اليسار لليمين لتصفح الجوائز ➡️</div>
                         </div>
                         <button class="play-chip yellow" id="buy-pass-btn" onclick="contactWhatsAppForPass()">
                             <span>👑 شراء Drop Pass ($2.49)</span>
@@ -577,7 +579,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 3: 100 BALL SKINS + 100 BACKLIGHT TRAILS -->
+        <!-- PORTAL 3: 100 BALL SKINS + 100 BACKLIGHT TRAILS (LIVE CANVAS PREVIEWS) -->
         <div id="portal-skins" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--cyan);">🎨 خزانة الأشكال (100 طابة + 100 باك لايت)</div>
@@ -587,9 +589,6 @@
                 <div class="sub-tabs-row">
                     <button id="tab-btn-balls" class="sub-tab-btn active" onclick="switchCosmeticTab('balls')">⚽ أشكال الطابات (100)</button>
                     <button id="tab-btn-backlights" class="sub-tab-btn" onclick="switchCosmeticTab('backlights')">✨ خطوط الباك لايت (100)</button>
-                </div>
-                <div style="font-size:10.5px; color:#94a3b8; text-align:center; margin-bottom:4px;">
-                    💡 (1-50 متجر XP) • (51-80 جوائز Drop Pass) • (81-100 أكواد الهدايا السرية)
                 </div>
                 <div id="skins-list-container" style="display:flex; flex-direction:column; gap:8px;"></div>
             </div>
@@ -670,7 +669,7 @@
                         <span id="live-song-label" style="font-size:11.5px; font-weight:900; color:var(--cyan);">🎶 جاري التشغيل...</span>
                         <span id="live-song-timer" dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:11px; color:var(--yellow);">0:00 / 0:00</span>
                     </div>
-                    <input type="range" id="live-song-seek" min="0" max="100" value="0" style="width:100%; accent-color:var(--pink);" oninput="seekPreviewAudio(this.value)">
+                    <input type="range" id="live-song-seek" min="0" max="100" value="0" style="width:100%; accent-color:var(--pink);">
                 </div>
 
                 <div class="editor-box" style="border-color:#ec4899;">
@@ -689,7 +688,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 7: CREATE MAP -->
+        <!-- PORTAL 7: CREATE MAP (WITH AUTO-BEATMAP) -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية وتصنيف صعوبة</div>
@@ -773,6 +772,7 @@
                     </div>
 
                     <button class="play-chip" style="width:100%; padding:10px;" onclick="addBallToEditor()"><span>➕ أضف الكرة إلى الماب</span></button>
+                    <button class="play-chip purple" id="auto-beat-btn" style="width:100%; padding:10px; margin-top:2px;" onclick="autoGenerateBeatmap()"><span>🎵 توزيع الطابات تلقائياً على إيقاع الغناية</span></button>
                     <div class="spawn-list" id="ed-balls-list"></div>
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
@@ -946,45 +946,60 @@
         const icon = BALL_ICONS_POOL[i % BALL_ICONS_POOL.length];
         const baseName = ARABIC_SKIN_TITLES[(i - 1) % ARABIC_SKIN_TITLES.length];
 
-        let unlockType = 'shop', cost = 0, passLvl = 0, codeIdx = 0, rarityTag = '';
+        let unlockType = 'shop', cost = 0, passLvl = 0, codeIdx = 0;
         if (i <= 50) {
             unlockType = 'shop';
             cost = i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.85) * 28);
-            rarityTag = `متجر (${cost.toLocaleString()} XP)`;
         } else if (i <= 65) {
             unlockType = 'pass_free';
             passLvl = (i - 50) * 6;
-            rarityTag = `🎁 مجاني Drop Pass (LVL ${passLvl})`;
         } else if (i <= 80) {
             unlockType = 'pass_vip';
             passLvl = (i - 65) * 6 + 2;
             if (i === 80) passLvl = 100;
-            rarityTag = `👑 نادر جداً VIP Pass (LVL ${passLvl})`;
         } else {
             unlockType = 'code';
             codeIdx = i - 80;
-            rarityTag = `🔒 حصري بكود سري (#${codeIdx})`;
         }
 
         SKINS_CATALOG.push({
             id: `ball_${i}`, num: i, name: `${i}. طابة ${baseName}`, unlockType, cost, passLvl, codeIdx,
             color: col, core: coreCol, shape: i >= 66 ? (i % 2 === 0 ? 'dragon' : 'rainbow') : shape,
-            icon: i >= 81 ? '👑' : icon, desc: rarityTag
+            icon: i >= 81 ? '👑' : icon
         });
 
         BACKLIGHTS_CATALOG.push({
             id: `bl_${i}`, num: i, name: `${i}. باك لايت ${baseName}`, unlockType,
             cost: unlockType === 'shop' ? (i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.8) * 25)) : 0,
             passLvl: unlockType === 'pass_free' ? ((i - 50) * 6 - 3) : (unlockType === 'pass_vip' ? ((i - 65) * 6 - 1) : 0),
-            codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 62%)`, icon: i % 2 === 0 ? '✨' : '🔥', desc: rarityTag
+            codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 62%)`, icon: i % 2 === 0 ? '✨' : '🔥'
         });
     }
 
     function getSkinObj(skinId) { return SKINS_CATALOG.find(s => s.id === skinId || s.color === skinId) || SKINS_CATALOG[0]; }
     function getBacklightObj(blId) { return BACKLIGHTS_CATALOG.find(b => b.id === blId || b.color === blId) || BACKLIGHTS_CATALOG[0]; }
 
-    // ================= DROP PASS (LEFT-TO-RIGHT HORIZONTAL) =================
+    // ================= DROP PASS (30-DAY REAL-TIME TIMER + LTR HORIZONTAL) =================
     const XP_PER_PASS_LEVEL = 250;
+    const DROP_PASS_END_TIME = new Date('2026-12-20T00:34:00+03:00').getTime();
+
+    function updateDropPassTimer() {
+        const diff = DROP_PASS_END_TIME - Date.now();
+        if (diff <= 0) {
+            document.querySelectorAll('.top-btn-pass, #portal-droppass, #hub-pass-lvl').forEach(el => el.classList.add('hidden'));
+            const hubPassBtn = document.querySelector('button[onclick*="droppass"]');
+            if (hubPassBtn) hubPassBtn.classList.add('hidden');
+            return false;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const badge = document.getElementById('pass-timer-badge');
+        if (badge) badge.textContent = `⏳ ${days} يوم و ${hours} ساعة`;
+        return true;
+    }
+    setInterval(updateDropPassTimer, 60000);
+    setTimeout(updateDropPassTimer, 200);
+
     function getDropPassLevel(xpVal) { const xp = isCurrentUserAdmin() ? 100000 : (xpVal || 0); return Math.min(100, Math.max(1, Math.floor(xp / XP_PER_PASS_LEVEL) + 1)); }
     function hasVipDropPass() { return isCurrentUserAdmin() || !!saveData.vipPass; }
 
@@ -1000,6 +1015,7 @@
         return false;
     }
 
+    // ================= SKINS & BACKLIGHTS SHOP (LIVE CANVAS PREVIEWS + LOCKED ONLY) =================
     let currentCosmeticTab = 'balls';
     function switchCosmeticTab(tab) {
         currentCosmeticTab = tab;
@@ -1017,30 +1033,48 @@
         container.innerHTML = list.map((item) => {
             const isSelected = activeId === item.id;
             const unlocked = isCosmeticUnlocked(item);
-            let btnText = 'تفعيل ⚡';
-            if (isSelected) btnText = 'مفعّل ✅';
-            else if (!unlocked) {
-                if (item.unlockType === 'shop') btnText = `🔒 ${item.cost.toLocaleString()} XP`;
-                else if (item.unlockType === 'pass_free') btnText = `🔒 LVL ${item.passLvl}`;
-                else if (item.unlockType === 'pass_vip') btnText = `👑 VIP LVL ${item.passLvl}`;
-                else btnText = `🔒 كود سري`;
-            }
+
+            const btnText = isSelected ? 'مفعّل ✅' : (unlocked ? 'تفعيل ⚡' : '🔒 مغلق');
+            const descText = unlocked ? 'متاح لديك ✨' : '🔒 مغلق';
             const btnClass = isSelected ? 'green' : (unlocked ? '' : 'locked-btn');
 
             return `
             <div class="stage-card" style="border-right-color:${item.color};">
                 <div style="display:flex; align-items:center; gap:11px; flex:1;">
-                    <div class="skin-orb-preview" style="background:radial-gradient(circle at 35% 35%, ${item.core || item.secColor}, ${item.color}); box-shadow:0 0 16px ${item.color}; border:2px solid #fff;">
-                        <span>${item.icon}</span>
-                    </div>
+                    <canvas id="prev-${item.id}" width="58" height="58" style="width:54px; height:54px; border-radius:12px; background:#070512; border:1.5px solid rgba(255,255,255,0.18); flex-shrink:0;"></canvas>
                     <div class="stage-info">
                         <div class="stage-title" style="color:${item.color};">${item.name}</div>
-                        <div class="stage-desc">${item.desc}</div>
+                        <div class="stage-desc">${descText}</div>
                     </div>
                 </div>
                 <button class="play-chip ${btnClass}" onclick="selectCosmeticItem('${currentCosmeticTab}', '${item.id}')"><span>${btnText}</span></button>
             </div>`;
         }).join('');
+
+        list.forEach((item) => {
+            const c = document.getElementById(`prev-${item.id}`);
+            if (!c) return;
+            const pCtx = c.getContext('2d');
+            pCtx.clearRect(0, 0, 58, 58);
+
+            if (currentCosmeticTab === 'balls') {
+                const dummyBall = { x: 29, y: 29, r: 16, rot: 0.4, armor: 1, type: 'normal', trail: [] };
+                drawCustomBallSkin(pCtx, dummyBall, 1200, item, null, null);
+            } else {
+                const pts = [];
+                for (let k = 0; k < 16; k++) pts.push({ x: 29, y: 7 + k * 2.6 });
+                const dummyTrailBall = { x: 29, y: 47, r: 10, rot: 0, armor: 1, type: 'normal', trail: pts };
+                const prevActive = active;
+                active = false;
+                drawBacklightEffect(pCtx, dummyTrailBall, 1200, item);
+                active = prevActive;
+
+                pCtx.fillStyle = '#ffffff';
+                pCtx.beginPath();
+                pCtx.arc(29, 47, 5, 0, Math.PI * 2);
+                pCtx.fill();
+            }
+        });
     }
 
     function selectCosmeticItem(tab, itemId) {
@@ -1053,16 +1087,16 @@
             saveProgress();
             renderSkinsShop();
             playSfxTone(740, 'triangle', 0.12, 0.2);
-            showToast(`✅ تم تفعيل [${item.name}] بنجاح!`, true);
+            showToast(`✅ تم تفعيل [${item.name}]!`, true);
         } else {
             playSfxTone(150, 'sawtooth', 0.2, 0.2);
-            showToast(`🔒 لم تفتح هذا العنصر بعد (${item.desc})`, false);
+            showToast(`🔒 مغلق!`, false);
         }
     }
 
     function scrollDropPass(offsetPx) {
         const wrap = document.getElementById('droppass-tiers-container');
-        if (wrap) wrap.scrollBy({ left: offsetPx, behavior: 'smooth' }); // LTR scroll (Left to Right)
+        if (wrap) wrap.scrollBy({ left: offsetPx, behavior: 'smooth' });
     }
 
     function scrollToMyPassLevel() {
@@ -1073,6 +1107,7 @@
     }
 
     function renderDropPassPortal() {
+        if (!updateDropPassTimer()) return;
         const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
         const myLvl = getDropPassLevel(myXP);
         const vipActive = hasVipDropPass();
@@ -1088,7 +1123,7 @@
         const activeBallId = getSkinObj(saveData.skin).id;
         const activeBlId = getBacklightObj(saveData.backlight).id;
         const container = document.getElementById('droppass-tiers-container');
-        container.style.direction = 'ltr'; // Force Left-to-Right (LVL 1 on Left -> LVL 100 on Right)
+        container.style.direction = 'ltr';
 
         let colsHTML = [];
         for (let lvl = 1; lvl <= 100; lvl++) {
@@ -1367,11 +1402,6 @@
         const xp = xpVal || 0; let current = RANK_TIERS[0], next = null;
         for (let i = 0; i < RANK_TIERS.length; i++) { if (xp >= RANK_TIERS[i].minXP) { current = RANK_TIERS[i]; next = RANK_TIERS[i + 1] || null; } }
         return { current, next };
-    }
-
-    function getRankBadgeHTML(xpVal) {
-        const { current } = getRankByXP(xpVal);
-        return `<span class="rank-tag ${current.insane ? 'insane-anim' : ''}" style="background:${current.bg}; color:${current.color}; border:1px solid ${current.color};">${current.icon} ${current.name}</span>`;
     }
 
     function updateRankUI() {
@@ -1763,6 +1793,7 @@
     // ================= PORTAL CONTROL & LEADERBOARD =================
     function openPortal(name, ev) {
         if (name === 'admin' && !isCurrentUserAdmin()) return;
+        if (name === 'droppass' && !updateDropPassTimer()) return;
         const modal = document.getElementById('portal-' + name); if (!modal) return;
         if (name === 'stages') renderTutorialCards();
         else if (name === 'droppass') renderDropPassPortal();
@@ -1894,7 +1925,7 @@
     }
     function toggleMusicMute() { isMusicMuted = !isMusicMuted; document.getElementById('hud-mute-btn').textContent = isMusicMuted ? '🔇' : '🔊'; try { stageAudioPlayer.volume = isMusicMuted ? 0 : musicVolume; } catch(e){} }
 
-    // ================= LEVEL EDITOR =================
+    // ================= LEVEL EDITOR & AUTO-BEATMAP GENERATOR =================
     let editorSpawns = [], editorAudioData = "SYNTH_2", editorAudioName = "⚡ Neon Arcade Rush";
     function renderCustomStagesList() {
         document.getElementById('my-custom-stages').innerHTML = Object.values(customStagesDB).map(st => st?.spawns ? `<div class="stage-card green"><div class="stage-info"><div class="stage-title">${st.title} [${st.id}]</div></div><button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button></div>` : '').join('');
@@ -1904,9 +1935,11 @@
         editorSpawns.push({ lane: parseInt(document.getElementById('ed-lane').value), type: document.getElementById('ed-type').value, time: t, speed: parseFloat(document.getElementById('ed-speed').value) || 4.2 });
         editorSpawns.sort((a, b) => a.time - b.time);
         document.getElementById('ed-time').value = +(t + 0.8).toFixed(2);
+        addBallToEditorRender();
+    }
+    function addBallToEditorRender() {
         document.getElementById('ed-balls-list').innerHTML = editorSpawns.map((b, i) => `<div class="spawn-item"><span>#${i+1} | مسار ${b.lane+1} | ${BALL_META[b.type]?.name || b.type}</span><button class="logout-btn" onclick="editorSpawns.splice(${i},1); addBallToEditorRender();">✖</button></div>`).join('');
     }
-    function addBallToEditorRender() { document.getElementById('ed-balls-list').innerHTML = editorSpawns.map((b, i) => `<div class="spawn-item"><span>#${i+1} | مسار ${b.lane+1} | ${BALL_META[b.type]?.name || b.type}</span><button class="logout-btn" onclick="editorSpawns.splice(${i},1); addBallToEditorRender();">✖</button></div>`).join(''); }
     async function saveCustomStage() {
         if (!editorSpawns.length) return;
         const id = `TK-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -1918,12 +1951,88 @@
     function testEditorStage() { if (editorSpawns.length) { closeAllPortals(); startCustomStage({ id: 'TEST', title: 'تجربة', diff: 'easy_tako', audioData: editorAudioData, spawns: editorSpawns }, false); } }
     function playStageById(id) { const k = (id || document.getElementById('stage-id-input').value).trim().toUpperCase(); if (customStagesDB[k]) { closeAllPortals(); startCustomStage(customStagesDB[k], false); } }
     function startSingleBallDemo(t) { closeAllPortals(); startCustomStage({ id: 'DEMO', title: t, diff: 'easy', audioData: 'SYNTH_1', spawns: [{ lane: 1, type: t, time: 0.5, speed: 4 }, { lane: 2, type: t, time: 2, speed: 4 }] }, false); }
-    function handleAudioFileUpload(ev) { const f = ev.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = e => { editorAudioData = e.target.result; }; r.readAsDataURL(f); }
+    function handleAudioFileUpload(ev) { const f = ev.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = e => { editorAudioData = e.target.result; document.getElementById('ed-audio-status').textContent = `✅ تم رفع الملف: ${f.name}`; }; r.readAsDataURL(f); }
     function handlePresetAudioChange() { editorAudioData = document.getElementById('ed-synth-preset').value; }
     function handleUrlAudioInput() { editorAudioData = document.getElementById('ed-audio-url').value.trim(); }
     function toggleEditorAudioPreview() { if (isPreviewingEditorAudio) stopStageAudio(); else { playStageAudio(editorAudioData); isPreviewingEditorAudio = true; } }
 
-    // ================= ULTRA-VISIBLE BACKLIGHT TRAILS & LUXURY SECRET-TRAP BALLS =================
+    async function autoGenerateBeatmap() {
+        if (!editorAudioData) { showToast("⚠️ اختر غناية أو ارفع ملف صوتي أولاً!", false); return; }
+        const btn = document.getElementById('auto-beat-btn');
+        const oldHtml = btn ? btn.innerHTML : '';
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳ جاري تحليل إيقاع الغناية...</span>'; }
+
+        const speedVal = parseFloat(document.getElementById('ed-speed')?.value) || 4.2;
+        const diffKey = document.getElementById('ed-diff')?.value || 'easy_tako';
+        const travelSec = (hitY > 100 ? hitY : 520) / (speedVal * 60);
+        const maxBallTypes = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 40 : (diffKey === 'hard_tako' ? 22 : 10);
+        const allowedTypes = BALL_KEYS.slice(0, maxBallTypes);
+
+        let beatTimes = [];
+        try {
+            if (editorAudioData.startsWith('SYNTH_')) {
+                const bpmMap = { SYNTH_1: 112, SYNTH_2: 130, SYNTH_3: 146 };
+                const stepSec = 60 / (bpmMap[editorAudioData] || 130);
+                for (let t = 1.2; t <= 45; t += stepSec) beatTimes.push(t);
+            } else {
+                ensureAudioCtx();
+                const response = await fetch(editorAudioData);
+                const arrayBuffer = await response.arrayBuffer();
+                const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+                const rawData = audioBuffer.getChannelData(0);
+                const sampleRate = audioBuffer.sampleRate;
+                const windowSize = Math.floor(sampleRate * 0.05);
+                const energies = [];
+
+                for (let i = 0; i < rawData.length; i += windowSize) {
+                    let sum = 0;
+                    const end = Math.min(i + windowSize, rawData.length);
+                    for (let j = i; j < end; j++) sum += rawData[j] * rawData[j];
+                    energies.push(Math.sqrt(sum / (end - i)));
+                }
+
+                const minGapSec = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 0.34 : 0.48;
+                let lastBeatTime = -1;
+
+                for (let i = 10; i < energies.length - 10; i++) {
+                    let localAvg = 0;
+                    for (let k = i - 10; k <= i + 10; k++) localAvg += energies[k];
+                    localAvg /= 21;
+
+                    const currentTime = (i * windowSize) / sampleRate;
+                    if (energies[i] > localAvg * 1.38 && energies[i] > 0.06 && energies[i] >= energies[i - 1] && energies[i] >= energies[i + 1] && (currentTime - lastBeatTime) >= minGapSec) {
+                        beatTimes.push(currentTime);
+                        lastBeatTime = currentTime;
+                    }
+                }
+            }
+        } catch (err) {
+            for (let t = 1.2; t <= 35; t += 0.52) beatTimes.push(t);
+            showToast("⚡ تم توليد إيقاع تلقائي (الرابط الخارجي محمي)", true);
+        }
+
+        if (beatTimes.length === 0) for (let t = 1.2; t <= 30; t += 0.55) beatTimes.push(t);
+
+        editorSpawns = [];
+        let lastLane = -1;
+        beatTimes.forEach((beatT, idx) => {
+            const spawnT = Math.max(0.2, +(beatT - travelSec).toFixed(2));
+            let lane = Math.floor(Math.random() * 4);
+            if (lane === lastLane) lane = (lane + 1 + Math.floor(Math.random() * 2)) % 4;
+            lastLane = lane;
+            const type = (idx % 4 === 3) ? allowedTypes[Math.floor(Math.random() * allowedTypes.length)] : 'normal';
+            editorSpawns.push({ lane, type, time: spawnT, speed: speedVal });
+        });
+
+        editorSpawns.sort((a, b) => a.time - b.time);
+        addBallToEditorRender();
+        if (btn) { btn.disabled = false; btn.innerHTML = oldHtml; }
+        playSfxTone(820, 'triangle', 0.14, 0.2);
+        showToast(`🎵 تم توزيع ${editorSpawns.length} طابة على إيقاع الغناية!`, true);
+    }
+
+    // ================= CINEMATIC BACKLIGHT TRAILS & 3D MYTHIC BALL RENDERER =================
     function drawPolygonPath(ctx, x, y, r, sides, rot) {
         ctx.beginPath();
         for (let i = 0; i < sides; i++) { const a = rot + (i * Math.PI * 2) / sides; ctx[i === 0 ? 'moveTo' : 'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
@@ -1941,226 +2050,227 @@
         if (!b.trail) b.trail = [];
         if (active) {
             b.trail.push({ x: b.x, y: b.y });
-            if (b.trail.length > 26) b.trail.shift();
+            if (b.trail.length > 28) b.trail.shift();
         }
         if (b.trail.length < 2) return;
 
         const num = blObj.num || 1;
-        const styleId = num % 5;
-        const mainCol = (num >= 95) ? `hsl(${(ts * 0.3) % 360}, 100%, 60%)` : blObj.color;
-        const secCol = blObj.secColor || '#ffffff';
+        const styleId = num % 10;
+        const isRainbow = num >= 90;
+        const mainCol = isRainbow ? `hsl(${(ts * 0.35) % 360}, 100%, 60%)` : blObj.color;
+        const secCol = isRainbow ? `hsl(${(ts * 0.35 + 160) % 360}, 100%, 65%)` : (blObj.secColor || '#ffffff');
 
         ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.shadowColor = mainCol;
-        ctx.shadowBlur = 26;
+        ctx.shadowBlur = 22;
 
         const len = b.trail.length;
         for (let i = 0; i < len - 1; i++) {
             const p1 = b.trail[i], p2 = b.trail[i + 1];
             const ratio = (i + 1) / len;
-            ctx.globalAlpha = Math.min(1, ratio * 1.05);
-            ctx.strokeStyle = (i % 2 === 0 && styleId >= 3) ? secCol : mainCol;
+            const alpha = Math.pow(ratio, 1.3);
 
             if (styleId === 0) {
-                ctx.lineWidth = Math.max(4, b.r * 1.35 * ratio);
+                ctx.globalAlpha = alpha * 0.55;
+                ctx.strokeStyle = mainCol; ctx.lineWidth = Math.max(4, b.r * 1.65 * ratio);
                 ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1.5, b.r * 0.45 * ratio); ctx.stroke();
+                ctx.globalAlpha = alpha * 0.95;
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1.5, b.r * 0.45 * ratio);
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
             } else if (styleId === 1) {
-                ctx.lineWidth = Math.max(3, 8.5 * ratio);
-                const jitter = (i % 2 === 0 ? 1 : -1) * (12 * ratio);
-                ctx.beginPath(); ctx.moveTo(p1.x + jitter, p1.y); ctx.lineTo(p2.x - jitter, p2.y); ctx.stroke();
+                const w1 = Math.sin(ts * 0.02 + i * 0.55) * (b.r * 0.95 * ratio);
+                const w2 = Math.sin(ts * 0.02 + (i + 1) * 0.55) * (b.r * 0.95 * ratio);
+                ctx.globalAlpha = alpha;
+                ctx.lineWidth = Math.max(2, 5.5 * ratio);
+                ctx.strokeStyle = mainCol; ctx.beginPath(); ctx.moveTo(p1.x + w1, p1.y); ctx.lineTo(p2.x + w2, p2.y); ctx.stroke();
+                ctx.strokeStyle = secCol; ctx.beginPath(); ctx.moveTo(p1.x - w1, p1.y); ctx.lineTo(p2.x - w2, p2.y); ctx.stroke();
             } else if (styleId === 2) {
-                const offset = b.r * 0.72 * ratio;
-                ctx.lineWidth = Math.max(2.5, 6 * ratio);
-                ctx.beginPath();
-                ctx.moveTo(p1.x - offset, p1.y); ctx.lineTo(p2.x - offset, p2.y);
-                ctx.moveTo(p1.x + offset, p1.y); ctx.lineTo(p2.x + offset, p2.y);
-                ctx.stroke();
+                const j1 = Math.sin(i * 4.7 + ts * 0.05) * (b.r * 0.85 * ratio);
+                const j2 = Math.sin((i + 1) * 4.7 + ts * 0.05) * (b.r * 0.85 * ratio);
+                ctx.globalAlpha = alpha * 0.85;
+                ctx.strokeStyle = mainCol; ctx.lineWidth = Math.max(2.5, 8 * ratio);
+                ctx.beginPath(); ctx.moveTo(p1.x + j1, p1.y); ctx.lineTo(p2.x + j2, p2.y); ctx.stroke();
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1, 2.5 * ratio); ctx.stroke();
             } else if (styleId === 3) {
-                const w1 = Math.sin(ts * 0.025 + i * 0.55) * (14 * ratio);
-                const w2 = Math.sin(ts * 0.025 + (i + 1) * 0.55) * (14 * ratio);
-                ctx.lineWidth = Math.max(3, 9.5 * ratio);
-                ctx.beginPath(); ctx.moveTo(p1.x + w1, p1.y); ctx.lineTo(p2.x + w2, p2.y); ctx.stroke();
-            } else {
-                ctx.lineWidth = Math.max(4, b.r * 1.4 * ratio + Math.sin(ts * 0.03 + i) * 4);
+                ctx.globalAlpha = alpha * 0.4;
+                ctx.strokeStyle = mainCol; ctx.lineWidth = Math.max(3, b.r * 1.1 * ratio);
                 ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                if (i % 2 === 0) {
+                    const sx = p1.x + Math.sin(i * 12.3 + ts * 0.01) * (b.r * 0.9 * ratio);
+                    ctx.globalAlpha = alpha;
+                    ctx.fillStyle = i % 4 === 0 ? '#ffffff' : secCol;
+                    drawStarPath(ctx, sx, p1.y, 4, 5.5 * ratio, 1.8 * ratio, ts * 0.01 + i); ctx.fill();
+                }
+            } else if (styleId === 4) {
+                if (i % 3 === 0 && i > 1) {
+                    const w = b.r * 0.85 * ratio;
+                    ctx.globalAlpha = alpha; ctx.strokeStyle = i % 6 === 0 ? secCol : mainCol; ctx.lineWidth = Math.max(2, 4 * ratio);
+                    ctx.beginPath(); ctx.moveTo(p1.x - w, p1.y - w * 0.6); ctx.lineTo(p1.x, p1.y + w * 0.45); ctx.lineTo(p1.x + w, p1.y - w * 0.6); ctx.stroke();
+                }
+            } else if (styleId === 5) {
+                if (i % 3 === 0) {
+                    ctx.globalAlpha = alpha * 0.9; ctx.strokeStyle = i % 6 === 0 ? secCol : mainCol; ctx.lineWidth = Math.max(1.5, 3 * ratio);
+                    ctx.beginPath(); ctx.ellipse(p1.x, p1.y, b.r * 0.85 * ratio, b.r * 0.38 * ratio, 0, 0, Math.PI * 2); ctx.stroke();
+                }
+            } else if (styleId === 6) {
+                const flicker = Math.sin(ts * 0.03 + i * 1.3) * (6 * ratio);
+                ctx.globalAlpha = alpha * 0.7; ctx.fillStyle = mainCol;
+                ctx.beginPath(); ctx.arc(p1.x + flicker, p1.y, Math.max(2, b.r * 0.85 * ratio), 0, Math.PI * 2); ctx.fill();
+                ctx.globalAlpha = alpha * 0.9; ctx.fillStyle = secCol;
+                ctx.beginPath(); ctx.arc(p1.x - flicker * 0.5, p1.y, Math.max(1, b.r * 0.42 * ratio), 0, Math.PI * 2); ctx.fill();
+            } else if (styleId === 7) {
+                if (i % 2 === 0) {
+                    ctx.globalAlpha = alpha * 0.95; ctx.fillStyle = i % 4 === 0 ? mainCol : secCol;
+                    drawPolygonPath(ctx, p1.x, p1.y, Math.max(2.5, b.r * 0.68 * ratio), 4, Math.PI / 4 + i * 0.2); ctx.fill();
+                }
+            } else if (styleId === 8) {
+                const off = b.r * 0.72 * ratio;
+                ctx.globalAlpha = alpha * 0.85; ctx.strokeStyle = mainCol; ctx.lineWidth = Math.max(1.8, 4 * ratio);
+                ctx.beginPath(); ctx.moveTo(p1.x - off, p1.y); ctx.lineTo(p2.x - off, p2.y); ctx.moveTo(p1.x + off, p1.y); ctx.lineTo(p2.x + off, p2.y); ctx.stroke();
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1.5, 3.5 * ratio);
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+            } else {
+                if (i % 2 === 0) {
+                    const barW = b.r * 1.35 * ratio, shift = Math.sin(i * 9 + ts * 0.04) * 5;
+                    ctx.globalAlpha = alpha * 0.9; ctx.fillStyle = i % 4 === 0 ? mainCol : secCol;
+                    ctx.fillRect(p1.x - barW / 2 + shift, p1.y - 2, barW, 4 * ratio);
+                }
             }
         }
         ctx.restore();
     }
 
-        function drawCustomBallSkin(ctx, b, ts, skObj, blObj, overrideColor) {
+    function drawCustomBallSkin(ctx, b, ts, skObj, blObj, overrideColor) {
         drawBacklightEffect(ctx, b, ts, blObj);
 
         const id = skObj.num || 1;
-        const frameType = id % 5;         // 5 إطارات خارجية مختلفة
-        const coreMat = Math.floor(id / 5) % 4; // 4 خامات داخلية مختلفة
-        const orbitType = Math.floor(id / 20) % 5; // 5 تأثيرات دوارة حول الطابة
-        const shapeIdx = id % 14;         // 14 نقش داخلي مختلف
+        const isMythic = id >= 81;
+        const isVip = id >= 66 && id <= 80;
+        const styleIdx = id % 10;
+        const frameIdx = Math.floor(id / 10) % 5;
 
-        let baseCol = overrideColor || skObj.color;
-        let secCol = skObj.core || '#ffffff';
-        if (!overrideColor && (id >= 90 || skObj.shape === 'rainbow')) {
-            baseCol = `hsl(${(ts * 0.25 + id * 25) % 360}, 95%, 58%)`;
+        let mainCol = overrideColor || skObj.color;
+        let secCol = skObj.core || '#00f0ff';
+        if (!overrideColor && (id >= 95 || skObj.shape === 'rainbow')) {
+            mainCol = `hsl(${(ts * 0.25 + id * 30) % 360}, 100%, 58%)`;
+            secCol = `hsl(${(ts * 0.25 + id * 30 + 140) % 360}, 100%, 65%)`;
         }
 
         ctx.save();
-        ctx.shadowColor = baseCol;
-        ctx.shadowBlur = id >= 66 ? 26 : 18;
+        ctx.translate(b.x, b.y);
+        ctx.shadowColor = mainCol;
+        ctx.shadowBlur = isMythic ? 28 : 18;
 
-        // ================= 1. الإطار الخارجي (Outer Frame) =================
-        if (frameType === 1) {
-            // إطار سايبر متقطع يدور
-            ctx.strokeStyle = baseCol; ctx.lineWidth = 2.5;
-            ctx.setLineDash([6, 4]);
-            ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 4, b.rot, b.rot + Math.PI * 2); ctx.stroke();
-            ctx.setLineDash([]);
-        } else if (frameType === 2) {
-            // مسننات / أشواك طاقة خارجية
-            ctx.strokeStyle = secCol; ctx.lineWidth = 2;
-            drawStarPath(ctx, b.x, b.y, 12, b.r + 5, b.r - 1, -b.rot * 0.8); ctx.stroke();
-        } else if (frameType === 3) {
-            // حلقات كوكبية مائلة (مثل زحل)
-            ctx.save();
-            ctx.translate(b.x, b.y); ctx.rotate(b.rot * 0.4);
-            ctx.strokeStyle = secCol; ctx.lineWidth = 2.2;
-            ctx.beginPath(); ctx.ellipse(0, 0, b.r + 8, b.r * 0.35, 0.3, 0, Math.PI * 2); ctx.stroke();
+        if (isMythic) {
+            ctx.save(); ctx.rotate(b.rot * 0.9);
+            for (let k = 0; k < 3; k++) {
+                ctx.rotate((Math.PI * 2) / 3);
+                ctx.strokeStyle = k % 2 === 0 ? '#ffd700' : mainCol; ctx.lineWidth = 2.6;
+                ctx.beginPath(); ctx.arc(0, 0, b.r + 5, -0.5, 0.5); ctx.stroke();
+            }
             ctx.restore();
-        } else if (frameType === 4) {
-            // درع سداسي خارجي متوهج
-            ctx.strokeStyle = baseCol; ctx.lineWidth = 2.5;
-            drawPolygonPath(ctx, b.x, b.y, b.r + 4, 6, b.rot * 0.6); ctx.stroke();
+        } else if (frameIdx === 1) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2.2; ctx.setLineDash([7, 5]);
+            ctx.beginPath(); ctx.arc(0, 0, b.r + 4, b.rot, b.rot + Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+        } else if (frameIdx === 2) {
+            ctx.save(); ctx.rotate(b.rot * 0.4); ctx.strokeStyle = secCol; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.ellipse(0, 0, b.r + 7, b.r * 0.34, 0.25, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+        } else if (frameIdx === 3) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2; drawStarPath(ctx, 0, 0, 12, b.r + 4, b.r, -b.rot * 0.6); ctx.stroke();
         }
 
-        // ================= 2. خامة جسم الطابة (Base Material) =================
-        const grad = ctx.createRadialGradient(b.x - b.r * 0.32, b.y - b.r * 0.32, 2, b.x, b.y, b.r);
-        if (coreMat === 0) {
-            // كريستال ساطع
-            grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.35, secCol); grad.addColorStop(0.75, baseCol); grad.addColorStop(1, '#05050a');
-        } else if (coreMat === 1) {
-            // نواة مظلمة مشعة من الأطراف (Dark Matter)
-            grad.addColorStop(0, '#090714'); grad.addColorStop(0.55, '#1a1033'); grad.addColorStop(0.85, baseCol); grad.addColorStop(1, '#ffffff');
-        } else if (coreMat === 2) {
-            // معدن ذهبي / نيون مزدوج
-            grad.addColorStop(0, secCol); grad.addColorStop(0.5, baseCol); grad.addColorStop(1, '#000000');
-        } else {
-            // بلازما متوهجة بالكامل
-            grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.5, baseCol); grad.addColorStop(1, secCol);
-        }
+        const bgGrad = ctx.createRadialGradient(-b.r * 0.3, -b.r * 0.3, 1, 0, 0, b.r);
+        bgGrad.addColorStop(0, '#1e1b38'); bgGrad.addColorStop(0.55, '#090714'); bgGrad.addColorStop(0.88, mainCol); bgGrad.addColorStop(1, '#ffffff');
+        ctx.fillStyle = bgGrad; ctx.beginPath(); ctx.arc(0, 0, b.r, 0, Math.PI * 2); ctx.fill();
+        ctx.lineWidth = isMythic ? 2.8 : 2; ctx.strokeStyle = (isMythic || isVip) ? '#ffd700' : mainCol; ctx.stroke();
 
-        ctx.fillStyle = grad;
-        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
-        ctx.lineWidth = 2; ctx.strokeStyle = id >= 66 ? '#ffd700' : 'rgba(255,255,255,0.85)'; ctx.stroke();
-
-        // ================= 3. النقش الداخلي (14 Core Pattern) =================
-        ctx.shadowBlur = 0;
-        if (shapeIdx === 0) {
-            ctx.fillStyle = '#ffffff'; drawStarPath(ctx, b.x, b.y, 5, b.r * 0.68, b.r * 0.28, b.rot); ctx.fill();
-        } else if (shapeIdx === 1) {
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.2;
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 6, b.rot); ctx.stroke();
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.38, 6, -b.rot); ctx.stroke();
-        } else if (shapeIdx === 2) {
-            ctx.fillStyle = 'rgba(255,255,255,0.88)'; drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot); ctx.fill();
-        } else if (shapeIdx === 3) {
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.8;
-            const c = b.r * 0.55;
-            ctx.beginPath(); ctx.moveTo(b.x - c, b.y); ctx.lineTo(b.x + c, b.y); ctx.moveTo(b.x, b.y - c); ctx.lineTo(b.x, b.y + c); ctx.stroke();
-        } else if (shapeIdx === 4) {
-            // عين الشارينغان
-            ctx.fillStyle = '#05050a'; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.26, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = '#05050a'; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.58, 0, Math.PI * 2); ctx.stroke();
-            for (let t = 0; t < 3; t++) { const a = b.rot + (t * Math.PI * 2) / 3; ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * b.r * 0.58, b.y + Math.sin(a) * b.r * 0.58, 3, 0, Math.PI * 2); ctx.fill(); }
-        } else if (shapeIdx === 5) {
-            // نووي
-            ctx.strokeStyle = '#05050a'; ctx.lineWidth = 2.4;
-            for (let t = 0; t < 3; t++) { const a = b.rot + (t * Math.PI * 2) / 3; ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * b.r * 0.36, b.y + Math.sin(a) * b.r * 0.36, 4.8, 0, Math.PI * 2); ctx.stroke(); }
-        } else if (shapeIdx === 6) {
-            // دوامة
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.2;
-            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.35, b.rot, b.rot + Math.PI * 1.3); ctx.stroke();
-            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.68, -b.rot, -b.rot + Math.PI * 1.3); ctx.stroke();
-        } else if (shapeIdx === 7) {
-            // هلال
-            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.55, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = baseCol; ctx.beginPath(); ctx.arc(b.x + 5, b.y - 3, b.r * 0.45, 0, Math.PI * 2); ctx.fill();
-        } else if (shapeIdx === 8) {
-            // مثلثين متعاكسين (نجمة داوود هندسية)
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 3, b.rot); ctx.stroke();
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.72, 3, b.rot + Math.PI); ctx.stroke();
-        } else if (shapeIdx === 9) {
-            // نجمة ثمانية
-            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.2;
-            drawStarPath(ctx, b.x, b.y, 8, b.r * 0.75, b.r * 0.35, b.rot); ctx.stroke();
-        } else if (shapeIdx === 10) {
-            // علامة البرق داخل الطابة
-            ctx.fillStyle = '#ffffff';
-            ctx.beginPath();
-            ctx.moveTo(b.x + 2, b.y - 10); ctx.lineTo(b.x - 6, b.y + 1); ctx.lineTo(b.x, b.y + 1);
-            ctx.lineTo(b.x - 2, b.y + 10); ctx.lineTo(b.x + 6, b.y - 1); ctx.lineTo(b.x, b.y - 1);
-            ctx.closePath(); ctx.fill();
-        } else if (shapeIdx === 11) {
-            // حلقات متحدة المركز
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.65, 0, Math.PI * 2); ctx.stroke();
-            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.32, 0, Math.PI * 2); ctx.stroke();
-        } else if (shapeIdx === 12) {
-            // مربعين متداخلين
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot); ctx.stroke();
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.68, 4, b.rot + Math.PI / 4); ctx.stroke();
-        } else {
-            // جوهرة ثلاثية الأضلاع
-            ctx.fillStyle = 'rgba(255,255,255,0.85)';
-            drawPolygonPath(ctx, b.x, b.y, b.r * 0.65, 3, b.rot); ctx.fill();
-        }
-
-        // ================= 4. عناصر متحركة حول الطابة (Orbiting Accents) =================
-        if (orbitType === 1) {
-            // قمرين صغيرين يدوران حول الطابة
-            for (let k = 0; k < 2; k++) {
-                const a = b.rot * 1.4 + k * Math.PI;
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * (b.r + 5), b.y + Math.sin(a) * (b.r + 5), 3, 0, Math.PI * 2); ctx.fill();
-            }
-        } else if (orbitType === 2) {
-            // 4 شرارات متوهجة بالزوايا
+        ctx.shadowBlur = 10; ctx.shadowColor = mainCol;
+        if (styleIdx === 0) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2.2; drawPolygonPath(ctx, 0, 0, b.r * 0.72, 6, b.rot); ctx.stroke();
+            ctx.strokeStyle = secCol; ctx.lineWidth = 1.6; drawPolygonPath(ctx, 0, 0, b.r * 0.45, 6, -b.rot * 1.4); ctx.stroke();
+            const coreG = ctx.createRadialGradient(0, 0, 1, 0, 0, b.r * 0.35);
+            coreG.addColorStop(0, '#ffffff'); coreG.addColorStop(0.5, mainCol); coreG.addColorStop(1, 'transparent');
+            ctx.fillStyle = coreG; ctx.beginPath(); ctx.arc(0, 0, b.r * 0.35, 0, Math.PI * 2); ctx.fill();
+        } else if (styleIdx === 1) {
+            ctx.save(); ctx.rotate(b.rot * 1.3);
             for (let k = 0; k < 4; k++) {
-                const a = -b.rot + (k * Math.PI) / 2;
-                ctx.fillStyle = '#ffd700';
-                ctx.beginPath(); ctx.arc(b.x + Math.cos(a) * (b.r + 4), b.y + Math.sin(a) * (b.r + 4), 2.5, 0, Math.PI * 2); ctx.fill();
+                ctx.rotate(Math.PI / 2);
+                const g = ctx.createLinearGradient(0, 0, b.r * 0.8, 0); g.addColorStop(0, secCol); g.addColorStop(1, mainCol);
+                ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(b.r * 0.78, -4); ctx.lineTo(b.r * 0.45, 5); ctx.closePath(); ctx.fill();
             }
-        } else if (orbitType === 3) {
-            // نبض دائري متوسع
-            const pulseR = b.r + 2 + ((ts * 0.02) % 8);
-            ctx.strokeStyle = baseCol; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.5;
-            ctx.beginPath(); ctx.arc(b.x, b.y, pulseR, 0, Math.PI * 2); ctx.stroke();
+            ctx.fillStyle = '#090714'; ctx.beginPath(); ctx.arc(0, 0, 4.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore();
+        } else if (styleIdx === 2) {
+            ctx.save(); ctx.rotate(b.rot * 0.7);
+            const g = ctx.createLinearGradient(-b.r * 0.6, -b.r * 0.6, b.r * 0.6, b.r * 0.6);
+            g.addColorStop(0, secCol); g.addColorStop(0.5, mainCol); g.addColorStop(1, '#120824');
+            ctx.fillStyle = g; drawPolygonPath(ctx, 0, 0, b.r * 0.7, 6, 0); ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.75)'; ctx.lineWidth = 1.2; ctx.stroke();
+            for (let k = 0; k < 6; k++) { const a = (k * Math.PI) / 3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * b.r * 0.7, Math.sin(a) * b.r * 0.7); ctx.stroke(); }
+            ctx.restore();
+        } else if (styleIdx === 3) {
+            const eyeG = ctx.createRadialGradient(0, 0, 2, 0, 0, b.r * 0.78);
+            eyeG.addColorStop(0, '#000000'); eyeG.addColorStop(0.45, mainCol); eyeG.addColorStop(1, '#1a0510');
+            ctx.fillStyle = eyeG; ctx.beginPath(); ctx.arc(0, 0, b.r * 0.78, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(0, 0, b.r * 0.5, 0, Math.PI * 2); ctx.stroke();
+            ctx.fillStyle = '#000';
+            for (let k = 0; k < 3; k++) { const a = b.rot * 1.1 + (k * Math.PI * 2) / 3; ctx.beginPath(); ctx.arc(Math.cos(a) * b.r * 0.5, Math.sin(a) * b.r * 0.5, 3, 0, Math.PI * 2); ctx.fill(); }
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(0, 0, 2.5, 0, Math.PI * 2); ctx.fill();
+        } else if (styleIdx === 4) {
+            ctx.save(); ctx.rotate(b.rot * 1.4);
+            for (let arm = 0; arm < 3; arm++) {
+                ctx.rotate((Math.PI * 2) / 3);
+                ctx.strokeStyle = arm === 0 ? '#ffffff' : (arm === 1 ? mainCol : secCol); ctx.lineWidth = 2.4;
+                ctx.beginPath(); ctx.arc(b.r * 0.28, 0, b.r * 0.42, 0, Math.PI * 1.1); ctx.stroke();
+            }
+            ctx.restore();
+        } else if (styleIdx === 5) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2.2; drawStarPath(ctx, 0, 0, 5, b.r * 0.78, b.r * 0.34, b.rot); ctx.stroke();
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1.4; drawStarPath(ctx, 0, 0, 5, b.r * 0.48, b.r * 0.2, -b.rot * 1.3); ctx.stroke();
+        } else if (styleIdx === 6) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2; drawPolygonPath(ctx, 0, 0, b.r * 0.65, 4, b.rot); ctx.stroke();
+            ctx.strokeStyle = secCol; ctx.lineWidth = 2; drawPolygonPath(ctx, 0, 0, b.r * 0.65, 4, b.rot + Math.PI / 4); ctx.stroke();
+            ctx.fillStyle = mainCol; ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill();
+        } else if (styleIdx === 7) {
+            ctx.strokeStyle = secCol; ctx.lineWidth = 2; drawStarPath(ctx, 0, 0, 8, b.r * 0.8, b.r * 0.46, -b.rot); ctx.stroke();
+            const g = ctx.createRadialGradient(0, 0, 1, 0, 0, b.r * 0.48); g.addColorStop(0, '#ffffff'); g.addColorStop(0.6, mainCol); g.addColorStop(1, 'transparent');
+            ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, b.r * 0.48, 0, Math.PI * 2); ctx.fill();
+        } else if (styleIdx === 8) {
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 2; drawPolygonPath(ctx, 0, 0, b.r * 0.74, 3, b.rot); ctx.stroke();
+            ctx.strokeStyle = secCol; ctx.lineWidth = 2; drawPolygonPath(ctx, 0, 0, b.r * 0.74, 3, b.rot + Math.PI); ctx.stroke();
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 2); ctx.fill();
+        } else {
+            ctx.save(); ctx.rotate(b.rot);
+            ctx.strokeStyle = mainCol; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.ellipse(0, 0, b.r * 0.75, b.r * 0.3, 0, 0, Math.PI * 2); ctx.stroke();
+            ctx.strokeStyle = secCol;
+            ctx.beginPath(); ctx.ellipse(0, 0, b.r * 0.75, b.r * 0.3, Math.PI / 3, 0, Math.PI * 2); ctx.stroke();
+            ctx.beginPath(); ctx.ellipse(0, 0, b.r * 0.75, b.r * 0.3, -Math.PI / 3, 0, Math.PI * 2); ctx.stroke();
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(0, 0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
+
+        ctx.shadowBlur = 0;
+        const shine = ctx.createLinearGradient(0, -b.r, 0, 0);
+        shine.addColorStop(0, 'rgba(255,255,255,0.42)'); shine.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = shine; ctx.beginPath(); ctx.ellipse(0, -b.r * 0.42, b.r * 0.62, b.r * 0.32, 0, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
 
-        // ================= أرقام الكبسات والقنبلة فقط (باقي المقالب سرية 100%) =================
+        // يظهر فقط: أرقام الكبسات (x2/x3/x4) وعداد القنبلة الموقوتة — باقي المقالب سرية 100%
         if (b.armor > 1) {
-            ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : '#ffd700';
-            ctx.lineWidth = 4;
+            ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : '#ffd700'; ctx.lineWidth = 4;
             ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
-
-            ctx.fillStyle = 'rgba(5, 5, 12, 0.88)';
-            ctx.beginPath(); ctx.arc(b.x, b.y, 13.5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = 'rgba(5, 5, 12, 0.88)'; ctx.beginPath(); ctx.arc(b.x, b.y, 13.5, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2; ctx.stroke();
-
             ctx.font = '900 14px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            ctx.fillStyle = '#ffd700';
-            ctx.fillText('x' + b.armor, b.x, b.y + 1);
+            ctx.fillStyle = '#ffd700'; ctx.fillText('x' + b.armor, b.x, b.y + 1);
             return;
         }
 
         if (b.type === 'timebomb') {
             const rem = Math.max(0, (b.bombDeadline - ts) / 1000).toFixed(1);
-            ctx.fillStyle = 'rgba(0,0,0,0.88)';
-            ctx.beginPath(); ctx.arc(b.x, b.y, 14, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = 'rgba(0,0,0,0.88)'; ctx.beginPath(); ctx.arc(b.x, b.y, 14, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = '#ff4d4d'; ctx.lineWidth = 2; ctx.stroke();
             ctx.fillStyle = '#ff4d4d'; ctx.font = '900 11px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText(rem, b.x, b.y + 1);
