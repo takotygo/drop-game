@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v8.4</title>
+    <title>TAKO DROP | غدر الكرات v8.5</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -225,7 +225,7 @@
         .slider-row { background: rgba(7, 5, 16, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
         .cyber-slider { width: 100%; accent-color: var(--cyan); height: 6px; cursor: pointer; direction: ltr; }
 
-        /* ================= PROFILE, FRIENDS & CHAT ================= */
+        /* ================= PROFILE, TROPHIES, FRIENDS & CHAT ================= */
         .profile-hero-card {
             background: linear-gradient(135deg, rgba(24, 15, 48, 0.96) 0%, rgba(12, 8, 26, 0.98) 100%);
             border: 2px solid var(--cyan);
@@ -251,21 +251,54 @@
             cursor: pointer;
             direction: ltr;
         }
-        .ach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
-        .ach-badge {
+        .trophy-showcase-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .trophy-slot {
+            background: rgba(7, 5, 16, 0.85);
+            border: 1.5px dashed rgba(255, 215, 0, 0.35);
+            border-radius: 10px;
+            padding: 6px 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 62px;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .trophy-slot.filled {
+            border-style: solid;
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.18) 0%, rgba(18, 15, 34, 0.96) 100%);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+        }
+        .trophy-slot:active { transform: scale(0.92); }
+        .trophy-card {
             background: rgba(18, 15, 34, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 4px solid #475569;
             border-radius: 10px;
-            padding: 8px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 8px;
-            opacity: 0.45;
+            opacity: 0.52;
         }
-        .ach-badge.unlocked {
+        .trophy-card.unlocked {
             opacity: 1;
-            border-color: var(--gold);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(18, 15, 34, 0.95));
+            border-right-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(18, 15, 34, 0.96));
+        }
+        .trophy-card.pinned {
+            border-color: var(--cyan);
+            border-right-color: var(--cyan);
+            box-shadow: 0 0 14px rgba(0, 240, 255, 0.2);
         }
         .chat-wrap { display: flex; flex-direction: column; height: 100%; gap: 8px; }
         .chat-messages {
@@ -496,7 +529,7 @@
 
     <!-- LOGIN OVERLAY -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.4 PRO</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.5 FINAL</div>
         <div class="glitch-title" style="margin-bottom:6px;" data-i18n="login_title">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px; font-size:12px; color:#94a3b8; text-align:center;" data-i18n="login_sub">حسابك محمي بكلمة سر على السيرفر العالمي!</div>
 
@@ -544,7 +577,7 @@
 
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.4 PRO</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.5 FINAL</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -778,7 +811,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 7: CREATE MAP (WITH AUTO-BEATMAP) -->
+        <!-- PORTAL 7: CREATE MAP (WITH TRUE BASS BEATMAP GENERATOR) -->
         <div id="portal-editor" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--green);">🛠️ تصنيع ماب مع أغنية وتصنيف صعوبة</div>
@@ -825,7 +858,7 @@
                         </div>
                         <div class="editor-grid">
                             <label class="file-upload-lbl">
-                                📁 ارفع غناية من جهازك
+                                📁 ارفع غناية MP3 من جهازك
                                 <input type="file" id="ed-audio-file" accept="audio/*" style="display:none;" onchange="handleAudioFileUpload(event)">
                             </label>
                             <select id="ed-synth-preset" class="cyber-input" onchange="handlePresetAudioChange()">
@@ -975,7 +1008,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 13: PROFILE, FRIENDS, SEARCH & PRIVATE CHAT -->
+        <!-- PORTAL 13: PROFILE, TROPHIES, FRIENDS & PRIVATE CHAT -->
         <div id="portal-profile" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--cyan);">👤 ملفي الشخصي والأصدقاء</div>
@@ -988,10 +1021,8 @@
                     <button id="ptab-chat" class="sub-tab-btn" onclick="switchProfileTab('chat')">💬 الشات</button>
                 </div>
 
-                <!-- TAB 1: MY PROFILE -->
                 <div id="pview-myprofile" style="display:flex; flex-direction:column; gap:9px;"></div>
 
-                <!-- TAB 2: FRIENDS & SEARCH -->
                 <div id="pview-friends" class="hidden" style="display:flex; flex-direction:column; gap:9px;">
                     <div class="editor-box" style="border-color:var(--cyan); padding:10px;">
                         <div class="stage-title" style="color:var(--cyan); font-size:12.5px;">🔍 ابحث عن لاعب بالـ ID أو الاسم</div>
@@ -1011,7 +1042,6 @@
                     <div id="my-friends-list" style="display:flex; flex-direction:column; gap:7px;"></div>
                 </div>
 
-                <!-- TAB 3: PRIVATE CHAT -->
                 <div id="pview-chat" class="hidden chat-wrap">
                     <div id="chat-header-bar" class="stage-card" style="padding:8px 10px; margin-bottom:2px;">
                         <div class="stage-info">
@@ -1143,7 +1173,7 @@
 
     // ================= DROP PASS (30-DAY REAL-TIME TIMER + LTR HORIZONTAL) =================
     const XP_PER_PASS_LEVEL = 250;
-    const DROP_PASS_END_TIME = new Date('2026-12-20T03:08:00+03:00').getTime();
+    const DROP_PASS_END_TIME = new Date('2026-12-20T03:33:00+03:00').getTime();
 
     function updateDropPassTimer() {
         const diff = DROP_PASS_END_TIME - Date.now();
@@ -1721,7 +1751,7 @@
     // ================= CLOUD & AUTH =================
     let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v50') || '{}');
     let activeUserKey = localStorage.getItem('takoDropActiveUser_v50') || "";
-    let saveData = { username: "", password: "", playerId: "", high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
+    let saveData = { username: "", password: "", playerId: "", high: 0, xp: 0, maxCombo: 0, hcWins: 0, pvpWins: 0, pinnedTrophies: [], cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v50') || '{}');
 
     function sanitizeFirebaseKey(key) { return key.trim().toLowerCase().replace(/[.#$\[\]\/]/g, '_'); }
@@ -1830,6 +1860,7 @@
         if (!saveData.playerId) saveData.playerId = 'TK-' + Math.floor(10000 + Math.random() * 89999);
         if (!saveData.friends || typeof saveData.friends !== 'object') saveData.friends = {};
         if (!saveData.friendRequests || typeof saveData.friendRequests !== 'object') saveData.friendRequests = {};
+        if (!Array.isArray(saveData.pinnedTrophies)) saveData.pinnedTrophies = [];
         const reqCount = Object.keys(saveData.friendRequests).length;
         document.getElementById('friend-req-dot')?.classList.toggle('hidden', reqCount === 0);
     }
@@ -1860,11 +1891,11 @@
     async function checkAutoLogin() {
         initBallsUI(); initSettingsUI(); await syncFromCloud(false);
         if (sessionStorage.getItem('takoGhostAdminSession') === '1') {
-            saveData = { username: ADMIN_USERNAME, password: ADMIN_PASS, playerId: "TK-00001", high: 0, xp: 100000, cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1), skin: "ball_100", backlight: "bl_100", effect: "fx_100", vipPass: true, redeemedCodes: Array.from({ length: 20 }, (_, i) => i + 1), redeemedFxCodes: Array.from({ length: 20 }, (_, i) => i + 1), friends: {}, friendRequests: {}, banned: false };
+            saveData = { username: ADMIN_USERNAME, password: ADMIN_PASS, playerId: "TK-00001", high: 999, xp: 100000, maxCombo: 100, hcWins: 10, pvpWins: 10, pinnedTrophies: [], cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1), skin: "ball_100", backlight: "bl_100", effect: "fx_100", vipPass: true, redeemedCodes: Array.from({ length: 20 }, (_, i) => i + 1), redeemedFxCodes: Array.from({ length: 20 }, (_, i) => i + 1), friends: {}, friendRequests: {}, banned: false };
             document.getElementById('login-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); saveProgress(); return;
         }
         if (activeUserKey && accountsDB[activeUserKey] && !accountsDB[activeUserKey].banned) {
-            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[activeUserKey], cleared: accountsDB[activeUserKey].cleared || [] };
+            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", maxCombo: 0, hcWins: 0, pvpWins: 0, pinnedTrophies: [], vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[activeUserKey], cleared: accountsDB[activeUserKey].cleared || [] };
             document.getElementById('login-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); saveProgress();
         } else {
             document.getElementById('login-overlay').classList.remove('hidden'); document.getElementById('menu-overlay').classList.add('hidden');
@@ -1879,9 +1910,9 @@
         try { const res = await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`); if (res.ok) { const acc = await res.json(); if (acc) accountsDB[uKey] = acc; } } catch (e) {}
         if (accountsDB[uKey]) {
             if (String(accountsDB[uKey].password) !== String(p)) { showLoginMessage("❌ كلمة السر خاطئة!", "error"); return; }
-            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[uKey], cleared: accountsDB[uKey].cleared || [] };
+            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", maxCombo: 0, hcWins: 0, pvpWins: 0, pinnedTrophies: [], vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[uKey], cleared: accountsDB[uKey].cleared || [] };
         } else {
-            saveData = { username: u, password: p, playerId: 'TK-' + Math.floor(10000 + Math.random() * 89999), high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
+            saveData = { username: u, password: p, playerId: 'TK-' + Math.floor(10000 + Math.random() * 89999), high: 0, xp: 0, maxCombo: 0, hcWins: 0, pvpWins: 0, pinnedTrophies: [], cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
             accountsDB[uKey] = { ...saveData };
         }
         activeUserKey = uKey; saveProgress();
@@ -2125,8 +2156,10 @@
     }
     function toggleMusicMute() { isMusicMuted = !isMusicMuted; document.getElementById('hud-mute-btn').textContent = isMusicMuted ? '🔇' : '🔊'; try { stageAudioPlayer.volume = isMusicMuted ? 0 : musicVolume; } catch(e){} }
 
-    // ================= LEVEL EDITOR & AUTO-BEATMAP GENERATOR =================
+    // ================= LEVEL EDITOR & TRUE BASS BEATMAP GENERATOR =================
     let editorSpawns = [], editorAudioData = "SYNTH_2", editorAudioName = "⚡ Neon Arcade Rush";
+    let measuredFps = 60, _fpsLastTs = 0, _fpsFrames = 0;
+
     function renderCustomStagesList() {
         document.getElementById('my-custom-stages').innerHTML = Object.values(customStagesDB).map(st => st?.spawns ? `<div class="stage-card green"><div class="stage-info"><div class="stage-title">${st.title} [${st.id}]</div></div><button class="play-chip green" onclick="playStageById('${st.id}')"><span>العب ◀</span></button></div>` : '').join('');
     }
@@ -2157,14 +2190,15 @@
     function toggleEditorAudioPreview() { if (isPreviewingEditorAudio) stopStageAudio(); else { playStageAudio(editorAudioData); isPreviewingEditorAudio = true; } }
 
     async function autoGenerateBeatmap() {
-        if (!editorAudioData) { showToast("⚠️ اختر غناية أو ارفع ملف صوتي أولاً!", false); return; }
+        if (!editorAudioData) { showToast("⚠️ اختر غناية أو ارفع ملف MP3 من جهازك أولاً!", false); return; }
         const btn = document.getElementById('auto-beat-btn');
         const oldHtml = btn ? btn.innerHTML : '';
-        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳ جاري تحليل إيقاع الغناية...</span>'; }
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳ جاري عزل الإيقاع وتحليل ضربات البيس...</span>'; }
 
         const speedVal = parseFloat(document.getElementById('ed-speed')?.value) || 4.2;
         const diffKey = document.getElementById('ed-diff')?.value || 'easy_tako';
-        const travelSec = (hitY > 100 ? hitY : 520) / (speedVal * 60);
+        const distPx = (hitY > 100 ? hitY : 520) + 25;
+        const travelSec = distPx / (speedVal * Math.max(55, measuredFps));
         const maxBallTypes = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 40 : (diffKey === 'hard_tako' ? 22 : 10);
         const allowedTypes = BALL_KEYS.slice(0, maxBallTypes);
 
@@ -2173,51 +2207,77 @@
             if (editorAudioData.startsWith('SYNTH_')) {
                 const bpmMap = { SYNTH_1: 112, SYNTH_2: 130, SYNTH_3: 146 };
                 const stepSec = 60 / (bpmMap[editorAudioData] || 130);
-                for (let t = 1.2; t <= 45; t += stepSec) beatTimes.push(t);
+                for (let t = 1.0; t <= 45; t += stepSec) beatTimes.push(t);
             } else {
                 ensureAudioCtx();
                 const response = await fetch(editorAudioData);
                 const arrayBuffer = await response.arrayBuffer();
-                const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-                const rawData = audioBuffer.getChannelData(0);
-                const sampleRate = audioBuffer.sampleRate;
-                const windowSize = Math.floor(sampleRate * 0.05);
-                const energies = [];
+                const decoded = await audioCtx.decodeAudioData(arrayBuffer);
 
-                for (let i = 0; i < rawData.length; i += windowSize) {
+                const offline = new OfflineAudioContext(1, decoded.length, decoded.sampleRate);
+                const src = offline.createBufferSource();
+                src.buffer = decoded;
+                const filter = offline.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 160;
+                src.connect(filter);
+                filter.connect(offline.destination);
+                src.start(0);
+                const filteredBuf = await offline.startRendering();
+
+                const data = filteredBuf.getChannelData(0);
+                const sr = filteredBuf.sampleRate;
+                const win = Math.floor(sr * 0.02);
+                const energies = [];
+                for (let i = 0; i < data.length; i += win) {
                     let sum = 0;
-                    const end = Math.min(i + windowSize, rawData.length);
-                    for (let j = i; j < end; j++) sum += rawData[j] * rawData[j];
+                    const end = Math.min(i + win, data.length);
+                    for (let j = i; j < end; j++) sum += data[j] * data[j];
                     energies.push(Math.sqrt(sum / (end - i)));
                 }
 
-                const minGapSec = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 0.34 : 0.48;
-                let lastBeatTime = -1;
-                for (let i = 10; i < energies.length - 10; i++) {
-                    let localAvg = 0;
-                    for (let k = i - 10; k <= i + 10; k++) localAvg += energies[k];
-                    localAvg /= 21;
-                    const currentTime = (i * windowSize) / sampleRate;
-                    if (energies[i] > localAvg * 1.38 && energies[i] > 0.06 && energies[i] >= energies[i - 1] && energies[i] >= energies[i + 1] && (currentTime - lastBeatTime) >= minGapSec) {
-                        beatTimes.push(currentTime); lastBeatTime = currentTime;
+                const minGapSec = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 0.28 : 0.42;
+                let lastBeat = -1;
+                for (let i = 15; i < energies.length - 15; i++) {
+                    let avg = 0;
+                    for (let k = i - 15; k <= i + 15; k++) avg += energies[k];
+                    avg /= 31;
+
+                    const flux = energies[i] - energies[i - 1];
+                    const tNow = (i * win) / sr;
+                    if (
+                        energies[i] > avg * 1.45 &&
+                        flux > 0.015 &&
+                        energies[i] >= energies[i - 1] &&
+                        energies[i] >= energies[i + 1] &&
+                        (tNow - lastBeat) >= minGapSec &&
+                        tNow >= travelSec
+                    ) {
+                        beatTimes.push(tNow);
+                        lastBeat = tNow;
                     }
                 }
             }
         } catch (err) {
-            for (let t = 1.2; t <= 35; t += 0.52) beatTimes.push(t);
-            showToast("⚡ تم توليد إيقاع تلقائي (الرابط الخارجي محمي)", true);
+            if (btn) { btn.disabled = false; btn.innerHTML = oldHtml; }
+            showToast("❌ هذا الرابط محمي ولا يسمح بتحليل الإيقاع! ارفع ملف MP3 من جهازك.", false);
+            return;
         }
 
-        if (beatTimes.length === 0) for (let t = 1.2; t <= 30; t += 0.55) beatTimes.push(t);
+        if (beatTimes.length < 3) {
+            if (btn) { btn.disabled = false; btn.innerHTML = oldHtml; }
+            showToast("⚠️ لم يتم التقاط إيقاع واضح في هذا الملف!", false);
+            return;
+        }
 
         editorSpawns = [];
         let lastLane = -1;
         beatTimes.forEach((beatT, idx) => {
-            const spawnT = Math.max(0.2, +(beatT - travelSec).toFixed(2));
+            const spawnT = Math.max(0.05, +(beatT - travelSec).toFixed(3));
             let lane = Math.floor(Math.random() * 4);
             if (lane === lastLane) lane = (lane + 1 + Math.floor(Math.random() * 2)) % 4;
             lastLane = lane;
-            const type = (idx % 4 === 3) ? allowedTypes[Math.floor(Math.random() * allowedTypes.length)] : 'normal';
+            const type = (idx % 5 === 4) ? allowedTypes[Math.floor(Math.random() * allowedTypes.length)] : 'normal';
             editorSpawns.push({ lane, type, time: spawnT, speed: speedVal });
         });
 
@@ -2225,7 +2285,7 @@
         addBallToEditorRender();
         if (btn) { btn.disabled = false; btn.innerHTML = oldHtml; }
         playSfxTone(820, 'triangle', 0.14, 0.2);
-        showToast(`🎵 تم توزيع ${editorSpawns.length} طابة على إيقاع الغناية!`, true);
+        showToast(`🎵 تم التقاط ${editorSpawns.length} دقة إيقاع حقيقية!`, true);
     }
 
     // ================= OPTIMIZED CINEMATIC BACKLIGHT & 3D MYTHIC BALL RENDERER =================
@@ -2467,7 +2527,7 @@
         }
     }
 
-    // ================= FULL 40-BALL GAMEPLAY ENGINE (OPTIMIZED) =================
+    // ================= FULL 40-BALL GAMEPLAY ENGINE (OPTIMIZED + AUDIO SYNC) =================
     let curStage = 1, customMode = false, activeCustomStage = null, customQueue = [], stageStartTime = 0;
     let score = 0, pendingStageXP = 0, clearedBallsCount = 0, combo = 0, hearts = 3, active = false;
     let balls = [], particles = [], shockwaves = [], floatTexts = [], lastSpawn = 0, hitY = 0, lanes = [0, 0, 0, 0], gridOffset = 0;
@@ -2549,6 +2609,7 @@
 
     function rewardBallSuccess(ballType, x, y, customLabel, acc = 1.0) {
         combo++;
+        if (combo > (saveData.maxCombo || 0)) saveData.maxCombo = combo;
         const meta = BALL_META[ballType] || BALL_META.normal;
         const hc = document.getElementById('hardcore-toggle').checked ? 2 : 1;
         const fever = combo >= 12 ? 2 : 1;
@@ -2606,13 +2667,21 @@
     window.addEventListener('keydown', e => { if (e.repeat) return; const k = e.key.toLowerCase(); if (k==='d'||k==='1') pressLane(0); if (k==='f'||k==='2') pressLane(1); if (k==='j'||k==='3') pressLane(2); if (k==='k'||k==='4') pressLane(3); });
 
     function loop(ts) {
+        _fpsFrames++;
+        if (ts - _fpsLastTs >= 500) {
+            measuredFps = Math.round((_fpsFrames * 1000) / (ts - _fpsLastTs));
+            _fpsFrames = 0; _fpsLastTs = ts;
+        }
+
         const speedFactor = ts < slowMoUntil ? 0.48 : 1.0;
         const activeSkinObj = getSkinObj(saveData.skin), activeBlObj = getBacklightObj(saveData.backlight);
         beatPulseRadius = Math.max(0, beatPulseRadius - 0.35);
 
         if (active) {
             if (customMode) {
-                const elapsed = (ts - stageStartTime) / 1000;
+                const elapsed = (!stageAudioPlayer.paused && stageAudioPlayer.currentTime > 0)
+                    ? stageAudioPlayer.currentTime
+                    : (ts - stageStartTime) / 1000;
                 while (customQueue.length && elapsed >= customQueue[0].time) { const it = customQueue.shift(); spawnBallWithExtras(it.lane, it.type, it.speed); }
             } else if (ts - lastSpawn > STAGES[curStage].spawn) {
                 spawnBallWithExtras(Math.floor(Math.random() * 4), pickType(STAGES[curStage].p), STAGES[curStage].speed); lastSpawn = ts;
@@ -2789,6 +2858,8 @@
             let bonus = 0;
             if (!customMode && !saveData.cleared.includes(curStage) && curStage <= TOTAL_STAGES) { saveData.cleared.push(curStage); bonus = curStage * 10; }
             const totalXP = pendingStageXP + bonus;
+            if (document.getElementById('hardcore-toggle')?.checked) saveData.hcWins = (saveData.hcWins || 0) + 1;
+            if (activePvpRoomCode) saveData.pvpWins = (saveData.pvpWins || 0) + 1;
             saveData.xp = (saveData.xp || 0) + totalXP; saveProgress();
             t.textContent = activePvpRoomCode ? `انتهت معركة الـ 1vs1! ⚔️🏆` : `اجتزت المرحلة بنجاح! 🏆🔥`;
             d.textContent = `كسبت +${totalXP} XP | مستواك في الدروب باس: LVL ${getDropPassLevel(saveData.xp)}`;
@@ -2805,7 +2876,7 @@
     function retryStage() { if (customMode) startCustomStage(activeCustomStage, !!activePvpRoomCode); else startStage(curStage); }
     function openMenu() { active = false; stopStageAudio(); if (pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; } saveProgress(); syncFromCloud(false); document.getElementById('result-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); }
 
-    // ================= PROFILE, UNIQUE PLAYER ID, FRIENDS & PRIVATE CHAT =================
+    // ================= PROFILE, 24 TROPHIES SHOWCASE, FRIENDS & PRIVATE CHAT =================
     let currentProfileTab = 'myprofile', activeChatFriendKey = '', activeChatFriendName = '', chatPollInterval = null;
 
     function copyMyPlayerId() {
@@ -2827,23 +2898,102 @@
         else if (tab === 'chat' && activeChatFriendKey) startChatPolling();
     }
 
+    function getTrophiesList() {
+        const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
+        const cleared = (saveData.cleared || []).length;
+        const high = saveData.high || 0;
+        const maxCombo = saveData.maxCombo || 0;
+        const hcWins = saveData.hcWins || 0;
+        const pvpWins = saveData.pvpWins || 0;
+        const friendsCount = Object.keys(saveData.friends || {}).length;
+        const myMaps = Object.values(customStagesDB).filter(m => m && m.creator && m.creator.toLowerCase() === (saveData.username || '').toLowerCase()).length;
+        const ownedBalls = SKINS_CATALOG.filter(s => isCosmeticUnlocked(s)).length;
+        const ownedBls = BACKLIGHTS_CATALOG.filter(b => isCosmeticUnlocked(b)).length;
+        const ownedFx = EFFECTS_CATALOG.filter(e => isCosmeticUnlocked(e)).length;
+
+        return [
+            { id: 't_first',   icon: '🎯', name: 'بداية الأسطورة',   desc: 'اختم أول مرحلة باللعبة',              done: cleared >= 1 },
+            { id: 't_st10',    icon: '🔥', name: 'متحدي السايبر',    desc: 'اختم 10 مراحل',                       done: cleared >= 10 },
+            { id: 't_st25',    icon: '⚡', name: 'سيد السرعة',       desc: 'اختم 25 مرحلة',                       done: cleared >= 25 },
+            { id: 't_tut40',   icon: '🎓', name: 'خريج التتوريال',   desc: 'اختم كل الـ 40 تتوريال',              done: cleared >= 40 },
+            { id: 't_st50',    icon: '💀', name: 'الوحش الرسمي',     desc: 'اختم 50 مرحلة',                       done: cleared >= 50 },
+            { id: 't_all62',   icon: '👑', name: 'قاهر TAKO DROP',   desc: 'اختم جميع الـ 62 مرحلة بالكامل',      done: cleared >= 62 },
+            { id: 't_cmb15',   icon: '🎶', name: 'إيقاع ناري',       desc: 'حقق كومبو 15 متتالي',                 done: maxCombo >= 15 },
+            { id: 't_cmb35',   icon: '☄️', name: 'إعصار الكومبو',    desc: 'حقق كومبو 35 متتالي',                 done: maxCombo >= 35 },
+            { id: 't_cmb70',   icon: '🌌', name: 'آلة بدون أخطاء',   desc: 'حقق كومبو 70 متتالي',                 done: maxCombo >= 70 },
+            { id: 't_sc100',   icon: '💯', name: 'نادي المئة',       desc: 'وصل لأعلى سكور 100 نقطة',             done: high >= 100 },
+            { id: 't_sc300',   icon: '🚀', name: 'سكور خارق',        desc: 'وصل لأعلى سكور 300 نقطة',             done: high >= 300 },
+            { id: 't_sc700',   icon: '🐉', name: 'أسطورة السكور',    desc: 'وصل لأعلى سكور 700 نقطة',             done: high >= 700 },
+            { id: 't_hc1',     icon: '💔', name: 'أعصاب فولاذية',    desc: 'اربح مرحلة واحدة بطور الجلطة',        done: hcWins >= 1 },
+            { id: 't_hc5',     icon: '😈', name: 'ملك الجلطة',       desc: 'اربح 5 مراحل بطور الجلطة',            done: hcWins >= 5 },
+            { id: 't_pvp1',    icon: '⚔️', name: 'مبارز الأونلاين',  desc: 'العب وانهي تحدي 1v1',                 done: pvpWins >= 1 },
+            { id: 't_pvp5',    icon: '🏆', name: 'بطل الرومات',      desc: 'انهي 5 تحديات 1v1',                   done: pvpWins >= 5 },
+            { id: 't_map1',    icon: '🛠️', name: 'مهندس مابات',      desc: 'اصنع وارفع ماب خاص بك',               done: myMaps >= 1 },
+            { id: 't_map3',    icon: '🏗️', name: 'معماري محترف',     desc: 'اصنع وارفع 3 مابات',                  done: myMaps >= 3 },
+            { id: 't_fr1',     icon: '🤝', name: 'صديق جديد',        desc: 'أضف أول صديق لقائمتك',                done: friendsCount >= 1 },
+            { id: 't_fr5',     icon: '🌟', name: 'شعبية كبيرة',      desc: 'اجمع 5 أصدقاء بقائمتك',               done: friendsCount >= 5 },
+            { id: 't_ball15',  icon: '⚽', name: 'جامع الطابات',     desc: 'افتح 15 طابة أو أكثر',                done: ownedBalls >= 15 },
+            { id: 't_bl15',    icon: '✨', name: 'سيد النيون',       desc: 'افتح 15 باك لايت أو أكثر',            done: ownedBls >= 15 },
+            { id: 't_fx10',    icon: '💥', name: 'خبير الانفجارات',  desc: 'افتح 10 تأثيرات انفجار',              done: ownedFx >= 10 },
+            { id: 't_xp100k',  icon: '🔱', name: 'Insane Tako',      desc: 'وصل لـ 100,000 XP',                   done: myXP >= 100000 }
+        ];
+    }
+
+    function togglePinTrophy(trophyId) {
+        if (!Array.isArray(saveData.pinnedTrophies)) saveData.pinnedTrophies = [];
+        const all = getTrophiesList();
+        const t = all.find(x => x.id === trophyId);
+        if (!t || !t.done) { showToast("🔒 خلّص التحدي أولاً لتعرضه ببروفايلك!", false); return; }
+
+        const idx = saveData.pinnedTrophies.indexOf(trophyId);
+        if (idx >= 0) {
+            saveData.pinnedTrophies.splice(idx, 1);
+            playSfxTone(420, 'sine', 0.08, 0.15);
+            showToast("تمت إزالة التروفي من الواجهة", true);
+        } else {
+            if (saveData.pinnedTrophies.length >= 5) {
+                playSfxTone(160, 'sawtooth', 0.15, 0.2);
+                showToast("⚠️ الحد الأقصى 5 تروفيات! أزل واحداً أولاً.", false);
+                return;
+            }
+            saveData.pinnedTrophies.push(trophyId);
+            playSfxTone(820, 'triangle', 0.12, 0.2);
+            showToast(`📌 تم عرض [${t.name}] ببروفايلك!`, true);
+        }
+        saveProgress();
+        renderMyProfileView();
+    }
+
     function renderMyProfileView() {
         ensurePlayerId();
         const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
         const { current: rank } = getRankByXP(myXP);
         const clearedCount = (saveData.cleared || []).length;
         const ownedBalls = SKINS_CATALOG.filter(s => isCosmeticUnlocked(s)).length;
-        const ownedBls = BACKLIGHTS_CATALOG.filter(b => isCosmeticUnlocked(b)).length;
         const myMaps = Object.values(customStagesDB).filter(m => m && m.creator && m.creator.toLowerCase() === (saveData.username || '').toLowerCase());
 
-        const achievements = [
-            { icon: '🎯', name: 'بداية الأسطورة', desc: 'اختم أول مرحلة', done: clearedCount >= 1 },
-            { icon: '🎓', name: 'خريج التتوريال', desc: 'اختم 40 تتوريال', done: clearedCount >= 40 },
-            { icon: '👑', name: 'قاهر اللعبة', desc: 'اختم كل الـ 62 مرحلة', done: clearedCount >= 62 },
-            { icon: '🛠️', name: 'مهندس مابات', desc: 'اصنع ماب واحد على الأقل', done: myMaps.length >= 1 },
-            { icon: '🎨', name: 'جامع الطابات', desc: 'افتح 15 طابة أو أكثر', done: ownedBalls >= 15 },
-            { icon: '⚡', name: 'طاقة خارقة', desc: 'وصل لـ 10,000 XP', done: myXP >= 10000 }
-        ];
+        const trophies = getTrophiesList();
+        const unlockedCount = trophies.filter(t => t.done).length;
+        saveData.pinnedTrophies = saveData.pinnedTrophies.filter(id => trophies.some(t => t.id === id && t.done)).slice(0, 5);
+
+        let showcaseHTML = '';
+        for (let i = 0; i < 5; i++) {
+            const pid = saveData.pinnedTrophies[i];
+            const tr = pid ? trophies.find(x => x.id === pid) : null;
+            if (tr) {
+                showcaseHTML += `
+                <div class="trophy-slot filled" onclick="togglePinTrophy('${tr.id}')" title="اضغط للإزالة">
+                    <span style="font-size:20px;">${tr.icon}</span>
+                    <span style="font-size:8.5px; font-weight:900; color:var(--gold); line-height:1.15; margin-top:2px;">${tr.name}</span>
+                </div>`;
+            } else {
+                showcaseHTML += `
+                <div class="trophy-slot">
+                    <span style="font-size:15px; opacity:0.35;">➕</span>
+                    <span style="font-size:8px; color:#64748b;">فارغ</span>
+                </div>`;
+            }
+        }
 
         const mapsHTML = myMaps.length
             ? myMaps.map(m => `<div class="stage-card green" style="padding:7px 10px;"><div class="stage-info"><div class="stage-title" style="font-size:12px;">🛠️ ${m.title} <span dir="ltr" style="color:var(--green);">[${m.id}]</span></div></div><button class="play-chip green" onclick="playStageById('${m.id}')"><span>العب ◀</span></button></div>`).join('')
@@ -2861,22 +3011,34 @@
                     </div>
                 </div>
                 <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-label">المراحل المختومة</div><div class="stat-val val-cyan">${clearedCount}/${TOTAL_STAGES}</div></div>
-                    <div class="stat-card"><div class="stat-label">الطابات المفتوحة</div><div class="stat-val val-yellow">${ownedBalls}/100</div></div>
-                    <div class="stat-card"><div class="stat-label">الباك لايت</div><div class="stat-val val-cyan">${ownedBls}/100</div></div>
+                    <div class="stat-card"><div class="stat-label">المراحل</div><div class="stat-val val-cyan">${clearedCount}/${TOTAL_STAGES}</div></div>
+                    <div class="stat-card"><div class="stat-label">الطابات</div><div class="stat-val val-yellow">${ownedBalls}/100</div></div>
+                    <div class="stat-card"><div class="stat-label">التروفيات</div><div class="stat-val val-cyan">${unlockedCount}/${trophies.length}</div></div>
+                </div>
+                <div>
+                    <div style="font-size:11px; font-weight:900; color:var(--gold);">🏆 واجهة التروفيات المعروضة (${saveData.pinnedTrophies.length}/5) — اضغط على تروفي لإزالته:</div>
+                    <div class="trophy-showcase-row">${showcaseHTML}</div>
                 </div>
             </div>
 
-            <div style="font-size:12.5px; font-weight:900; color:var(--gold);">🏅 الإنجازات (${achievements.filter(a => a.done).length}/${achievements.length}):</div>
-            <div class="ach-grid">
-                ${achievements.map(a => `
-                    <div class="ach-badge ${a.done ? 'unlocked' : ''}">
-                        <span style="font-size:20px;">${a.icon}</span>
-                        <div>
-                            <div style="font-size:11px; font-weight:900; color:${a.done ? 'var(--gold)' : '#94a3b8'};">${a.name}</div>
-                            <div style="font-size:9.5px; color:#94a3b8;">${a.desc}</div>
+            <div style="font-size:12.5px; font-weight:900; color:var(--gold);">🏅 جميع التحديات والتروفيات (${unlockedCount}/${trophies.length}):</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                ${trophies.map(t => {
+                    const isPinned = saveData.pinnedTrophies.includes(t.id);
+                    const btnTxt = !t.done ? '🔒 مغلق' : (isPinned ? 'معروض ✅' : '📌 عرض');
+                    const btnCls = !t.done ? 'locked-btn' : (isPinned ? 'green' : 'yellow');
+                    return `
+                    <div class="trophy-card ${t.done ? 'unlocked' : ''} ${isPinned ? 'pinned' : ''}">
+                        <div style="display:flex; align-items:center; gap:9px; flex:1;">
+                            <span style="font-size:22px;">${t.icon}</span>
+                            <div>
+                                <div style="font-size:12px; font-weight:900; color:${t.done ? 'var(--gold)' : '#94a3b8'};">${t.name}</div>
+                                <div style="font-size:10px; color:#94a3b8;">${t.desc}</div>
+                            </div>
                         </div>
-                    </div>`).join('')}
+                        <button class="play-chip ${btnCls}" style="padding:5px 9px; font-size:10.5px;" onclick="togglePinTrophy('${t.id}')"><span>${btnTxt}</span></button>
+                    </div>`;
+                }).join('')}
             </div>
 
             <div style="font-size:12.5px; font-weight:900; color:var(--green);">🛠️ المابات التي صنعتها (${myMaps.length}):</div>
