@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#070510">
-    <title>TAKO DROP | غدر الكرات v8.3</title>
+    <title>TAKO DROP | غدر الكرات v8.4</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Orbitron:wght@700;900&display=swap');
 
@@ -200,8 +200,8 @@
         .pass-equip-btn.equipped { background: var(--green); color: #05050a; }
         .pass-equip-btn.locked { background: rgba(255, 255, 255, 0.08); color: #64748b; }
 
-        .sub-tabs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-        .sub-tab-btn { background: rgba(18, 15, 34, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; padding: 9px; border-radius: 10px; font-size: 12.5px; font-weight: 900; cursor: pointer; text-align: center; }
+        .sub-tabs-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+        .sub-tab-btn { background: rgba(18, 15, 34, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; padding: 8px 4px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; text-align: center; }
         .sub-tab-btn.active { background: linear-gradient(135deg, rgba(0, 240, 255, 0.22), rgba(184, 41, 255, 0.22)); border-color: var(--cyan); color: #fff; box-shadow: 0 0 14px rgba(0, 240, 255, 0.3); }
 
         .pass-banner {
@@ -224,6 +224,95 @@
 
         .slider-row { background: rgba(7, 5, 16, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
         .cyber-slider { width: 100%; accent-color: var(--cyan); height: 6px; cursor: pointer; direction: ltr; }
+
+        /* ================= PROFILE, FRIENDS & CHAT ================= */
+        .profile-hero-card {
+            background: linear-gradient(135deg, rgba(24, 15, 48, 0.96) 0%, rgba(12, 8, 26, 0.98) 100%);
+            border: 2px solid var(--cyan);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 0 22px rgba(0, 240, 255, 0.2);
+        }
+        .profile-id-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 240, 255, 0.14);
+            border: 1px dashed var(--cyan);
+            color: var(--cyan);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11.5px;
+            font-weight: 900;
+            cursor: pointer;
+            direction: ltr;
+        }
+        .ach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+        .ach-badge {
+            background: rgba(18, 15, 34, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.45;
+        }
+        .ach-badge.unlocked {
+            opacity: 1;
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(18, 15, 34, 0.95));
+        }
+        .chat-wrap { display: flex; flex-direction: column; height: 100%; gap: 8px; }
+        .chat-messages {
+            flex: 1;
+            min-height: 240px;
+            max-height: 55vh;
+            overflow-y: auto;
+            background: rgba(7, 5, 16, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .chat-msg {
+            max-width: 82%;
+            padding: 8px 11px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .chat-msg.me {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #0284c7, #00f0ff);
+            color: #05050a;
+            border-bottom-right-radius: 3px;
+        }
+        .chat-msg.them {
+            align-self: flex-end;
+            background: rgba(30, 24, 54, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-bottom-left-radius: 3px;
+        }
+        .chat-challenge-card {
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.25), rgba(184, 41, 255, 0.25));
+            border: 1.5px solid var(--pink);
+            border-radius: 10px;
+            padding: 9px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
         /* ================= SONG CARDS ================= */
         .song-card { background: rgba(18, 15, 34, 0.95); border: 1px solid rgba(255, 255, 255, 0.09); border-right: 4px solid #ec4899; border-radius: 12px; padding: 10px; display: flex; align-items: flex-start; gap: 10px; }
@@ -337,10 +426,6 @@
         .adm-del { background: rgba(255, 0, 85, 0.25); border: 1px solid var(--pink); color: #fda4af; }
 
         .rank-row { display: flex; align-items: center; justify-content: space-between; background: rgba(18, 15, 34, 0.92); border: 1px solid rgba(255, 255, 255, 0.06); padding: 8px 10px; border-radius: 9px; font-size: 12px; font-weight: 800; gap: 6px; }
-        .rank-badge { min-width: 32px; height: 24px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 10px; direction: ltr; }
-        .rank-1 { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #000; }
-        .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #000; }
-        .rank-3 { background: linear-gradient(135deg, #d97706, #92400e); color: #fff; }
 
         #login-msg { font-size: 12px; font-weight: 800; padding: 8px 10px; border-radius: 6px; text-align: center; display: none; }
         #login-msg.error { display: block; background: rgba(255, 0, 85, 0.2); border: 1px solid var(--pink); color: #fda4af; }
@@ -411,7 +496,7 @@
 
     <!-- LOGIN OVERLAY -->
     <div id="login-overlay" class="overlay hidden" style="justify-content:center; align-items:center;">
-        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 FINAL</div>
+        <div class="cyber-badge" dir="ltr">TAKO DROP // v8.4 PRO</div>
         <div class="glitch-title" style="margin-bottom:6px;" data-i18n="login_title">تسجيل الدخول العالمي</div>
         <div class="menu-subtitle" style="margin-bottom:16px; font-size:12px; color:#94a3b8; text-align:center;" data-i18n="login_sub">حسابك محمي بكلمة سر على السيرفر العالمي!</div>
 
@@ -440,6 +525,10 @@
                 <span id="top-rank-badge" class="rank-tag">🥉 Bronze</span>
             </div>
             <div class="top-actions">
+                <button class="top-btn-mini" onclick="openPortal('profile', event)" title="ملفي والأصدقاء" style="border-color:var(--gold); color:var(--gold);">
+                    👤
+                    <span id="friend-req-dot" class="mail-dot hidden"></span>
+                </button>
                 <button class="top-btn-admin hidden" id="admin-top-btn" onclick="openPortal('admin', event)">👑 الأدمن</button>
                 <button class="top-btn-pass" onclick="openPortal('droppass', event)">🎫 Drop Pass</button>
                 <button class="top-btn-mini" onclick="openPortal('mail', event)" title="صندوق البريد">
@@ -455,7 +544,7 @@
 
         <div class="hub-container">
             <div class="hub-header">
-                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.3 FINAL</div>
+                <div class="cyber-badge" dir="ltr">TAKO DROP // v8.4 PRO</div>
                 <div class="glitch-title" dir="ltr">TAKO DROP</div>
             </div>
 
@@ -546,7 +635,7 @@
             </div>
         </div>
 
-        <!-- PORTAL 2: HORIZONTAL DROP PASS (LTR + 30-DAY TIMER + DIRECT WHATSAPP BUY) -->
+        <!-- PORTAL 2: HORIZONTAL DROP PASS -->
         <div id="portal-droppass" class="portal-modal">
             <div class="portal-header">
                 <div class="portal-title" style="color:var(--gold);">🎫 الموسم الأول: DROP PASS (LVL 1 - 100)</div>
@@ -579,16 +668,17 @@
             </div>
         </div>
 
-        <!-- PORTAL 3: 100 BALL SKINS + 100 BACKLIGHT TRAILS (LIVE CANVAS PREVIEWS) -->
+        <!-- PORTAL 3: 100 BALLS + 100 BACKLIGHTS + 100 EFFECTS -->
         <div id="portal-skins" class="portal-modal">
             <div class="portal-header">
-                <div class="portal-title" style="color:var(--cyan);">🎨 خزانة الأشكال (100 طابة + 100 باك لايت)</div>
+                <div class="portal-title" style="color:var(--cyan);">🎨 خزانة الأشكال (طابات + باك لايت + تأثيرات)</div>
                 <button class="close-portal-btn" onclick="closePortal('skins')">✖ إغلاق</button>
             </div>
             <div class="portal-body">
                 <div class="sub-tabs-row">
-                    <button id="tab-btn-balls" class="sub-tab-btn active" onclick="switchCosmeticTab('balls')">⚽ أشكال الطابات (100)</button>
-                    <button id="tab-btn-backlights" class="sub-tab-btn" onclick="switchCosmeticTab('backlights')">✨ خطوط الباك لايت (100)</button>
+                    <button id="tab-btn-balls" class="sub-tab-btn active" onclick="switchCosmeticTab('balls')">⚽ الطابات (100)</button>
+                    <button id="tab-btn-backlights" class="sub-tab-btn" onclick="switchCosmeticTab('backlights')">✨ باك لايت (100)</button>
+                    <button id="tab-btn-effects" class="sub-tab-btn" onclick="switchCosmeticTab('effects')">💥 التأثيرات (100)</button>
                 </div>
                 <div id="skins-list-container" style="display:flex; flex-direction:column; gap:8px;"></div>
             </div>
@@ -630,7 +720,7 @@
 
                 <div class="editor-box" style="border-color:var(--gold);">
                     <div class="stage-title" style="color:var(--gold);">🎁 مكان إدخال الأكواد السرية (Redeem Codes)</div>
-                    <div class="stage-desc">أدخل كود الهدية لفتح أشكال طابات وألوان باك لايت سرية وحصرية!</div>
+                    <div class="stage-desc">أدخل كود الهدية لفتح أشكال طابات وألوان باك لايت وتأثيرات حصرية!</div>
                     <div class="id-search-bar" style="border-color:var(--gold);">
                         <input type="text" id="promo-code-input" class="cyber-input" dir="ltr" placeholder="اكتب الكود هنا...">
                         <button class="play-chip yellow" onclick="redeemSecretCode()"><span>تفعيل 🎁</span></button>
@@ -884,6 +974,61 @@
                 <div id="admin-users-container" style="display:flex; flex-direction:column; gap:9px;"></div>
             </div>
         </div>
+
+        <!-- PORTAL 13: PROFILE, FRIENDS, SEARCH & PRIVATE CHAT -->
+        <div id="portal-profile" class="portal-modal">
+            <div class="portal-header">
+                <div class="portal-title" style="color:var(--cyan);">👤 ملفي الشخصي والأصدقاء</div>
+                <button class="close-portal-btn" onclick="closePortal('profile')">✖ إغلاق</button>
+            </div>
+            <div class="portal-body" style="display:flex; flex-direction:column;">
+                <div class="sub-tabs-row">
+                    <button id="ptab-myprofile" class="sub-tab-btn active" onclick="switchProfileTab('myprofile')">👤 ملفي</button>
+                    <button id="ptab-friends" class="sub-tab-btn" onclick="switchProfileTab('friends')">🤝 الأصدقاء</button>
+                    <button id="ptab-chat" class="sub-tab-btn" onclick="switchProfileTab('chat')">💬 الشات</button>
+                </div>
+
+                <!-- TAB 1: MY PROFILE -->
+                <div id="pview-myprofile" style="display:flex; flex-direction:column; gap:9px;"></div>
+
+                <!-- TAB 2: FRIENDS & SEARCH -->
+                <div id="pview-friends" class="hidden" style="display:flex; flex-direction:column; gap:9px;">
+                    <div class="editor-box" style="border-color:var(--cyan); padding:10px;">
+                        <div class="stage-title" style="color:var(--cyan); font-size:12.5px;">🔍 ابحث عن لاعب بالـ ID أو الاسم</div>
+                        <div class="id-search-bar" style="border-color:var(--cyan);">
+                            <input type="text" id="friend-search-input" class="cyber-input" placeholder="مثال: TK-48291 أو اسم اللاعب...">
+                            <button class="play-chip" onclick="searchPlayersOnline()"><span>بحث 🔍</span></button>
+                        </div>
+                        <div id="friend-search-results" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
+                    </div>
+
+                    <div id="friend-requests-section" class="hidden" style="display:flex; flex-direction:column; gap:6px;">
+                        <div style="font-size:12.5px; font-weight:900; color:var(--yellow);">📩 طلبات صداقة واردة:</div>
+                        <div id="friend-requests-list" style="display:flex; flex-direction:column; gap:6px;"></div>
+                    </div>
+
+                    <div style="font-size:12.5px; font-weight:900; color:var(--green);">👥 قائمة أصدقائي:</div>
+                    <div id="my-friends-list" style="display:flex; flex-direction:column; gap:7px;"></div>
+                </div>
+
+                <!-- TAB 3: PRIVATE CHAT -->
+                <div id="pview-chat" class="hidden chat-wrap">
+                    <div id="chat-header-bar" class="stage-card" style="padding:8px 10px; margin-bottom:2px;">
+                        <div class="stage-info">
+                            <div class="stage-title" id="chat-friend-name" style="color:var(--cyan);">اختر صديقاً لبدء المحادثة 💬</div>
+                        </div>
+                        <button id="chat-1v1-btn" class="play-chip pink hidden" onclick="sendDirect1v1Challenge()"><span>⚔️ تحدي 1v1</span></button>
+                    </div>
+                    <div id="chat-messages-box" class="chat-messages">
+                        <div style="text-align:center; color:#64748b; font-size:12px; margin:auto;">اختر صديقاً من قائمة الأصدقاء لفتح الشات الخاص!</div>
+                    </div>
+                    <div id="chat-input-bar" class="id-search-bar hidden" style="border-color:var(--cyan);">
+                        <input type="text" id="chat-msg-input" class="cyber-input" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter') sendPrivateChatMessage()">
+                        <button class="play-chip" onclick="sendPrivateChatMessage()"><span>إرسال ➤</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- RESULT OVERLAY -->
@@ -907,6 +1052,7 @@
     const ctx = canvas.getContext('2d');
     const app = document.getElementById('app');
     const toast = document.getElementById('toast');
+    const laneBtnEls = [0, 1, 2, 3].map(i => document.getElementById('btn-' + i));
 
     function isCurrentUserAdmin() {
         return saveData &&
@@ -915,7 +1061,7 @@
                String(saveData.password) === ADMIN_PASS;
     }
 
-    // ================= 20 SECRET PROMO CODES =================
+    // ================= 20 BALL/BACKLIGHT CODES + 20 EFFECT CODES =================
     const SECRET_CODES_MAP = {
         "TAKO-VIP1": 1, "TAKO-VIP2": 2, "TAKO-VIP3": 3, "TAKO-VIP4": 4, "TAKO-VIP5": 5,
         "TAKO-VIP6": 6, "TAKO-VIP7": 7, "TAKO-VIP8": 8, "TAKO-VIP9": 9, "TAKO-VIP10": 10,
@@ -923,7 +1069,14 @@
         "SYRIA-2026": 16, "GHOST-777": 17, "DEMON-999": 18, "ULTRA-MAX": 19, "TAKO-100K": 20
     };
 
-    // ================= 100 LUXURY BALL SKINS & 100 BACKLIGHT TRAILS =================
+    const EFFECT_CODES_MAP = {
+        "FX-NOVA1": 1, "FX-CYBER2": 2, "FX-BLAZE3": 3, "FX-STORM4": 4, "FX-PULSE5": 5,
+        "FX-VIPER6": 6, "FX-GHOST7": 7, "FX-LASER8": 8, "FX-TITAN9": 9, "FX-OMEGA10": 10,
+        "FX-SONIC11": 11, "FX-FROST12": 12, "FX-VENOM13": 13, "FX-SOLAR14": 14, "FX-VOID15": 15,
+        "FX-HYPER16": 16, "FX-DEMON17": 17, "FX-DRAG18": 18, "FX-KING19": 19, "FX-TAKO20": 20
+    };
+
+    // ================= 100 BALL SKINS + 100 BACKLIGHTS + 100 EFFECTS =================
     const BALL_SHAPES_POOL = ['ring', 'star', 'hex', 'diamond', 'cross', 'eye', 'bio', 'sun', 'vortex', 'crescent', 'crown', 'dragon', 'galaxy', 'rainbow'];
     const BALL_ICONS_POOL = ['🔵', '🔴', '🟢', '⭐', '🟣', '☢️', '👁️', '💎', '☀️', '🌀', '🩸', '👑', '🌌', '🌈', '🐉', '⚡', '🔥', '❄️', '☄️', '🔱'];
     const ARABIC_SKIN_TITLES = [
@@ -936,6 +1089,7 @@
 
     const SKINS_CATALOG = [];
     const BACKLIGHTS_CATALOG = [];
+    const EFFECTS_CATALOG = [];
 
     for (let i = 1; i <= 100; i++) {
         const hue = (i * 37) % 360;
@@ -974,14 +1128,22 @@
             passLvl: unlockType === 'pass_free' ? ((i - 50) * 6 - 3) : (unlockType === 'pass_vip' ? ((i - 65) * 6 - 1) : 0),
             codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 62%)`, icon: i % 2 === 0 ? '✨' : '🔥'
         });
+
+        EFFECTS_CATALOG.push({
+            id: `fx_${i}`, num: i, name: `${i}. تأثير ${baseName}`, isEffect: true, unlockType,
+            cost: unlockType === 'shop' ? (i === 1 ? 0 : Math.round(Math.pow(i - 1, 1.8) * 26)) : 0,
+            passLvl: unlockType === 'pass_free' ? ((i - 50) * 6 - 2) : (unlockType === 'pass_vip' ? ((i - 65) * 6) : 0),
+            codeIdx, color: col, secColor: `hsl(${secHue}, 98%, 65%)`, icon: '💥'
+        });
     }
 
     function getSkinObj(skinId) { return SKINS_CATALOG.find(s => s.id === skinId || s.color === skinId) || SKINS_CATALOG[0]; }
     function getBacklightObj(blId) { return BACKLIGHTS_CATALOG.find(b => b.id === blId || b.color === blId) || BACKLIGHTS_CATALOG[0]; }
+    function getEffectObj(fxId) { return EFFECTS_CATALOG.find(e => e.id === fxId) || EFFECTS_CATALOG[0]; }
 
     // ================= DROP PASS (30-DAY REAL-TIME TIMER + LTR HORIZONTAL) =================
     const XP_PER_PASS_LEVEL = 250;
-    const DROP_PASS_END_TIME = new Date('2026-12-20T00:34:00+03:00').getTime();
+    const DROP_PASS_END_TIME = new Date('2026-12-20T03:08:00+03:00').getTime();
 
     function updateDropPassTimer() {
         const diff = DROP_PASS_END_TIME - Date.now();
@@ -1007,33 +1169,35 @@
         if (isCurrentUserAdmin()) return true;
         const myXP = saveData.xp || 0;
         const myPassLvl = getDropPassLevel(myXP);
-        const redeemedArr = Array.isArray(saveData.redeemedCodes) ? saveData.redeemedCodes : [];
         if (item.unlockType === 'shop') return myXP >= item.cost;
         if (item.unlockType === 'pass_free') return myPassLvl >= item.passLvl;
         if (item.unlockType === 'pass_vip') return hasVipDropPass() && myPassLvl >= item.passLvl;
-        if (item.unlockType === 'code') return redeemedArr.includes(item.codeIdx);
+        if (item.unlockType === 'code') {
+            const arr = item.isEffect ? (saveData.redeemedFxCodes || []) : (saveData.redeemedCodes || []);
+            return arr.includes(item.codeIdx);
+        }
         return false;
     }
 
-    // ================= SKINS & BACKLIGHTS SHOP (LIVE CANVAS PREVIEWS + LOCKED ONLY) =================
+    // ================= SKINS, BACKLIGHTS & EFFECTS SHOP (LIVE CANVAS PREVIEWS) =================
     let currentCosmeticTab = 'balls';
     function switchCosmeticTab(tab) {
         currentCosmeticTab = tab;
         document.getElementById('tab-btn-balls').classList.toggle('active', tab === 'balls');
         document.getElementById('tab-btn-backlights').classList.toggle('active', tab === 'backlights');
+        document.getElementById('tab-btn-effects').classList.toggle('active', tab === 'effects');
         renderSkinsShop();
     }
 
     function renderSkinsShop() {
         const container = document.getElementById('skins-list-container');
         if (!container) return;
-        const list = currentCosmeticTab === 'balls' ? SKINS_CATALOG : BACKLIGHTS_CATALOG;
-        const activeId = currentCosmeticTab === 'balls' ? getSkinObj(saveData.skin).id : getBacklightObj(saveData.backlight).id;
+        const list = currentCosmeticTab === 'balls' ? SKINS_CATALOG : (currentCosmeticTab === 'backlights' ? BACKLIGHTS_CATALOG : EFFECTS_CATALOG);
+        const activeId = currentCosmeticTab === 'balls' ? getSkinObj(saveData.skin).id : (currentCosmeticTab === 'backlights' ? getBacklightObj(saveData.backlight).id : getEffectObj(saveData.effect).id);
 
         container.innerHTML = list.map((item) => {
             const isSelected = activeId === item.id;
             const unlocked = isCosmeticUnlocked(item);
-
             const btnText = isSelected ? 'مفعّل ✅' : (unlocked ? 'تفعيل ⚡' : '🔒 مغلق');
             const descText = unlocked ? 'متاح لديك ✨' : '🔒 مغلق';
             const btnClass = isSelected ? 'green' : (unlocked ? '' : 'locked-btn');
@@ -1058,34 +1222,41 @@
             pCtx.clearRect(0, 0, 58, 58);
 
             if (currentCosmeticTab === 'balls') {
-                const dummyBall = { x: 29, y: 29, r: 16, rot: 0.4, armor: 1, type: 'normal', trail: [] };
-                drawCustomBallSkin(pCtx, dummyBall, 1200, item, null, null);
+                drawCustomBallSkin(pCtx, { x: 29, y: 29, r: 16, rot: 0.4, armor: 1, type: 'normal', trail: [] }, 1200, item, null, null);
+            } else if (currentCosmeticTab === 'backlights') {
+                const pts = []; for (let k = 0; k < 14; k++) pts.push({ x: 29, y: 8 + k * 2.8 });
+                const prevA = active; active = false;
+                drawBacklightEffect(pCtx, { x: 29, y: 47, r: 10, rot: 0, armor: 1, type: 'normal', trail: pts }, 1200, item);
+                active = prevA;
+                pCtx.fillStyle = '#fff'; pCtx.beginPath(); pCtx.arc(29, 47, 4.5, 0, Math.PI * 2); pCtx.fill();
             } else {
-                const pts = [];
-                for (let k = 0; k < 16; k++) pts.push({ x: 29, y: 7 + k * 2.6 });
-                const dummyTrailBall = { x: 29, y: 47, r: 10, rot: 0, armor: 1, type: 'normal', trail: pts };
-                const prevActive = active;
-                active = false;
-                drawBacklightEffect(pCtx, dummyTrailBall, 1200, item);
-                active = prevActive;
-
-                pCtx.fillStyle = '#ffffff';
-                pCtx.beginPath();
-                pCtx.arc(29, 47, 5, 0, Math.PI * 2);
-                pCtx.fill();
+                pCtx.save(); pCtx.translate(29, 29);
+                const st = item.num % 10;
+                pCtx.strokeStyle = item.color; pCtx.lineWidth = 2;
+                pCtx.beginPath(); pCtx.arc(0, 0, 17, 0, Math.PI * 2); pCtx.stroke();
+                for (let k = 0; k < 8; k++) {
+                    const a = (k * Math.PI) / 4, d = k % 2 === 0 ? 15 : 10;
+                    const px = Math.cos(a) * d, py = Math.sin(a) * d;
+                    pCtx.fillStyle = k % 2 === 0 ? item.color : item.secColor;
+                    if (st === 2 || st === 9) { drawStarPath(pCtx, px, py, 4, 4.5, 1.6, a); pCtx.fill(); }
+                    else if (st === 3) { pCtx.fillRect(px - 2.5, py - 2.5, 5, 5); }
+                    else if (st === 4) { drawPolygonPath(pCtx, px, py, 4, 4, a); pCtx.fill(); }
+                    else { pCtx.beginPath(); pCtx.arc(px, py, 3, 0, Math.PI * 2); pCtx.fill(); }
+                }
+                pCtx.restore();
             }
         });
     }
 
     function selectCosmeticItem(tab, itemId) {
-        const list = tab === 'balls' ? SKINS_CATALOG : BACKLIGHTS_CATALOG;
+        const list = tab === 'balls' ? SKINS_CATALOG : (tab === 'backlights' ? BACKLIGHTS_CATALOG : EFFECTS_CATALOG);
         const item = list.find(x => x.id === itemId);
         if (!item) return;
         if (isCosmeticUnlocked(item)) {
             if (tab === 'balls') saveData.skin = item.id;
-            else saveData.backlight = item.id;
-            saveProgress();
-            renderSkinsShop();
+            else if (tab === 'backlights') saveData.backlight = item.id;
+            else saveData.effect = item.id;
+            saveProgress(); renderSkinsShop();
             playSfxTone(740, 'triangle', 0.12, 0.2);
             showToast(`✅ تم تفعيل [${item.name}]!`, true);
         } else {
@@ -1258,17 +1429,31 @@
     function redeemSecretCode() {
         const rawCode = document.getElementById('promo-code-input').value.trim().toUpperCase();
         const codeIdx = SECRET_CODES_MAP[rawCode];
-        if (!codeIdx) { playSfxTone(140, 'sawtooth', 0.2, 0.25); showToast("❌ كود غير صحيح!", false); return; }
-        if (!Array.isArray(saveData.redeemedCodes)) saveData.redeemedCodes = [];
-        if (saveData.redeemedCodes.includes(codeIdx)) { showToast("✅ مستخدم مسبقاً!", true); return; }
+        const fxIdx = EFFECT_CODES_MAP[rawCode];
 
-        saveData.redeemedCodes.push(codeIdx);
-        saveData.skin = SKINS_CATALOG[80 + codeIdx - 1].id;
-        saveData.backlight = BACKLIGHTS_CATALOG[80 + codeIdx - 1].id;
-        saveProgress();
-        document.getElementById('promo-code-input').value = '';
-        playSfxTone(880, 'triangle', 0.18, 0.25);
-        showToast("🎁 مبروك! فتحت طابة وباك لايت سري!", true);
+        if (codeIdx) {
+            if (!Array.isArray(saveData.redeemedCodes)) saveData.redeemedCodes = [];
+            if (saveData.redeemedCodes.includes(codeIdx)) { showToast("✅ مستخدم مسبقاً!", true); return; }
+            saveData.redeemedCodes.push(codeIdx);
+            saveData.skin = SKINS_CATALOG[80 + codeIdx - 1].id;
+            saveData.backlight = BACKLIGHTS_CATALOG[80 + codeIdx - 1].id;
+            saveProgress(); document.getElementById('promo-code-input').value = '';
+            playSfxTone(880, 'triangle', 0.18, 0.25);
+            showToast("🎁 مبروك! فتحت طابة وباك لايت سري!", true);
+            return;
+        }
+        if (fxIdx) {
+            if (!Array.isArray(saveData.redeemedFxCodes)) saveData.redeemedFxCodes = [];
+            if (saveData.redeemedFxCodes.includes(fxIdx)) { showToast("✅ مستخدم مسبقاً!", true); return; }
+            saveData.redeemedFxCodes.push(fxIdx);
+            saveData.effect = EFFECTS_CATALOG[80 + fxIdx - 1].id;
+            saveProgress(); document.getElementById('promo-code-input').value = '';
+            playSfxTone(880, 'triangle', 0.18, 0.25);
+            showToast("💥 مبروك! فتحت تأثير انفجار سري!", true);
+            return;
+        }
+        playSfxTone(140, 'sawtooth', 0.2, 0.25);
+        showToast("❌ كود غير صحيح!", false);
     }
 
     const I18N_DICT = {
@@ -1536,7 +1721,7 @@
     // ================= CLOUD & AUTH =================
     let accountsDB = JSON.parse(localStorage.getItem('takoDropAccounts_v50') || '{}');
     let activeUserKey = localStorage.getItem('takoDropActiveUser_v50') || "";
-    let saveData = { username: "", password: "", high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", vipPass: false, redeemedCodes: [], banned: false };
+    let saveData = { username: "", password: "", playerId: "", high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
     let customStagesDB = JSON.parse(localStorage.getItem('cyberDropCustomStages_v50') || '{}');
 
     function sanitizeFirebaseKey(key) { return key.trim().toLowerCase().replace(/[.#$\[\]\/]/g, '_'); }
@@ -1556,6 +1741,9 @@
                     if (activeUserKey && accountsDB[activeUserKey]) {
                         if (accountsDB[activeUserKey].banned && !isCurrentUserAdmin()) { active = false; logoutUser(); showLoginMessage("🚫 حسابك محظور!", "error"); return; }
                         saveData.vipPass = !!accountsDB[activeUserKey].vipPass;
+                        if (accountsDB[activeUserKey].friends) saveData.friends = accountsDB[activeUserKey].friends;
+                        if (accountsDB[activeUserKey].friendRequests) saveData.friendRequests = accountsDB[activeUserKey].friendRequests;
+                        ensurePlayerId();
                     }
                 }
                 document.getElementById('server-status-dot').classList.remove('offline');
@@ -1638,7 +1826,16 @@
 
     function tryStartStage(sNum) { if (!isStageUnlocked(sNum)) { showToast("🔒 اختم المرحلة السابقة أولاً!", false); return; } startStage(sNum); }
 
+    function ensurePlayerId() {
+        if (!saveData.playerId) saveData.playerId = 'TK-' + Math.floor(10000 + Math.random() * 89999);
+        if (!saveData.friends || typeof saveData.friends !== 'object') saveData.friends = {};
+        if (!saveData.friendRequests || typeof saveData.friendRequests !== 'object') saveData.friendRequests = {};
+        const reqCount = Object.keys(saveData.friendRequests).length;
+        document.getElementById('friend-req-dot')?.classList.toggle('hidden', reqCount === 0);
+    }
+
     function saveProgress() {
+        ensurePlayerId();
         if (!Array.isArray(saveData.cleared)) saveData.cleared = [];
         if (saveData.username) {
             const uKey = sanitizeFirebaseKey(saveData.username);
@@ -1663,11 +1860,11 @@
     async function checkAutoLogin() {
         initBallsUI(); initSettingsUI(); await syncFromCloud(false);
         if (sessionStorage.getItem('takoGhostAdminSession') === '1') {
-            saveData = { username: ADMIN_USERNAME, password: ADMIN_PASS, high: 0, xp: 100000, cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1), skin: "ball_100", backlight: "bl_100", vipPass: true, redeemedCodes: Array.from({ length: 20 }, (_, i) => i + 1), banned: false };
+            saveData = { username: ADMIN_USERNAME, password: ADMIN_PASS, playerId: "TK-00001", high: 0, xp: 100000, cleared: Array.from({ length: TOTAL_STAGES }, (_, i) => i + 1), skin: "ball_100", backlight: "bl_100", effect: "fx_100", vipPass: true, redeemedCodes: Array.from({ length: 20 }, (_, i) => i + 1), redeemedFxCodes: Array.from({ length: 20 }, (_, i) => i + 1), friends: {}, friendRequests: {}, banned: false };
             document.getElementById('login-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); saveProgress(); return;
         }
         if (activeUserKey && accountsDB[activeUserKey] && !accountsDB[activeUserKey].banned) {
-            saveData = { skin: "ball_1", backlight: "bl_1", vipPass: false, redeemedCodes: [], ...accountsDB[activeUserKey], cleared: accountsDB[activeUserKey].cleared || [] };
+            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[activeUserKey], cleared: accountsDB[activeUserKey].cleared || [] };
             document.getElementById('login-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); saveProgress();
         } else {
             document.getElementById('login-overlay').classList.remove('hidden'); document.getElementById('menu-overlay').classList.add('hidden');
@@ -1682,9 +1879,9 @@
         try { const res = await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(uKey)}.json`); if (res.ok) { const acc = await res.json(); if (acc) accountsDB[uKey] = acc; } } catch (e) {}
         if (accountsDB[uKey]) {
             if (String(accountsDB[uKey].password) !== String(p)) { showLoginMessage("❌ كلمة السر خاطئة!", "error"); return; }
-            saveData = { skin: "ball_1", backlight: "bl_1", vipPass: false, redeemedCodes: [], ...accountsDB[uKey], cleared: accountsDB[uKey].cleared || [] };
+            saveData = { skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, ...accountsDB[uKey], cleared: accountsDB[uKey].cleared || [] };
         } else {
-            saveData = { username: u, password: p, high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", vipPass: false, redeemedCodes: [], banned: false };
+            saveData = { username: u, password: p, playerId: 'TK-' + Math.floor(10000 + Math.random() * 89999), high: 0, xp: 0, cleared: [], skin: "ball_1", backlight: "bl_1", effect: "fx_1", vipPass: false, redeemedCodes: [], redeemedFxCodes: [], friends: {}, friendRequests: {}, banned: false };
             accountsDB[uKey] = { ...saveData };
         }
         activeUserKey = uKey; saveProgress();
@@ -1802,6 +1999,7 @@
         else if (name === 'skins') renderSkinsShop();
         else if (name === 'ranks') syncFromCloud(false);
         else if (name === 'tiers') renderTiersLadder();
+        else if (name === 'profile') { syncFromCloud(false); switchProfileTab('myprofile'); }
         else if (name === 'admin') { syncFromCloud(false); renderAdminPanel(); }
         modal.classList.add('open'); modal.style.clipPath = `circle(150% at 50% 50%)`;
         playSfxTone(520, 'sine', 0.08, 0.12);
@@ -1809,11 +2007,13 @@
     function closePortal(name) {
         if (name === 'editor' || name === 'music') stopStageAudio();
         if (name === 'pvp' && pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; }
+        if (name === 'profile' && chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; }
         const m = document.getElementById('portal-' + name); if (m) { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; }
     }
     function closeAllPortals() {
         stopStageAudio();
         if (pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; }
+        if (chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; }
         document.querySelectorAll('.portal-modal').forEach(m => { m.classList.remove('open'); m.style.clipPath = `circle(0% at 50% 50%)`; });
     }
 
@@ -1979,7 +2179,6 @@
                 const response = await fetch(editorAudioData);
                 const arrayBuffer = await response.arrayBuffer();
                 const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-
                 const rawData = audioBuffer.getChannelData(0);
                 const sampleRate = audioBuffer.sampleRate;
                 const windowSize = Math.floor(sampleRate * 0.05);
@@ -1994,16 +2193,13 @@
 
                 const minGapSec = (diffKey === 'ultra_tako' || diffKey === 'demon_tako') ? 0.34 : 0.48;
                 let lastBeatTime = -1;
-
                 for (let i = 10; i < energies.length - 10; i++) {
                     let localAvg = 0;
                     for (let k = i - 10; k <= i + 10; k++) localAvg += energies[k];
                     localAvg /= 21;
-
                     const currentTime = (i * windowSize) / sampleRate;
                     if (energies[i] > localAvg * 1.38 && energies[i] > 0.06 && energies[i] >= energies[i - 1] && energies[i] >= energies[i + 1] && (currentTime - lastBeatTime) >= minGapSec) {
-                        beatTimes.push(currentTime);
-                        lastBeatTime = currentTime;
+                        beatTimes.push(currentTime); lastBeatTime = currentTime;
                     }
                 }
             }
@@ -2032,7 +2228,7 @@
         showToast(`🎵 تم توزيع ${editorSpawns.length} طابة على إيقاع الغناية!`, true);
     }
 
-    // ================= CINEMATIC BACKLIGHT TRAILS & 3D MYTHIC BALL RENDERER =================
+    // ================= OPTIMIZED CINEMATIC BACKLIGHT & 3D MYTHIC BALL RENDERER =================
     function drawPolygonPath(ctx, x, y, r, sides, rot) {
         ctx.beginPath();
         for (let i = 0; i < sides; i++) { const a = rot + (i * Math.PI * 2) / sides; ctx[i === 0 ? 'moveTo' : 'lineTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
@@ -2050,7 +2246,7 @@
         if (!b.trail) b.trail = [];
         if (active) {
             b.trail.push({ x: b.x, y: b.y });
-            if (b.trail.length > 28) b.trail.shift();
+            if (b.trail.length > 22) b.trail.shift();
         }
         if (b.trail.length < 2) return;
 
@@ -2064,8 +2260,6 @@
         ctx.globalCompositeOperation = 'lighter';
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.shadowColor = mainCol;
-        ctx.shadowBlur = 22;
 
         const len = b.trail.length;
         for (let i = 0; i < len - 1; i++) {
@@ -2161,8 +2355,6 @@
 
         ctx.save();
         ctx.translate(b.x, b.y);
-        ctx.shadowColor = mainCol;
-        ctx.shadowBlur = isMythic ? 28 : 18;
 
         if (isMythic) {
             ctx.save(); ctx.rotate(b.rot * 0.9);
@@ -2187,7 +2379,6 @@
         ctx.fillStyle = bgGrad; ctx.beginPath(); ctx.arc(0, 0, b.r, 0, Math.PI * 2); ctx.fill();
         ctx.lineWidth = isMythic ? 2.8 : 2; ctx.strokeStyle = (isMythic || isVip) ? '#ffd700' : mainCol; ctx.stroke();
 
-        ctx.shadowBlur = 10; ctx.shadowColor = mainCol;
         if (styleIdx === 0) {
             ctx.strokeStyle = mainCol; ctx.lineWidth = 2.2; drawPolygonPath(ctx, 0, 0, b.r * 0.72, 6, b.rot); ctx.stroke();
             ctx.strokeStyle = secCol; ctx.lineWidth = 1.6; drawPolygonPath(ctx, 0, 0, b.r * 0.45, 6, -b.rot * 1.4); ctx.stroke();
@@ -2251,13 +2442,11 @@
             ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(0, 0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
 
-        ctx.shadowBlur = 0;
         const shine = ctx.createLinearGradient(0, -b.r, 0, 0);
         shine.addColorStop(0, 'rgba(255,255,255,0.42)'); shine.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = shine; ctx.beginPath(); ctx.ellipse(0, -b.r * 0.42, b.r * 0.62, b.r * 0.32, 0, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
 
-        // يظهر فقط: أرقام الكبسات (x2/x3/x4) وعداد القنبلة الموقوتة — باقي المقالب سرية 100%
         if (b.armor > 1) {
             ctx.strokeStyle = b.type === 'blackhole' ? '#c084fc' : '#ffd700'; ctx.lineWidth = 4;
             ctx.beginPath(); ctx.arc(b.x, b.y, b.r + 5, 0, Math.PI * 2); ctx.stroke();
@@ -2278,10 +2467,10 @@
         }
     }
 
-    // ================= FULL 40-BALL GAMEPLAY ENGINE =================
+    // ================= FULL 40-BALL GAMEPLAY ENGINE (OPTIMIZED) =================
     let curStage = 1, customMode = false, activeCustomStage = null, customQueue = [], stageStartTime = 0;
     let score = 0, pendingStageXP = 0, clearedBallsCount = 0, combo = 0, hearts = 3, active = false;
-    let balls = [], particles = [], floatTexts = [], lastSpawn = 0, hitY = 0, lanes = [0, 0, 0, 0], gridOffset = 0;
+    let balls = [], particles = [], shockwaves = [], floatTexts = [], lastSpawn = 0, hitY = 0, lanes = [0, 0, 0, 0], gridOffset = 0;
     let smokeUntil = 0, flashAlpha = 0, mirrorUntil = 0, slowMoUntil = 0, frozenLaneUntil = [0, 0, 0, 0];
 
     function resize() {
@@ -2332,8 +2521,25 @@
         else if (type === 'laserhold') { setTimeout(() => { if (active) { const t = createBallObject(lane, 'normal', speed); t.isLaserTail = true; balls.push(t); } }, 220); }
     }
 
-    function burst(x, y, color) { for (let i = 0; i < 14; i++) { const a = Math.random() * Math.PI * 2, s = Math.random() * 5 + 2; particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, color, sz: Math.random() * 4 + 2 }); } }
-    function addFloat(x, y, txt, color) { floatTexts.push({ x, y, txt, color, alpha: 1 }); }
+    function burst(x, y, color) {
+        const fx = getEffectObj(saveData.effect);
+        const st = fx.num % 10;
+        const c1 = fx.num >= 90 ? `hsl(${(performance.now() * 0.4) % 360}, 100%, 60%)` : fx.color;
+        const c2 = fx.secColor || '#ffffff';
+
+        shockwaves.push({ x, y, r: 10, maxR: st === 1 ? 58 : 44, alpha: 0.9, color: c1, dbl: st === 1 });
+        if (shockwaves.length > 15) shockwaves.shift();
+
+        const count = particles.length > 60 ? 6 : 12;
+        for (let i = 0; i < count; i++) {
+            const a = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+            const s = Math.random() * 5.2 + 2.2;
+            particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, color: i % 2 === 0 ? c1 : c2, sz: Math.random() * 3.8 + 2.2, shape: st, rot: a });
+        }
+        if (particles.length > 85) particles.splice(0, particles.length - 85);
+    }
+
+    function addFloat(x, y, txt, color) { floatTexts.push({ x, y, txt, color, alpha: 1 }); if (floatTexts.length > 18) floatTexts.shift(); }
 
     function hurt(reason, dmg = 1) {
         playSfxTone(140, 'sawtooth', 0.25, 0.25); hearts -= dmg; combo = 0; updateHUD(); showToast(reason, false);
@@ -2360,7 +2566,7 @@
         if (!active) return;
         const now = performance.now(), lane = now < mirrorUntil ? (3 - rawLane) : rawLane;
         if (now < frozenLaneUntil[lane]) { playSfxTone(180, 'sine', 0.1, 0.2); showToast(`المسار ${lane + 1} متجمد! ❄️`, false); return; }
-        const btn = document.getElementById('btn-' + lane); btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 100);
+        const btn = laneBtnEls[lane]; btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 100);
         const laneBalls = balls.filter(b => b.lane === lane && b.state !== 'dead' && b.state !== 'bouncing_up' && !b.isIllusion).sort((a, b) => Math.abs(a.y - hitY) - Math.abs(b.y - hitY));
         if (!laneBalls.length) { hurt("تسرعت! ما في كرة 💨"); return; }
 
@@ -2395,7 +2601,7 @@
         }
     }
 
-    document.querySelectorAll('.lane-btn').forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); pressLane(parseInt(b.getAttribute('data-lane'))); }));
+    laneBtnEls.forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); pressLane(parseInt(b.getAttribute('data-lane'))); }));
     canvas.addEventListener('pointerdown', e => { const r = canvas.getBoundingClientRect(); const l = Math.floor((e.clientX - r.left) / (canvas.width / 4)); if (l >= 0 && l < 4) pressLane(l); });
     window.addEventListener('keydown', e => { if (e.repeat) return; const k = e.key.toLowerCase(); if (k==='d'||k==='1') pressLane(0); if (k==='f'||k==='2') pressLane(1); if (k==='j'||k==='3') pressLane(2); if (k==='k'||k==='4') pressLane(3); });
 
@@ -2413,10 +2619,9 @@
             }
 
             for (let i = 0; i < 4; i++) {
-                const btn = document.getElementById('btn-' + i);
-                btn.classList.remove('warn');
-                btn.classList.toggle('frozen', ts < frozenLaneUntil[i]);
-                btn.classList.toggle('mirrored', ts < mirrorUntil);
+                laneBtnEls[i].classList.remove('warn');
+                laneBtnEls[i].classList.toggle('frozen', ts < frozenLaneUntil[i]);
+                laneBtnEls[i].classList.toggle('mirrored', ts < mirrorUntil);
             }
 
             for (let i = balls.length - 1; i >= 0; i--) {
@@ -2462,10 +2667,10 @@
                 if (b.type === 'boomerang' && !b.bounced && b.y >= hitY - 5) { b.bounced = true; b.state = 'bouncing_up'; b.vy = -10.8; continue; }
 
                 if (b.state === 'faked') {
-                    document.getElementById('btn-' + b.lane).classList.add('warn');
+                    laneBtnEls[b.lane].classList.add('warn');
                     if (b.y > hitY + 55) { rewardBallSuccess('fake', lanes[b.lane], hitY - 28, "كشفت الفيك! 🧠"); balls.splice(i, 1); }
                 } else if (b.type === 'mine') {
-                    if (b.y >= b.trigY) document.getElementById('btn-' + b.lane).classList.add('warn');
+                    if (b.y >= b.trigY) laneBtnEls[b.lane].classList.add('warn');
                     if (b.y > hitY + 58) { rewardBallSuccess('mine', lanes[b.lane], hitY - 28, "تجنبت اللغم! ☠️"); balls.splice(i, 1); }
                 } else if (b.type === 'shieldgrd') {
                     if (b.y > hitY + 55) { rewardBallSuccess('shieldgrd', lanes[b.lane], hitY - 28, "مرت بسلام! 🛡️"); balls.splice(i, 1); }
@@ -2494,7 +2699,28 @@
         }
 
         balls.forEach(b => { if (b.linkedTo && b.linkedTo.state !== 'dead') { ctx.save(); ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(b.linkedTo.x, b.linkedTo.y); ctx.stroke(); ctx.restore(); } });
-        particles.forEach((p, idx) => { p.x += p.vx; p.y += p.vy; p.alpha -= 0.035; if (p.alpha <= 0) { particles.splice(idx, 1); return; } ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+            const sw = shockwaves[i];
+            sw.r += 3.2; sw.alpha -= 0.06;
+            if (sw.alpha <= 0) { shockwaves.splice(i, 1); continue; }
+            ctx.save(); ctx.globalAlpha = sw.alpha; ctx.strokeStyle = sw.color; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2); ctx.stroke();
+            if (sw.dbl) { ctx.beginPath(); ctx.arc(sw.x, sw.y, sw.r * 0.65, 0, Math.PI * 2); ctx.stroke(); }
+            ctx.restore();
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx; p.y += p.vy; p.alpha -= 0.04; p.rot += 0.12;
+            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+            ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+            if (p.shape === 2 || p.shape === 9) { drawStarPath(ctx, p.x, p.y, 4, p.sz * 1.5, p.sz * 0.5, p.rot); ctx.fill(); }
+            else if (p.shape === 3) { ctx.fillRect(p.x - p.sz, p.y - p.sz, p.sz * 2, p.sz * 2); }
+            else if (p.shape === 4) { drawPolygonPath(ctx, p.x, p.y, p.sz * 1.3, 4, p.rot); ctx.fill(); }
+            else { ctx.beginPath(); ctx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); ctx.fill(); }
+            ctx.restore();
+        }
 
         balls.forEach(b => {
             ctx.save();
@@ -2518,13 +2744,17 @@
         }
         if (flashAlpha > 0) { ctx.save(); ctx.fillStyle = `rgba(255,255,255,${flashAlpha})`; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.restore(); flashAlpha = Math.max(0, flashAlpha - 0.04); }
 
-        floatTexts.forEach((f, idx) => { f.y -= 1.8; f.alpha -= 0.025; if (f.alpha <= 0) { floatTexts.splice(idx, 1); return; } ctx.save(); ctx.globalAlpha = f.alpha; ctx.fillStyle = f.color; ctx.font = '900 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(f.txt, f.x, f.y); ctx.restore(); });
+        for (let i = floatTexts.length - 1; i >= 0; i--) {
+            const f = floatTexts[i]; f.y -= 1.8; f.alpha -= 0.025;
+            if (f.alpha <= 0) { floatTexts.splice(i, 1); continue; }
+            ctx.save(); ctx.globalAlpha = f.alpha; ctx.fillStyle = f.color; ctx.font = '900 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(f.txt, f.x, f.y); ctx.restore();
+        }
 
         requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
 
-    function resetEffects() { smokeUntil = 0; flashAlpha = 0; mirrorUntil = 0; slowMoUntil = 0; frozenLaneUntil = [0, 0, 0, 0]; }
+    function resetEffects() { smokeUntil = 0; flashAlpha = 0; mirrorUntil = 0; slowMoUntil = 0; frozenLaneUntil = [0, 0, 0, 0]; shockwaves = []; }
 
     function startStage(num) {
         closeAllPortals(); resize(); resetEffects();
@@ -2574,6 +2804,291 @@
     function nextStage() { if (curStage < TOTAL_STAGES) startStage(curStage + 1); }
     function retryStage() { if (customMode) startCustomStage(activeCustomStage, !!activePvpRoomCode); else startStage(curStage); }
     function openMenu() { active = false; stopStageAudio(); if (pvpLobbyInterval) { clearInterval(pvpLobbyInterval); pvpLobbyInterval = null; } saveProgress(); syncFromCloud(false); document.getElementById('result-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('hidden'); }
+
+    // ================= PROFILE, UNIQUE PLAYER ID, FRIENDS & PRIVATE CHAT =================
+    let currentProfileTab = 'myprofile', activeChatFriendKey = '', activeChatFriendName = '', chatPollInterval = null;
+
+    function copyMyPlayerId() {
+        ensurePlayerId();
+        navigator.clipboard?.writeText(saveData.playerId);
+        playSfxTone(760, 'triangle', 0.1, 0.18);
+        showToast(`📋 تم نسخ الـ ID الخاص بك: ${saveData.playerId}`, true);
+    }
+
+    function switchProfileTab(tab) {
+        currentProfileTab = tab;
+        ['myprofile', 'friends', 'chat'].forEach(t => {
+            document.getElementById('ptab-' + t)?.classList.toggle('active', t === tab);
+            document.getElementById('pview-' + t)?.classList.toggle('hidden', t !== tab);
+        });
+        if (tab !== 'chat' && chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; }
+        if (tab === 'myprofile') renderMyProfileView();
+        else if (tab === 'friends') renderFriendsAndRequests();
+        else if (tab === 'chat' && activeChatFriendKey) startChatPolling();
+    }
+
+    function renderMyProfileView() {
+        ensurePlayerId();
+        const myXP = isCurrentUserAdmin() ? 100000 : (saveData.xp || 0);
+        const { current: rank } = getRankByXP(myXP);
+        const clearedCount = (saveData.cleared || []).length;
+        const ownedBalls = SKINS_CATALOG.filter(s => isCosmeticUnlocked(s)).length;
+        const ownedBls = BACKLIGHTS_CATALOG.filter(b => isCosmeticUnlocked(b)).length;
+        const myMaps = Object.values(customStagesDB).filter(m => m && m.creator && m.creator.toLowerCase() === (saveData.username || '').toLowerCase());
+
+        const achievements = [
+            { icon: '🎯', name: 'بداية الأسطورة', desc: 'اختم أول مرحلة', done: clearedCount >= 1 },
+            { icon: '🎓', name: 'خريج التتوريال', desc: 'اختم 40 تتوريال', done: clearedCount >= 40 },
+            { icon: '👑', name: 'قاهر اللعبة', desc: 'اختم كل الـ 62 مرحلة', done: clearedCount >= 62 },
+            { icon: '🛠️', name: 'مهندس مابات', desc: 'اصنع ماب واحد على الأقل', done: myMaps.length >= 1 },
+            { icon: '🎨', name: 'جامع الطابات', desc: 'افتح 15 طابة أو أكثر', done: ownedBalls >= 15 },
+            { icon: '⚡', name: 'طاقة خارقة', desc: 'وصل لـ 10,000 XP', done: myXP >= 10000 }
+        ];
+
+        const mapsHTML = myMaps.length
+            ? myMaps.map(m => `<div class="stage-card green" style="padding:7px 10px;"><div class="stage-info"><div class="stage-title" style="font-size:12px;">🛠️ ${m.title} <span dir="ltr" style="color:var(--green);">[${m.id}]</span></div></div><button class="play-chip green" onclick="playStageById('${m.id}')"><span>العب ◀</span></button></div>`).join('')
+            : `<div style="font-size:11px; color:#64748b; text-align:center; padding:8px;">لم تصنع أي ماب بعد — جرّب قسم CREATE!</div>`;
+
+        document.getElementById('pview-myprofile').innerHTML = `
+            <div class="profile-hero-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div>
+                        <div style="font-size:17px; font-weight:900; color:#fff;">👤 ${isCurrentUserAdmin() ? '👑 الأدمن' : saveData.username} ${hasVipDropPass() ? '👑' : ''}</div>
+                        <div style="margin-top:4px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <span class="profile-id-pill" onclick="copyMyPlayerId()">ID: ${saveData.playerId} 📋</span>
+                            <span class="rank-tag" style="background:${rank.bg}; color:${rank.color}; border:1px solid ${rank.color};">${rank.icon} ${rank.name}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-label">المراحل المختومة</div><div class="stat-val val-cyan">${clearedCount}/${TOTAL_STAGES}</div></div>
+                    <div class="stat-card"><div class="stat-label">الطابات المفتوحة</div><div class="stat-val val-yellow">${ownedBalls}/100</div></div>
+                    <div class="stat-card"><div class="stat-label">الباك لايت</div><div class="stat-val val-cyan">${ownedBls}/100</div></div>
+                </div>
+            </div>
+
+            <div style="font-size:12.5px; font-weight:900; color:var(--gold);">🏅 الإنجازات (${achievements.filter(a => a.done).length}/${achievements.length}):</div>
+            <div class="ach-grid">
+                ${achievements.map(a => `
+                    <div class="ach-badge ${a.done ? 'unlocked' : ''}">
+                        <span style="font-size:20px;">${a.icon}</span>
+                        <div>
+                            <div style="font-size:11px; font-weight:900; color:${a.done ? 'var(--gold)' : '#94a3b8'};">${a.name}</div>
+                            <div style="font-size:9.5px; color:#94a3b8;">${a.desc}</div>
+                        </div>
+                    </div>`).join('')}
+            </div>
+
+            <div style="font-size:12.5px; font-weight:900; color:var(--green);">🛠️ المابات التي صنعتها (${myMaps.length}):</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">${mapsHTML}</div>
+        `;
+    }
+
+    async function searchPlayersOnline() {
+        const q = (document.getElementById('friend-search-input')?.value || '').trim().toLowerCase();
+        const resBox = document.getElementById('friend-search-results');
+        if (!q) return;
+        resBox.innerHTML = `<div style="font-size:11px; color:var(--cyan);">⏳ جاري البحث...</div>`;
+        await syncFromCloud(false);
+
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        const matches = Object.entries(accountsDB).filter(([k, u]) =>
+            u && u.username && k !== myKey && u.username.toLowerCase() !== ADMIN_USERNAME &&
+            (u.username.toLowerCase().includes(q) || (u.playerId || '').toLowerCase() === q)
+        ).slice(0, 8);
+
+        if (!matches.length) {
+            resBox.innerHTML = `<div style="font-size:11.5px; color:#fda4af; text-align:center;">❌ لم يتم العثور على لاعب بهذا الاسم أو الـ ID</div>`;
+            return;
+        }
+
+        resBox.innerHTML = matches.map(([uKey, u]) => {
+            const isFriend = !!(saveData.friends && saveData.friends[uKey]);
+            return `
+            <div class="stage-card" style="padding:8px 10px;">
+                <div class="stage-info">
+                    <div class="stage-title" style="font-size:12.5px;">👤 ${u.username} <span dir="ltr" style="font-size:10px; color:var(--cyan);">${u.playerId || ''}</span></div>
+                    <div class="stage-desc">أعلى سكور: ${u.high || 0} | المراحل: ${(u.cleared || []).length}/${TOTAL_STAGES}</div>
+                </div>
+                ${isFriend
+                    ? `<button class="play-chip green" onclick="openFriendChat('${uKey}', '${u.username}')"><span>💬 شات</span></button>`
+                    : `<button class="play-chip" onclick="sendFriendRequest('${uKey}', '${u.username}')"><span>➕ دعوة</span></button>`}
+            </div>`;
+        }).join('');
+    }
+
+    async function sendFriendRequest(targetKey, targetName) {
+        ensurePlayerId();
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        try {
+            await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(targetKey)}/friendRequests/${encodeURIComponent(myKey)}.json`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: myKey, name: saveData.username, playerId: saveData.playerId, time: Date.now() })
+            });
+            playSfxTone(780, 'triangle', 0.12, 0.2);
+            showToast(`✅ تم إرسال دعوة الصداقة إلى ${targetName}!`, true);
+        } catch (e) { showToast("❌ تعذر إرسال الدعوة!", false); }
+    }
+
+    async function acceptFriendRequest(senderKey, senderName) {
+        ensurePlayerId();
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        saveData.friends[senderKey] = senderName;
+        delete saveData.friendRequests[senderKey];
+        saveProgress();
+        try {
+            await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(senderKey)}/friends/${encodeURIComponent(myKey)}.json`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(saveData.username)
+            });
+            await fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(myKey)}/friendRequests/${encodeURIComponent(senderKey)}.json`, { method: 'DELETE' });
+        } catch (e) {}
+        playSfxTone(880, 'triangle', 0.15, 0.2);
+        showToast(`🤝 أصبحتما أصدقاء مع ${senderName}!`, true);
+        renderFriendsAndRequests();
+    }
+
+    async function declineFriendRequest(senderKey) {
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        delete saveData.friendRequests[senderKey];
+        saveProgress();
+        fetch(`${FIREBASE_DB_URL}/accounts/${encodeURIComponent(myKey)}/friendRequests/${encodeURIComponent(senderKey)}.json`, { method: 'DELETE' }).catch(()=>{});
+        renderFriendsAndRequests();
+    }
+
+    function renderFriendsAndRequests() {
+        ensurePlayerId();
+        const reqs = Object.values(saveData.friendRequests || {});
+        const reqSec = document.getElementById('friend-requests-section');
+        const reqList = document.getElementById('friend-requests-list');
+        reqSec.classList.toggle('hidden', reqs.length === 0);
+        reqList.innerHTML = reqs.map(r => `
+            <div class="stage-card yellow" style="padding:8px 10px;">
+                <div class="stage-info">
+                    <div class="stage-title" style="font-size:12.5px;">📩 ${r.name} <span dir="ltr" style="font-size:10px; color:var(--cyan);">${r.playerId || ''}</span></div>
+                </div>
+                <div style="display:flex; gap:5px;">
+                    <button class="play-chip green" onclick="acceptFriendRequest('${r.key}', '${r.name}')"><span>قبول ✅</span></button>
+                    <button class="play-chip pink" onclick="declineFriendRequest('${r.key}')"><span>رفض ✖</span></button>
+                </div>
+            </div>`).join('');
+
+        const friendsEntries = Object.entries(saveData.friends || {});
+        const fList = document.getElementById('my-friends-list');
+        if (!friendsEntries.length) {
+            fList.innerHTML = `<div style="text-align:center; color:#64748b; font-size:12px; padding:14px;">لا يوجد أصدقاء بعد.. ابحث عن رفقاتك بالـ ID فوق!</div>`;
+            return;
+        }
+        fList.innerHTML = friendsEntries.map(([fKey, fName]) => {
+            const acc = accountsDB[fKey] || {};
+            const displayName = acc.username || fName || fKey;
+            return `
+            <div class="stage-card green" style="padding:9px 10px;">
+                <div class="stage-info">
+                    <div class="stage-title" style="font-size:13px;">🟢 ${displayName} <span dir="ltr" style="font-size:10px; color:var(--cyan);">${acc.playerId || ''}</span></div>
+                    <div class="stage-desc">السكور: ${acc.high || 0} | المراحل: ${(acc.cleared || []).length}/${TOTAL_STAGES}</div>
+                </div>
+                <div style="display:flex; gap:5px;">
+                    <button class="play-chip" onclick="openFriendChat('${fKey}', '${displayName}')"><span>💬 شات</span></button>
+                    <button class="play-chip pink" onclick="openFriendChat('${fKey}', '${displayName}', true)"><span>⚔️ 1v1</span></button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function getChatRoomId(friendKey) {
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        return [myKey, friendKey].sort().join('__');
+    }
+
+    function openFriendChat(friendKey, friendName, autoChallenge = false) {
+        activeChatFriendKey = friendKey;
+        activeChatFriendName = friendName;
+        document.getElementById('chat-friend-name').textContent = `💬 محادثة مع: ${friendName}`;
+        document.getElementById('chat-1v1-btn').classList.remove('hidden');
+        document.getElementById('chat-input-bar').classList.remove('hidden');
+        switchProfileTab('chat');
+        if (autoChallenge) sendDirect1v1Challenge();
+    }
+
+    function startChatPolling() {
+        if (chatPollInterval) clearInterval(chatPollInterval);
+        fetchChatMessages();
+        chatPollInterval = setInterval(fetchChatMessages, 2000);
+    }
+
+    async function fetchChatMessages() {
+        if (!activeChatFriendKey || currentProfileTab !== 'chat') return;
+        const chatId = getChatRoomId(activeChatFriendKey);
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        try {
+            const res = await fetch(`${FIREBASE_DB_URL}/chats/${encodeURIComponent(chatId)}.json`);
+            if (!res.ok) return;
+            const data = await res.json();
+            const box = document.getElementById('chat-messages-box');
+            const msgs = data ? Object.values(data).sort((a, b) => (a.time || 0) - (b.time || 0)).slice(-40) : [];
+            if (!msgs.length) {
+                box.innerHTML = `<div style="text-align:center; color:#64748b; font-size:12px; margin:auto;">ابدأ المحادثة مع ${activeChatFriendName} 👋</div>`;
+                return;
+            }
+            box.innerHTML = msgs.map(m => {
+                const isMe = m.senderKey === myKey;
+                if (m.type === 'challenge') {
+                    return `
+                    <div class="chat-challenge-card">
+                        <div style="font-size:12px; font-weight:900; color:#fff;">⚔️ ${m.senderName} أرسل تحدي 1v1!</div>
+                        <div dir="ltr" style="font-family:'Orbitron',sans-serif; font-size:11px; color:var(--yellow);">ROOM: ${m.roomCode}</div>
+                        <button class="play-chip green" style="padding:6px;" onclick="acceptChatChallenge('${m.roomCode}')"><span>⚔️ قبول ودخول الروم الآن</span></button>
+                    </div>`;
+                }
+                return `<div class="chat-msg ${isMe ? 'me' : 'them'}">${m.text}</div>`;
+            }).join('');
+            box.scrollTop = box.scrollHeight;
+        } catch (e) {}
+    }
+
+    async function sendPrivateChatMessage(isChallenge = false, roomCode = '') {
+        if (!activeChatFriendKey) return;
+        const inp = document.getElementById('chat-msg-input');
+        const text = isChallenge ? `⚔️ تحدي 1v1 في روم ${roomCode}` : (inp?.value || '').trim();
+        if (!text) return;
+        if (!isChallenge && inp) inp.value = '';
+
+        const chatId = getChatRoomId(activeChatFriendKey);
+        const msgId = 'm_' + Date.now();
+        const myKey = sanitizeFirebaseKey(saveData.username || '');
+        const payload = {
+            senderKey: myKey,
+            senderName: saveData.username,
+            text,
+            type: isChallenge ? 'challenge' : 'text',
+            roomCode: roomCode || '',
+            time: Date.now()
+        };
+        try {
+            await fetch(`${FIREBASE_DB_URL}/chats/${encodeURIComponent(chatId)}/${msgId}.json`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            fetchChatMessages();
+        } catch (e) {}
+    }
+
+    async function sendDirect1v1Challenge() {
+        if (!activeChatFriendKey) return;
+        const roomCode = 'PVP-' + Math.floor(1000 + Math.random() * 8999);
+        await sendPrivateChatMessage(true, roomCode);
+        document.getElementById('pvp-room-input').value = roomCode;
+        closePortal('profile');
+        openPortal('pvp');
+        createOrJoinPvpRoom(true);
+        showToast(`⚔️ تم إرسال التحدي إلى ${activeChatFriendName}!`, true);
+    }
+
+    function acceptChatChallenge(roomCode) {
+        document.getElementById('pvp-room-input').value = roomCode;
+        closePortal('profile');
+        openPortal('pvp');
+        createOrJoinPvpRoom(false);
+    }
 
     setInterval(() => { if (!active) syncFromCloud(false); }, 15000);
     checkAutoLogin();
